@@ -1,0 +1,14 @@
+// Header Alanı
+
+// Header Alanı Genel Değişkenleri
+$header-width: 100%;
+
+
+header {
+	width:$header-width;
+	height:70px;
+	display: block;
+	//position: fixed;
+	background:$color-main-white;
+	z-index:1024;
+}

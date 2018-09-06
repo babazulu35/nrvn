@@ -1,0 +1,111 @@
+/**
+ *
+ * Usage:
+.test {
+	float:left;
+	@include mobile-sm(portrait) {
+		float:none;
+	}
+
+}
+ *
+ */
+
+/**
+ * @project Nirvana B-Office
+ * @author Brewww Interactive
+ *
+ */
+
+ 
+
+
+@mixin mobile-sm($oriantal) {
+	@if $oriantal == portrait {
+		@media only screen and(max-width: $media-hand-small) { @content; }
+	}
+	@else if $oriantal == landscape {
+		@media only screen and (min-width: $media-land-small + 1) and (max-width: $media-land-medium -1) { @content; }
+	}
+	@else {
+		@media only screen and(max-width: $media-hand-small) { @content; }
+	}
+}
+
+@mixin mobile-md($oriantal) {
+	@if $oriantal == portrait {
+		@media only screen and(max-width: $media-hand-med) { @content; }
+	}
+	@else if $oriantal == landscape {
+		@media only screen and (min-width: $media-land-medium + 1) and (max-width: $media-land-large -1) { @content; }
+	}
+	@else {
+		@media only screen and(max-width: $media-hand-med) { @content; }
+	}
+}
+
+@mixin mobile-lg($oriantal) {
+	@if $oriantal == portrait {
+		@media only screen and(max-width: $media-hand-large) { @content; }
+	}
+	@else if $oriantal == landscape {
+		@media only screen and (min-width: $media-land-large + 1) and (max-width: $media-land-max -1) { @content; }
+	}
+	@else {
+		@media only screen and(max-width: $media-hand-large) { @content; }
+	}
+}
+
+
+// For Tablet Sizes
+@mixin tablet-sm($oriantal) {
+	@if $oriantal == portrait {
+		@media only screen and(max-width: $media-tablet-small) { @content; }
+	}
+	@else if $oriantal == landscape {
+		@media only screen and (min-width: $media-tablet-small + 1) and (max-width: $media-tablet-med -1) { @content; }
+	}
+	@else {
+		@media only screen and(max-width: $media-tablet-small) { @content; }
+	}
+}
+@mixin tablet-md($oriantal) {
+	@if $oriantal == portrait {
+		@media only screen and(max-width: $media-tablet-med) { @content; }
+	}
+	@else if $oriantal == landscape {
+		@media only screen and (min-width: $media-tablet-med + 1) and (max-width: $media-tablet-large - 1) { @content; }
+	}
+	@else {
+		@media only screen and(max-width: $media-tablet-med) { @content; }
+	}
+}
+
+
+// Desktop Small 1221px - 1440px
+@mixin desktop-sm(){
+	@media only screen and (min-width: $media-tablet-land-lg + 1) and (max-width: $media-desktop-small ) { @content; }
+}
+// Desktop Medium 1441px - 1660px
+@mixin desktop-md(){
+	@media only screen and (min-width: $media-desktop-small + 1) and (max-width: $media-desktop-med ) { @content; }
+}
+// Desktop Large Screen 1661px - 1920px
+@mixin desktop-lg(){
+	@media only screen and (min-width: $media-desktop-med + 1) and (max-width: $media-desktop-hd ) { @content; }
+}
+// Tablet Large
+@mixin tablet-lg(){
+	@media only screen and (min-width: $media-tablet-land-small + 1) and (max-width: $media-tablet-land-lg) { @content; }
+}
+// Tablet Medium 
+@mixin tablet-md() {
+	@media only screen and(min-width:$media-tablet-med + 1) and (max-width:$media-tablet-land-small) { @content; }
+}
+@mixin tablet-sm() {
+	@include mediaDeclarationMulti($media-tablet-large,$media-tablet-small)
+}
+
+
+
+

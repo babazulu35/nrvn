@@ -1,0 +1,73 @@
+/* --------------------------------------------------------
+author: Abdullah Karadeniz
+----------------------------------------------------------*/
+
+$c-header-inline-edit: ( font-size: 18px, input-bar: ( color: #9d9d9d, ), breadcrumb: ( color: #35383d, padding: 0.4em 0px, // inline-edit padding değerleri
+margin: 0.15em 0px 0.1em //input ile fonts-size farkını dengeler
+));
+$c-header-inline-edit: map-merge($c-header-inline-edit, getSettingsMap("c-header-inline-edit"));
+$c-map: $c-header-inline-edit;
+.c-header-inline-edit {
+    position: relative;
+    display: block;
+    line-height: 1em;
+    width: 100%;
+    font-size: map-get($c-map, font-size);
+    @include ffamily("light");
+    &__bar {
+        display: flex;
+        width: 100%;
+        align-items: center;
+        justify-content: flex-start;
+        flex-grow: 1;
+        flex-shrink: 1;
+    }
+    &__breadcrumb {
+        display: flex;
+        align-items: center;
+        white-space: nowrap;
+        flex-grow: 0;
+        flex-shrink: 1;
+        &:focus {
+            outline: inherit;
+        }
+        &-item {
+            display: inline-block;
+            padding: map-deep-get($c-map, breadcrumb, padding);
+            //margin: map-deep-get($c-map, breadcrumb, margin);
+            color: map-deep-get($c-map, breadcrumb, color);
+            font-size: inherit;
+            &:after {
+                margin: 0px 5px;
+                content: "/"
+            }
+            &:focus {
+                outline: inherit;
+            }
+        }
+    }
+    &__input-bar {
+        display: flex;
+        white-space: nowrap;
+        overflow: hidden;
+        flex-grow: 0;
+        flex-shrink: 1;
+        .c-inline-edit {
+            @include ffamily("light");
+            font-size: inherit;
+            &__label-bar {
+                color: map-deep-get($c-map, input-bar, color);
+            }
+            &__edit-button {
+                color: map-deep-get($c-map, breadcrumb, color);
+            }
+            &__input-bar {}
+        }
+    }
+}
+
+$c-map: null;
+
+/* --------------------------------------------------------
+author: Abdullah Karadeniz
+----------------------------------------------------------*/

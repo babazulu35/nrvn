@@ -1,0 +1,26 @@
+<div class="c-customer-capacity-select-list__container">
+  <span class="c-customer-capacity-select-list__item" *ngFor="let item of items; index as i"
+    [ngClass]="{
+      'c-customer-capacity-select-list__item--selected': item?.isSelected, 
+      'c-customer-capacity-select-list__item--disabled': item?.isDisabled,
+      'c-customer-capacity-select-list__item--empty': !item?.capacity
+    }"
+    [ngStyle]="{
+     'z-index': item?.isSelected ? items?.length : i  
+    }"
+    (click)="itemClickHandler($event, item)">
+    <span class="c-customer-capacity-select-list__item-box">
+      <span class="c-customer-capacity-select-list__item-box-left">
+        <span class="c-customer-capacity-select-list__item-title">
+          {{item?.customer?.FirstName}} {{item?.customer?.LastName}}
+          <!-- <span class="c-customer-capacity-select-list__item-secondary-text">
+              
+          </span> -->
+        </span>
+      </span>
+      <span class="c-customer-capacity-select-list__item-box-right">
+        <span class="c-customer-capacity-select-list__item-capacity">{{item?.capacity}}</span>
+      </span>
+    </span>
+  </span>
+</div>

@@ -1,0 +1,244 @@
+$c-customer-card-list: (
+  border-radius: 3px,
+
+  container: (
+    padding: 20px,
+    border-color: #dcdce5,
+    background-color: #f7f7f7,
+  ),
+
+  add-bar: (
+    font-size: 13px,
+    color: #21242b
+  ),
+
+  list: (
+    
+    item: (
+        color: #21242b, 
+        background-color: #ffffff, 
+        border-color: #dcdce5,
+
+        margin: 10px,
+        padding: 13px 20px,
+        
+        icon: (
+            font-size: 24px,
+            color: #B1B1B1
+        ),
+        avatar: (
+            font-size: 40px
+        ),
+        title: (
+            font-size: 13px
+        ),
+        sub-title: (
+            font-size: 12px
+        ),
+        type: (
+            font-size: 12px,
+            min-width: 170px
+        ),
+        action: (
+            font-size: 24px,
+            margin: 0px 0px 0px 10px,
+            color: #B1B1B1
+        )
+    )
+  ),
+  
+
+  add-item-button: (
+    font-size: 33.275px,
+    margin: 20px
+  )
+);
+
+// Merge settings and defaults
+$c-customer-card-list: map-merge($c-customer-card-list, getSettingsMap("c-customer-card-list"));
+
+// Set shortcuts
+$c-map: $c-customer-card-list;
+
+.c-customer-card-list {
+    display: inline-block;
+    position: relative;
+    line-height: 0px;
+    font-size: 0px;
+    min-width: map-deep-get($c-map, width);
+    width: 100%;
+
+    &--empty {
+
+        .c-customer-card-list {
+            &__container {
+                padding: map-deep-get($c-map, container, padding)/2;
+                border: 1px dashed map-deep-get($c-map, container, border-color);
+            }
+
+            &__csv {
+                .c-file-upload-box {
+                    &__drop-zone-icon {
+                        display: none;
+                    }
+                }
+            }
+
+            .c-button--button {
+                min-width: 180px;
+            }
+        }
+    }
+
+    &:not(.c-customer-card-list--emtpy) {
+        .c-customer-card-list {
+            &__content {
+                .c-file-upload-box {
+                    &__drop-zone-bar {
+                        background-color: map-deep-get($c-map, list, item, background-color);
+                    }
+                    &__drop-zone-action {
+                        &::before { display: none };
+                    }
+                }
+            }
+        }
+    }
+
+    &__container {
+        display: block;
+        background-color: map-deep-get($c-map, container, background-color);
+        border-radius: map-deep-get($c-map, border-radius);
+        padding: map-deep-get($c-map, container, padding);
+        border: 1px solid map-deep-get($c-map, container, border-color);
+    }
+
+    &__content {
+        display: flex;
+        position: relative;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        width: 100%;
+        max-width: 560px;
+        margin: auto;
+    }
+
+    &__add-bar {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+
+        .c-button {
+            button {
+                text-transform: uppercase;
+            }
+        }
+
+        .c-button + .c-customer-card-list__csv {
+            margin-left: 1em;
+        }
+    }
+
+    &__csv {
+        display: flex;
+        align-items: center;
+        @include ffamily(regular, i);
+        font-size: map-deep-get($c-map, add-bar, font-size);
+        color: map-deep-get($c-map, add-bar, color);
+        line-height: 1.2em;
+    }
+
+    
+    &__items {
+        display: block;
+        width: 100%;
+    }
+
+    &__item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        padding: map-deep-get($c-map, list, item, padding);
+        background-color: map-deep-get($c-map, list, item, background-color);
+        color: map-deep-get($c-map, list, item, color);
+        border: solid 1px map-deep-get($c-map, list, item, border-color);
+
+        & + .c-customer-card-list__item {
+            //margin-top: map-deep-get($c-map, list, item, margin);
+            margin-top: -1px;
+        }
+
+        &-icon {
+            display: flex;
+            flex-grow: 0;
+            flex-shrink: 0;
+            align-items: center;
+            justify-content: center;
+            font-size: map-deep-get($c-map, list, item, icon, font-size);
+            color: map-deep-get($c-map, list, item, icon, color);
+            width: 1em;
+            height: 1em;
+            margin-right: map-deep-get($c-map, list, item, margin);
+
+            &:after {
+                @include icon("person");
+            }
+        }
+
+        &-avatar {
+            display: flex;
+            flex-grow: 0;
+            flex-shrink: 0;
+            align-items: center;
+            justify-content: center;
+            font-size: map-deep-get($c-map, list, item, avatar, font-size);
+            width: 1em;
+            height: 1em;
+
+            & + .c-customer-card-list__item-info {
+                margin-left: map-deep-get($c-map, list, item, margin);
+            }
+        }
+
+        &-info {
+            display: flex;
+            flex-grow: 1;
+            flex-shrink: 0;
+        }
+
+        &-title {
+            @include ffamily('bold');
+            font-size: map-deep-get($c-map, list, item, title, font-size);
+
+            & + .c-customer-card-list__item-sub-title {
+                margin-left: map-deep-get($c-map, list, item, margin) / 2;
+            }
+        }
+
+        &-sub-title {
+            @include ffamily('regular', i);
+            font-size: map-deep-get($c-map, list, item, sub-title, font-size);
+        }
+
+        &-action {
+            display: flex;
+            flex-grow: 0;
+            flex-shrink: 1;
+            align-items: center;
+            font-size: map-deep-get($c-map, list, item, action, font-size);
+            margin: map-deep-get($c-map, list, item, action, margin);
+            color: map-deep-get($c-map, list, item, action, color);
+        }
+    }
+
+    &__add-item-button {
+        display: block;
+        text-align: center;
+        margin-top: map-deep-get($c-map, add-item-button, margin);
+        font-size: map-deep-get($c-map, add-item-button, font-size);
+    }
+
+}

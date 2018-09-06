@@ -1,0 +1,170 @@
+/* --------------------------------------------------------
+author: Abdullah Karadeniz
+----------------------------------------------------------*/
+
+$c-promise-icon: (
+    color: #000, blade-count: 12, ease: getEase(out-back), 
+    sizes: ( sm: ( icon-size: 18px), md: ( icon-size: 24px), lg: ( icon-size: 32px), xl: ( icon-size: 48px)),
+    themes: (primary: ( color: #21242b), secondary: ( color:#B1B1B1, ), danger: ( color:#ec4e48), light: ( color:#ffffff), warning: ( color:#FCC200))
+);
+$c-promise-icon: map-merge($c-promise-icon, getSettingsMap("c-promise-icon"));
+$c-map: $c-promise-icon;
+$selected-size: map-deep-get($c-map, sizes, md);
+.c-promise-icon {
+    display: inline-block;
+    position: relative;
+    font-size: map-get($selected-size, icon-size);
+    line-height: 0px;
+    width: 1em;
+    height: 1em;
+    vertical-align: middle;
+    &--promise {
+        .c-promise-icon {
+            &__before,
+            &__after,
+            &__container {
+                display: none !important;
+            }
+            &__spinner {
+                display: inline-block !important;
+                @include animation(getAnimation(zoom-in, 0.35s map-get($c-map, ease)));
+            }
+        }
+    }
+    &--after {
+        .c-promise-icon {
+            &__before,
+            &__promise,
+            {
+                display: none !important;
+            }
+            &__after {
+                display: inline-block !important;
+                @include animation(getAnimation(zoom-in, 0.35s map-get($c-map, ease)));
+            }
+        }
+    }
+    i.icon__n,
+    i.icon__m {
+        // position: absolute;
+        // top: 50%;
+        // left: 50%;
+        font-size: inherit;
+        width: 1em;
+        height: 1em;
+        //transform: translateX(-50%) translateY(-50%);
+    }
+    &__container {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: inherit;
+        height: inherit;
+        top: 0px;
+        left: 0px;
+        font-size: inherit;
+        @include animation(getAnimation(zoom-in, 0.35s map-get($c-map, ease)));
+    }
+    &__before {
+        position: absolute;
+        display: inline-block;
+        width: 1em;
+        height: 1em;
+        top: 0px;
+        left: 0px;
+        font-size: inherit;
+        @include animation(getAnimation(zoom-in, 0.35s map-get($c-map, ease)));
+    }
+    &__spinner {
+        position: absolute;
+        display: none;
+        width: inherit;
+        height: inherit;
+        top: 0px;
+        left: 0px;
+        font-size: inherit;
+        @include animation(getAnimation(zoom-in, 0.35s map-get($c-map, ease)));
+    }
+    &__spinner-blade {
+        font-size: inherit;
+        position: absolute;
+        left: 50%;
+        top: 0px;
+        width: #{(1/map-get($c-map, blade-count))}em; //map-get($selected-size, icon-size)/map-get($c-map, blade-count); //#{(strip-unit(map-get($selected-size, icon-size))/360)}%;
+        height: 0.25em; //0.215em; //#{(1/3.6)}em; //.2777em
+        border-radius: #{(1/map-get($c-map, blade-count) * 0.5)}em; //map-get($selected-size, icon-size)/map-get($c-map, blade-count)/2;
+        background-color: map-get($c-map, color);
+        transform-origin: center 0.5em; //center 0.430em; //center -.2222em;
+        @include animation(getAnimation(fade-in, 1s infinite linear));
+        $animation-delay: 0s;
+        $blade-rotation: 0deg;
+        @for $i from 1 through map-get($c-map, blade-count) {
+            &:nth-child(#{$i}) {
+                animation-delay: $animation-delay;
+                @include transform(translateX(-50%) rotate($blade-rotation));
+                $blade-rotation: $blade-rotation + 30;
+                $animation-delay: $animation-delay + .083;
+            }
+        }
+    }
+    &__after {
+        display: none;
+        position: absolute;
+        width: 1em;
+        height: 1em;
+        top: 0px;
+        left: 0px;
+        font-size: inherit;
+    }
+    //Set size
+    &--sm {
+        $selected-size: map-deep-get($c-map, sizes, sm);
+        font-size: map-get($selected-size, icon-size) !important;
+    }
+    &--md {
+        $selected-size: map-deep-get($c-map, sizes, md);
+        font-size: map-get($selected-size, icon-size);
+    }
+    &--lg {
+        $selected-size: map-deep-get($c-map, sizes, lg);
+        font-size: map-get($selected-size, icon-size);
+    }
+    &--xl {
+        $selected-size: map-deep-get($c-map, sizes, xl);
+        font-size: map-get($selected-size, icon-size);
+    }
+    &--autosize {
+        font-size: inherit;
+    }
+
+    //Set themes
+    &--primary {
+        color: map-deep-get($c-map, themes, primary, color);
+        .c-promise-icon__spinner-blade { background-color: map-deep-get($c-map, themes, primary, color)};
+    }
+
+    &--secondary {
+        color: map-deep-get($c-map, themes, secondary, color);
+        .c-promise-icon__spinner-blade { background-color: map-deep-get($c-map, themes, secondary, color)};
+    }
+
+    &--danger {
+        color: map-deep-get($c-map, themes, danger, color);
+        .c-promise-icon__spinner-blade { background-color: map-deep-get($c-map, themes, danger, color)};
+    }
+
+    &--light {
+        color: map-deep-get($c-map, themes, light, color);
+        .c-promise-icon__spinner-blade { background-color: map-deep-get($c-map, themes, light, color)};
+    }
+
+    &--warning {
+        color: map-deep-get($c-map, themes, warning, color);
+        .c-promise-icon__spinner-blade { background-color: map-deep-get($c-map, themes, warning, color)};
+    }
+
+}
+
+$c-map: null;
+$selected-size: null;

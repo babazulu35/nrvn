@@ -1,0 +1,87 @@
+/* --------------------------------------------------------
+author: Can SİVRİ
+----------------------------------------------------------*/
+
+// Variables
+$c-tag-group: ( min-width: 100px, wrap-padding: 10px 20px, item-text-padding: 2px 0px 0px 6px, border-color: #dcdce5, icon-color: #bdbdbd, primary: ( background-color: #ffffff, item-background-color: #f7f7f7, padding: 10px 20px, ), secondary: ( background-color: #f7f7f7, item-background-color: #ffffff, padding: 20px 20px, ));
+// Merge settings and defaults
+$c-tag-group: map-merge($c-tag-group, getSettingsMap("c-tag-group"));
+// Set shortcuts
+$c-map: $c-tag-group;
+.c-tag-group {
+    position: relative;
+    display: block;
+    @include clearfix();
+    padding: map-deep-get($c-map, primary, padding);
+    background-color: map-deep-get($c-map, primary, background-color);
+    border-top: 1px dashed map-get($c-map, border-color);
+    &--primary {
+        padding: map-deep-get($c-map, primary, padding);
+        background-color: map-deep-get($c-map, primary, background-color);
+        .c-tag-group__list-item-bar {
+            background-color: map-deep-get($c-map, primary, item-background-color);
+        }
+    }
+    &--secondary {
+        padding: map-deep-get($c-map, secondary, padding);
+        background-color: map-deep-get($c-map, secondary, background-color);
+        .c-tag-group__list-item-bar {
+            background-color: map-deep-get($c-map, secondary, item-background-color);
+        }
+    }
+}
+
+.c-tag-group__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.c-tag-group__list-item {
+    display: inline-block;
+    position: relative;
+    padding: 1px;
+    white-space: nowrap;
+    //@include animation(getAnimation(zoom-in, 0.35s getEase(out-back)));
+}
+
+.c-tag-group__list-item-bar {
+    display: flex;
+    width: 100%;
+    align-content: center;
+    align-items: center;
+    justify-content: space-between;
+    min-width: map-get($c-map, min-width);
+    padding: map-get($c-map, item-text-padding);
+    border: 1px solid map-get($c-map, border-color);
+    border-radius: 2px;
+    background-color: map-deep-get($c-map, primary, item-background-color);
+    line-height: 0px;
+    >* {
+        line-height: inherit;
+    }
+}
+
+.c-tag-group__list-item-text {
+    position: relative;
+    text-transform: uppercase;
+    display: inline-block;
+    font-size: 11px;
+    @include ffamily("regular");
+    i {
+        @include ffamily("semi", "i");
+        text-transform: lowercase !important;
+    }
+    &.c-tag-group__list-item-candeleted {
+        line-height: 25px;
+        padding-right: 6px;
+    }
+}
+
+.c-tag-group__list-item-button {
+    position: relative;
+    display: inline-block;
+    margin: 0px;
+    padding: 0px;
+    line-height: 0px;
+}

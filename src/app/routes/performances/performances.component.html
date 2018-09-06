@@ -1,0 +1,33 @@
+<!--<app-tab-bar [data]="null">
+    <div right>
+        <button class="btn btn-primary btn-md" (click)="openNewPerformanceDrawer($event)">YENİ PERFORMANS OLUŞTUR</button>
+    </div>-->
+<!--<div class="c-tab-bar__left-column">
+		<ng-template [ngIf] = "tabs && tabs.length">
+	    	<li *ngFor="let item of tabs"
+	        class="c-tab-bar__item">
+	        <a [routerLink]="item.routerLink"
+	            [routerLinkActive] = "['c-tab-bar__item-link--active']"
+	            class="c-tab-bar__item-link">{{item.label}}</a>
+	    	</li>
+		</ng-template>
+    </div>
+</app-tab-bar>-->
+<div class="row o-filter-bar">
+    <div class="col-sm-5">
+        <app-inline-search-input (onInputSave)="onInputChange($event)" (onInputChange)="onInputChange($event)" [isIconAlignLeft]='true' placeholder='Performanslar Arasında Arayın'></app-inline-search-input>
+    </div>
+    <div class="col-sm-6 text-sm-center">
+        <app-pill-group [pills]="pills" (selectPillFilterAction)="filterPerformances($event)"> </app-pill-group>
+    </div>
+    <div class="col-sm-5 float-sm-right">
+        <div class="o-tab__button float-sm-right">
+            <!--<app-button [isDisabled]="true" (click)="goToLink('performance/create')">YENİ PERFORMANS OLUŞTUR</app-button>-->
+            <app-button *ngIf="isAuthenticatedRole" (click)="goToLink('performance/create')" >YENİ PERFORMANS OLUŞTUR</app-button>
+            <!--<app-selectbox [options]=sortParams (changeEvent)="sortPerformances($event)" class="margin-right-10"></app-selectbox>-->
+            <!--<app-sort-view [activeView]="activeView" (changeView)="changeView($event)"></app-sort-view>-->
+        </div>
+    </div>
+    <!-- Selet Box Ends-->
+</div>
+<router-outlet></router-outlet>

@@ -1,0 +1,67 @@
+<div class="or-index-intro" *ngIf="!hasData">
+    <figure class="or-index-intro__img"><img src="assets/images/intro/role-group-intro.png" alt="" /></figure>
+    <h2 class="or-index-intro__title">Görüntülemek istediğiniz rol grubunu seçin</h2>
+    <p class="or-index-intro__text">Ya da <strong class="or-index-intro--underline" (click)="createNew()">yeni rol grubu ekleyin</strong></p>
+</div>
+
+
+<div class="p-container" *ngIf="hasData" [ngClass]="{'main-loader': isLoading}">
+    <div class="p-group__main-title">
+        <h3>Rol Grubu Ayarlar</h3>
+    </div>
+    <div class="p-group">
+
+        <div class="p-group__item">
+            <div class="p-form-group">
+                <div class="p-form-gorup__label">
+                    ROL GRUBU ADI<sup>*</sup>
+                </div>
+                <div class="p-form-gorup__input">
+                    <app-text-input name="RoleName" [value]="groupData?.Name" (changeEvent)="inputChangeHandler($event)" (typeEvent)="inputChangeHandler( $event)"></app-text-input>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="p-group">
+        <div class="p-group__item">
+            <app-expandable-block [leftIcon]="false" (actionEvent)="emitAction($event)" [title]="'Roller *'" [isExpanded]="true" [ngClass]="{'main-loader': isRoleListLoaded}">
+                <div class="c-role-group-role-list">
+                    <div class="p-container">
+                        <div class="p-group">
+                            <div class="p-group__item">
+                                <div class="p-group__item--selectall" *ngIf="!isAllRolesSelected" (click)="selectAll()">TÜMÜNÜ SEÇ</div>
+                                <div class="p-group__item--selectall" *ngIf="isAllRolesSelected" (click)="deSelectAll()">TÜMÜNÜ KALDIR</div>
+                                <div class="p-group__item-element" *ngFor="let role of roleList" [ngClass]="{'disabled': !role.IsActive}">
+
+                                    <app-checkbox (changeEvent)="checkChangeAction($event,role.Id)" [isChecked]="isRoleChecked[role.Id]" [isDisabled]="!role.IsActive" type="square"></app-checkbox>
+                                    <span class="p-group__item-label">{{role.Name}}</span>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </app-expandable-block>
+        </div>
+    </div>
+    <div class="p-group">
+        <div class="p-group__item">
+            <app-expandable-block [leftIcon]="false" (actionEvent)="emitAction($event)" [title]="'Kullanıcılar'" [isExpanded]="true" [ngClass]="{'main-loader': userListLoaded}">
+                <app-firm-search-select [avatar]="'true'" (changeEvent)="userChangeHandler($event)" [firmList]="userList" (actionEvent)="userActionHandler($event)" [firmSearchResult]="userSearchResult" [settings]="{
+                        addLabel: 'KULLANICI EKLE',
+                        search: {
+                            title: 'Kullanıcı Ekle',
+                            placeholder: 'Eklemek istediğiniz kullanıcı ismini yazın',
+                            presets: userPresets,
+                            feedback: {
+                                title: 'Aramanız ile eşleşen kullanıcı kaydı bulunamadı',
+                                description: 'Arama kriterlerini değiştirerek yeniden deneyebilirsiniz.',
+                                icon: {type: 'icon', name:'local_atm'}
+                            }
+                        }
+                    }"></app-firm-search-select>
+            </app-expandable-block>
+        </div>
+    </div>
+</div>

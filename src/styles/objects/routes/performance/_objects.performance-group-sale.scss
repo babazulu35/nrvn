@@ -1,0 +1,14 @@
+// Set Defaults
+$or-performance-group-sale: ();
+// Merge settings and defaults
+$or-performance-group-sale: map-merge($or-performance-group-sale, getSettingsMap("or-performance-group-sale"));
+// Set shortcuts
+$o-map: $or-performance-group-sale;
+.or-performance-group-sale {
+    display: block;
+    .c-collapsible-container {
+        min-height: 1600px !important;
+    }
+}
+
+$o-map: null;

@@ -1,0 +1,10 @@
+<span class="tag tag-pill c-pill c-pill--active c-pill--{{theme}}" [class.c-pill--active]="selectedPill == pill" (click)="toggle(pill)" *ngFor="let pill of pills">
+	<span *ngIf="isIcon">
+		<i class="icon__n icon__n--{{ pill.icon }}"></i>
+	</span>
+<span *ngIf="!isIcon">
+		{{ pill.text }} 
+	</span>
+
+<span class="tag tag-pill c-pill__bagde" *ngIf="pill.count">{{pill.count}}</span>
+</span>

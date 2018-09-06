@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<link rel="stylesheet" href="../../../css/main.css">
+  <script src="../../../bower_components/jquery/dist/jquery.min.js"></script>
+
+
+  <style>
+    .theme-section {
+      padding: 10px 30px
+    }
+
+    .theme-section--dark {
+      background-color: #35383d;
+      color: #aeaeae;
+    }
+
+    .theme-section--dark .preview-card {
+      border: solid 1px #878787;
+    }
+
+    .preview-card {
+      display: inline-block;
+      position: relative;
+      margin: 20px 20px 0px 0px;
+      border: solid 1px #ececea;
+      width: 360px;
+      height: 200px;
+      padding: 40px;
+      overflow: hidden;
+    }
+
+    .preview-card__header {
+
+    }
+
+    .preview-card__content {
+      position: absolute;
+      bottom: 40px;
+      left: 40px;
+      width: calc(100% - 80px);
+    }
+
+    button.promise-button
+    {
+        width: 200px;
+        margin-right: 1em;
+    }
+
+    .preview-card__content >* {
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+  </style>
+
+</head>
+<body>
+
+  <div class="theme-section">
+
+    <div class="preview-card">
+      <div class="preview-card__header">
+        <h3>Small Size --sm</h3>
+        <smaller>18 px</smaller>
+      </div>
+
+      <div class="preview-card__content">
+
+        <button class="promise-button">Start Promise</button>
+        <div class="c-promise-icon c-promise-icon--sm">
+          <div class="c-promise-icon__before">
+            <i class="icon__n icon__n--search"></i>
+          </div>
+          <div class="c-promise-icon__spinner c-promise-icon__spinner--sm">
+            <div class="c-promise-icon__spinner-blade"></div>
+            <div class="c-promise-icon__spinner-blade"></div>
+            <div class="c-promise-icon__spinner-blade"></div>
+            <div class="c-promise-icon__spinner-blade"></div>
+            <div class="c-promise-icon__spinner-blade"></div>
+            <div class="c-promise-icon__spinner-blade"></div>
+            <div class="c-promise-icon__spinner-blade"></div>
+            <div class="c-promise-icon__spinner-blade"></div>
+            <div class="c-promise-icon__spinner-blade"></div>
+            <div class="c-promise-icon__spinner-blade"></div>
+            <div class="c-promise-icon__spinner-blade"></div>
+            <div class="c-promise-icon__spinner-blade"></div>
+          </div>
+          <div class="c-promise-icon__after">
+            <i class="icon__n icon__n--done"></i>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="preview-card">
+      <div class="preview-card__header">
+        <h3>Medium Size --md</h3>
+        <smaller>24 px | default size</smaller>
+      </div>
+
+      <div class="preview-card__content">
+
+        <button class="promise-button">Start Promise</button>
+        <div class="c-promise-icon">
+          <div class="c-promise-icon__before">
+            <i class="icon__n icon__n--search"></i>
+          </div>
+          <div class="c-promise-icon__spinner c-promise-icon__spinner--sm">
+            <div class="c-promise-icon__spinner-blade"></div>
+            <div class="c-promise-icon__spinner-blade"></div>
+            <div class="c-promise-icon__spinner-blade"></div>
+            <div class="c-promise-icon__spinner-blade"></div>
+            <div class="c-promise-icon__spinner-blade"></div>
+            <div class="c-promise-icon__spinner-blade"></div>
+            <div class="c-promise-icon__spinner-blade"></div>
+            <div class="c-promise-icon__spinner-blade"></div>
+            <div class="c-promise-icon__spinner-blade"></div>
+            <div class="c-promise-icon__spinner-blade"></div>
+            <div class="c-promise-icon__spinner-blade"></div>
+            <div class="c-promise-icon__spinner-blade"></div>
+          </div>
+          <div class="c-promise-icon__after">
+            <i class="icon__n icon__n--done"></i>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="preview-card">
+      <div class="preview-card__header">
+        <h3>Large Size --lg</h3>
+        <smaller>36 px</smaller>
+      </div>
+
+      <div class="preview-card__content">
+
+        <button class="promise-button">Start Promise</button>
+        <div class="c-promise-icon c-promise-icon--lg">
+          <div class="c-promise-icon__before">
+            <i class="icon__n icon__n--search"></i>
+          </div>
+          <div class="c-promise-icon__spinner c-promise-icon__spinner--sm">
+            <div class="c-promise-icon__spinner-blade"></div>
+            <div class="c-promise-icon__spinner-blade"></div>
+            <div class="c-promise-icon__spinner-blade"></div>
+            <div class="c-promise-icon__spinner-blade"></div>
+            <div class="c-promise-icon__spinner-blade"></div>
+            <div class="c-promise-icon__spinner-blade"></div>
+            <div class="c-promise-icon__spinner-blade"></div>
+            <div class="c-promise-icon__spinner-blade"></div>
+            <div class="c-promise-icon__spinner-blade"></div>
+            <div class="c-promise-icon__spinner-blade"></div>
+            <div class="c-promise-icon__spinner-blade"></div>
+            <div class="c-promise-icon__spinner-blade"></div>
+          </div>
+          <div class="c-promise-icon__after">
+            <i class="icon__n icon__n--done"></i>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="preview-card">
+      <div class="preview-card__header">
+        <h3>Custom Size</h3>
+        <smaller>54px</smaller>
+      </div>
+
+      <div class="preview-card__content">
+
+        <button class="promise-button">Start Promise</button>
+        <div class="c-promise-icon" style="font-size:54px;">
+          <div class="c-promise-icon__before">
+            <i class="icon__n icon__n--search"></i>
+          </div>
+          <div class="c-promise-icon__spinner c-promise-icon__spinner--sm">
+            <div class="c-promise-icon__spinner-blade"></div>
+            <div class="c-promise-icon__spinner-blade"></div>
+            <div class="c-promise-icon__spinner-blade"></div>
+            <div class="c-promise-icon__spinner-blade"></div>
+            <div class="c-promise-icon__spinner-blade"></div>
+            <div class="c-promise-icon__spinner-blade"></div>
+            <div class="c-promise-icon__spinner-blade"></div>
+            <div class="c-promise-icon__spinner-blade"></div>
+            <div class="c-promise-icon__spinner-blade"></div>
+            <div class="c-promise-icon__spinner-blade"></div>
+            <div class="c-promise-icon__spinner-blade"></div>
+            <div class="c-promise-icon__spinner-blade"></div>
+          </div>
+          <div class="c-promise-icon__after">
+            <i class="icon__n icon__n--done"></i>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+    $('button.promise-button').click(function(){
+      let $icon = $(this).siblings('.c-promise-icon');
+      if($icon.hasClass('c-promise-icon--after')){
+        $icon.removeClass("c-promise-icon--after");
+        $(this).text('Start Promise');
+
+      }else {
+        if($icon.hasClass('c-promise-icon--promise')){
+          $icon.removeClass("c-promise-icon--promise");
+          $icon.addClass("c-promise-icon--after");
+          $(this).text('Reset --after');
+        }else {
+          $icon.addClass("c-promise-icon--promise");
+          $(this).text('Stop Promise --promise');
+        }
+      }
+    })
+  </script>
+
+</body>
+</html>

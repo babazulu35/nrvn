@@ -1,0 +1,112 @@
+<style>
+.theme-section {
+    padding: 10px 30px
+}
+
+.theme-section--dark {
+    background-color: #35383d;
+    color: #aeaeae;
+}
+
+.theme-section--dark .preview-card {
+    border: solid 1px #878787;
+}
+
+.preview-card {
+    display: inline-block;
+    position: relative;
+    margin: 20px 20px 0px 0px;
+    border: solid 1px #ececea;
+    width: 360px;
+    height: 220px;
+    padding: 40px;
+    overflow: hidden;
+}
+
+.preview-card__header {
+
+}
+
+.preview-card__content {
+    position: absolute;
+    bottom: 40px;
+    left: 40px;
+    width: calc(100% - 80px);
+}
+</style>
+
+  <div class="theme-section">
+
+    <div class="preview-card">
+      <div class="preview-card__header">
+        <h3>lightswitch</h3>
+      </div>
+
+      <div class="preview-card__content">
+        <label class="c-lightswitch">
+          <input type="checkbox">
+          <span class="c-lightswitch__label">Label</span>
+          <div class="c-lightswitch__toggle">
+            <span class="c-lightswitch__toggle-wrap"><span class="c-lightswitch__toggle-on"></span><span class="c-lightswitch__toggle-handle"></span><span class="c-lightswitch__toggle-off"></span></span>
+          </div>
+        </label>
+      </div>
+
+    </div>
+
+    <div class="preview-card">
+      <div class="preview-card__header">
+        <h3>lightswitch disabled</h3>
+      </div>
+
+      <div class="preview-card__content">
+        <label class="c-lightswitch">
+          <input disabled type="checkbox">
+          <span class="c-lightswitch__label">Label</span>
+          <div class="c-lightswitch__toggle">
+            <span class="c-lightswitch__toggle-wrap"><span class="c-lightswitch__toggle-on"></span><span class="c-lightswitch__toggle-handle"></span><span class="c-lightswitch__toggle-off"></span></span>
+          </div>
+        </label>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="theme-section theme-section--dark">
+
+    <div class="preview-card">
+      <div class="preview-card__header">
+        <h3>lightswitch--dark</h3>
+      </div>
+
+      <div class="preview-card__content">
+        <label class="c-lightswitch c-lightswitch--dark">
+          <input type="checkbox">
+          <span class="c-lightswitch__label">Label</span>
+          <div class="c-lightswitch__toggle">
+            <span class="c-lightswitch__toggle-wrap"><span class="c-lightswitch__toggle-on"></span><span class="c-lightswitch__toggle-handle"></span><span class="c-lightswitch__toggle-off"></span></span>
+          </div>
+        </label>
+      </div>
+
+    </div>
+
+    <div class="preview-card">
+      <div class="preview-card__header">
+        <h3>lightswitch--dark disabled</h3>
+      </div>
+
+      <div class="preview-card__content">
+        <label class="c-lightswitch c-lightswitch--dark">
+          <input disabled  type="checkbox">
+          <span class="c-lightswitch__label">Label</span>
+          <div class="c-lightswitch__toggle">
+            <span class="c-lightswitch__toggle-wrap"><span class="c-lightswitch__toggle-on"></span><span class="c-lightswitch__toggle-handle"></span><span class="c-lightswitch__toggle-off"></span></span>
+          </div>
+        </label>
+      </div>
+
+    </div>
+
+  </div>

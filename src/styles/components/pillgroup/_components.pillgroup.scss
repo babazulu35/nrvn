@@ -1,0 +1,160 @@
+/***
+* Pill Group Component:
+*/
+
+
+/**
+* Pill Group:
+* `.c-pill - Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque repellat autem deleniti odit repellendus temporibus placeat ipsa similique, neces
+*
+*     @example
+*     <div class="c-pill-group">
+*	    	<span class="c-pill tag tag-pill">
+					TEXT
+					<span class="c-pill__bagde tag tag-pill float-xs-right">0</span>
+			</span>
+*	   </div>
+
+*     @example active
+*     <div class="c-pill-group">
+*	    	<span class="c-pill c-pill--active tag tag-pill">
+					TEXT
+					<span class="c-pill__bagde tag tag-pill float-xs-right">0</span>
+			</span>
+*	   </div>
+*/
+
+// Set defaults
+$c-pill: ( height: 32px, min-width: 60px, padding:5px 10px, margin:0 10px 0px 0px, background-color: #fff, border:1px solid $color-ui-border, line-height:19px, font-size: 11px, text-color: #a6a6a6, active-color: #fff, pill-active: #21242b, theme:( campaign:( badge-bg: #2799f1, font-size:13px, text-color:#404449, badge-color:#fff, ), red-sonja:( badge-bg: #fff, background:#ec4e48, font-size:13px, text-color:#fff, badge-color:#ec4e48, ), black-sabbath:( badge-bg: #fff, background:#21242b, font-size:13px, text-color:#fff, badge-color:#21242b, )), );
+// Merge settings and defaults
+$c-pill: map-merge($c-pill, getSettingsMap("c-pill"));
+$themes: map-get($c-pill, theme);
+// Set shortcuts
+$c-map: $c-pill;
+.c-pill-group {
+    font-size: 0;
+    white-space: nowrap;
+    .c-pill {
+        margin: map-get($c-map, margin);
+        &:last-child {
+            margin: 0px;
+        }
+    }
+}
+
+.c-pill {
+    min-width: map-get($c-map, min-width);
+    height: map-get($c-map, height);
+    border: map-get($c-map, border);
+    padding: map-get($c-map, padding);
+    background-color: map-get($c-map, background-color);
+    box-sizing: border-box;
+    @include t--border-radius(50px);
+    line-height: map-get($c-map, line-height);
+    @include ffamily(semi);
+    color: map-get($c-map, text-color);
+    font-size: map-get($c-map, font-size);
+    text-align: center;
+    cursor: pointer;
+    &--campaign {
+        display: flex;
+        align-items: center;
+        $selected-theme: map-get($themes, campaign);
+        color: map-get($selected-theme, text-color) !important;
+        font-size: map-get($selected-theme, font-size);
+        //padding: 6px 10px;
+        height: auto;
+        .c-pill__bagde {
+            padding: 0.5em 0.4em;
+            background-color: map-get($selected-theme, badge-bg) !important;
+            color: map-get($selected-theme, badge-color) !important;
+        }
+        &.c-pill--active,
+        &:hover,
+        &:focus {
+            //padding: 5px 10px;
+            color: map-get($c-map, active-color);
+            //border-color: inherit !important;
+            border-color: #d5d5d5 !important;
+            background-color: #ffffff !important;
+            .c-pill__bagde {
+                //border: 1px solid map-get($c-map, pill-color);
+                color: map-get($c-map, pill-active);
+            }
+        }
+    }
+    &--red-sonja {
+        $selected-theme: map-get($themes, red-sonja);
+        color: map-get($selected-theme, text-color) !important;
+        font-size: map-get($selected-theme, font-size);
+        background: map-get($selected-theme, background) !important;
+        padding: 6px 10px;
+        height: auto;
+        .c-pill__bagde {
+            padding: 0.5em 0.4em;
+            background-color: map-get($selected-theme, badge-bg) !important;
+            color: map-get($selected-theme, badge-color) !important;
+        }
+        &.c-pill--active,
+        &:hover,
+        &:focus {
+            padding: 5px 10px;
+            color: map-get($c-map, active-color);
+            border-color: inherit !important;
+            background-color: lighten(map-get($selected-theme, background), 10) !important;
+            .c-pill__bagde {
+                border: 1px solid map-get($c-map, pill-color);
+                color: map-get($c-map, pill-active);
+            }
+        }
+    }
+    &--black-sabbath {
+        $selected-theme: map-get($themes, black-sabbath);
+        color: map-get($selected-theme, text-color) !important;
+        font-size: map-get($selected-theme, font-size);
+        background: map-get($selected-theme, background) !important;
+        padding: 6px 10px;
+        height: auto;
+        .c-pill__bagde {
+            padding: 0.5em 0.4em;
+            background-color: map-get($selected-theme, badge-bg) !important;
+            color: map-get($selected-theme, badge-color) !important;
+        }
+        &.c-pill--active,
+        &:hover,
+        &:focus {
+            padding: 5px 10px;
+            color: map-get($c-map, active-color);
+            border-color: inherit !important;
+            background-color: lighten(map-get($selected-theme, background), 10) !important;
+            .c-pill__bagde {
+                border: 1px solid map-get($c-map, pill-color);
+                color: map-get($c-map, pill-active);
+            }
+        }
+    }
+    .c-pill__bagde {
+        position: relative;
+        height: 100%;
+        min-width: 36px;
+        margin-left: 12px;
+        margin-right: -5px;
+        background-color: map-get($c-map, background-color);
+        border: none;
+        @include ffamily(bold);
+        font-size: map-get($c-map, font-size);
+        line-height: 12px;
+        color: map-get($c-map, text-color);
+    }
+    &.c-pill--active,
+    &:hover,
+    &:focus {
+        color: map-get($c-map, active-color);
+        border-color: map-get($c-map, pill-active);
+        background-color: map-get($c-map, pill-active);
+        .c-pill__bagde {
+            border: 1px solid map-get($c-map, pill-color);
+            color: map-get($c-map, pill-active);
+        }
+    }
+}

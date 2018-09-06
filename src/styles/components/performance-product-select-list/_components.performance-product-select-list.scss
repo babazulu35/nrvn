@@ -1,0 +1,157 @@
+$c-performance-product-select-list: (
+	border-color: #dcdce5,
+    background-color: #ffffff,
+    primary-color: #35383d,
+    secondary-color: #9d9d9d,
+    active-color: #2b98f0,
+    active-background-color: #f7f7f7,
+    font-size: 13px,
+    
+    item: (
+        padding: 20px,
+        min-height: 60px,
+
+        right: (
+            min-width: 85px,
+        ),
+        label: (
+            font-size: 13px
+        ),
+        capacity: (
+            font-size: 16px
+        ),
+        indicator: (
+            font-size: 12px
+        ),
+        action: (
+            font-size: 24px
+        )
+    )
+);
+
+// Merge settings and defaults
+$c-performance-product-select-list: map-merge($c-performance-product-select-list, getSettingsMap("c-performance-product-select-list"));
+
+// Set shortcuts
+$c-map: $c-performance-product-select-list;
+
+.c-performance-product-select-list {
+    display: inline-block;
+    width: 100%;
+
+    &__container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__item {
+        display: flex;
+        width: 100%;
+        flex-grow: 1;
+        flex-shrink: 0;
+        color: map-deep-get($c-map, primary-color);
+        min-height: map-deep-get($c-map, item, min-height);
+        
+        & + .c-performance-product-select-list__item {
+            margin-top: map-deep-get($c-map, item, padding) / 2;
+        }
+
+        &--selected {
+            .c-performance-product-select-list__item {
+                &-box {
+                    border: solid 1px map-deep-get($c-map, primary-color);
+                    background-color: map-deep-get($c-map, active-background-color);
+                }
+            }
+        }
+
+        &:not(.c-performance-product-select-list__item--selected) {
+            &:hover {
+                cursor: pointer;
+
+                .c-performance-product-select-list__item {
+                    &-box {
+                        background-color: map-deep-get($c-map, active-background-color);
+                        transition: background-color .3s ease-out;
+                    }
+                }
+            }
+        }
+
+        &-box {
+            display: flex;
+            width: 100%;
+            flex-grow: 1;
+            flex-shrink: 0;
+            border: solid 1px map-deep-get($c-map, border-color);
+            border-radius: 3px;
+            background-color: map-deep-get($c-map, background-color);
+            white-space: normal;
+            flex-wrap: wrap;
+
+            &-left,
+            &-right {
+                display: flex;
+                padding: map-deep-get($c-map, item, padding)/2 map-deep-get($c-map, item, padding);
+                align-items: center;
+                position: relative;
+            }
+
+            &-left {
+                flex-grow: 1;
+                flex-shrink: 0;
+                justify-content: flex-start;
+                width: calc(100% - #{map-deep-get($c-map, item, right, min-width)});
+            }
+
+            &-right {
+                flex-grow: 0;
+                flex-shrink: 0;
+                width: map-deep-get($c-map, item, right, min-width);
+                border-left: dashed 1px map-deep-get($c-map, border-color);
+                justify-content: center;
+            }
+        }
+        &-title {
+            @include ffamily(bold);
+            font-size: map-deep-get($c-map, item, label, font-size);
+            white-space: normal;
+        }
+
+        &-capacity {
+            @include ffamily(bold);
+            font-size: map-deep-get($c-map, item, capacity, font-size);
+            white-space: normal;
+        }
+
+        &-secondary-text {
+            @include ffamily(semi, i);
+            font-size: map-deep-get($c-map, item, label, font-size);
+            white-space: normal;
+        }
+
+        &-indicator {
+            position: absolute;
+            top: map-deep-get($c-map, item, padding) / 3;
+            right: map-deep-get($c-map, item, padding) / 3;
+            font-size: map-deep-get($c-map, item, indicator, font-size);
+            width: 1em;
+            height: 1em;
+            border-radius: 0.5em;
+            line-height: 0px;
+            background-color: map-deep-get($c-map, secondary-color);
+        }
+
+        &-action {
+            position: absolute;
+            bottom: map-deep-get($c-map, item, padding) / 3;
+            // right: map-deep-get($c-map, item, padding) / 3;
+            right: 0px;
+            font-size: map-deep-get($c-map, item, action, font-size);
+            width: 1em;
+            height: 1em;
+            line-height: 0px;
+        }
+
+    }
+}

@@ -1,0 +1,64 @@
+$c-cms-component-settings-block: (
+    space: 20px,
+    border-color: #dcdce5,
+
+    fields: (
+        
+    ),
+
+    field: (
+
+    ),
+
+    add-button: (
+        font-size: 33.275px
+    ),
+
+    footer: (
+        background-color: #FFFEF0
+    )
+);
+
+// Merge settings and defaults
+$c-cms-component-settings-block: map-merge($c-cms-component-settings-block, getSettingsMap("c-cms-component-settings-block"));
+$c-map: $c-cms-component-settings-block;
+
+// Basic Styling
+.c-cms-component-settings-block {
+  display: block;
+  width: 100%;
+
+  &__fields {
+    padding: map-deep-get($c-map, space);
+  }
+
+  &__field {
+    & + .c-cms-component-settings-block__field {
+        margin-top: map-deep-get($c-map, space)/2;
+    }
+  }
+
+  &__add-button {
+    display: block;
+    text-align: center;
+    margin-bottom: map-deep-get($c-map, space);
+    font-size: map-deep-get($c-map, add-button, font-size);
+  }
+
+  &__footer {
+      display: block;
+      background-color: map-deep-get($c-map, footer, background-color);
+      border-top: solid 1px map-deep-get($c-map, border-color);
+      padding: map-deep-get($c-map, space)/2;
+      text-align: right;
+  }
+
+  &__actions {
+      > * {
+          margin-left: map-deep-get($c-map, space)/2;
+      }
+  }
+}
+
+// Reset
+$c-map: null;

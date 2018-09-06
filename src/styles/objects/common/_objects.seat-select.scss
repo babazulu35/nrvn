@@ -1,0 +1,23 @@
+$oc-seat-select: (
+	
+);
+
+$oc-seat-select: map-merge($oc-seat-select, getSettingsMap("oc-seat-select"));
+$oc-map: $oc-seat-select;
+
+.oc-seat-select {
+    display: block;
+    
+    &__overlay {
+        display: flex;
+        position: absolute;
+        width: 100%;
+        height: 80%;
+        top: 0px;
+        left: 0px;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+$oc-map: null;

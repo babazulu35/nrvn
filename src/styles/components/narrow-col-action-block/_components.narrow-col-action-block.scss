@@ -1,0 +1,109 @@
+/***
+ * Dar Sütun / Aksiyon Bloğu:
+ * Author: Fatih Turan
+ */
+
+ /**
+ * Narrow Col Action Block:
+ *
+ * @example
+ * <div class="c-narrow-col-action-block">
+ * 	<div class="c-narrow-col-action-block__body">
+ * 		<i class="c-narrow-col-action-block__top-icons icon__n icon__n--visibility_off"></i>
+ * 		<i class="c-narrow-col-action-block__top-icons c-narrow-col-action-block__top-icons--right icon__n icon__n--more_vert"></i>
+ * 		<i class="c-narrow-col-action-block__top-icons c-narrow-col-action-block__top-icons--right icon__n icon__n--replay"></i>
+ *
+ * 		<div class="c-narrow-col-action-block__figure">
+ * 			<div class="c-narrow-col-action-block__normal-content">
+ * 				<span class="c-avatar c-avatar--sm c-avatar--circle">
+ * 					<figure>
+ * 						<img src="http://lorempixel.com/160/160/people/9" alt="">
+ * 					</figure>
+ * 				</span>
+ * 			</div>
+ *
+ * 			<a href="#" class="c-narrow-col-action-block__content">
+ * 				Akbank Caz Festivali Edebiyat & Caz : Murat Meriç ile Türkiye’de Müzik Tarihi
+ * 			</a>
+ * 		</div><!-- /.c-narrow-col-action-block__figure -->
+ * 	</div><!-- /.c-narrow-col-action-block__body -->
+ * </div><!-- /.c-narrow-col-action-block -->
+ */
+
+
+ // Set Defaults
+ $c-narrow-col-action-block: (
+    padding: 20px,
+    min-width: 200px,
+    min-height: 140px,
+    border-radius: 3px,
+    font-size: 13px,
+    top-icon-size: 24px,
+
+    c-primary-color: #3a2e39,
+    black: #333,
+    card-border-color: #dcdce5,
+    icon-color: #bdbdbd,
+    icon-color-on: #7cb342,
+ );
+
+ // Merge settings and defaults
+ $c-narrow-col-action-block: map-merge($c-narrow-col-action-block, getSettingsMap("c-narrow-col-action-block"));
+
+ // Set shortcuts
+ $c-map: $c-narrow-col-action-block;
+
+ .c-narrow-col-action-block {
+   display: inline-block;
+    position: relative;
+    z-index: 0;
+    padding: map-get($c-map, padding);
+    min-width: map-get($c-map, min-width);
+    width: 100%;
+    text-align: center;
+    vertical-align: top;
+    background-color: $color-text-white;
+    color: map-get($c-map, black);
+    border: 1px solid map-get($c-map, card-border-color);
+    @include ffamily;
+    @include border-radius(map-get($c-map, border-radius));
+ }
+
+.c-narrow-col-action-block__content {
+  display: block;
+  font-size: map-get($c-map, font-size);
+  @include ffamily('semi');
+  color: map-get($c-map, c-primary-color);
+  &:hover {
+    color: map-get($c-map, c-primary-color);
+  }
+}
+
+.c-narrow-col-action-block__top-icons {
+  position: absolute;
+  top: 12px;
+  left: 14px;
+  color: map-get($c-map, icon-color);
+  font-size: map-get($c-map, top-icon-size);
+
+  &.c-narrow-col-action-block__top-icons--right {
+    left: auto;
+    right: 8px;
+    & + .c-narrow-col-action-block__top-icons--right {
+      right: 32px;
+    }
+
+  }
+
+  &.c-narrow-col-action-block__top-icons--active {
+    color: map-get($c-map, icon-color-on);
+  }
+
+}
+
+.c-narrow-col-action-block__normal-content {
+  font-size:40px;
+}
+
+//Reset
+$c-map: null;

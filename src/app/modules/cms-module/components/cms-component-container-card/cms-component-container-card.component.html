@@ -1,0 +1,48 @@
+<div [ngSwitch]="viewType">
+  <div *ngSwitchDefault class="c-cms-component-container-card__container">
+    <div class="c-cms-component-container-card__content">
+      <span class="c-cms-component-container-card__title">
+        <span (click)="gotoEdit()">{{componentContainer?.Name}}</span>
+      </span>
+      <span class="c-cms-component-container-card__action">
+        <app-button (click)="openContextMenu($event)" type="icon" [icon]="'more_vert'" theme="secondary"></app-button>
+      </span>
+    </div>
+    <ul class="c-cms-component-container-card__fields">
+      <li class="c-cms-component-container-card__field" *ngFor="let field of fields">
+        <app-promise-icon [iconName]="field?.icon"></app-promise-icon>
+      </li>
+    </ul>
+  </div>
+
+  <div *ngSwitchCase="'tag'" class="c-cms-component-container-card__container">
+    <div class="c-cms-component-container-card__content">
+      <span class="c-cms-component-container-card__icon">
+        <app-promise-icon [iconName]="'developer_board'"></app-promise-icon>
+      </span>
+      <span class="c-cms-component-container-card__title">
+        <span>{{componentContainer?.Name}}</span>
+      </span>
+    </div>
+  </div>
+
+  <div *ngSwitchCase="'bar'" class="c-cms-component-container-card__container">
+      <div class="c-cms-component-container-card__content">
+        <span class="c-cms-component-container-card__left">
+          <span class="c-cms-component-container-card__field" *ngFor="let field of fields">
+            <app-promise-icon [iconName]="field?.icon"></app-promise-icon>
+          </span>
+        </span>
+        <span class="c-cms-component-container-card__center">
+          <span class="c-cms-component-container-card__title">
+            <span>{{componentContainer?.Name}}</span>
+          </span>
+        </span>
+        <span class="c-cms-component-container-card__right">
+          <span *ngIf="contextMenuData?.length == 1"><app-button (clickEvent)="actionEvent.emit(contextMenuData[0])" type="icon" [icon]="contextMenuData[0]?.icon" theme="secondary"></app-button></span>
+          <span *ngIf="contextMenuData?.length > 1"><app-button (click)="openContextMenu($event)" type="icon" [icon]="'more_vert'" theme="secondary"></app-button></span>
+        </span>
+      </div>
+    </div>
+
+</div>

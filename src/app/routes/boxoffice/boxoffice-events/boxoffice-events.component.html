@@ -1,0 +1,56 @@
+<div class="or-boxoffice-events">
+    <div class="p-search-container">
+        <app-header-large-search inputType="event" 
+                                 (onDataChange)="search($event)"
+                                 [isPromising]="isPromising"
+                                 [options]="[{ value: 'event', text: 'Etkinliğe Göre' }, { value: 'venue', text: 'Mekana Göre' }, { value: 'date', text: 'Etkinlik Tarihine Göre' }]"                                 
+                                 [placeholder]="{ event: 'Etkinliğe göre arama yapın', venue: 'Mekana göre arama yapın', date: 'Etkinlik tarihine göre arama yapın'}"
+                                 (onTypeChange)="typeChanged($event)">
+        </app-header-large-search>
+    </div>
+    <!-- /.p-search-container -->
+
+    <div class="p-title-container">
+        <div class="p-title-container__left">
+            <h2>Satıştaki Etkinlikler</h2>
+        </div>
+        <div class="p-title-container__right">
+            <span class="p-title-container__right-item">
+                <app-pill-group *ngIf="showPills"
+                                [pills]="pills"
+                                [setSelectedPill]="selectedPill"
+                                [canToggle]="false"
+                                (selectPillFilterAction)="filterEvents($event)"> </app-pill-group>
+            </span>
+        </div>
+    </div>
+    <!-- /.p-title-container -->
+
+    <div class="o-card-view">
+        <app-no-data *ngIf="!isLoading && (!results || results.length == 0)" style="max-width: 60%;margin-top:30px" [hasContainer]="true" [icon]='{type: "icon", name: "event"}' title="Aramanız ile eşleşen etkinlik kaydı bulunamadı" description="Arama kriterini değiştirerek yeniden deneyebilirsiniz"></app-no-data>
+
+        <div class="o-card-container__content">
+            <app-grid-list [ngClass]="{'main-loader': isLoading }">
+                <li *ngFor="let event of results">
+                    <app-card-item (actionEvent)="cardActionHandler($event)" [data]="{entryType: 'boevent', model: event}">
+                    </app-card-item>
+                </li>
+            </app-grid-list>
+        </div>
+
+        <!-- <div class="o-card-container__content" *ngIf="isVenueSearchActive">
+            <app-grid-list [ngClass]="{'main-loader': isLoading }">
+                <li *ngFor="let venue of results">
+                    <app-card-item (actionEvent)="cardActionHandler($event)" [data]="{entryType: 'venue', model: venue, from: 'boevent'}">
+                    </app-card-item>
+                </li>
+            </app-grid-list>
+        </div> -->
+
+        <div class="o-card-view__footer">
+            <app-pagination size="xs" [options]="pageSizes" [totalItem]="count" [showItemPerPage]="pageSize" [currentPage]="currentPage" (changeEvent)="changePageSize($event)" (transistPage)="transistPage($event)">
+            </app-pagination>
+        </div>
+    </div>
+    <!-- /.o-card-container -->
+</div>

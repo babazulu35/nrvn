@@ -1,0 +1,37 @@
+$c-modal-pin: (
+
+);
+
+// Merge settings and defaults
+$c-modal-pin: map-merge($c-modal-pin, getSettingsMap("c-modal-pin"));
+
+// Set shortcuts
+$c-map: $c-modal-pin;
+
+.c-modal-pin {
+  position: relative;
+
+  &__button {
+
+  }
+
+  &__container {
+    display: none;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    width: 550px;
+    height: 500px;
+  }
+
+  &--show-modal {
+    .c-modal-pin__container {
+      display: block !important;
+    }
+  }
+
+}
+
+//Reset
+$c-map: null;
+$selected-size: null;

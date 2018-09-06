@@ -1,0 +1,26 @@
+// Performance Route
+// Author: Fatih Turan
+
+// Set Defaults
+$o-performance-products: (
+  
+);
+
+// Merge settings and defaults
+$o-performance-products: map-merge($o-performance-products, getSettingsMap("o-over-image-dates"));
+
+// Set shortcuts
+$o-map: $o-performance-products;
+
+
+.or-performance-products {
+    
+    &__list {
+        display: block;
+        list-style-type: none;
+
+        li {
+            display: block;
+        }
+    }
+}

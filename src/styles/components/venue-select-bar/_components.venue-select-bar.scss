@@ -1,0 +1,164 @@
+$c-venue-select-bar: (
+  border-radius: 3px,
+
+  container: (
+    padding: 20px,
+    border-color: #dcdce5,
+    background-color: #f7f7f7,
+  ),
+
+  item: (
+    color: #21242b, 
+    background-color: #ffffff, 
+    border-color: #dcdce5,
+
+    margin: 10px,
+    padding: 10px 10px 10px 15px,
+
+    avatar: (
+      font-size: 40px,
+      margin: 10px,
+    ),
+
+    title: (
+      font-size: 12px,
+      color: #35383d,
+    ),
+    top-label: (
+      color: #939393,
+      font-size: 10px,
+    ),
+    sub-title: (
+      color: #35383d,
+      font-size: 11px,
+    ),
+
+    action: (
+      font-size: 24px
+    )
+  ),
+
+  add-button: (
+    font-size: 33.275px,
+    margin: 20px
+  )
+);
+
+// Merge settings and defaults
+$c-venue-select-bar: map-merge($c-venue-select-bar, getSettingsMap("c-venue-select-bar"));
+
+// Set shortcuts
+$c-map: $c-venue-select-bar;
+
+.c-venue-select-bar {
+  display: inline-block;
+  position: relative;
+  line-height: 0px;
+  font-size: 0px;
+  min-width: map-deep-get($c-map, width);
+  width: 100%;
+
+  &--empty {
+    .c-venue-select-bar__container {
+        background-color: map-deep-get($c-map, container, background-color);
+        padding: map-deep-get($c-map, container, padding)/2;
+        border: 1px dashed map-deep-get($c-map, container, border-color);
+        border-radius: map-deep-get($c-map, border-radius);
+    }
+    .c-button {
+      min-width: 180px;
+    }
+  }
+
+  &--disabled {
+    cursor: not-allowed;
+    opacity: 0.65;
+    > * {
+      pointer-events: none;
+    }
+  }
+
+  &:hover {
+    
+  }
+
+  &__container {
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__item-list {
+    display: flex;
+    width: 100%;
+  }
+
+  &__item {
+      display: inline-block;
+      width: 50%;
+      
+      &:nth-child(2n+1) {
+        padding-right: 5px;
+      }
+
+      &:nth-child(2n+2) {
+        padding-left: 5px;
+      }
+
+      &-bar {
+        display: table;
+        width: 100%;
+        height: 100%;
+        padding: map-deep-get($c-map, item, padding);
+        background-color: map-deep-get($c-map, item, background-color);
+        color: map-deep-get($c-map, item, color);
+        border: solid 1px map-deep-get($c-map, item, border-color);
+      }
+      
+      &-avatar {
+        display: table-cell;
+        vertical-align: middle;
+        font-size: map-deep-get($c-map, item, avatar, font-size);
+        padding-right: map-deep-get($c-map, item, avatar, margin);
+      }
+
+      &-content {
+        display: table-cell;
+        vertical-align: middle;
+        width: 100%;
+      }
+
+      &-title {
+        display: block;
+        line-height: 1em;
+        @include ffamily('semi');
+        font-size: map-deep-get($c-map, item, title, font-size);
+        color: map-deep-get($c-map, item, title, color);
+      }
+
+      &-top-label {
+        display: block;
+        line-height: 1em;
+        @include ffamily('regular');
+        font-size: map-deep-get($c-map, item, top-label, font-size);
+        color: map-deep-get($c-map, item, top-label, color);
+        margin-bottom: 0.25em;
+      }
+
+      &-sub-title {
+        display: block;
+        line-height: 1em;
+        @include ffamily('regular');
+        font-size: map-deep-get($c-map, item, sub-title, font-size);
+        color: map-deep-get($c-map, item, sub-title, color);
+      }
+
+      &-action {
+        display: table-cell;
+        vertical-align: middle;
+        font-size: map-deep-get($c-map, item, action, font-size);
+        white-space: nowrap;
+      }
+  }
+}

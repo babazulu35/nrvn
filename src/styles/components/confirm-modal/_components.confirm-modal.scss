@@ -1,0 +1,210 @@
+/* --------------------------------------------------------
+author: Can SİVRİ
+----------------------------------------------------------*/
+
+/***
+* Confirm Modal Component:
+*/
+
+/**
+* Confirm Modal:
+* `.c-confirm-modal - Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque repellat autem deleniti odit repellendus temporibus placeat ipsa similique, neces
+*
+*     @example
+
+*/
+
+
+// Set defaults
+
+$c-confirm-modal: (
+	header: (
+        padding: 30px,
+        margin: 0,
+        border-color: #dcdce5,
+
+        title: (
+            color: #392d38,
+            size: 16px
+        ),
+
+        actions: (
+            color: #bdbdbd,
+            size: 24px,
+            active-color: #392d38
+        )
+    ),
+
+	 body: (
+        padding: 30px,
+        color: #392d38,
+		font-size: 13px
+	 ),
+
+	 footer: (
+        height: 70px,
+        padding: 0 30px 30px,
+    ),
+
+	padding: 28px,
+	background-color: #fff,
+	border: 1px solid #dcdce5
+);
+
+// Merge settings and defaults
+$c-confirm-modal: map-merge($c-confirm-modal, getSettingsMap("c-confirm-modal"));
+
+// Set shortcuts
+$c-map: $c-confirm-modal;
+
+
+.c-confirm-modal {
+	display: block;
+	box-sizing: border-box;
+	background-color: map-get($c-map, background-color);
+	border: map-get($c-map, border); 
+
+	&__header {
+		&-bar {
+            display: table;
+            position: relative;
+            width: map-deep-get($c-map, header, width);
+            margin: map-deep-get($c-map, header, margin);
+            padding-top: map-deep-get($c-map, header, padding);
+            padding-left: map-deep-get($c-map, header, padding);
+            padding-right: map-deep-get($c-map, header, padding);
+            padding-bottom: map-deep-get($c-map, header, padding)*0;
+        }
+        
+        &-title {
+            display: table-cell;
+            vertical-align: top;
+            width: 100%;
+            @include ffamily("semi");
+            font-size: map-deep-get($c-map, header, title, size);
+            color: map-deep-get($c-map, header, title, color);
+			padding-top: map-deep-get($c-map, header, title, size)/4;
+			padding-right: 1em;
+        }
+
+        &-actions {
+            display: table-cell;
+            vertical-align: top;
+            >a {
+                font-size: map-deep-get($c-map, header, actions, size);
+                color: map-deep-get($c-map, header, actions, color);
+                &:hover, &:focus, &:active {color: map-deep-get($c-map, header, actions, active-color);}
+            }
+        }
+	}
+
+	&__body {
+		padding: map-deep-get($c-map, body, padding);
+		font-size: 13px;
+		@include ffamily("regular");
+		color: map-deep-get($c-map, body, color);
+		
+		strong, b {@include ffamily("bold")};
+
+		.c-confirm-modal__image {
+
+			& + .c-confirm-modal__description {
+				margin-top: map-deep-get($c-map, body, padding);
+			}
+		}
+
+		.c-confirm-modal__feedback {
+			display: block;
+			margin-top: map-deep-get($c-map, body, padding);
+
+			&-label {
+				display: block;
+				font-size: 11px;
+				@include ffamily("semi");
+				color: #9d9d9d;
+				margin-bottom: 5px;
+			}
+
+			&-input {
+				textarea {
+					width: 100%;
+				}
+			}
+		}
+	}
+
+	&__footer {
+		padding: map-deep-get($c-map, footer, padding);
+		text-align: right;
+		.c-button {
+			vertical-align: middle;
+
+			& +.c-button {
+				margin-left: 10px;
+			}
+		}
+	}
+	
+	.c-modal-sub-heading {
+		border:none;
+		margin:0 0 30px 0;
+		&__text {
+			width: 85%;
+			font-size: 16px;
+			@include ffamily("semi");
+			line-height: 24px;
+		}
+		&__close {
+			position:relative;
+			top:2px;
+		}
+	}
+	&__warning {
+		margin: 0 0 25px 0;
+		font-size: 13px;
+		@include ffamily("regular");
+		color: #35383d;
+		strong {@include ffamily("bold")}
+	}
+	&__action-bar {
+		text-align:right;
+		a {
+			display: inline-block;
+			vertical-align: middle;
+			margin: 0 14px;
+			font-size: 12px;
+			@include ffamily("bold");
+			color: #392d38;
+			&:hover, &:focus {
+				text-decoration: none;
+				color: #392d38;
+			}
+		}
+		.btn {
+			min-width: 120px;
+			margin:0;
+			outline: none;
+			color: #fff;
+			&.btn-flat {
+				@include t--create-button(#392d38, #fff, #dcdce5, 12px, 15px, 12px, 100px);
+				text-transform: uppercase;
+				@include ffamily('bold');
+				font-size: 12px;
+				-webkit-font-smoothing: antialiased;
+				-moz-osx-font-smoothing: grayscale;
+			}
+			&:hover, &:focus {
+				outline:none;
+				color: #fff;
+			}
+		}
+	}
+	&__timer {
+		display: block;
+		float: left;
+		@include ffamily("semi");
+		font-size: map-deep-get($c-map, header, title, size);
+		color: map-deep-get($c-map, header, title, color);
+		padding-top: map-deep-get($c-map, header, title, size)/3;
+	}
+}

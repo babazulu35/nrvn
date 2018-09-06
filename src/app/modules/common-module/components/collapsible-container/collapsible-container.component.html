@@ -1,0 +1,18 @@
+<div #content class="c-collapsible-container__content" [class.c-collapsible-container__content--no-padding]="contentHasNoPadding">
+    <ng-content select="[content]"></ng-content>
+    <div *ngIf="hasOverlay" class="p-overlay"></div>
+</div>
+
+<div #aside class="c-collapsible-container__aside" [style.display]="isAsideVisible ? 'block' : 'none'" [class.c-collapsible-container__aside--expanded]="isAsideVisible ? isAsideOpen : false" [class.c-collapsible-container__aside--no-padding]="asideHasNoPadding" [class.c-collapsible-container__aside--has-footer]="hasAsideFooter">
+
+    <div class="c-collapsible-container__aside-inner">
+        <ng-content select="[aside]"></ng-content>
+        <div *ngIf="hasOverlay" class="p-overlay"></div>
+    </div>
+    <div *ngIf="hasAsideFooter" class="c-collapsible-container__aside-footer">
+        <div class="c-collapsible-container__aside-footer-content">
+            <ng-content select="[aside-footer]"></ng-content>
+        </div>
+    </div>
+    <a *ngIf="isAsideVisible" (click)="toggleAside()" class="c-collapsible-container__toggle-btn"> <i class="icon-open icon__n icon__n--first_page"></i> <i class="icon-close icon__n icon__n--last_page"></i></a>
+</div>

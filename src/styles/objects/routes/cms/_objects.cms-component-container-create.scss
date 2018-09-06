@@ -1,0 +1,24 @@
+/* --------------------------------------------------------
+author: Abdullah Karadeniz
+----------------------------------------------------------*/
+
+$or-cms-component-container-create: ( border-color: #dcdce5, switch-bar: ( label: ( color: #373a3c, font-size: 14px, )));
+$or-cms-component-container-create: map-merge($or-cms-component-container-create, getSettingsMap("or-cms-component-container-create"));
+$oc-map: $or-cms-component-container-create;
+.or-cms-component-container-create {
+    display: block;
+    position: relative;
+
+    .c-split-container__fluid {
+        .p-container {
+            min-width: 650px;
+            max-width: 900px;
+            width: 75%;
+            margin: auto;
+        }
+    }
+}
+
+$oc-map: null;/* --------------------------------------------------------
+author: Abdullah Karadeniz
+----------------------------------------------------------*/

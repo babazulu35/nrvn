@@ -1,0 +1,25 @@
+<div class="c-narrow-index">
+    <div class="c-expr-list-pager">
+        <a href="javascript:void(0)" class="icon__n icon__n--keyboard_arrow_left" (click)="onLeftClick($event)"></a> <strong>{{title}}</strong>
+        <a href="javascript:void(0)" class="icon__n icon__n--keyboard_arrow_right" (click)="onRightClick($event)"></a>
+    </div>
+
+    <div *ngIf="isLoading" class="c-narrow-index--spinner">
+        <img src="assets/images/svg/content-loader.svg ">
+    </div>
+
+    <app-no-data *ngIf="isNoDataContent && !isLoading" title="Hiç bir kayıtlı etkinlik yoktur" description="Lütfen Öteki Haftalara Bakınız"></app-no-data>
+
+    <ul class="c-narrow-index-list" *ngIf="!isNoDataContent && !isLoading">
+        <li *ngFor="let event of data; " class="c-narrow-index-list__item ">
+            <a title=" " [routerLink]="[ '/event', event.Id] ">
+                <app-avatar [size]="lg" [source]="event.Images | image: 'Event' "></app-avatar>
+                <span class="c-narrow-index-list__item__content "> <strong>{{event.Name}}</strong>
+                    <time datetime="2016-09-15 16:00 ">{{event.BeginDate | relativeDate}}</time>
+                </span>
+            </a>
+        </li>
+    </ul>
+    <!--end narrow-index-list-->
+</div>
+<!--end c-narrow-index-->

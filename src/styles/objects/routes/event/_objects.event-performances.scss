@@ -1,0 +1,55 @@
+// Set defaults
+$or-event-performances: (
+	add-product-font-size: 11px,
+	add-product-icon-size: 40px,
+
+	primary-color: #35383d,
+	aside-color: #f7f7f7
+);
+
+// Merge settings and defaults
+$or-event-performances: map-merge($or-event-performances, getSettingsMap("o-over-image-dates"));
+
+// Set shortcuts
+$o-map: $or-event-performances;
+
+.or-event-performances {
+
+	.or-event-performances-card {
+		.c-card {
+			height: auto;
+			min-height: 350px;
+		}
+
+		.c-card__name {
+			height: auto;
+			margin-bottom: 15px;
+		}
+
+		.c-card__metas {
+			position: relative;
+			left: auto;
+			bottom: auto;
+			width: 100%;
+
+			li {
+				margin-top: 0;
+			}
+			&>li + li {
+				margin-top: 15px;
+			}
+		}
+	}
+
+	.o-collapsible-container__aside {
+		background-color: map-get($o-map, aside-color);
+	}
+
+	.o-collapsible-container__toggle-btn {
+		background-color: map-get($o-map, aside-color);
+	}
+}
+
+//Reset
+$o-map: null;
+$or-event-performances: null;

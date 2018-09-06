@@ -1,0 +1,110 @@
+/**
+* Bulk Sms:
+* Author: Can Sivri
+*
+*/
+
+
+// Variables
+$bulk-sms: (
+  max-width: 690px,
+  margin: 60px auto,
+  text-color: #333
+);
+
+// Merge settings and defaults
+$bulk-sms: map-merge($bulk-sms, getSettingsMap("bulk-sms"));
+
+// Set shortcuts
+$c-map: $bulk-sms;
+
+
+.bulk-sms {
+  box-sizing: border-box;
+  max-width: map-get($c-map, max-width);
+  margin: map-get($c-map, margin);
+  &__title {
+    margin: 0 0 25px 0;
+    h3 {
+      margin: 0 0 15px 0;
+      font-size: 16px;
+      @include ffamily("semi");
+      color: map-get($c-map, text-color);
+    }
+    p {
+      font-size: 13px;
+      @include ffamily("regular");
+      color: map-get($c-map, text-color);
+    }
+  }
+  &__body {
+    border: 1px solid #dcdce5;
+    border-radius: 3px;
+    background-color: #f7f7f7;
+  }
+  &__textarea {
+    margin-bottom: -1px;
+    background-color: #fff;
+    border-bottom: 1px solid #dcdce5;
+    .c-text-area {
+      padding: 0;
+      background-color: #fff;
+      border: none;
+      textarea {
+        margin: 0;
+        border: none;
+        border-radius: 3px;
+        resize: none;
+        min-height: 320px !important;
+        padding: 20px;
+        font: 11px "Courier";
+        color: #262126;
+      }
+    }
+  }
+  &__text {
+    padding: 15px;
+    font-size: 13px;
+    @include ffamily("regular");
+    color: map-get($c-map, text-color);
+    strong {@include ffamily("semi");}
+    i {
+      vertical-align: bottom;
+      margin-right: 5px;
+      font-size: 23px;
+      color: #2b98f0;
+    }
+  }
+  &__info-list {
+    padding: 10px 20px;
+    list-style: none;
+    &-item {
+      margin: 7px 0;
+      font-size: 13px;
+      @include ffamily("semi");
+      color: map-get($c-map, text-color);
+      i {
+        vertical-align: bottom;
+        margin-right: 5px;
+        font-size: 23px;
+        color: #2b98f0;
+      }
+      &--error {
+        color: #ec4e48;
+        i {color: #ec4e48;}
+      }
+    }
+    &--narrow {margin-top: -20px;}
+  }
+  &__note {
+    margin: 10px 0;
+    font-size: 11px;
+    @include ffamily("regular");
+    color: #939393;
+    i {
+      vertical-align: bottom;
+      padding-right: 4px;
+      font-size: 17px;
+    }
+  }
+}

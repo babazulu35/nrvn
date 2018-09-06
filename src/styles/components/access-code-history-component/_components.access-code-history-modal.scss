@@ -1,0 +1,28 @@
+.c-access-code-history-modal{
+    &--table{
+        table{
+            margin-top: 27px;
+            width: 100%;
+        }
+        td{
+            height: 50px;
+            border: 1px solid lightgray;
+            text-align: center;
+            width: 50%;
+        }
+    }
+
+    &__info{
+        text-align: center;
+        font-size: 13px;
+        display: block;
+        line-height:21px;
+    }
+    
+    .c-dialog-box__body{
+        &--height{
+            height: 370px !important;
+        }
+    }
+
+}

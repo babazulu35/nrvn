@@ -1,0 +1,134 @@
+<app-expandable-block (actionEvent)="emitAction($event)" [contextMenuData]="contextMenuData" [title]="(product?.Localization?.Name | localization) || 'Yeni Ürün'" [isExpanded]="true">
+    <div class="c-performance-product-block__section">
+      <div class="c-performance-product-block__section-container">
+          <div class="c-performance-product-block__content">
+
+            <div class="p-group row">
+              <div class="p-form-group">
+                  <div class="p-form-group__label">ÜRÜN ADI<sup>*</sup></div>
+                  <div class="p-form-group__input">
+                      <app-text-input [isTypeEmitting]="true" [typeDebounceTime]="50" [hasLocalization]="true" (typeEvent)="inputChangeHandler($event,'Name')" [localization]="product?.Localization?.Name"></app-text-input>
+                  </div>
+              </div>
+            </div>
+    
+            <div class="p-group">
+                <div class="p-group__header">
+                    <div class="p-group__header-bar">
+                        <div class="p-group__header-title">AYARLAR</div>
+                    </div>
+                </div>
+                <div class="p-group__item">
+                    <div class="p-group__list">
+    
+                        <div class="p-group__list-item">
+                            <div class="p-group__list-item-bar">
+                                <div class="p-group__list-item-label">Para Birimi</div>
+                                <div class="p-group__list-item-action">
+                                    <app-selectbox *ngIf="currencyList?.length" (changeEvent)="inputChangeHandler($event, 'CurrencyId')" [value]="product?.CurrencyId" [options]="currencyList"></app-selectbox>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <div class="p-group__list-item">
+                            <div class="p-group__list-item-bar">
+                                <div class="p-group__list-item-label">KDV Oranı*</div>
+                                <div class="p-group__list-item-action">
+                                    <app-selectbox (changeEvent)="inputChangeHandler($event, 'Vat')" [value]="product?.Vat" [options]="vatList"></app-selectbox>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <div class="p-group__list-item">
+                            <div class="p-group__list-item-bar">
+                                <div class="p-group__list-item-label">Bir seferde satılabilecek maksimum ürün</div>
+                                <div class="p-group__list-item-action">
+                                    <app-selectbox (changeEvent)="inputChangeHandler($event, 'MaxProductsPerTrx')" [value]="product?.MaxProductsPerTrx" [numberRanges]="{min: 1, max: 10}"></app-selectbox>
+                                </div>
+                            </div>
+                        </div>
+    
+                    </div>
+                </div>
+            </div>
+    
+            <div class="p-group">
+                <div class="p-group__header p-group__header--border">
+                    <div class="p-group__header-bar">
+                        <div class="p-group__header-title">SEÇİM RENGİ<sup>*</sup></div>
+                    </div>
+                </div>
+                <div class="p-group__item">
+                    <app-color-picker (selectEvent)="inputChangeHandler($event, 'CategoryColorSeat')" [selectedColor]="performanceProduct?.CategoryColorSeat"></app-color-picker>
+                </div>
+            </div>
+    
+          </div>
+      </div>
+    </div>
+
+    <div class="c-performance-product-block__section">
+      <div class="c-performance-product-block__section-header">
+          <div class="c-performance-product-block__section-header-bar">
+            <span class="c-performance-product-block__section-header-title">
+              Yerleşim Bilgileri
+            </span>
+            <span class="c-performance-product-block__section-header-action">
+              <div class="p-toggle">
+                <span class="p-toggle__label">Yerleşim bilgilerini satış kanallarına göre özelleştir</span>
+                <span class="p-toggle__input">
+                    <app-checkbox type="lightswitch" (changeEvent)="inputChangeHandler($event, 'allowCustomProductSelectionType', productFactory)" [isChecked]="allowCustomProductSelectionType"></app-checkbox>
+                </span>
+              </div>
+            </span>
+          </div>
+      </div>
+
+      <div class="c-performance-product-block__section-container">
+        <app-product-selection-type-list [groupSelectionIsActive]="!allowCustomProductSelectionType" (changeEvent)="selectionTypeListChangeHandler($event)"></app-product-selection-type-list>
+      </div>
+
+    </div>
+
+    <div class="c-performance-product-block__section">
+      <div class="c-performance-product-block__section-header">
+          <div class="c-performance-product-block__section-header-bar">
+            <span class="c-performance-product-block__section-header-title">
+              Fiyat Bilgileri
+            </span>
+            <span class="c-performance-product-block__section-header-action">
+              <span><app-button (click)="toggleAllPriceBlocks()" type="link" [label]="allPriceCollapsed ? 'TÜMÜNÜ GENİŞLET' : 'TÜMÜNÜ DARALT'"></app-button></span>
+              <span><app-button (click)="toggleAllPriceBlocks()" type="icon" [icon]="allPriceCollapsed ? 'unfold_more' : 'unfold_less'" theme="primary" size="md"></app-button></span>
+            </span>
+          </div>
+      </div>
+
+      <div class="c-performance-product-block__content c-performance-product-block__content--wide">
+        <div class="p-group">
+          <div class="p-group__item" *ngFor="let priceListFactory of productFactory?.priceListFactories; let i = index">
+              <app-relative-product-price-block
+                (actionEvent)="productPriceBlockActionHandler($event, i, priceListFactory)"
+                (changeEvent)="productPriceBlockChangeHandler($event, i, priceListFactory)"
+                [useFactory]="true"
+                [priceListFactory]="priceListFactory"
+                [product]="product"
+                [contextMenuData]="priceListActions"
+                ></app-relative-product-price-block>
+          </div>
+          <div class="p-group__item">
+              <app-container-canvas [isEmpty]="true">
+                  <app-button (clickEvent)="addNewPrice($event)" theme="secondary">FİYAT BLOĞU EKLE</app-button>
+              </app-container-canvas>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+</app-expandable-block>
+
+<div class="c-performance-product-block__submit" *ngIf="expandableBlock && expandableBlock?.isExpanded">
+    <app-container-canvas type="footer">
+        <app-button (clickEvent)="submitHandler()" [isDisabled]="!isValid" theme="secondary">KAYDET VE KAPAT</app-button>
+    </app-container-canvas>
+</div>

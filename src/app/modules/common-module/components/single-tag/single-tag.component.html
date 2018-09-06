@@ -1,0 +1,8 @@
+<span class="c-single-tag__bar">
+  <span *ngIf="icon" class="c-tag-group__icon"><i class="icon__n icon__n--{{icon}}"</span>
+  <span class="c-single-tag__label"
+    [innerHTML]="data?.name"></span>
+  <span *ngIf="data?.name && action?.icon && !isDisabled" class="c-single-tag__action">
+    <app-button (click)="emitAction(action?.name)" type="icon" [icon]="action?.icon" theme="secondary"></app-button>
+  </span>
+</span>

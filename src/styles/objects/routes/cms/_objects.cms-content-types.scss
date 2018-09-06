@@ -1,0 +1,19 @@
+/* --------------------------------------------------------
+author: Abdullah Karadeniz
+----------------------------------------------------------*/
+
+$or-cms-content-types: ( border-color: #dcdce5, switch-bar: ( label: ( color: #373a3c, font-size: 14px, )));
+$or-cms-content-types: map-merge($or-cms-content-types, getSettingsMap("or-cms-content-types"));
+$oc-map: $or-cms-content-types;
+.or-cms-content-types {
+    display: block;
+    position: relative;
+
+    .o-list-view__content {
+        padding: 20px;
+    }
+}
+
+$oc-map: null;/* --------------------------------------------------------
+author: Abdullah Karadeniz
+----------------------------------------------------------*/

@@ -1,0 +1,130 @@
+/**
+* Narrow Vertical Kv List:
+* Author: Can Sivri
+*
+*/
+
+
+// Variables
+$c-vertical-kv-list: (
+  bg: #fff,
+  padding: 18px 20px,
+  border-color: #dcdce5,
+  border-radius-value: 3px,
+  item-padding:0 20px,
+  item-margin: 0 -20px 0,
+  item-font-size: 11px,
+  item-color: #9d9d9d,
+  value-text-height: 1.5em,
+  value-line-height: 1.25em,
+  value-font-size: 16px,
+  value-color: #35383d,
+  sold-color:#6bba18,
+  blocked-color:#ffcc00,
+  cancel-color:#ec4e48
+);
+
+// Merge settings and defaults
+$c-vertical-kv-list: map-merge($c-vertical-kv-list, getSettingsMap("c-vertical-kv-list"));
+
+// Set shortcuts
+$c-map: $c-vertical-kv-list;
+
+
+.c-vertical-kv-list {
+  display: block;
+  box-sizing:border-box;
+  padding: map-get($c-map, padding);
+  border: 1px solid map-get($c-map, border-color);
+  border-radius: map-get($c-map, border-radius-value);
+  background-color: map-get($c-map, bg);
+  list-style: none;
+
+  &--clean {
+    border: none;
+    padding: 0px;
+    
+    .c-vertical-kv-list__item {
+      height: 24px;
+
+      &:not(.c-vertical-kv-list__item--active):hover {
+        background-color:transparent;
+      }
+    }
+  }
+
+  &__section {
+    margin:0 0 12px 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid map-get($c-map, border-color);
+    &:last-child {
+      margin-bottom:0;
+      border:none;
+      padding-bottom:0;
+    }
+  }
+  &__item {
+    display:table;
+    @include t--clearfix();
+    margin: map-get($c-map, item-margin);
+    padding: map-get($c-map, item-padding);
+    height:36px;
+    &:last-child {margin-bottom:0;}
+    &:not(.c-vertical-kv-list__item--active):hover {
+      background-color:#f7f7f7;
+    }
+    &--active{
+      background-color:#f7f7f7;
+    }
+    &--refresh {
+      .c-vertical-kv-list__item-action {display:table-cell;}
+    }
+    &--status {
+      .c-vertical-kv-list__item-dot {display:table-cell;}
+    }
+  }
+  &__item-action {
+    display:none;
+    position:relative;
+    top:2px;
+    vertical-align:middle;
+    padding:0 10px;
+    font-size:24px;
+    color:#bdbdbd;
+    text-decoration:none;
+    a, .c-button {
+      color:#bdbdbd;
+      &:hover, &:focus, &:active {color:#bdbdbd;}
+    }
+  }
+  &__item-dot {
+    display:none;
+    vertical-align:middle;
+    width:20px;
+    .c-vertical-kv-list__item-icon {
+      display:block;
+      @include t--size(20px);
+      margin-right:20px;
+      border-radius:50%;
+    }
+  }
+  &__item-label {
+    display:table-cell;
+    vertical-align:middle;
+    width:100%;
+    padding:2px 1em 0 0;
+    font-size: map-get($c-map, item-font-size);
+    line-height: map-get($c-map, text-line-height);
+    @include ffamily("semi");
+    color: map-get($c-map, item-color);
+  }
+  &__item-value {
+    display:table-cell;
+    vertical-align:middle;
+    font-size: map-get($c-map, value-font-size);
+    line-height: map-get($c-map, value-line-height);
+    @include ffamily("bold");
+    color: map-get($c-map, value-color);
+    white-space: nowrap;
+  }
+}

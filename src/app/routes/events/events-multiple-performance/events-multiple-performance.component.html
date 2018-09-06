@@ -1,0 +1,137 @@
+<div class="o-placeholder--multi_selection " [class.active]="isMultiSelectionActive">
+    <app-multi-selection-bar (toggleSelectedItems)="selectAllItems($event)" (transistAction)="callSelectedItemsAction($event)" [selectedItems]="selectedItems" [actionButtons]="actionButtons" [numberOfTotalItem]="events.length">
+    </app-multi-selection-bar>
+</div>
+
+<app-no-data *ngIf="noDataInContent" style="max-width: 50%;margin-top:30px" [hasContainer]="true" title="Aramanız ile eşleşen etkinlik kaydı bulunamadı" description="Arama kriterini değiştirerek yeniden deneyebilirsiniz"></app-no-data>
+
+<div class="o-list-view" *ngIf="eventService.viewType.isListViewActive && !noDataInContent">
+    <div class="o-list-view__content">
+        <app-responsive-table [ngClass]="{'main-loader': isLoading }">
+            <div class="c-responsive-table__caption row">
+                <div class="c-responsive-table__primary-column hidden-sm-down col-md-9 col-lg-7">
+                    <app-sort-title sortTitle='ETKİNLİK ADI' sortBy='Name' [activeTitle]="eventService.queryParamSubject" (toggleSortTitle)="toggleSortTitle($event)"></app-sort-title>
+                </div>
+
+                <div class="c-responsive-table__secondary-column hidden-sm-down col-md-7 col-lg-9">
+                    <div class="col-md-10 col-lg-10 col-xl-5">
+                        <app-sort-title sortTitle='TARİHİ' sortBy='BeginDate' [activeTitle]="eventService.queryParamSubject" (toggleSortTitle)="toggleSortTitle($event)"></app-sort-title>
+                    </div>
+
+                    <div class="col-md-6 col-lg-6 col-xl-4">
+                        <app-sort-title sortTitle='DURUM' sortBy='Status' [activeTitle]="eventService.queryParamSubject" (toggleSortTitle)="toggleSortTitle($event)"></app-sort-title>
+                    </div>
+
+                    <div class="hidden-lg-down col-xl-7">
+                        <span>MEKAN</span>
+                    </div>
+
+                    <!--
+                    <div class="hidden-lg-down col-xl-4">
+                        <span>KATEGORİ</span>
+                    </div>
+                    -->
+                </div>
+            </div>
+
+            <div class="c-responsive-table__row row" *ngFor="let event of events">
+                <div class="c-responsive-table__primary-column col-sm-16 col-md-9 col-lg-7">
+                    <div class="c-primary-column-line c-primary-column-line--with-select c-primary-column-line--with-avatar">
+                        <div class="c-primary-column-line__primary-content">
+                            <div class="c-primary-column-line__select">
+                                <app-checkbox theme="ligth" type="circle" [isChecked]="selectedItems.indexOf(event) > -1" (checkedAction)="selectItem($event, event);"></app-checkbox>
+                            </div>
+                            <div class="c-primary-column-line__avatar">
+                                <app-avatar [letters]="event?.Name?.charAt(0)" source="{{event.Images | image: 'Event'}}"></app-avatar>
+                            </div>
+                            <a class="c-primary-column-line__title" [routerLink]="['/event', event.Id]">
+                                {{event.Name}} ({{event.PerformanceCount}})
+                            </a>
+                        </div>
+
+                        <div class="c-primary-column-line__secondary-content">
+                            <div class="c-responsive-table__secondary-item hidden-md-up">
+                                <span class="c-responsive-table__secondary-item-label">TARİH</span>
+                                <span class="c-responsive-table__secondary-item-value"><span class="text-nowrap">{{event.BeginDate | relativeDate}}</span></span>
+                            </div>
+
+                            <div class="c-responsive-table__secondary-item hidden-md-up">
+                                <span class="c-responsive-table__secondary-item-label">DURUM</span>
+                                <span class="c-responsive-table__secondary-item-value">{{eventStatus[event.Status]}}</span>
+                            </div>
+
+                            <div class="c-responsive-table__secondary-item hidden-lg-up">
+                                <span class="c-responsive-table__secondary-item-label">MEKAN</span>
+                                <span class="c-responsive-table__secondary-item-value">
+                                    <span *ngIf="event.Performances">
+                                        {{event.Performances | venuesByPerformances}}
+                                    </span>
+                                </span>
+                            </div>
+
+                            <!--
+                            <div class="c-responsive-table__secondary-item hidden-xl-up">
+                                <span class="c-responsive-table__secondary-item-label">KATEGORİ</span>
+                                <span class="c-responsive-table__secondary-item-value" *ngFor="let attr of event.AttributeList">
+                        			<ng-template [ngIf]="attr.Name">{{attr.Name}}</ng-template>
+                                </span>
+                            </div>
+                            -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="c-responsive-table__secondary-column hidden-sm-down col-md-7 col-lg-9">
+                    <div class="col-sm-10 col-md-10 col-lg-10 col-xl-5">
+                        <span class="text-nowrap">{{event.BeginDate | relativeDate}}</span>
+                    </div>
+
+                    <div class="col-sm-6 col-md-6 col-lg-6 col-xl-4">
+                        <span>{{eventStatus[event.Status] | enumTranslator}}</span>
+                    </div>
+
+                    <div class="hidden-lg-down col-xl-7">
+                        <span *ngIf="event.Performances">
+                                {{event.Performances | venuesByPerformances}}
+                        </span>
+                    </div>
+
+                    <!--
+                    <div class="hidden-lg-down col-xl-4">
+                        <span *ngFor="let attr of event.AttributeList">
+                        	<ng-template [ngIf]="attr.Name">{{attr.Name}}</ng-template>
+						</span>
+                    </div>
+                    -->
+                </div>
+
+                <div class="c-responsive-table__action-btn" (click)="openEventsContextMenu($event, event)">
+                    <i class="icon__n icon__n--md icon__n--more_vert"></i>
+                </div>
+            </div>
+        </app-responsive-table>
+    </div>
+
+    <div class="o-list-view__footer" *ngIf="events?.length">
+        <app-pagination size="xs" (changeEvent)="changePageSize($event)" [options]="pageSizes" [totalItem]="count" [showItemPerPage]="pageSize" [currentPage]=currentPage (transistPage)="transistPage($event)"></app-pagination>
+    </div>
+</div>
+
+<div class="o-card-view" *ngIf="eventService.viewType.isCardViewActive && !noDataInContent">
+    <div class="o-card-view__content">
+        <app-grid-list [ngClass]="{'main-loader': isLoading }">
+            <li *ngFor="let event of events">
+                <app-card-item
+                    [actions]="getItemActions(event)"
+                    [isActive]="event.Status == eventStatus['OnSale']"
+                    (actionEvent)="cardActionHandler($event)"
+                    [data]="{entryType: 'event', model: event}"
+                    [isSelected]="selectedItems.indexOf(event) > -1"></app-card-item>
+            </li>
+        </app-grid-list>
+    </div>
+
+    <div class="o-card-view__footer" *ngIf="events?.length">
+        <app-pagination size="lg" (changeEvent)="changePageSize($event)" [options]="pageSizes" [totalItem]="count" [showItemPerPage]="pageSize" [currentPage]=currentPage (transistPage)="transistPage($event)"></app-pagination>
+    </div>
+</div>

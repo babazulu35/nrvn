@@ -1,0 +1,55 @@
+<div class="c-card-item__container">
+
+    <div class="c-card-item__status">
+        <span class="c-card-item__status-icon">
+            <i class="icon__n icon__n--{{statusIcon}}"></i>
+        </span>
+    </div>
+
+    <div class="c-card-item__action" *ngIf="!isGhost && actions && actions.length > 0">
+        <span class="c-card-item__action-button">
+            <app-button
+                (click)="openContextMenu($event)"
+                type="icon" icon="more_vert" theme="isHover ? light : secondary"></app-button>
+        </span>
+    </div>
+
+    <div class="c-card-item__avatar" [class.c-card-item__avatar--ghost]="isGhost && avatarData?.source == null" [class.c-card-item__avatar--border]="avatarData && (avatarData.source == null || avatarData.source.length == 0)">
+        <app-avatar *ngIf="avatarData != null" [source]='avatarData.source' (click)="goToLink()" [icon]='avatarData.icon' [letters]='avatarData.letters' [hasBorder]="avatarData.border"></app-avatar>
+
+        <div class="c-card-item__kinds" *ngIf="isGhost || kinds?.length" [class.c-card-item__kinds--ghost]="isGhost && (!kinds || !kinds.length)">
+            <i *ngFor="let kind of kinds" class="icon__n icon__n--{{kind.icon}}"></i>
+        </div>
+    </div>
+
+
+    <div class="c-card-item__title" [class.c-card-item__title--ghost]="isGhost && (!title || title.length == 0)">
+        <span [innerHTML]="title | sanitizeHtml" (click)="goToLink()"></span>
+    </div>
+
+    <div #descriptionBox class="c-card-item__description" [class.c-card-item__description--ghost]="isGhost && !(descriptionRef?.nativeElement?.children.length)">
+        <span *ngIf="!isGhost && description?.text?.length > 0" [innerHTML]="description.text | sanitizeHtml"></span>
+        <ng-content></ng-content>
+    </div>
+
+    <div class="c-card-item__services" *ngIf='services && services.length'>
+        <ul>
+            <li *ngFor="let service of services">
+                <i class="icon__n icon__n--{{service.icon}}"></i>
+            </li>
+        </ul>
+    </div>
+
+    <div class="c-card-item__overlay" *ngIf='isEditable'>
+
+        <div class="c-card-item__select-btn">
+            <app-checkbox label="Seç" (changeEvent)="emitActionEvent('select', $event)" [isChecked]="isSelected" theme="dark"></app-checkbox>
+        </div>
+
+        <div class="c-card-item__edit-btn">
+            <app-button (click)="emitActionEvent('goto', 'edit')" size="full-width">{{gotoButtonLabel}}</app-button>
+        </div>
+
+    </div>
+
+</div>

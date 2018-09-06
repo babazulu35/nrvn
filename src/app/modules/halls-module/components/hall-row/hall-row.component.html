@@ -1,0 +1,40 @@
+<div class="c-hall-row">
+  <div class="c-hall-row__header">
+    <div class="c-hall-row__header-left">
+      <span> {{ hall.Localization.Name }} </span>
+    </div>
+    <div class="c-hall-row__header-right">
+      <div *ngFor="let attribute of attributes">
+          <span class="c-hall-row__header-right-badge">{{attribute.AAttribute.Name}}</span>
+      </div>      
+      <div class="c-hall-row__header-right-menu" (click)="openEventsContextMenu($event)">
+        <i class="icon__n icon__n--md icon__n--more_vert"></i>
+      </div>
+    </div>
+  </div>
+  <div class="c-hall-row__content">
+    <div class="c-hall-row__content-item" *ngFor="let dic of perfPerEvent">
+      <div class="c-hall-row__content-item-left">          
+          <div class="c-primary-column-line__avatar" *ngIf="performances.length > 0">
+              <app-avatar [letters]="dic.key.Localization.Name.charAt(0)" source=""></app-avatar>
+          </div>
+          <span class="c-hall-row__content-item-left-perf-name" *ngIf="hall?.Templates">{{ dic.key.Localization.Name }}</span>
+      </div>
+      <div class="c-hall-row__content-item-right">
+          <ul class="c-basic-button-group__inner">
+              <li *ngFor="let performance of dic.value" class="c-basic-button-group__item">
+                  <a class="c-basic-button-group__button">{{ performance.Date | date:'HH:mm'}}</a>
+              </li>
+          </ul>          
+      </div>
+    </div>
+
+    <div class="c-hall-row__content-item c-hall-row__content-item--no-perf" *ngIf="performances.length === 0">
+          <span class="c-hall-row__content-item--no-perf-icon">
+              <i class="icon__n icon__n--md icon__n--theaters"></i>
+          </span>
+          <span class="c-hall-row__content-item--no-perf-textbox"> <i class="icon__n icon__n--md icon__n--info"></i>Salona ait program bilgisi bulunmuyor</span>
+    </div>
+
+  </div>
+</div>

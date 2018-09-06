@@ -1,0 +1,11 @@
+<div class="or-users">
+  <app-split-container [fixedWidth]="600">
+    <div fluid>
+      <app-user-list (userSelectedForEdit)="showUserInfo($event)"></app-user-list>
+    </div>
+    <div fixed>
+      <app-user-edit [selectedUser]="selectedUser" (selectedUserChanged)="discard()"></app-user-edit>
+    </div>
+  </app-split-container>
+</div>
+<!-- End of or-users -->

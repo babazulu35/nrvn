@@ -1,0 +1,71 @@
+<form [formGroup]="collectForm" novalidate>
+    <div class="p-container margin-bottom-30 full-width">
+        <!-- Title -->
+        <div class="p-group__header or-collect-data--header">
+            <div class="p-group__header-bar">
+                <div class="p-group__header-title">
+                    {{collection?.EventName}}
+                </div>
+            </div>
+        </div>
+
+        <div class="p-group or-collect-data--frame" [attr.data-line]="collection?.MetadataNode?.RelationType_Desc" *ngIf="collection?.MetadataNode?.RelationType == 1 && collection?.MetadataNode?.Field == null">
+
+            <!-- First Has Children -->
+            <div *ngFor="let children of collection?.MetadataNode?.Children; let i = index">
+                <!-- First Or State -->
+
+                <div class="or-collect-data--frame_child" *ngIf="children?.RelationType == 1 && children?.Field == null">
+
+                    <div *ngFor="let nested_first of children?.Children; let a= index">
+                        <!-- And -->
+                        <div *ngIf="nested_first?.RelationType==1 && nested_first?.Field==null ">
+                            <h5>and secon {{a}}</h5>
+                        </div>
+                        <!-- Ot -->
+                        <div *ngIf="nested_first?.RelationType==2 && nested_first?.Field == null " class="margin-bottom-15 full-width" [attr.data-line]="nested_first?.RelationType_Desc" class="or-collect-data--frame_singleline ">
+
+                            <div *ngFor="let nested_second of nested_first?.Children; let n = index" class="margin-bottom-15 full-width">
+                                <div *ngIf="nested_second?.RelationType==0 && nested_second?.Field !=null ">
+                                    <label> {{nested_second?.Field?.Title}}</label><span class="or-collect-data--blockseat">{{nested_second?.Field?.Seat}}</span>
+                                    <app-text-input [localization]="nested_second?.Field?.Value " (changeEvent)="valueChangeHandler($event,nested_second?.Field?.Name,collection?.MetadataId) " [patternString]="nested_second?.Field?.Regex == '' ? '^[a-zA-Z0-9]{2,25}$' : nested_second?.Field?.Regex"
+                                        [form]="collectForm" [name]="nested_second?.Field?.Name" [type]="'text'" [placeholder]="nested_second?.Field?.Info "></app-text-input>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngIf="nested_first.RelationType==0 && nested_first.Field != null " class="pading-top-10 full-width">
+                            <label>{{nested_first?.Field?.Title}}</label><span class="or-collect-data--blockseat">{{nested_first?.Field?.Seat}}</span>
+                            <app-text-input [localization]="nested_first.Field.Value || '' " (changeEvent)="valueChangeHandler($event,nested_first?.Field?.Name,collection.MetadataId) " [form]="collectForm" [required]="true" [name]="nested_first?.Field?.Name" [type]="'text'" [placeholder]="nested_first?.Field?.Info "></app-text-input>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- On First Chil -->
+
+                <div class="or-collect-data--frame_child" *ngIf="children?.RelationType == 0 && children?.Field != null">
+                    <label style="font-size:16px;">{{children?.Field?.Title}}</label><span class="or-collect-data--blockseat">{{children?.Field?.Seat}}</span>
+                    <app-text-input [localization]="children?.Field?.Value !=null ? children?.Field?.Value : '' " (changeEvent)="valueChangeHandler($event,children?.Field?.Name,collection?.MetadataId) " [name]="children?.Field?.Name" [form]="collectForm" [required]="true"
+                        [type]="'text'" [placeholder]="children?.Field?.Info "></app-text-input>
+                </div>
+                <!-- On First Child -->
+
+                <div class="or-collect-data--frame_child" *ngIf="children?.RelationType == 2 && children?.Field == null">
+                    <div [attr.data-line]="children?.RelationType_Desc" class="or-collect-data--frame_singleline ">
+                        <div *ngFor="let nested_top of children.Children; let p = index">
+                            <div *ngIf="nested_top?.RelationType==0 && nested_top?.Field !=null ">
+                                <label style="font-size:16px;"> {{nested_top?.Field?.Title}}</label><span class="or-collect-data--blockseat">{{nested_top?.Field?.Seat}}</span>
+                                <app-text-input [localization]="nested_top?.Field.Value " [patternString]="nested_top?.Field.Regex == '' ? '^[a-zA-Z0-9]{2,25}$' : nested_top?.Field.Regex " (changeEvent)="valueChangeHandler($event,nested_top?.Field?.Name,collection?.MetadataId) " [name]="nested_top?.Field?.Name"
+                                    [form]="collectForm" [type]="'text'" [placeholder]="nested_top?.Field?.Info "></app-text-input>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="collection?.MetadataNode?.RelationType==0 && collection?.MetadataNode?.Field !=null ">
+
+        </div>
+    </div>
+</form>

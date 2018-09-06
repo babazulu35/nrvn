@@ -1,0 +1,13 @@
+<ng-template [ngIf]="hasSource">
+	<figure>
+		<img (error)="imageErrorHandler($event)" src="{{source}}" alt="">
+	</figure>
+</ng-template>
+<ng-template [ngIf]="!hasSource">
+	<div *ngIf=iconName class="c-avatar__icon">
+		<i class="icon__n icon__n--{{iconName}}"></i>
+	</div>
+	<div *ngIf=letters class="c-avatar__letters">
+		<span>{{letters}}</span>
+	</div>
+</ng-template>

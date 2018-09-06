@@ -1,0 +1,158 @@
+$c-add-multiple-performance: ( padding: 10px, height: 200px, border-color: #DCDCE5);
+// Merge settings and defaults
+$c-add-multiple-performance: map-merge($c-add-multiple-performance, getSettingsMap("c-add--performance"));
+// Set shortcuts
+$c-map: $c-add-multiple-performance;
+.c-add-multiple-performance {
+    // .c-time-input__bar {
+    //     border: inherit;
+    //     padding: 0;
+    // }
+    &__input_field {
+        display: flex;
+        width: 80px
+    }
+    &--fieldname {
+        flex: 1;
+        align-self: center;
+    }
+    &__order_right {
+        flex: 0 40px;
+        order: 2;
+        &--dot {
+            flex: 0;
+            order: 2;
+            align-self: center;
+            margin: 0px 5px;
+        }
+    }
+    &__order_left {
+        flex: 0 40px;
+        order: 1
+    }
+    &__add-row-button {
+        display: block;
+        text-align: center;
+        margin-top: 20px;
+        font-size: 33.275px;
+    }
+    &__container {
+        display: flex;
+        background: #fff;
+        border-radius: 4px;
+        border: 1px solid #DCDCE5;
+        overflow-y: auto;
+    }
+    &__row {
+        order: 1;
+        flex: 1;
+        &--selected {
+            background: #FFFEF3;
+        }
+        &-item {
+            //flex-basis: 0 100%;
+            border-bottom: 1px solid #ccc;
+            border-right: 1px solid #ccc;
+            padding: 16px;
+            align-items: center;
+            display: flex;
+            .c-button {
+                margin-right: 10px;
+            }
+            &--time-text {
+                @include ffamily('italic');
+                margin-top: 11px;
+                margin-bottom: 5px;
+                flex: 1;
+                align-self: center;
+                cursor: pointer;
+                &:hover {
+                    color: #2D98EE;
+                }
+            }
+            //justify-content: center;
+            .justifyCenter {
+                width: 25%;
+                .c-promise-icon {
+                    display: block;
+                }
+                .c-text-input__bar {
+                    text-align: center !important;
+                }
+            }
+            .c-text-input[type="datepicker"] {
+                width: 100%;
+                min-height: 36px;
+                color: #32353A;
+                font-size: 13px;
+                line-height: 2em;
+                @include ffamily(semi);
+                .c-promise-icon {
+                    display: none;
+                }
+                .c-text-input__bar {
+                    border-bottom: inherit;
+                    text-align: left;
+                }
+            }
+            &:last-child {
+                border-bottom: inherit;
+            }
+            &-label {
+                @include ffamily('bold');
+                font-size: 13px;
+            }
+            &--half-size {
+                flex-basis: 0 50%;
+                border-bottom: 1px solid #ccc;
+                border-right: 1px solid #ccc;
+                padding: 11px 10px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                align-content: center;
+                .c-time-input--focused {
+                    border-bottom: 1px solid #2D98EE;
+                }
+                .c-time-input__icon {
+                    display: none;
+                }
+                &:last-child {
+                    border-bottom: inherit;
+                }
+                &:first-child:not(:last-child) {
+                    @include ffamily('bold');
+                    font-size: 13px;
+                }
+            }
+        }
+    }
+    &__aside {
+        order: 2;
+        flex: 0;
+        padding: 10px;
+        align-self: stretch;
+        //border-left: 1px solid #DCDCE5;
+        .icon__n {
+            color: #333;
+        }
+    }
+    &__aside--text {
+        order: 2;
+        flex: 0 50%;
+        padding: 10px;
+        align-self: stretch;
+        //border-left: 1px solid #DCDCE5;
+        @include ffamily('semi');
+        .icon__n {
+            font-size: 30px;
+            vertical-align: middle;
+            color: #333;
+        }
+    }
+}
+
+.u-justify {
+    justify-content: center;
+    padding: 16px;
+}

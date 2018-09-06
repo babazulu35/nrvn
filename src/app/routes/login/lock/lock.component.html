@@ -1,0 +1,71 @@
+<app-fullscreen-cover 
+    backgroundColor = "#3e3e3e"
+    backgroundImage="assets/images/backgrounds/login-back.jpg">
+
+  <ng-template [ngIf]='!isAuthenticatedUser'>
+    
+    <app-auth-dialog-box #self 
+      headerLogo = "../../assets/images/logo/nirvana.png"
+      headerBackgroundColor = "#EE4C42"
+      (submitEvent)='authSubmitEventHandler($event)'>
+        
+          <h1 class="padding-bottom-20">Giriş Yapın</h1>
+
+          <p class="padding-bottom-20">Kasa <b>Lorem Ipsum</b> tarafından 30.12.2016 tarihinde kitlenmiştir, açmak için <b>kullanıcı adı</b> ve <b>parolasını</b> giriniz.</p>
+
+          <div *ngIf="authAlert" class="alert alert-{{ authAlert.type }}">
+            <h1 [innerHTML]='authAlert.title'></h1>
+            <p [innerHTML]='authAlert.description'></p>
+          </div>
+
+          <form 
+            [formGroup]="self.authForm">
+            <app-text-input
+              theme="underline"
+              class="margin-bottom-20"
+              [form]="self.authForm"
+              name="username"
+              [required]='true'
+              placeholder="Kullanıcı Adı (demo)"
+              icon="person" ></app-text-input>
+            <app-text-input
+              theme="underline"
+              class="margin-bottom-20"
+              [form]="self.authForm"
+              name="password"
+              placeholder="Parola (demo)"
+              icon="lock" ></app-text-input>
+          </form>
+          
+          <div class="row text-xs-right">
+            <a routerLink="/login/password-recovery">Parolamı Unuttum</a>
+          </div>
+
+          <button footer 
+            (click)="self.submit()" 
+            [disabled]="self.authForm.disabled"
+            class="btn">DEVAM ET</button> <!-- footer directive is a container -->
+
+    </app-auth-dialog-box>
+
+  </ng-template>
+
+  <ng-template [ngIf]='isAuthenticatedUser'>
+    
+    <app-auth-dialog-box #self
+      headerLogo = "../../assets/images/logo/nirvana.png"
+      headerBackgroundColor = "#EE4C42">
+        
+          <h1 class="padding-bottom-20">Giriş Yapın</h1>
+
+          <p class="margin-bottom-20">Giriş yapıldı... Yönlendiriliyorsunuz...</p>
+
+          <button footer 
+            routerLink="/"
+            class="btn">DEVAM ET</button> <!-- footer directive is a container -->
+
+    </app-auth-dialog-box>
+
+  </ng-template>
+  
+</app-fullscreen-cover>

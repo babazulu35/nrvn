@@ -1,0 +1,25 @@
+<!-- >> abdullah -->
+<span *ngIf="!isEditing" (click)="startEdit($event)" class="c-inline-edit__label-bar">
+  <span class="c-inline-edit__label">{{(label | localization) || placeholder}}</span>
+  <app-button class="c-inline-edit__edit-button"
+    type="icon"
+    icon="edit"
+    theme="secondary"
+    [isPromising]="isPromising"
+    ></app-button>
+</span>
+<span *ngIf="isEditing" class="c-inline-edit__input-bar">
+  <app-text-input 
+    (changeEvent)="inputChangeEventHandler($event)"
+    (dismissEvent)= "inputDismissEventHandler($event)"
+    [dismissOnFocusOut]="dismissOnFocusOut"
+    [placeholder]="placeholder"
+    [label]="placeholder"
+    [hasLocalization]="hasLocalization"
+    [localization]="value"
+    [isDisabled]="isPromising"
+    [theme]="theme"
+    [icon]="'keyboard_return'"
+    ></app-text-input>
+</span>
+<!-- abdullah << -->

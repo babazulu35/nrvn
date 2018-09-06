@@ -1,0 +1,47 @@
+
+// Form Değişkenleri
+$form-font-family: sans-serif;
+
+// FieldSet Alanı
+$fieldset-color-border: #005639;
+$fieldset-padding: 1.5rem;
+
+// Legend Alanı için
+$legend-font-size: 1rem;
+$legend-color: #FFF;
+$legend-color-bg: #005639;
+$legend-padding: 0.25rem 1rem;
+
+// Label Alanı
+$label-padding: 0.25rem 0;
+$label-color:  #002317;
+
+
+
+// Form ve Elementleri
+form {
+  font-family: $form-font-family;
+}
+
+
+fieldset {
+  font-size: $legend-font-size;
+  border: 2px solid $fieldset-color-border;
+  padding: $fieldset-padding;
+  border-radius: 0.5em;
+}
+
+legend {
+  color: $legend-color;
+  background: $legend-color-bg;
+  padding: $legend-padding;
+  border-radius: 1rem;
+}
+
+label {
+  font-weight: bold;
+  font-size: .75rem;
+  padding: $label-padding;
+  color: $label-color;
+  cursor: pointer;
+}

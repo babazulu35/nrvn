@@ -1,0 +1,57 @@
+/* --------------------------------------------------------
+author: Abdullah Karadeniz
+----------------------------------------------------------*/
+
+/**
+ * radio-group:
+ * `.c-radio-group` -
+
+ *     @example
+ *     
+ */
+
+$c-radio-group: (
+  modifiers: (
+    disabled: (
+
+    )
+  )
+);
+
+$c-radio-group: map-merge($c-radio-group, getSettingsMap("c-radio-group"));
+
+$c-map: $c-radio-group;
+
+.c-radio-group {
+  display: block;
+  position: relative;
+
+  &--horizontal {
+      display: flex;
+      align-items: center;
+      align-content: center;
+      justify-content: flex-start;
+  }
+
+  &--vertical {
+      display: flex;
+      align-items: flex-start;
+      align-content: flex-start;
+      justify-content: flex-start;
+  }
+
+  &--disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+
+    > * {
+      pointer-events: none;
+      user-select: none;  
+    }
+  }
+}
+
+$c-map: null;
+/* --------------------------------------------------------
+author: Abdullah Karadeniz
+----------------------------------------------------------*/

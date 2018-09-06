@@ -1,0 +1,149 @@
+/***
+* Tab Bar Component:
+*/
+
+
+/**
+* Tab Bar:
+* `.c-tab-bar - Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque repellat autem deleniti odit repellendus temporibus placeat ipsa similique, neces
+*
+*     @example
+* 		<ul class="nav nav-tabs c-tab-bar">
+*			  <li class="nav-item c-tab-bar__item">
+*			    <a class="nav-link c-tab-bar__item__link" href="#">TEXT</a>
+			  </li>
+			  <li class="nav-item c-tab-bar__item">
+			    <a class="nav-link c-tab-bar__item__link c-tab-bar__item__link--active" href="#">TEXT</a>
+			  </li>
+*			</ul>
+
+*/
+
+// Set defaults
+$c-tab-bar: ( margin: 0, padding-left: map-get($l-list, margin-aside), padding-right: map-get($l-list, margin-aside), background-color: #F7F7F7, border-color: #E5E5E5, font-size:13px, line-height:19px, text-color: #35383d, tab-bar-active: #35383d, tab-bar-white-active: #fff, seperate-margin: 45px, seperate-padding:0 0 15px 0, seperate-white-padding:0 0 10px 0, content: ( padding-top: 20px, ));
+// Merge settings and defaults
+$c-tab-bar: map-merge($c-tab-bar, getSettingsMap("c-tab-bar"));
+// Set shortcuts
+$c-map: $c-tab-bar;
+.c-tab-bar {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    position: relative;
+    width: 100%;
+    min-height:60px;
+    margin: map-get($c-map, margin);
+    padding: map-get($c-map, padding);
+    border-bottom: solid 1px map-deep-get($c-map, border-color);
+    background-color: map-deep-get($c-map, background-color);
+
+    &--white {
+        background-color: transparent;
+        border-bottom: none;
+        .c-tab-bar__visible-list {
+            padding-top:26px;
+        }
+        .c-tab-bar__left {
+            padding-left: 0px;
+        }
+        .c-tab-bar__right {
+            padding-right: 0px;
+        }
+        .c-tab-bar__hidden-list-menu {
+            color: map-get($c-map, tab-bar-white-active);
+        }
+
+        .c-tab-bar__item {
+            &-link {
+                padding: map-get($c-map, seperate-white-padding);
+                color: map-get($c-map, tab-bar-white-active);
+                &--active,
+                &:hover,
+                &:focus {
+                    color: map-get($c-map, tab-bar-white-active);
+                    border-bottom-color: map-get($c-map, tab-bar-white-active);
+                }
+            }
+        }
+    }
+
+    &__left {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        flex-grow: 1;
+        flex-shrink: 1;
+        padding-right: 1em;
+        text-align: left;
+        padding-left: map-get($c-map, padding-left);
+        height: 100%;
+        min-height: inherit;
+    }
+    &__right {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        flex-grow: 1;
+        flex-shrink: 0;
+        padding-right: map-get($c-map, padding-right);
+        height: 100%;
+        min-height: inherit;
+    }
+
+    &__visible-list {
+        display: flex;
+        align-items: flex-end;
+        align-self: flex-end;
+        justify-content: flex-start;
+        padding-top: map-deep-get($c-map, content, padding-top);
+        padding-right: map-deep-get($c-map, content, padding-right);
+        padding-left: map-deep-get($c-map, content, padding-left);
+        overflow: hidden;
+        list-style: none;
+        margin: 0px;
+    }
+
+    &__hidden-list-menu {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transform: translateY(25%);
+        margin-left: map-get($c-map, seperate-margin)/2;
+        color: map-get($c-map, text-color);
+        
+        .c-button {
+            color: inherit !important;
+        }
+    }
+    
+    &__item {
+        float: left;
+        margin: map-get($c-map, margin);
+        margin-right: map-get($c-map, seperate-margin);
+        border: map-get($c-map, border);
+        &:last-child {
+            margin: map-get($c-map, margin);
+        }
+
+        &-link {
+            display: block;
+            border: map-get($c-map, border);
+            border-bottom: 5px solid transparent;
+            padding: map-get($c-map, seperate-padding);
+            font-size: map-get($c-map, font-size);
+            @include ffamily('semi');
+            color: map-get($c-map, text-color);
+            text-decoration: none !important;
+            &--active,
+            &:hover,
+            &:focus {
+                color: map-get($c-map, text-color);
+                border-bottom-color: map-get($c-map, tab-bar-active);
+                text-decoration: none !important;
+            }
+        }
+    }
+}
+
+$c-map: null;
+$c-tab-bar: null;

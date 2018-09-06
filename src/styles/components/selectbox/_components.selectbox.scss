@@ -1,0 +1,111 @@
+/***
+ * Selectbox Component:
+ */
+
+// Set defaults
+$c-selectbox: ( height: 36px, min-width: 120px, background-color: #fff, active-border-color: #2096F3, text-color: #21242b, arrow-color: #a8adaf, border:1px solid $color-ui-border);
+// Merge settings and defaults
+$c-selectbox: map-merge($c-selectbox, getSettingsMap("c-selectbox"));
+// Set shortcuts
+$c-map: $c-selectbox;
+
+.c-selectbox {
+    display: inline-block;
+    min-width: map-get($c-map, min-width);
+    font-size: map-get($c-map, height);
+    width: 100%;
+    height: 1em;
+    border: map-get($c-map, border);
+    background-color: map-get($c-map, background-color);
+    box-sizing: border-box;
+    border-radius: 0.5em;
+    overflow: hidden;
+    cursor: pointer;
+
+    &--disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        * { pointer-events: none }
+    }
+
+    &--focus {
+        border-color: map-get($c-map, active-border-color);
+    }
+
+    &:hover {
+        .c-selectbox__field:after {
+            color: map-get($c-map, active-border-color);
+        }
+    }
+    
+    .c-selectbox__field {
+        display: block;
+        position: relative;
+        height: 100%;
+        select {
+            display: inline-block;
+            position: absolute;
+            z-index: 1;
+            height: inherit;
+            line-height: 1.2em;
+            left: 0px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 100%;
+            outline: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 0.345em;
+            @include ffamily(semi);
+            color: map-get($c-map, text-color);
+            padding-left: 1em;
+            padding-right: 3em;
+            appearance: none;
+            -webkit-appearance: none;
+            border-radius: 0;
+            &::-ms-expand {
+                display: none;
+            }
+            &:focus::-ms-value {
+                background-color: transparent;
+                color: map-get($c-map, text-color);
+            }
+            &:-moz-focusring {
+                color: transparent;
+                text-shadow: 0 0 0 #000;
+            }
+        }
+        &:before {
+            content: "";
+            pointer-events: none;
+            display: block;
+            position: absolute;
+            z-index: 2;
+            top: 0px;
+            right: 0px;
+            width: 1em;
+            height: 1em;
+            background-color: map-get($c-map, background-color);
+        }
+        &:after {
+            @include icon("expand_more");
+            pointer-events: none;
+            display: inline-block;
+            vertical-align: middle;
+            position: absolute;
+            z-index: 3;
+            top: calc(50% + 1px);
+            right: 0.25em;
+            transform: translateY(-50%);
+            font-size: 0.75em;
+            line-height: 0px;
+            height: 0px;
+            max-height: 1em;
+            color: map-get($c-map, arrow-color);
+        }
+    }
+}
+
+$c-selectbox: null;
+$c-map:null;

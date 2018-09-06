@@ -1,0 +1,119 @@
+$c-single-tag: (
+    height: 32px,
+    font-size: 11px,
+    icon-size: 24px,
+    padding: 11px 15px 10px,
+    min-width: 100px,
+    border-radius: 3px,
+
+    disabled: (
+        color: #939393
+    ),
+
+    themes: (
+        primary: (
+            background-color: #f7f7f7,
+            border-color: #dcdce5,
+            icon: (
+                color: #bdbdbd
+            ),
+            label: (
+                color: #35383d,
+            ),
+            action: (
+                color: #bdbdbd
+            )
+        ),
+        secondary: (
+            background-color: #ffffff,
+            border-color: #dcdce5,
+            icon: (
+                color: #bdbdbd
+            ),
+            label: (
+                color: #35383d,
+            ),
+            action: (
+                color: #bdbdbd
+            )
+        )
+    )
+);
+// Merge settings and defaults
+$c-single-tag: map-merge($c-single-tag, getSettingsMap("c-single-tag"));
+// Set shortcuts
+$c-map: $c-single-tag;
+.c-single-tag {
+    display: inline-block;
+    white-space: nowrap;
+    background-color: map-deep-get($c-map, themes,  primary, background-color);
+    border: solid 1px map-deep-get($c-map, themes, primary, border-color);
+    border-radius: map-deep-get($c-map, border-radius);
+    min-width: map-deep-get($c-map, min-width);
+    height: map-deep-get($c-map, height);
+
+    &--empty {
+        border: dashed 1px map-deep-get($c-map, themes, primary, border-color) !important;
+    }
+
+    &--deactive {
+        pointer-events: none;
+        .c-single-tag__label {
+            color: map-deep-get($c-map, disabled, color) !important;
+        }
+    }
+
+    &--primary {
+        background-color: map-deep-get($c-map, themes,  primary, background-color);
+        border: solid 1px map-deep-get($c-map, themes, primary, border-color);
+    }
+
+    &--secondary {
+        background-color: map-deep-get($c-map, themes,  secondary, background-color);
+        border: solid 1px map-deep-get($c-map, themes, secondary, border-color);
+    }
+
+    &__bar {
+        display: table;
+        height: 100%;
+    }
+
+    &__icon {
+        display: table-cell;
+        vertical-align: middle;
+        text-align: center;
+        width: map-deep-get($c-map, height);
+        font-size: map-deep-get($c-map, icon-size);
+        color: map-deep-get($c-map, themes, primary, icon, color);
+        line-height: 0px;
+    }
+
+    &__label {
+        display: table-cell;
+        vertical-align: middle;
+        text-align: left;
+        white-space: nowrap;
+        padding: 0px 1em;
+        color: map-deep-get($c-map, themes, primary, label, color);
+        line-height: 0px;
+        @include ffamily("semi");
+        i {
+            @include ffamily("semi", "i");
+        }
+    }
+
+    &__action {
+        display: table-cell;
+        vertical-align: middle;
+        text-align: center;
+        width: map-deep-get($c-map, height);
+        font-size: map-deep-get($c-map, icon-size);
+        line-height: 0px;
+    }
+
+
+}
+
+//Reset
+$c-map: null;
+$selected-size: null;

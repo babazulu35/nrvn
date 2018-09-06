@@ -1,0 +1,108 @@
+/*$c-campaign-monitor:();
+$c-campaign-monitor: map-get($c-campaign-monitor, getSettingsMap("c-campaign-monitor"));*/
+
+.c-campaign-monitor {
+    width: 100%;
+    height: auto;
+    border: 1px solid #d5d5d5;
+    border-bottom: 0;
+    float: left;
+    .c-promise-icon--xl {
+        margin-top: 4px;
+        .icon__n--card_giftcard {
+            color: #2799F1;
+        }
+    }
+
+    & + .c-campaign-monitor {
+        margin-top: 3px;
+    }
+    &__item {
+        &-line {
+            ul>li {
+                background: #fff;
+                list-style: none;
+                border-bottom: 1px solid #d5d5d5;
+                display: flex;
+                width: 100%;
+                padding: 5px;
+                
+                > * {
+                    display: flex;
+                }
+
+                &.c-campaign-monitor--field-error {
+                    background-color: #FDF0EF;
+                }
+
+                & + li {
+                    margin-top: 2px;
+                }
+            }
+        }
+        &-product {
+            display: flex;
+            flex-grow: 1;
+            vertical-align: middle;
+            padding: 5px;
+            strong {
+                font-size: 15px;
+                display: block;
+                margin-bottom: 4px;
+            }
+            &--error {
+                color: #f04c41;
+                @include ffamily('semi', 'i');
+                font-size: 10px;
+                &_icon {
+                    display: table-cell;
+                    vertical-align: middle;
+                    font-size: 28px;
+                    color: #f04c41;
+                    text-align: right;
+                    padding-right: 27px;
+                }
+            }
+            &--info {
+                display: table-cell;
+                line-height: 1.1em;
+                p {
+                    font-size: 11px;
+                }
+            }
+        }
+        &-brand {
+            height: 40px;
+            min-width: 50px;
+            display: flex;
+            border-right: 1px solid #d5d5d5;
+            padding-right: 5px;
+            img {
+                margin: auto;
+                width: auto;
+                display: block;
+                height: 100%;
+            }
+        }
+        &-field {
+            &--success {
+                background: #F7F7F7 !important;
+            }
+            &--error {
+                background: #FEF0EF !important;
+            }
+        }
+    }
+}
+
+.campaign-holder {
+    display: block;
+    float: left;
+    width: 100%;
+    &:first-child:not(:last-child) {
+        margin-top: 10px;
+        .c-campaign-monitor {
+            margin-top: 10px;
+        }
+    }
+}

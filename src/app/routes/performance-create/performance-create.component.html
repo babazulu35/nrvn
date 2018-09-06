@@ -1,0 +1,352 @@
+<div class="or-performance-create">
+    <div class="p-header-bar" sticky sticky-main-scroller sticky-release-offset="30" sticky-height-property="55" sticky-width-property="100%" sticky-follow-menu-moves>
+        <div class="p-header-bar__left">
+            <app-header-inline-edit [hasLocalization]="true" [value]="performance?.Localization?.Name" (changeEvent)="titleChangeHandler($event)" [placeholder]="'Performans Adını Giriniz*'" [breadcrumbs]="isEditMode ? [{label:'Performans Düzenle', routerLink:'/performance-create'}] : [{label:'Performans Ekle', routerLink:'/performance-create'}]"></app-header-inline-edit>
+        </div>
+
+        <div class="p-header-bar__right">
+            <app-button (clickEvent)='submitPerformance($event)' [isPromising]="isLoading || isPromising" [isDisabled]="!isValid">KAYDET</app-button>
+            <app-button (clickEvent)='exit($event)' type="icon" icon="close" theme="secondary"></app-button>
+        </div>
+    </div>
+
+    <app-collapsible-container [isAsideOpen]="true" theme="toggle-gray" [asideHasNoPadding]="true" [hasOverlay]="performance?.Status == 5">
+        <div content class="p-container">
+
+            <div class="p-group">
+                <div class="p-group__header">
+                    <div class="p-group__header-bar">
+                        <div class="p-group__header-title">
+                            Program Bilgisi
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-group__item">
+                    <app-performer-search-select (changeEvent)="performersChangeHandler($event)" [performers]="performers"></app-performer-search-select>
+
+                    <app-container-canvas type="footer" [isEmpty]="!performers || performers.length == 0">
+                        <div class="or-performance-create__combo-performance">
+                            <span class="or-performance-create__switch-bar">
+                                <span class="or-performance-create__switch-bar-label">
+                                    Kombine Performans
+                                </span>
+                            <span class="or-performance-create__switch-bar-input">
+                                    <app-checkbox type="lightswitch"
+                                        (changeEvent)="checkHandler($event, 'IsSeason')"
+                                        [isChecked]="performance?.IsSeason"></app-checkbox>
+                                </span>
+                            </span>
+                        </div>
+                    </app-container-canvas>
+                </div>
+            </div>
+
+            <div class="p-group" *ngIf="attributeTypes?.length">
+                <div class="p-group__header">
+                    <div class="p-group__header-bar">
+                        <div class="p-group__header-title">
+                            Özellikler
+                        </div>
+                    </div>
+                </div>
+                <div class="p-group__item">
+                    <app-attributes-select-add-bar [entityTypeId]="entityTypeId" (changeEvent)="attributesChangeHandler($event)" (actionEvent)="attributesActionHandler($event)" [types]="attributeTypes" [attributes]="attributes"></app-attributes-select-add-bar>
+                </div>
+            </div>
+
+            <div class="p-group">
+                <div class="p-group__header">
+                    <div class="p-group__header-bar">
+                        <div class="p-group__header-title">
+                            Diğer Bilgiler
+                        </div>
+                    </div>
+                </div>
+
+                <div class="or-performance-create__info">
+                    <div class="or-performance-create__info-content">
+                        <div class="p-group__item">
+                            <app-venue-select-bar (changeEvent)="venueSelectChangeHandler($event)" (actionEvent)="venueSelectActionHandler($event)" [isDisabled]="performance?.Status != performanceStatus.Draft" [venue]="venue" [template]="template" [settings]="{
+                                    addLabel: 'MEKAN EKLE*'
+                                }" [isEditMode]="isEditMode"></app-venue-select-bar>
+                            <app-helper-text class="margin-top-10 margin-left-10" *ngIf="performance?.Status != performanceStatus.Draft" type="warning">Bu preformans satış aşamasına geçmiştir. Artık mekan ve oturma düzeni değişimi yapılamaz.</app-helper-text>
+                        </div>
+
+                        <div class="p-group__item">
+                            <div class="row">
+                                <div class=" col-xs-8 padding-right-5">
+                                    <div class="p-form-group__label">
+                                        BAŞLANGIÇ TARİHİ<sup>*</sup>
+                                    </div>
+                                    <div class="p-form-group__input">
+                                        <app-text-input name="Date" type="datepicker" placeholder="Bir Tarih Seçiniz" (changeEvent)="dateChangeHandler($event, 'Date')" [date]="performance?.Date"></app-text-input>
+                                    </div>
+                                </div>
+                                <div class="col-xs-8 padding-left-5">
+                                    <div class="p-form-group__label">
+                                        BİTİŞ TARİHİ<sup>*</sup>
+                                    </div>
+                                    <div class="p-form-group__input">
+                                        <app-text-input name="EndDate" type="datepicker" placeholder="Bir Tarih Seçiniz" (changeEvent)="dateChangeHandler($event, 'EndDate')" [minDate]="performance?.Date" [date]="performance?.EndDate"></app-text-input>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class=" col-xs-8 padding-right-5">
+                                    <div class="p-form-group__label">
+
+                                    </div>
+                                    <div class="p-form-group__input">
+                                        <div class="or-performance-create__switch-bar">
+                                            <span class="or-performance-create__switch-bar-label">
+                                                Gece yarısından sonra
+                                            </span>
+                                            <span class="or-performance-create__switch-bar-input">
+                                                <app-checkbox type="lightswitch" [isDisabled]="true"></app-checkbox>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="p-group__item">
+                            <app-profile-photo (changeEvent)="photoChangeHandler($event)" [source]="performance?.Images | image : 'Performance'"></app-profile-photo>
+                            <app-helper-text type="info">Görselin En Az 1024x768px çözünürlükte ve 4:3 oranında olması önerilir Max.10MB</app-helper-text>
+                        </div>
+
+                        <div class="p-group__item">
+                            <div class="p-form-group__label">
+                                NOTLAR<sup>*</sup>
+                            </div>
+                            <div class="p-form-group__input">
+                                <app-md-editor name="Description" [hasLocalization]="true" [localization]="performance?.Localization?.Description" (changeEvent)="descriptionChangeHandler($event)" [options]="{placeholder:'açıklama giriniz',previewOn: true}"></app-md-editor>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-group">
+                <div class="p-group__header">
+                    <div class="p-group__header-bar">
+                        <div class="p-group__header-title">
+                            Sponsor Bilgileri
+                        </div>
+                    </div>
+                </div>
+                <div class="p-group__item">
+                    <app-firm-search-select name="sponsors" (changeEvent)="sponsorChangeHandler($event)" (actionEvent)="sponsorActionHandler($event)" [firmSearchResult]="firmSearchResult" [firmTypes]="firmTypes" [firmList]="sponsors" [settings]="{
+                            addLabel: 'SPONSOR EKLE',
+                            search: {
+                                title: 'Sponsor Ekle',
+                                placeholder: 'Eklemek istediğiniz sponsor ismini yazın',
+                                presets: firmPresets,
+                                feedback: {
+                                    title: 'Aramanız ile eşleşen sponsor kaydı bulunamadı',
+                                    description: 'Arama kriterlerini değiştirerek yeniden deneyebilirsiniz.',
+                                    icon: {type: 'icon', name:'local_atm'}
+                                }
+                            }
+                        }"></app-firm-search-select>
+                </div>
+            </div>
+
+            <div class="p-group">
+                <div class="p-group__header">
+                    <div class="p-group__header-bar">
+                        <div class="p-group__header-title">
+                            Organizatör Bilgileri<sup>*</sup>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-group__item">
+                    <app-firm-search-select name="promoters" (changeEvent)="promoterChangeHandler($event)" (actionEvent)="promoterActionHandler($event)" [firmSearchResult]="firmSearchResult" [firmList]="promoters" [settings]="{
+                            addLabel: 'ORGANİZATÖR EKLE',
+                            search: {
+                                title: 'Organizatör Ekle',
+                                placeholder: 'Eklemek istediğiniz organizatör ismini yazın',
+                                presets: firmPresets,
+                                feedback: {
+                                    title: 'Aramanız ile eşleşen organizatör kaydı bulunamadı',
+                                    description: 'Arama kriterlerini değiştirerek yeniden deneyebilirsiniz.',
+                                    icon: {type: 'icon', name:'local_atm'}
+                                }
+                            }
+                        }"></app-firm-search-select>
+                </div>
+            </div>
+        </div>
+
+        <div aside class="c-collapsible-container__aside--no-padding">
+            <div class="p-container">
+                <div class="p-group text-sm-center">
+                    <div class="p-group__item margin-top-5">
+                        <app-card-item viewMode="ghost" [title]="performance?.Localization?.Tr?.Name" [data]="{entryType: 'performance'}" [avatarData]="{source: performance?.Images | image : 'Performance'}">
+                            <ul>
+                                <li *ngIf="isValidDate(performance?.Date)" [innerHTML]="relativeDatePipe.transform([performance.Date])"></li>
+                                <li *ngIf="venue">{{venue?.Name}}, {{venue?.VenueLocationInfo?.CityName}}</li>
+                                <li>{{performanceStatus[performance?.Status] | enumTranslator}}</li>
+                            </ul>
+                        </app-card-item>
+                    </div>
+                </div>
+
+                <div class="p-group">
+                    <div class="p-group__header">
+                        <div class="p-group__header-bar">
+                            <div class="p-group__header-title">AYARLAR</div>
+                        </div>
+                    </div>
+
+                    <div class="p-group__item">
+                        <div class="p-group__list">
+                            <div class="p-group__list-item">
+                                <div class="p-group__list-item-bar">
+                                    <div class="p-group__list-item-label">Yayınla</div>
+                                    <div class="p-group__list-item-action">
+                                        <app-checkbox name="PublishDateFieldOn" (changeEvent)="checkHandler($event, 'PublishDateFieldOn', 'flags')" [isChecked]="flags.PublishDateFieldOn" type="lightswitch"></app-checkbox>
+                                    </div>
+                                </div>
+                                <div class="p-group__list-item-content" *ngIf="flags.PublishDateFieldOn">
+                                    <div class="p-form-group">
+                                        <app-text-input name="PublishDate" type="datepicker" size="sm-text" placeholder="Bir Tarih Seçiniz" (changeEvent)="dateChangeHandler($event, 'PublishDate')" [date]="performance?.PublishDate"></app-text-input>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="p-group__list-item">
+                                <div class="p-group__list-item-bar">
+                                    <div class="p-group__list-item-label">Rezervasyon yapılabilir<sup *ngIf="performance?.ReservationAvailable">*</sup></div>
+                                    <div class="p-group__list-item-action">
+                                        <app-checkbox name="ReservationAvailable" type="lightswitch" (changeEvent)="checkHandler($event, 'ReservationAvailable')" [isChecked]="performance?.ReservationAvailable"></app-checkbox>
+                                    </div>
+                                </div>
+                                <div class="p-group__list-item-content" *ngIf="performance?.ReservationAvailable && performance?.ReservationExpirationType != 0">
+                                    <div class="p-form-group">
+                                        <div class="p-form-group__input">
+                                            <app-selectbox name="ReservationExpirationType" placeholder="Seçiniz" [options]="expirationTypes" [value]="performance?.ReservationExpirationType" (changeEvent)="selectChangeHandler($event, 'ReservationExpirationType')"></app-selectbox>
+                                        </div>
+                                        <div class="p-form-group__input">
+                                            <app-selectbox placeholder="Süre Seçin" [options]="hoursRange" [value]="performance?.ReservationExpirationTime" (changeEvent)="selectChangeHandler($event, 'ReservationExpirationTime')"></app-selectbox>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="p-group__list-item">
+                                <div class="p-group__list-item-bar">
+                                    <div class="p-group__list-item-label">Arkadaş davet edilebilir<sup *ngIf="performance?.IsInviteFriendAvailable">*</sup></div>
+                                    <div class="p-group__list-item-action">
+                                        <app-checkbox name="IsInviteFriendAvailable" type="lightswitch" (changeEvent)="checkHandler($event, 'IsInviteFriendAvailable')" [isChecked]="performance?.IsInviteFriendAvailable"></app-checkbox>
+                                    </div>
+                                </div>
+                                <div class="p-group__list-item-content" *ngIf="performance?.IsInviteFriendAvailable && performance?.InviteFriendExpirationType != 0">
+                                    <div class="p-form-group">
+                                        <div class="p-form-group__input">
+                                            <app-selectbox name="InviteFriendExpirationType" placeholder="Seçiniz" [options]="expirationTypes" [value]="performance?.InviteFriendExpirationType" (changeEvent)="selectChangeHandler($event, 'InviteFriendExpirationType')"></app-selectbox>
+                                        </div>
+                                        <div class="p-form-group__input">
+                                            <app-selectbox placeholder="Süre Seçin" [options]="hoursRange" [value]="performance?.InviteFriendExpirationTime" (changeEvent)="selectChangeHandler($event, 'InviteFriendExpirationTime')"></app-selectbox>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="p-group__list-item">
+                                <div class="p-group__list-item-bar">
+                                    <div class="p-group__list-item-label">Bilet yönlendirilebilir</div>
+                                    <div class="p-group__list-item-action">
+                                        <app-checkbox name="IsTicketForwardingAvailable" (changeEvent)="checkHandler($event, 'IsTicketForwardingAvailable')" [isChecked]="performance?.IsTicketForwardingAvailable" type="lightswitch"></app-checkbox>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="p-group__list-item">
+                                <div class="p-group__list-item-bar">
+                                    <div class="p-group__list-item-label">Barkod oluşturulabilir</div>
+                                    <div class="p-group__list-item-action">
+                                        <app-checkbox name="IsGenerateBarcodeAvailable" (changeEvent)="checkHandler($event, 'IsGenerateBarcodeAvailable')" [isChecked]="performance?.IsGenerateBarcodeAvailable" type="lightswitch"></app-checkbox>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-group">
+                    <div class="p-group__header">
+                        <div class="p-group__header-bar">
+                            <div class="p-group__header-title">ERİŞİM KONTROL SİSTEMİ ENTEGRASYONU</div>
+                        </div>
+                    </div>
+
+                    <div class="p-group__item">
+                        <div class="p-group__list">
+                            <div class="p-group__list-item">
+                                <div class="p-group__list-item-content">
+                                    <div class="p-form-group">
+                                        <div class="p-form-group__input">
+                                            <app-selectbox name="AccessIntegrationTypeId" placeholder="Seçiniz" [options]="accessIntegrationTypes" [value]="performance?.AccessIntegrationTypeId" (changeEvent)="selectChangeHandler($event, 'AccessIntegrationTypeId')"></app-selectbox>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-group" *ngIf="isEditMode">
+                    <div class="p-group__item" *ngIf="performance?.Status == 2 || performance?.Status == 6">
+                        <app-button *ngIf="performance?.Status == 2" (click)="suspendEvent()" size="full-width" theme="light">ERTELE</app-button>
+                        <app-narrow-col-status-feedback *ngIf="performance?.Status == 6" style="position: relative; z-index: 101;" (actionEvent)="actionHandler($event)" [data]='{
+                                icon: "timer",
+                                title: "Bu Etkinlik Ertelenmiş",
+                                content: performance?.SuspensionReason
+                            }' [action]='{name: "unsuspend", label: "ERTELEMEYİ KALDIR", isDisabled: performance?.SuspensionReason ? false : true}'></app-narrow-col-status-feedback>
+                    </div>
+
+                    <div class="p-group__item">
+                        <app-button *ngIf="performance?.Status != 5" (click)="cancelEvent()" size="full-width" theme="danger">İPTAL ET</app-button>
+                        <app-narrow-col-status-feedback *ngIf="performance?.Status == 5" style="position: relative; z-index: 101;" (actionEvent)="actionHandler($event)" [data]='{
+                                icon: "do_not_disturb",
+                                title: "Bu Etkinlik İptal Edilmiş",
+                                content: performance?.CancellationReason
+                            }'></app-narrow-col-status-feedback>
+                    </div>
+
+                    <div class="p-group__item" *ngIf="performance?.Status == 1 || performance?.Status == 3">
+                        <app-button (click)="resaleEvent()" size="full-width" theme="secondary">SATIŞA AÇ</app-button>
+                    </div>
+                    <div class="p-group__item">
+                        <app-button *ngIf="'Performance_ResetBarcode' | authRole" (clickEvent)="refreshBarcode()" [isPromising]="barcodePromising" size="full-width" theme="primary">ERİŞİM KODLARINI SIFIRLA</app-button>
+                    </div>
+                </div>
+
+                <div class="p-group">
+                    <div class="p-group__header" *ngIf="performance?.Event">
+                        <div class="p-group__header-bar">
+                            <div class="p-group__header-title">BAĞLI ETKİNLİK</div>
+                        </div>
+                    </div>
+                    <div class="p-group__item">
+                        <app-narrow-col-action-offer *ngIf="performance?.Id && !performance?.Event" (actionOnClick)="openEventSearchBox()" [data]="{label: 'Etkinliğe Bağla'}">
+                            <span>Bu performans henüz bir etklinliğe bağlanmadı. <b>Etkinliğe bağlamak ister misiniz?</b></span>
+                        </app-narrow-col-action-offer>
+
+                        <app-narrow-col-action-block *ngIf="performance?.Event" (actionEvent)="actionHandler($event)" [action]="{name: 'relinkEvent', iconName:'replay'}" [contextMenuItems]="[
+                                {action: 'unlinkEvent', label: 'Etkinlikten Çıkar', icon: 'flash_off'}
+                            ]" [data]='{
+                                isActive: performance?.Event?.Status == 2,
+                                image: performance?.Event?.Images,
+                                label: performance?.Event?.Localization?.Name
+                                }'></app-narrow-col-action-block>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </app-collapsible-container>
+</div>

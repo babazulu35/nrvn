@@ -1,0 +1,28 @@
+$overide-settings: (
+  with-cover-image: (
+    className: ".with-cover-image",
+    top-height: map-get($l-header, height) + 322px, // 322px cover image yüksekliğidir
+    queries: (
+      xs: (
+        top-height: map-get($l-header, height) + 110px, //110px cover image yüksekliğidir
+      )
+    )
+  ),
+  venues: (
+    className: ".venues",
+    icon-color: #bdbdbd
+  ),
+  performers: (
+    className: ".performers",
+    icon-color: #dedede
+  )
+);
+
+@function getOverrideSettings($key) {
+  @if map-has-key($override-settings, $key) {
+    @return map-get($override-settings, $key);
+  }
+
+  @warn "Unkown '#{$key}' in $override-settings.";
+  @return null;
+};

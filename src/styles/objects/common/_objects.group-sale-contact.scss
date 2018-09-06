@@ -1,0 +1,16 @@
+/* --------------------------------------------------------
+author: Abdullah Karadeniz
+----------------------------------------------------------*/
+$oc-group-sale-contact: (
+	
+);
+
+$oc-group-sale-contact: map-merge($oc-group-sale-contact, getSettingsMap("oc-group-sale-contact"));
+$oc-map: $oc-group-sale-contact;
+
+.oc-group-sale-contact {
+    display: block;
+    
+}
+
+$oc-map: null;

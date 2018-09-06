@@ -1,0 +1,154 @@
+<div class="or-cms-contents">
+    <div class="p-header-bar" sticky sticky-main-scroller sticky-release-offset="30" sticky-height-property="55" sticky-width-property="100%" sticky-follow-menu-moves>
+        <div class="p-header-bar__left">
+            <h2>İçerik Ekle</h2>
+        </div>
+
+        <div class="p-header-bar__right">
+            <app-button (clickEvent)='addNewContent($event)' [isPromising]="isLoading" [isDisabled]="!canAddNewContent">EKLE</app-button>
+        </div>
+    </div>
+
+    <app-split-container fixedFloat="left" [fixedWidth]="250">
+        <div fixed left>
+            <div class="p-container p-container--has-footer p-container--no-padding padding-top-30">
+                <div class="p-group">
+                    <div class="p-group__item">
+                        <app-tree-view
+                            (selectEvent)="contentTypeChangeHandler($event)"
+                            [isAllEnabled]="false"
+                            title="İçerik Biçimleri"
+                            [list]="contentTypeList"></app-tree-view>
+                    </div>
+                </div>
+            </div>
+            <div class="p-footer">
+                <span><app-button (clickEvent)="gotoContentTypeCreate($event)" type="icon" icon="plus"></app-button><app-button (clickEvent)="gotoContentTypeCreate($event)" type="link" label="YENİ İÇERİK BİÇİMİ EKLE"></app-button></span>
+            </div>
+        </div>
+
+        <div fluid>
+            <div class="p-container padding-bottom-5">
+                <div class="p-group">
+                    <div class="p-group__item row">
+                        <div class="col-sm-5">
+                            <app-inline-search-input
+                                (onInputSave)="onInputChange($event)"
+                                (onInputChange)="onInputChange($event)"
+                                [isIconAlignLeft]='true'
+                                placeholder="İçerikler arasında arayın" ></app-inline-search-input>
+                        </div>
+                        <div class="col-sm-11 text-xs-right">
+                            <app-pill-group [canToggle]="false" [pills]="contentTypeFilters" [selectedPill]="selectedContentTypeFilter" (changeEvent)="filterChangeHandler($event)"> </app-pill-group>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <app-no-data *ngIf="!contents?.length" style="max-width: 50%;margin-top:30px" [hasContainer]="true" title="Aramanız ile eşleşen içerik bulunamadı" description="Arama kriterini değiştirerek yeniden deneyebilirsiniz"></app-no-data>
+
+            <div class="o-list-view" *ngIf="contents?.length">
+                <div class="o-list-view__content">
+                    <app-responsive-table [ngClass]="{'main-loader': isLoading }" [hasAction]="true">
+                        <div class="c-responsive-table__caption row">
+                            <div class="c-responsive-table__primary-column hidden-md-down col-lg-8 col-xl-6">
+                                <app-sort-title sortTitle='İÇERİK BAŞLIĞI' [activeTitle]="null" sortBy='Name' (toggleSortTitle)="toggleSortTitle($event)"></app-sort-title>
+                            </div>
+
+                            <div class="c-responsive-table__secondary-column hidden-sm-down col-lg-8 col-xl-10">
+                                <div class="hidden-lg-down col-xl-4">
+                                    <app-sort-title sortTitle='EKLEYEN' sortBy='CreatedBy' [activeTitle]="null" (toggleSortTitle)="toggleSortTitle($event)"></app-sort-title>
+                                </div>
+
+                                <div class="hidden-lg-down col-xl-4">
+                                    <app-sort-title sortTitle='E. TARİHİ' sortBy='Created' [activeTitle]="null" (toggleSortTitle)="toggleSortTitle($event)"></app-sort-title>
+                                </div>
+                                
+                                <div class="col-lg-8 col-xl-4">
+                                    <app-sort-title sortTitle='GÜNCELLEYEN' sortBy='ModifiedBy' [activeTitle]="null" (toggleSortTitle)="toggleSortTitle($event)"></app-sort-title>
+                                </div>
+
+                                <div class="col-lg-8 col-xl-4">
+                                    <app-sort-title sortTitle='G. TARİHİ' sortBy='Modified' [activeTitle]="null" (toggleSortTitle)="toggleSortTitle($event)"></app-sort-title>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="c-responsive-table__row row" *ngFor="let content of contents">
+                            <div class="c-responsive-table__primary-column col-md-16 col-lg-8 col-xl-6">
+                                <div class="c-primary-column-line c-primary-column-line--with-select">
+                                    <div class="c-primary-column-line__primary-content">
+                                        <div class="c-primary-column-line__select">
+                                            <!-- Checkbox geçici olarak etkin değil -->
+                                            <app-checkbox [isDisabled]="true" heme="ligth" type="circle" [isChecked]="selectedItems?.indexOf(content) > -1" (checkedAction)="selectItem($event, content);"></app-checkbox>
+                                        </div>
+                                        <a class="c-primary-column-line__title" [routerLink]="['/cms', 'content', content._id, 'edit']">
+                                            {{content?.Title}}
+                                        </a>
+                                    </div>
+
+                                    <div class="c-primary-column-line__secondary-content">
+                                        <div class="c-responsive-table__secondary-item hidden-xl-up">
+                                            <span class="c-responsive-table__secondary-item-label">EKLEYEN</span>
+                                            <span class="c-responsive-table__secondary-item-value">{{content?.CreatedBy}}</span>
+                                        </div>
+
+                                        <div class="c-responsive-table__secondary-item hidden-xl-up">
+                                            <span class="c-responsive-table__secondary-item-label">E. TARİHİ</span>
+                                            <span class="c-responsive-table__secondary-item-value">{{content?.Created | relativeDate}}</span>
+                                        </div>
+
+                                        <div class="c-responsive-table__secondary-item hidden-lg-up">
+                                            <span class="c-responsive-table__secondary-item-label">GÜNCELLEYEN</span>
+                                            <span class="c-responsive-table__secondary-item-value">{{content?.ModifiedBy}}</span>
+                                        </div>
+
+                                        <div class="c-responsive-table__secondary-item hidden-lg-up">
+                                            <span class="c-responsive-table__secondary-item-label">G. TARİHİ</span>
+                                            <span class="c-responsive-table__secondary-item-value">{{content?.Modified | relativeDate}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="c-responsive-table__secondary-column hidden-md-down col-lg-8 col-xl-10">
+                                <div class="hidden-lg-down col-xl-4">
+                                    <span>{{content?.CreatedBy}}</span>
+                                </div>
+
+                                <div class="hidden-lg-down col-xl-4">
+                                    <span>{{content?.Created | relativeDate}}</span>
+                                </div>
+
+                                <div class="col-lg-8 col-xl-4">
+                                    <span>{{content?.ModifiedBy}}</span>
+                                </div>
+
+                                <div class="col-lg-8 col-xl-4">
+                                    <span>{{content?.Modified | relativeDate}}</span>
+                                </div>
+
+                            </div>
+
+                            <div class="c-responsive-table__action-btn">
+                                <span *ngIf="contextMenuData?.length == 1"><app-button (clickEvent)="doAction(contextMenuData[0].action, content)" type="icon" [icon]="contextMenuData[0]?.icon" theme="secondary"></app-button></span>
+                                <span *ngIf="contextMenuData?.length > 1"><app-button (clickEvent)="openContextMenu($event, content)" type="icon" [icon]="'more_vert'" theme="secondary"></app-button></span>
+                            </div>
+                        </div>
+                    </app-responsive-table>
+                </div>
+
+                <div class="o-list-view__footer">
+                    <app-pagination size="xs"
+                        [totalItem]="count"
+                        [showItemPerPage]="pageSize"
+                        [currentPage]="currentPage"
+                        (transistPage)="transistPage($event)"
+                        [options]="pageSizes"
+                        (changeEvent)="changePageSize($event)"></app-pagination>
+                </div>
+            </div>
+
+        </div>
+    </app-split-container>
+</div>

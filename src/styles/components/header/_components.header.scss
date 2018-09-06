@@ -1,0 +1,126 @@
+$c-header: ( position:relative, height: 70px, background-color: #ffffff, padding-side: 30px, items-margin: 20px, seperate-color: #dcdce5, z-index: map-get($z-index, header), title: ( color: #35383d, font-size: 26px), icons: ( active-color: #262126, deactive-color: #bdbdbd, font-size: 27px), user: ( color: #2e2e2f, font-size: 13px, avatar-size: 40px), modal-placeholder: ( width: 500px, height: 500px));
+// Merge settings and defaults
+$c-header: map-merge($c-header, getSettingsMap("c-header"));
+// Set shortcuts
+$c-map: $c-header;
+.c-header {
+    display: table;
+    position: map-get($c-map, position);
+    height: map-get($c-map, height);
+    padding: 0px map-get($c-map, padding-side);
+    width: 100%;
+    z-index: map-get($c-map, z-index);
+    background-color: map-get($c-map, background-color);
+    //@include transition(width getTransition(main-menu));
+    border-bottom: 1px solid map-get($c-map, seperate-color);
+    &+* {
+        display: block;
+        //margin-top: map-get($c-map, height);
+    }
+    &__title {
+        display: table-cell;
+        vertical-align: middle;
+        @include ffamily('bold');
+        font-size: map-deep-get($c-map, title, font-size);
+        color: map-deep-get($c-map, title, color);
+        width: 100%;
+        [ng-reflect-router-link] {
+            cursor: pointer;
+            outline: none;
+        }
+    }
+    &__tools {
+        display: table-cell;
+        vertical-align: middle;
+        list-style-type: none;
+        white-space: nowrap;
+        padding-right: map-deep-get($c-map, items-margin);
+        &-item {
+            position: relative;
+            display: inline-block;
+            color: map-deep-get($c-map, icons, deactive-color);
+            font-size: map-deep-get($c-map, icons, font-size);
+            padding: 0px map-deep-get($c-map, items-margin);
+            cursor: pointer;
+            &:before {
+                content: "";
+                position: absolute;
+                width: 100%;
+                height: calc(100% - 0.45em);
+                top: 0.05em;
+                left: 0px;
+                border-right: solid 1px map-deep-get($c-map, border-color);
+            }
+            &:first-child:before {
+                //border-left: solid 1px map-deep-get($c-map, border-color);
+            }
+            .tag-pill {
+                position: absolute;
+                font-size: 0.415em;
+                top: 75%;
+                left: 50%;
+                color: #fff;
+                padding: 0.1em 0.5em;
+                @include transform(translateX(-50%));
+                @include ffamily("regular");
+            }
+        }
+    }
+    &__user {
+        display: table-cell;
+        vertical-align: middle;
+        white-space: nowrap;
+        &-name {
+            @include ffamily('regular');
+            display: inline-block;
+            vertical-align: middle;
+            font-size: map-deep-get($c-map, user, font-size);
+            b {
+                @include ffamily('bold');
+            }
+        }
+        &-avatar {
+            display: inline-block;
+            vertical-align: middle;
+            font-size: map-deep-get($c-map, user, avatar-size);
+            line-height: 0px;
+            margin-left: 0.3em;
+            margin-right: 0.15em;
+        }
+        &-action-button {
+            display: inline-block;
+            vertical-align: middle;
+            color: map-deep-get($c-map, icons, deactive-color);
+            font-size: map-deep-get($c-map, icons, font-size);
+            line-height: 0px;
+            cursor: pointer;
+        }
+    }
+    &__logo {
+        display: table-cell;
+        vertical-align: middle;
+        white-space: nowrap;
+        height: auto;
+        line-height: 0px;
+        img {
+            max-width: none;
+            max-height: 100%;
+            height: 48px;
+        }
+    }
+}
+
+.attach-header {
+    &--sticky {
+        position: fixed;
+        top: map-get($c-map, height);
+        &+* {
+            display: block;
+            //margin-top: map-get($c-map, height);
+        }
+    }
+}
+
+//Reset
+$c-map: null;
+$selected-size: null;

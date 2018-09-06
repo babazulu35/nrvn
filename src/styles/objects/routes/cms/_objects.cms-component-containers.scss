@@ -1,0 +1,15 @@
+/* --------------------------------------------------------
+author: Abdullah Karadeniz
+----------------------------------------------------------*/
+
+$or-cms-component-containers: ( border-color: #dcdce5, switch-bar: ( label: ( color: #373a3c, font-size: 14px, )));
+$or-cms-component-containers: map-merge($or-cms-component-containers, getSettingsMap("or-cms-component-containers"));
+$oc-map: $or-cms-component-containers;
+.or-cms-component-containers {
+    display: block;
+    position: relative;
+}
+
+$oc-map: null;/* --------------------------------------------------------
+author: Abdullah Karadeniz
+----------------------------------------------------------*/

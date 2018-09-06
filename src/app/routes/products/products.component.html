@@ -1,0 +1,19 @@
+<app-tab-bar [data]="tabs">
+    <div right>
+        <app-button [routerLink]="['/product/create']">YENİ ÜRÜN OLUŞTUR</app-button>
+    </div>
+</app-tab-bar>
+<div class="row o-filter-bar">
+    <div class="col-xs-5">
+        <app-inline-search-input (onInputSave)="onInputChange($event)" (onInputChange)="onInputChange($event)" [isIconAlignLeft]='true' placeholder='Etkinlikler Arasında Arayın'></app-inline-search-input>
+    </div>
+    <div class="col-xs-5 float-xs-right">
+        <!--        <div class="o-tab__button float-xs-right">
+            <app-selectbox [options]=sortParams (changeEvent)="sortProducts($event)" class="margin-right-10"></app-selectbox>
+        </div>-->
+    </div>
+    <!-- Selet Box Ends-->
+</div>
+<div class="container">
+    <router-outlet></router-outlet>
+</div>

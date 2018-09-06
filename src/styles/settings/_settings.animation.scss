@@ -1,0 +1,12 @@
+$animations: ( zoom-in: zoomIn, zoom-out: zoomOut, fade-in: fadeIn, fade-out: fadeOut, pulse: pulse, bottom-in: bottomIn, bottom-out:bottomOut);
+@function getAnimation($key, $content:"") {
+    @if map-has-key($animations, $key) {
+        @return map-get($animations, $key) $content;
+    }
+    @warn "Unkown '#{$key}' in $animations at _settings.animation.scss.";
+    @return null;
+}
+
+;
+$main-menu-transition-time: 0.3s;
+$main-menu-transition-ease: ease(in-out-sine);

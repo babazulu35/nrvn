@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html class="no-js" lang="tr">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<link rel="stylesheet" href="../../../../../bower_components/pikaday/css/pikaday.css">
+	<link rel="stylesheet" href="../../../css/main.css">
+</head>
+<body style="padding:20px;">
+	<!-- Your Component Goes Here -->
+
+	<div class="c-timepicker">
+		<label class="c-timepicker__label">SAAT</label>
+		<div class="c-timepicker__input-wrap">
+			<input type="text" id="timepicker">
+			<i class="icon__n icon__n--access_time c-timepicker__icon"></i>	
+		</div>
+	</div>
+
+
+	<script src="../../../../../bower_components/pikaday/pikaday.js"></script>
+	<script>
+	    var picker = new Pikaday({
+	    	field: document.getElementById('timepicker'),
+				showTime: true,
+				showMinutes: true,
+				showSeconds: false,
+				use24hour: true,
+				incrementHourBy: 1,
+				incrementMinuteBy: 1,
+				incrementSecondBy: 1,
+				autoClose: true,
+				timeLabel: "Saat" // optional string added to left of time select
+	  });
+	</script>
+
+</body>
+</html>
+<!-- End Of Html -->

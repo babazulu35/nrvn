@@ -1,0 +1,61 @@
+$c-performer-search-select: (
+  border-radius: 3px,
+
+  container: (
+    padding: 20px,
+    border-color: #dcdce5,
+    background-color: #f7f7f7,
+  ),
+
+  list: (
+    
+    item: (
+      margin: 6px,
+    )
+  ),
+
+  add-button: (
+    font-size: 33.275px,
+    margin: 20px
+  )
+);
+
+// Merge settings and defaults
+$c-performer-search-select: map-merge($c-performer-search-select, getSettingsMap("c-performer-search-select"));
+
+// Set shortcuts
+$c-map: $c-performer-search-select;
+
+.c-performer-search-select {
+  display: inline-block;
+  position: relative;
+  line-height: 0px;
+  font-size: 0px;
+  min-width: map-deep-get($c-map, width);
+  width: 100%;
+
+  &__list-container {
+    display: block;
+    width: 100%;
+  }
+
+  &__list {
+    display: block;
+    width: 100%;
+    list-style-type: none;
+
+    &-item {
+      & + .c-performer-search-select__list-item {
+        margin-top: map-deep-get($c-map, list, item, margin);
+      }
+    }
+  }
+
+  &__add-button {
+    display: block;
+    text-align: center;
+    margin-top: map-deep-get($c-map, add-button, margin);
+    font-size: map-deep-get($c-map, add-button, font-size);
+  }
+
+}

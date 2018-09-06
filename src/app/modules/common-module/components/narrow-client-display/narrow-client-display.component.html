@@ -1,0 +1,22 @@
+<ng-template [ngIf]="!hasUser">
+    <div class="c-narrow-client-display__avatar">
+        <app-avatar [source]='null' icon='person'></app-avatar>
+    </div>
+    <app-button theme="secondary" [label]="addCustomerButtonLabel" (click)="openCustomerSearchBox()"></app-button>
+</ng-template>
+
+<ng-template [ngIf]='hasUser'>
+    <div class="c-narrow-client-display__avatar">
+        <app-avatar [source]='user?.ProfilePicture' [letters]='userLetters'></app-avatar>
+    </div>
+
+    <span class="c-narrow-client-display__text c-narrow-client-display__name">{{user?.Name}} {{user?.Surname}}</span>
+    <span class="c-narrow-client-display__text c-narrow-client-display__phone">{{user?.PhoneNumber | phoneFormat:true}}</span>
+    <span class="c-narrow-client-display__text c-narrow-client-display__address">{{user?.Address}} {{user?.Town?.Name || '-'}} / {{user?.City?.Name || '-'}} </span>
+
+    <div class="c-narrow-client-display__operations">
+        <span (click)='openCustomerSearchBox()' href="#" class="c-narrow-client-display__edit"><i class="icon__n icon__n--edit"></i></span>
+        <span (click)='removeUserData()' href="#" class="c-narrow-client-display__delete"><i class="icon__n icon__n--delete"></i></span>
+    </div>
+
+</ng-template>

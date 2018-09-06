@@ -1,0 +1,22 @@
+/* --------------------------------------------------------
+author: Abdullah Karadeniz
+----------------------------------------------------------*/
+
+$or-terminal-edit: ( border-color: #dcdce5, switch-bar: ( label: ( color: #373a3c, font-size: 14px, )));
+$or-terminal-edit: map-merge($or-terminal-edit, getSettingsMap("or-terminal-edit"));
+$oc-map: $or-terminal-edit;
+.or-terminal-edit {
+    display: block;
+    position: relative;
+
+    .p-container {
+        min-width: 650px;
+        max-width: 900px;
+        width: 75%;
+        margin: auto;
+    }
+}
+
+$oc-map: null;/* --------------------------------------------------------
+author: Abdullah Karadeniz
+----------------------------------------------------------*/

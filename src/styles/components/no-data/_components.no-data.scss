@@ -1,0 +1,148 @@
+// Set defaults
+$c-no-data: ( color: #35383d, container: ( padding: 50px, border-radius: 3px, border-color: #dcdce5, background-color: #f7f7f7, ), title: ( font-size: 15px, ), description: ( font-size: 13px), icon: ( font-size: 100px, color: #D2D3D3), button: ( margin: 2em 0px 0px));
+// Merge settings and defaults
+$c-no-data: map-merge($c-no-data, getSettingsMap("c-no-data"));
+// Set shortcuts
+$c-map: $c-no-data;
+
+.c-no-data--container[ng-reflect-is-loading="true"] {
+            padding:0;
+            background:inherit;
+            border:inherit;
+            &:after {
+                content: "";
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(255, 255, 255, 0.7);
+                animation: getAnimation(zoom-in) 1s ease;
+                z-index: 9999999
+            }
+            &:before {
+                content: "";
+                position: absolute;
+                width: 48px;
+                height: 48px;
+                background-image: url('/assets/images/svg/content-loader.svg');
+                transform: translate(-50%, -50%);
+                left: 50%;
+                top: 50%;
+                z-index: 19999999;
+                border-radius: 50%;
+            }
+            [class*="c-no-data"]{
+                display:none;
+            }
+        }    
+.c-no-data {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    &--container {
+        padding: map-deep-get($c-map, container, padding);
+        background-color: map-deep-get($c-map, container, background-color);
+        border: 1px dashed map-deep-get($c-map, container, border-color);
+        border-radius: map-deep-get($c-map, container, border-radius);
+    }
+    &--dashed-container {
+        border-style: dashed;
+    }
+    &--card_view {
+        max-width: 100% !important;
+        margin-top: 15px;
+        .c-no-data {
+            border-top: 0 !important;
+            border-bottom: 1px solid #dcdce5;
+            padding-bottom: 20px;
+        }
+    }
+    &--list_view {
+        .c-no-data {
+            border-top: 0 !important;
+        }
+    }
+    &__icon {
+        display: flex;
+        position: relative;
+        align-items: flex-end;
+        justify-content: center;
+        font-size: map-deep-get($c-map, icon, font-size);
+        width: 1em;
+        height: 1em;
+        line-height: 0px;
+        margin: auto;
+        color: map-deep-get($c-map, icon, color);
+        &--lmd {
+            font-size: map-deep-get($c-map, icon, font-size) * 1.5;
+        }
+        &--lg {
+            font-size: map-deep-get($c-map, icon, font-size) * 2;
+        }
+        &--md {
+            font-size: map-deep-get($c-map, icon, font-size);
+        }
+        &--sm {
+            font-size: map-deep-get($c-map, icon, font-size) / 1.5;
+        }
+
+        &-container {
+            display: flex;
+            position: relative;
+            width: 1em;
+            height: 1em;
+            align-items: center;
+            text-align: center;
+            justify-content: center;
+            border-radius: 0.5em;
+            background-color: map-deep-get($c-map, container, background-color);
+            border: 2px solid map-deep-get($c-map, container, border-color);
+
+            .icon__n {
+                font-size: 0.5em;
+            }
+
+            &:after {
+                content: "0";
+                font-size: map-deep-get($c-map, icon, font-size)/5;
+                @include ffamily('bold');
+                position: absolute;
+                bottom: -0.5em;
+                right: -0.5em;
+                padding: 1em;
+                display: flex;
+                align-items: center;
+                text-align: center;
+                background-color: map-deep-get($c-map, container, border-color);
+                color: map-deep-get($c-map, container, background-color);
+                border-radius: 2em;
+                line-height: 0.5em;
+            }
+        }
+    }
+    &__title {
+        @include ffamily('bold', 'i');
+        font-size: map-deep-get($c-map, title, font-size);
+        line-height: 1.3em;
+        margin: 1.75em 0px 0.35em;
+        color: map-get($c-map, color);
+    }
+    &__description {
+        @include ffamily('regular');
+        font-size: map-deep-get($c-map, description, font-size);
+        line-height: 1.5em;
+        color: map-get($c-map, color);
+    }
+    &__button {
+        margin: map-deep-get($c-map, button, margin);
+        text-align: center;
+    }
+}
+
+//Reset
+$c-map: null;
+$c-no-data: null;

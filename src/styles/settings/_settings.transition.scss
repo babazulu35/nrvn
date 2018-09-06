@@ -1,0 +1,19 @@
+$transitions: (
+  media-query: (
+    time: 0.3s,
+    ease: getEase(out-expo)
+  ),
+  main-menu: (
+    time: 0.4s,
+    ease: getEase(out-expo)
+  )
+);
+
+@function getTransition($key) {
+  @if map-has-key($transitions, $key) {
+    @return map-deep-get($transitions, $key, time) map-deep-get($transitions, $key, ease);
+  }
+
+  @warn "Unkown '#{$key}' in $transitions.";
+  @return null;
+};

@@ -1,0 +1,17 @@
+// Set Defaults
+$or-performance-sales: (
+  
+);
+
+// Merge settings and defaults
+$or-performance-sales: map-merge($or-performance-sales, getSettingsMap("or-performance-sales"));
+
+// Set shortcuts
+$o-map: $or-performance-sales;
+
+
+.or-performance-sales {
+    display: block;
+}
+
+$o-map: null;

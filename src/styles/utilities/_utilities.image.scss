@@ -1,0 +1,9 @@
+
+// imaj yuvarlama
+.u-image{
+	&--round {
+  		@include t--border-radius(50%)
+  		object-fit: cover;
+	}
+}
+

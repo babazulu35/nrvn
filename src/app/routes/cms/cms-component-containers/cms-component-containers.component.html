@@ -1,0 +1,74 @@
+<div class="or-cms-contents">
+    <div class="p-header-bar" sticky sticky-main-scroller sticky-release-offset="30" sticky-height-property="55" sticky-width-property="100%" sticky-follow-menu-moves>
+        <div class="p-header-bar__left">
+            <h2>Bileşen Grupları</h2>
+        </div>
+
+        <div class="p-header-bar__right">
+            <app-button (clickEvent)='addNewComponentContainer($event)' [isPromising]="isLoading">EKLE</app-button>
+        </div>
+    </div>
+
+    <app-split-container [fixedWidth]="0">
+
+      <div fluid>
+        <div class="p-container">
+          <div class="p-group" *ngIf="componentContainers?.length">
+            
+            <div class="p-group__item">
+              <app-grid-list>
+                <li *ngFor="let componentContainer of componentContainers">
+                    <app-cms-component-container-card
+                        (actionEvent)="componentContainerCardActionHandler($event)"
+                        [componentContainer]="componentContainer" ></app-cms-component-container-card>
+                </li>
+              </app-grid-list>
+            </div>
+          </div>
+
+          <!-- <div class="p-group" *ngIf="groupComponentContainers?.length">
+            <div class="p-group__header p-group__header--border">
+              <div class="p-group__header-bar">
+                <div class="p-group__header-title">
+                  Grup Bileşenler
+                </div>
+              </div>
+            </div>
+
+            <div class="p-group__item">
+              <app-grid-list>
+                <li *ngFor="let componentContainer of groupComponentContainers">
+                    <app-cms-component-container-card
+                        (actionEvent)="componentContainerCardActionHandler($event)"
+                        [componentContainer]="componentContainer" ></app-cms-component-container-card>
+                </li>
+              </app-grid-list>
+            </div>
+          </div>
+
+          <div class="p-group" *ngIf="singleComponentContainers?.length">
+            <div class="p-group__header p-group__header--border">
+              <div class="p-group__header-bar">
+                <div class="p-group__header-title">
+                  Tekil Bileşenler
+                </div>
+              </div>
+            </div>
+
+            <div class="p-group__item">
+              <app-grid-list>
+                <li *ngFor="let componentContainer of singleComponentContainers">
+                    <app-cms-component-container-card
+                        (actionEvent)="componentContainerCardActionHandler($event)"
+                        [componentContainer]="componentContainer" ></app-cms-component-container-card>
+                </li>
+              </app-grid-list>
+            </div>
+          </div> -->
+
+        </div>
+      </div>
+
+    </app-split-container>
+
+</div>

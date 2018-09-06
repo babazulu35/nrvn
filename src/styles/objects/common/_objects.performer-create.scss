@@ -1,0 +1,185 @@
+// Set defaults
+$oc-performer-create: ( background-color: #fff, margin-bottom: 30px, title-color: #939393, title-size: 11px, header-color: #392d38, header-size: 20px, header-icon-color: #bdbdbd, header-icon-size: 24px, form-description-text-color: #939393, form-description-text-size:11px, form-description-icon-size:17px, footer-background-color: #35383d, footer-text-color: #939393, footer-text-size: 11px, footer-strong-color: #fff, footer-link-color: #e3e3e3, footer-link-size: 13px, footer-height: 71px, hover-color: #2985ef, z-index:1024, blockquote-font-size:20px, );
+// Merge settings and defaults
+$oc-performer-create: map-merge($oc-performer-create, getSettingsMap("oc-performer-create"));
+$o-map: $oc-performer-create;
+.oc-performer-create {
+    display: block;
+    background-color: map-get($o-map, "background-color");
+    height: 100%;
+    //overflow: scroll;
+    //overflow-x: hidden;
+    //padding:32px 30px map-get($o-map,footer-height) * 2 30px;
+    &__space {
+        margin-bottom: map-get($o-map, margin-bottom);
+    }
+    &__header {
+        margin: 0px 0px 20px 0px;
+        padding-bottom: 25px;
+        border-bottom: 1px solid map-get($o-map, "header-color");
+        &-title {
+            @include ffamily('regular');
+            font-size: map-get($o-map, header-size);
+            color: map-get($o-map, header-color);
+        }
+        &-close-btn {
+            color: map-get($o-map, header-icon-color);
+            font-size: map-get($o-map, header-icon-size);
+            i {
+                float: right;
+                margin-top: -20px;
+            }
+            &:hover {
+                cursor: pointer;
+                color: map-get($o-map, hover-color);
+            }
+        }
+    }
+    &__container {
+        &-performer-info {
+            padding-left: 25px;
+        }
+        &-content-title,
+        label {
+            @include ffamily('semi');
+            font-size: map-get($o-map, title-size);
+            color: map-get($o-map, title-color);
+            margin-bottom: 0.5em;
+        }
+        .form-text {
+            @include ffamily('regular');
+            font-size: map-get($o-map, form-description-text-size);
+            color: map-get($o-map, form-description-text-color);
+            margin-bottom: 0.5em;
+            margin-top: 10px;
+            i {
+                font-size: map-get($o-map, form-description-icon-size);
+                color: map-get($o-map, form-description-text-color);
+                float: left;
+                margin-right: 5px;
+            }
+        }
+    }
+    &__footer {
+        height: mag-get($o-map, footer-height);
+        background-color: map-get($o-map, footer-background-color);
+        width: 100%;
+        left: 0;
+        z-index: map-get($o-map, z-index);
+        padding: 0 2.35em;
+        p {
+            @include ffamily('semi');
+            font-size: map-get($o-map, footer-text-size);
+            color: map-get($o-map, footer-text-color);
+            margin-top: 10px;
+        }
+        strong {
+            color: map-get($o-map, footer-strong-color);
+            text-decoration: underline;
+        }
+        a {
+            @include ffamily('regular');
+            color: map-get($o-map, footer-link-color);
+            font-size: map-get($o-map, footer-link-size);
+            text-decoration: underline;
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+        .text-right {
+            text-align: right;
+        }
+        .btn {
+            padding-left: 42px;
+            padding-right: 42px;
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+    }
+    &__search-tag {
+        display: block;
+        margin-bottom: 20px;
+        @include ffamily('semi');
+        color: #9d9d9d;
+        span {
+            display: inline-block
+        }
+        strong {
+            @include ffamily('bold');
+        }
+        blockquote {
+            display: inline-block;
+            @include ffamily('bold');
+        }
+        blockquote:before {
+            @include ffamily('italic');
+            content: "\"";
+            font-size: map-get($o-map, blockquote-font-size);
+            line-height: 0.1em;
+            margin-right: 0.15em;
+            vertical-align: -0.2em;
+        }
+        blockquote:after {
+            @include ffamily('italic');
+            content: "\"";
+            font-size: map-get($o-map, blockquote-font-size);
+            line-height: 0.1em;
+            margin-right: 0.15em;
+            vertical-align: -0.2em;
+        }
+    }
+}
+
+// Overrides
+.oc-performer-create {
+    .c-dialog-box {
+        .c-dialog-box_header {
+            .c-dialog-box__header-bar {
+                border-bottom: 1px solid #392d38;
+            }
+        }
+        .c-dialog-box__body {
+            padding-top: 2.35em;
+        }
+        .c-dialog-box__footer {
+            button {
+                padding-top: 0;
+                padding-bottom: 0;
+            }
+        }
+        
+    }
+    .o-list-view {
+        margin: 0;
+        box-shadow: inherit;
+        &__content {
+            .c-responsive-table {
+                &__row {
+                    .c-responsive-table__secondary-column {
+                        .icon__n {
+                            color: #bdbdbd;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .c-wizard-header {
+        margin-bottom: 40px;
+        &__right {
+            text-align: right !important;
+            padding-right: 10px;
+        }
+    }
+    .c-inline-search-input {
+        margin-bottom: 40px;
+        .form-control {
+            border-bottom: 1px solid #392d38;
+            border-bottom-left-radius: 0;
+        }
+    }
+    &__exitbutton {
+        line-height: 36px !important;
+    }
+}
+
+$o-map: null;

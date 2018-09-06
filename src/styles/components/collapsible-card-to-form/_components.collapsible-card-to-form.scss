@@ -1,0 +1,136 @@
+/***
+* Call to Action Box:
+* Author: Fatih Turan
+*/
+
+
+// Set Defaults
+$c-collapsible-card-to-form: (
+  header-height: 50px,
+  default-border-radius: 3px,
+  default-border-color: #dcdce5,
+  handle-hover-color: #3a99ed,
+  title-color: #35383d,
+  icons-color: #bdbdbd,
+  title-size: 15px,
+  body-bg: #f7f7f7,
+);
+
+// Merge settings and defaults
+$c-collapsible-card-to-form: map-merge($c-collapsible-card-to-form, getSettingsMap("c-collapsible-card-to-form"));
+
+// Set shortcuts
+$c-map: $c-collapsible-card-to-form;
+
+
+.c-collapsible-card-to-form {
+  & + .c-collapsible-card-to-form {
+    margin-top: 10px;
+  }
+  &__header {
+    position: relative;
+    padding: 10px 55px 12px 55px;
+    height: map-get($c-map, header-height);
+    border: 1px solid map-get($c-map, default-border-color);
+    border-radius: map-get($c-map, default-border-radius);
+    text-align: center;
+  }
+  &__handle {
+    position: absolute;
+    top: 11px;
+    left: 19px;
+    font-size: 23px;
+    color: map-get($c-map, icons-color);
+    cursor: ns-resize;
+    &:hover {
+      color: map-get($c-map, handle-hover-color);
+    }
+  }
+  &__title {
+    position: relative;
+    top: 3px;
+    @include ffamily("regular");
+    font-size: map-get($c-map, title-size);;
+    color: map-get($c-map, title-color);
+    &-inner {
+      display: block;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+  }
+  &__actions {
+    position: absolute;
+    right: 10px;
+    top: 9px;
+    a {
+      font-size: 24px;
+      color: map-get($c-map, icons-color);
+      &:hover {
+        color: darken(map-get($c-map, icons-color), 25%);
+      }
+    }
+  }
+  &__collapse {
+    display: none;
+  }
+  &__collapse, &__expand {
+    margin-right: -7px;
+  }
+  &__body {
+    display: none;
+    padding: 20px;
+    background-color: map-get($c-map, body-bg);
+    border: 1px solid map-get($c-map, default-border-color);
+    border-radius: 0 0 map-get($c-map, default-border-radius) map-get($c-map, default-border-radius);
+  }
+  &--expanded {
+    .c-collapsible-card-to-form__header {
+      border-radius: map-get($c-map, default-border-radius) map-get($c-map, default-border-radius) 0 0;
+      border-bottom-width: 0;
+    }
+    .c-collapsible-card-to-form__body {
+      display: block;
+    }
+    .c-collapsible-card-to-form__collapse {
+      display: inline-block;
+    }
+    .c-collapsible-card-to-form__expand {
+      display: none;
+    }
+  }
+
+  .c-collapsible-card-to-form__row {
+    margin-bottom: 20px;
+    &:last-child {
+      margin-bottom: 0;
+    }
+    &--half {
+      width: 50%;
+    }
+  }
+  .c-selectbox, input[type="text"], textarea {
+    width: 100%;
+  }
+  .c-collapsible-card-to-form__row-label,
+  .c-lightswitch__label {
+    @include ffamily("semi");
+    font-size: 11px;
+    color: #939393;
+    label {
+      margin-bottom: 6px;
+    }
+  }
+  .c-lightswitch {
+    overflow: visible;
+    font-size: 30px;
+    &__label {
+      margin-bottom: 10px;
+      padding-left: 0;
+    }
+  }
+}
+
+
+// Reset
+$c-map: null;

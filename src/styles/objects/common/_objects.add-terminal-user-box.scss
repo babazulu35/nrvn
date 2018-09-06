@@ -1,0 +1,19 @@
+$oc-terminal-user-box: ( 
+    background-color: #ffffff, 
+    border-color: #dcdce5
+);
+// Merge settings and defaults
+$oc-terminal-user-box: map-merge($oc-terminal-user-box, getSettingsMap("oc-terminal-user-box"));
+// Set shortcuts
+$oc-map: $oc-terminal-user-box;
+.oc-terminal-user-box {
+    display: block;
+    position: relative;
+    width: 100%;
+    height: auto;
+    background-color: map-get($oc-map, background-color);
+    // border: solid 1px map-get($oc-map, border-color);
+}
+
+//Reset
+$oc-map: null;

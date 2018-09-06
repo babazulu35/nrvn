@@ -1,0 +1,14 @@
+<div class="c-user-card__bar">
+  <div class="c-user-card__avatar">
+    <app-avatar size="sm" [title]="fullname" [source]="user?.Images"></app-avatar>
+  </div>  
+  <div [ngClass]="{'c-user-card__title': true, 'c-user-card--inactive' : !isActive }">
+    {{fullname}}
+  </div>
+  <div [ngClass]="{'c-user-card__info': true, 'c-user-card--inactive' : !isActive }">
+    {{info}}
+  </div>
+  <div *ngIf="contextMenuData?.length" class="c-user-card__action">
+    <span><app-button (click)="openContextMenu($event)" type="icon" [icon]="'more_vert'" theme="secondary"></app-button></span>
+  </div>
+</div>

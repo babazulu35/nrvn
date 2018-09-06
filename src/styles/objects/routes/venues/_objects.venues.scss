@@ -1,0 +1,16 @@
+$or-venues: (
+	meta-link-color: #2e2e2f,
+	meta-link-hover-color: #3485E9,
+);
+
+// Merge settings and defaults
+$or-venues: map-merge($or-venues, getSettingsMap("or-venues"));
+
+// Set shortcuts
+$or-map: $or-venues;
+.or-venues {
+	
+}
+
+//Reset
+$or-map: null;

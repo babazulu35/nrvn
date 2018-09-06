@@ -1,0 +1,33 @@
+<div class="c-block-capacity-list__caption" *ngIf="caption || totalCapacity"> 
+  <span class="c-block-capacity-list__caption-title">
+    {{caption?.title}}
+  </span>
+  <span class="c-block-capacity-list__caption-input">
+    {{caption?.current}}
+  </span>
+  <span class="c-block-capacity-list__caption-capacity">
+    <span *ngIf="caption?.total">{{caption?.total}}</span>
+  </span>
+</div>
+
+<div class="c-block-capacity-list__items">
+  
+  <div class="c-block-capacity-list__item" *ngFor="let item of items">
+    <span class="c-block-capacity-list__item-title">
+      {{item.title}}
+    </span>
+    <span class="c-block-capacity-list__item-input">
+      <app-text-input *ngIf="!readonly"
+        (typeEvent)="inputChangeHandler($event, item)"
+        [isTypeEmitting]="true"
+        [typeDebounceTime]="100"
+        [value]="item?.currentCapacity"
+        [isDisabled]="!item?.availableCapacity" type="numeric" [min]="0" [max]="item?.availableCapacity" size="sm-text"></app-text-input>
+        <span *ngIf="readonly">{{item?.currentCapacity}}</span>
+    </span>
+    <span class="c-block-capacity-list__item-capacity">
+      {{item?.availableCapacity || '-'}}<span *ngIf="item?.totalCapacity"> / {{item?.totalCapacity}}</span>
+    </span>
+  </div>
+
+</div>

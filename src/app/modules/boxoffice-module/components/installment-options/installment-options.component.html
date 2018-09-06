@@ -1,0 +1,38 @@
+<app-dialog-box>
+    <div #header class="c-dialog-box__header c-dialog-box__header--border c-dialog-box__header--padding">
+        <div class="c-dialog-box__header-bar">
+            <h1 class="c-dialog-box__header-title">Taksit Sayısını Seçiniz</h1>
+
+            <div class="c-dialog-box__header-actions">
+                <app-button type="icon" (click)="close()" icon="close" theme="secondary"></app-button>
+            </div>
+        </div>
+    </div>
+    <div #body class="c-dialog-box__body  c-dialog-box__body--no-padding c-dialog-box__body--height">
+        <div class="p-container p-container--inherit">
+            <div class="c-installment-options--single-pay">
+                <app-checkbox inputType="radio" [value]="1" name="'installment'" (changeEvent)="installmentsChangeAction($event,null)"></app-checkbox>
+                <span>Tek Çekim</span>
+            </div>
+            <ul *ngFor="let installments of installmentOptions">
+                <span class="c-installment-options__bank-name">{{installments?.BankName}}</span>
+                <li *ngFor="let installmentsCount of installments.Installments">
+                    <div class="c-installment-options__installments-field">
+                        <app-checkbox inputType="radio" [value]="installmentsCount" name="'installment'" (changeEvent)="installmentsChangeAction($event,installments?.BankBkmCode)"></app-checkbox>
+                        <span>{{installmentsCount}} Taksit</span>
+                    </div>
+                </li>
+
+            </ul>
+
+        </div>
+    </div>
+    <div #footer class="c-dialog-box__footer row">
+        <div class="c-dialog-box__footer-content">
+            <div class="col-xs-16">
+                <app-button style="height:auto;margin-right:10px;" (click)="tether.dismiss()" [type]="'link'" [label]="'VAZGEÇ'"></app-button>
+                <app-button (click)="pushInstallment()" [type]="'button'" [label]="'UYGULA'" [theme]="'primary'"></app-button>
+            </div>
+        </div>
+    </div>
+</app-dialog-box>

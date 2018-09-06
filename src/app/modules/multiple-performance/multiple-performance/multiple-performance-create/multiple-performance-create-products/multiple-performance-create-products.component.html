@@ -1,0 +1,103 @@
+<div class="or-multiple-performance-create">
+    <div class="p-header-bar" sticky sticky-main-scroller sticky-release-offset="30" sticky-height-property="55" sticky-width-property="100%"
+        sticky-follow-menu-moves>
+        <div class="p-header-bar__left">
+            <app-button theme="primary" icon="keyboard_arrow_left" shape="rounded" type="icon" size="md" (clickEvent)="multiplePerformanceService.goBack()"></app-button>
+            <h2>Yeni Etkinlik
+                <span *ngIf="event?.Localization?.Name"> / {{event?.Localization?.Name | localization}}</span>
+            </h2>
+        </div>
+
+        <div class="p-header-bar__right">
+            <app-button (clickEvent)='submitEvent($event)' [isPromising]="isLoading" [isDisabled]="!isValid">DEVAM ET</app-button>
+            <!-- <app-button (clickEvent)='exit($event)' type="icon" icon="close" theme="secondary"></app-button> -->
+        </div>
+    </div>
+
+    <app-collapsible-container [isAsideVisible]="false">
+        <div content class="p-container">
+
+            <div class="p-group text-lg-center">
+                <div class="p-form-group d-inline-block">
+                    <div class="p-form-group__label text-lg-left">
+                        ADIMLAR
+                    </div>
+                    <div class="p-form-group__input d-block">
+                        <app-page-wizard-header (changeEvent)="multiplePerformanceService.currentLevelChangeHandler($event)" [levels]='levels' [currentLevel]="currentLevel?.key"></app-page-wizard-header>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-group" *ngIf="!basePerformanceFactory?.modelId"> 
+                <div class="p-group__header">
+                    <div class="p-group__header-bar">
+                        <div class="p-group__header-title">
+                            Genel Ürün Ayarları
+                        </div>
+                    </div>
+                </div>
+                <div class="p-group__item row">
+                    <app-container-canvas>
+                        <div class="p-form-group--center">
+                            <div class="p-group__vertical">
+                                <ul>
+                                    <li>
+                                        <div class="p-group__vertical-label text-xs-left">
+                                            Para Birimi
+                                        </div>
+                                        <div class="p-group__vertical-switch">
+                                            <app-selectbox *ngIf="baseProductFactory?.currencyList?.length" (changeEvent)="inputChangeHandler($event, 'defaultCurrencyId', baseProductFactory)"
+                                                [value]="baseProductFactory?.defaultCurrencyId" [options]="baseProductFactory?.currencyList"
+                                                [isDisabled]="basePerformanceFactory?.productFactories && basePerformanceFactory?.productFactories.length > 0"></app-selectbox>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="p-group__vertical-label text-xs-left">
+                                            KDV Oranı <sup>*</sup>
+                                        </div>
+                                        <div class="p-group__vertical-switch">
+                                            <app-selectbox *ngIf="baseProductFactory?.vatList?.length" (changeEvent)="inputChangeHandler($event, 'defaultVat', baseProductFactory)"
+                                                [value]="baseProductFactory?.defaultVat" [options]="baseProductFactory?.vatList" [isDisabled]="basePerformanceFactory?.productFactories && basePerformanceFactory?.productFactories.length > 0"></app-selectbox>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="p-group__vertical-label text-xs-left">
+                                            Biletleme Bedeli <sup>*</sup>
+                                        </div>
+                                        <div class="p-group__vertical-switch text-xs-right">
+                                            <app-text-input type="price" (changeEvent)="inputChangeHandler($event, 'defaultTicketingFee', baseProductFactory)" [value]="baseProductFactory?.defaultTicketingFee" [isDisabled]="basePerformanceFactory?.productFactories && basePerformanceFactory?.productFactories.length > 0"></app-text-input>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </app-container-canvas>
+                </div>
+            </div>
+
+            <div class="p-group">
+
+                <div class="p-group__wings">
+                    <div class="p-group__wings-left"></div>
+                    <div class="p-group__wings-right"></div>
+                </div>
+
+                <div class="p-group">
+                    <div class="p-form-group" *ngFor="let productFactory of basePerformanceFactory?.productFactories; let i = index">
+                        <app-performance-product-block [useFactory]="true" (actionEvent)="performanceProductBlockActionHandler($event, i)" (changeEvent)="performanceProductBlockChangeHandler($event, i)"
+                            [productFactory]="productFactory" [contextMenuData]="performanceProductBlockActions"></app-performance-product-block>
+                    </div>
+                    <div class="p-form-group">
+                        <app-container-canvas [isEmpty]="true">
+                            <app-button (clickEvent)="addNewProduct($event)" theme="secondary" [isDisabled]="!isValidForAddProduct">ÜRÜN EKLE</app-button>
+                        </app-container-canvas>
+                    </div>
+                </div>
+                <div class="p-group__item">
+
+                </div>
+            </div>
+
+        </div>
+    </app-collapsible-container>
+</div>

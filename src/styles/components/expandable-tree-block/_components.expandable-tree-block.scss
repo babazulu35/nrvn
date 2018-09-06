@@ -1,0 +1,260 @@
+$c-expandable-tree-block: (
+    width: 100%,
+	background-color: #f7f7f7,
+	color: #35383d,
+	border-color: #dcdce5,
+	item-padding: 7px 0,
+	icon-padding: 0 5px 0 1px,
+	icon-color: #bdbdbd,
+	label-padding: 3px 20px 0 0,
+    
+    bar: (
+        background-color: #fff,
+        padding: 18px,
+
+        title: (
+            font-size: 15px,
+            color: #35383d
+        ),
+        
+        info: (
+            font-size: 13px,
+            color: #35383d,
+
+            danger: (
+                color: #D41723
+            ),
+
+            warning: (
+                color: #D41723
+            )
+        )
+    ),
+
+    content: (
+        padding: 20px,
+        background-color: #F5F5F5
+    ),
+
+    add-button: (
+        font-size: 33.275px,
+        margin: 20px
+    )
+
+);
+
+// Merge settings and defaults
+$c-expandable-tree-block: map-merge($c-expandable-tree-block, getSettingsMap("c-expandable-tree-block"));
+
+// Set shortcuts
+$c-map: $c-expandable-tree-block;
+
+.c-expandable-tree-block {
+    display: block;
+    position: relative;
+    width: 100%;
+    border: solid 1px map-deep-get($c-map, border-color);
+  
+    &--expanded {
+      .c-expandable-tree-block__bar {
+          border-bottom: solid 1px map-deep-get($c-map, border-color);
+      }
+      .c-expandable-tree-block__content {
+          height: auto;
+          min-height: 60px;
+          padding: map-deep-get($c-map, content, padding);
+          transition: height 0.3ms getEase(out-sine);
+      }
+    }    
+  
+    &__bar {
+        display: table;
+        width: 100%;
+        background-color: map-deep-get($c-map, bar, background-color);
+        padding: map-deep-get($c-map, bar, padding);
+
+        &--empty {
+            border-style: dashed !important;
+            background-color: transparent;
+        }
+  
+        &-left {
+            display: table-cell;
+            vertical-align: middle;
+            white-space: nowrap;
+            padding-right: 1em;
+            > span + span {
+                margin-left: 0.5em;
+            }
+        }
+  
+        &-center {
+            display: table-cell;
+            width: 100%;
+            vertical-align: middle;
+            padding-right: 1em;
+            text-align: left;
+        }
+  
+        &-right {
+            display: table-cell;
+            vertical-align: middle;
+            white-space: nowrap;
+            text-align: right;
+
+            > span + span {
+                margin-right: 0.5em;
+            }
+        }
+  
+        &-title {
+          @include ffamily('regular');
+          font-size: map-deep-get($c-map, bar, title, font-size);
+          color: map-deep-get($c-map, bar, title, color);
+        }
+
+        &-info {
+            @include ffamily('regular');
+            font-size: map-deep-get($c-map, bar, info, font-size);
+            color: map-deep-get($c-map, bar, info, color);
+            float: right;
+            text-align: right;
+
+            &-type {
+                display: inline-block;
+                position: relative;
+                margin-right: 0.5em;
+                vertical-align: middle;
+            }
+
+            &--danger {
+                @include ffamily('regular', 'i');
+                color: map-deep-get($c-map, bar, info, danger, color);
+                .c-expandable-tree-block__bar-info-type {
+                    &::before {
+                        @include icon('error');
+                    }
+                }
+            }
+
+            &--warning {
+                @include ffamily('regular', 'i');
+                color: map-deep-get($c-map, bar, info, warning, color);
+                .c-expandable-tree-block__bar-info-type {
+                    &::before {
+                        @include icon('warning');
+                    }
+                }
+            }
+        }
+
+        &--inactive {
+            .icon__n {			
+                color: map-get($c-map, icon-color) !important;			
+            }
+            span {
+                color: #bdbdbd !important; 
+            }
+                       
+        }
+    }
+  
+    &__content {
+        display: block;
+        background-color: map-deep-get($c-map, content, background-color);
+        overflow: hidden;
+        height: 0px;
+        transition: height 0.3ms getEase(out-sine);
+
+        .c-expandable-tree-block__bar {
+            border: solid 1px map-deep-get($c-map, border-color);
+        }
+
+        &-item {
+            display: block;
+
+            &--expanded {
+                .c-expandable-tree-block__list {
+                    height: auto;
+                    min-height: 60px;
+                    padding: map-deep-get($c-map, content, padding)/2 0px 0px map-deep-get($c-map, content, padding)*3;
+                    transition: height 0.3ms getEase(out-sine);
+                }
+            }
+
+            & + .c-expandable-tree-block__content-item {
+                margin-top: map-deep-get($c-map, content, padding)/2;
+            }
+        }
+  
+        .c-text-input,
+        .c-time-input,
+        .c-text-area .c-text-area__text,
+        .c-text-area .c-text-area__localization {
+            background-color: #fff;
+        }
+    }
+
+    &__add-button {
+        display: block;
+        text-align: center;
+        margin-top: map-deep-get($c-map, add-button, margin);
+        font-size: map-deep-get($c-map, add-button, font-size);
+    }
+
+    &__list {
+        display: block;
+        list-style: none;
+        margin: 0px;
+        overflow: hidden;
+        height: 0px;
+        transition: height 0.3ms getEase(out-sine);
+
+        &-item {
+            display: block;
+            position: relative;
+
+            &--new {
+                &:after {
+                    border-top: 1px dashed map-get($c-map, border-color) !important;
+                }
+
+                &:before {
+                    border-left: 1px dashed map-get($c-map, border-color) !important;
+                }
+            }
+
+            & + .c-expandable-tree-block__list-item {
+                margin-top: map-deep-get($c-map, content, padding)/2;
+            }
+
+            &:last-child {
+                &:before {
+                    height: calc(50% + #{map-deep-get($c-map, content, padding)/2}) !important;
+                }
+            }
+
+            &:after {
+                content:"";
+                position: absolute;
+                top: 50%;
+                left: map-deep-get($c-map, content, padding)*-1.5;
+                width: map-deep-get($c-map, content, padding)*1.5;
+                height: 1px;
+                border-top: 1px solid map-get($c-map, border-color);
+              }
+
+              &:before {
+                content: "";
+                position: absolute;
+                top: map-deep-get($c-map, content, padding)/-2;
+                left: map-deep-get($c-map, content, padding)*-1.5;
+                width: 1px;
+                height: calc(100% + #{map-deep-get($c-map, content, padding)/2});
+                border-left: 1px solid map-get($c-map, border-color);
+              }
+        }
+    }
+
+  
+}

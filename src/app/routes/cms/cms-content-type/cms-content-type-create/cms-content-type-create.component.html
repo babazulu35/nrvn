@@ -1,0 +1,152 @@
+<div class="or-cms-content-type-create" [ngClass]="{'main-loader': isLoading }">
+    
+    <div class="p-header-bar" sticky sticky-main-scroller sticky-release-offset="30" sticky-height-property="55" sticky-width-property="100%" sticky-follow-menu-moves>
+        <div class="p-header-bar__left">
+            <app-breadcrumb [breadcrumbs]="[{title: 'Bileşen Grupları'}, {title: contentTypeData?.Name || 'Yeni Bileşen Grubu'}]"></app-breadcrumb>
+        </div>
+
+        <div class="p-header-bar__right">
+            <app-button (clickEvent)='saveContentType()' [isPromising]="isLoading || isPromising" [isDisabled]="!isValid" [label]="'KAYDET'"></app-button>
+            <app-button (clickEvent)='exit($event)' type="icon" icon="close" theme="secondary"></app-button>
+        </div>
+    </div>
+
+    <app-split-container fixedFloat="left" [fixedWidth]="410">
+      
+        <div fixed left>
+            <div class="p-container p-container--has-footer">
+                <div class="p-group" *ngIf="firmList?.length">
+                    <div class="p-group__header">
+                        <div class="p-group__header-bar">
+                            <span class="p-group__header-title">
+                                Organizatör<!--<sup>*</sup>-->
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-group__item">
+                        <app-selectbox [options]="firmList" [value]="contentTypeData?.PromoterCode" (changeEvent)="inputChangeHandler($event, 'PromoterCode')"></app-selectbox>
+                    </div>
+                </div>
+            <div class="p-group">
+                <div class="p-group__header">
+                    <div class="p-group__header-bar">
+                        <div class="p-group__header-title">
+                            BİLEŞEN GRUPLARI
+                        </div>
+                    </div>
+                </div>
+                <div class="p-group__item">
+                    <ul class="or-cms-content-type-create__component-containers">
+                        <li *ngFor="let componentContainer of componentContainers">
+                        <app-cms-component-container-card
+                            (click)="addToSelectedComponentContainers($event, componentContainer)"
+                            [componentContainer]="componentContainer"
+                            [viewMode]="'tag'"
+                            [isDisabled]="componentContainer?.selected"
+                            ></app-cms-component-container-card>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            </div>
+            <div class="p-footer">
+                <span><app-button (clickEvent)="gotoComponentContainerCreate($event)" type="icon" icon="plus"></app-button><app-button (clickEvent)="gotoComponentContainerCreate($event)" type="link" label="YENİ BİLEŞEN GRUBU EKLE"></app-button></span>
+            </div>
+        </div>
+
+        <div fluid>
+            <div class="p-container">
+                
+                <div class="p-group">
+                    <div class="p-group__item">
+                        <div class="p-form-group">
+                            <div class="p-form-group__label">
+                                İÇERİK BİÇİMİ ADI<sup>*</sup>
+                            </div>
+                            <div class="p-form-group__input">
+                                <app-text-input 
+                                    (typeEvent)="inputChangeHandler($event, 'Name')"
+                                    [isTypeEmitting]="true"
+                                    [typeDebounceTime]="100"
+                                    [value]="contentTypeData?.Name"></app-text-input>
+                                <app-helper-text type="info"><span>İçerik tipi görüntülenirken kullanılan metindir.</span></app-helper-text>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="p-group">
+                    <div class="p-group__header">
+                        <div class="p-group__header-bar">
+                            <div class="p-group__header-title">
+                                İçerik Tipi Tasarımı
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-group__item">
+                        <div class="or-cms-content-type-create__selected-component-containers">
+                            <app-no-data *ngIf="!selectedComponentContainers?.length"
+                                [hasContainer]="true"
+                                [title]="'Bileşen gruplarından ihtiyacınıza uygun bileşen grubunu ekleyin.'"
+                                [description]="'İhtiyacınıza uygun bileşen grubu bulamadıysanız yeni bileşen grubu oluşturabilirsiniz.'"
+                                [icon]="{type: 'svg', name: 'cms-empty'}"
+                                [iconSize]="'lg'"
+                                ></app-no-data>
+                            <ul *ngIf="selectedComponentContainers?.length">
+                                <app-container-canvas>
+                                    <li *ngFor="let componentContainer of selectedComponentContainers">
+                                    <app-cms-component-container-card
+                                        (actionEvent)="selectedComponentCantainerCardActionHandler($event, componentContainer)"
+                                        [componentContainer]="componentContainer"
+                                        [viewMode]="'bar'"
+                                        [contextMenuData]="[
+                                            {action: 'delete', icon: 'delete', params: {componentContainer: componentContainer}}
+                                        ]"
+                                        ></app-cms-component-container-card>
+                                    </li>
+                                </app-container-canvas>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-group">
+                    <div class="p-group__header">
+                        <div class="p-group__header-bar">
+                            <div class="p-group__header-title">
+                                Kullanılabilecek Varlıklar
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-group__item">
+                        <ul class="or-cms-content-type-create__related-events">
+                            <li *ngFor="let entityType of relatedEntities">
+                                <app-checkbox type="square" (changeEvent)="inputChangeHandler($event, 'selected', entityType)" [isChecked]="entityType?.selected" [label]="entityType?.label" [isDisabled]="!entityType?.endpoint"></app-checkbox>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="p-group">
+                    <div class="p-group__header">
+                        <div class="p-group__header-bar">
+                            <div class="p-group__header-title">
+                                Kullanılabilecek Veri Kaynakları
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-group__item">
+                        <ul class="or-cms-content-type-create__related-events">
+                            <li *ngFor="let relatedDatasource of relatedDatasources">
+                                <app-checkbox type="square" (changeEvent)="inputChangeHandler($event, 'selected', relatedDatasource)" [isChecked]="relatedDatasource?.selected" [label]="relatedDatasource?.label"></app-checkbox>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </app-split-container>
+
+</div>

@@ -1,0 +1,147 @@
+/***
+ * Basic Button Group:
+ * Author: Fatih Turan
+ */
+
+ /**
+ * Basic Button Group:
+ * `.c-basic-button-group` sınıfı ile oluşturulur.
+ *
+ * @example
+ */
+
+
+ // Set Defaults
+ $c-basic-button-group: (
+  base-text-size: 11px,
+  button-bg: #fff,
+  button-border: #dcdce4,
+  button-border-radius: 3px,
+  button-text-color: #35383d,
+  button-height: 32px,
+  button-edge-padding: 20px,
+  icon-size: 32px,
+  icon-color: #21242b,
+ );
+
+ // Merge settings and defaults
+ $c-basic-button-group: map-merge($c-basic-button-group, getSettingsMap("c-basic-button-group"));
+
+ // Set shortcuts
+ $c-map: $c-basic-button-group;
+
+
+.c-basic-button-group {
+  font-size: map-get($c-map, base-text-size);
+  display: flex;
+}
+
+.c-basic-button-group__inner {
+  position: relative;
+  top: 0px;
+  display: inline-block;
+  @include clearfix;
+  vertical-align: middle;
+}
+
+.c-basic-button-group__item {
+  position: relative;
+  float: left;
+  margin-bottom: -1px;
+  list-style: none;
+
+  &--disabled {
+    cursor: not-allowed;
+    .c-basic-button-group__button {
+      pointer-events: none;
+      color: lighten(map-get($c-map, button-text-color), 40%) !important;
+      background-color: darken(map-get($c-map, button-bg), 7%) !important;
+    } 
+  }
+
+  &--selected {
+   .c-basic-button-group__button {
+     background-color: darken(map-get($c-map, button-bg), 7%);
+   } 
+  }
+
+  &:hover {
+    .c-basic-button-group__button {
+      background-color: darken(map-get($c-map, button-bg), 5%);
+      color: map-get($c-map, button-text-color);
+      text-decoration: none;
+    }
+  }
+  &:active {
+    .c-basic-button-group__button {
+      background-color: darken(map-get($c-map, button-bg), 10%);
+    }
+  }
+  &:focus {
+    .c-basic-button-group__button {
+      outline: 0;
+    }
+  }
+
+  &:after {
+    content: "";
+    position: absolute;
+    right: -1px;
+    top: 0;
+    width: 1px;
+    height: 100%;
+    background-color: map-get($c-map, button-border);
+  }
+  &:first-child .c-basic-button-group__button {
+    border-top-left-radius: map-get($c-map, button-border-radius);
+    border-bottom-left-radius: map-get($c-map, button-border-radius);
+  }
+  &:last-child {
+    &:after {
+      display: none;
+    }
+    .c-basic-button-group__button {
+      border-top-right-radius: map-get($c-map, button-border-radius);
+      border-bottom-right-radius: map-get($c-map, button-border-radius);
+      border-right-width: 1px;
+    }
+  }
+}
+
+.c-basic-button-group__button {
+  display: block;
+  padding: 0 map-get($c-map, button-edge-padding);
+  height: map-get($c-map, button-height);
+  background-color: map-get($c-map, button-bg);
+  line-height: map-get($c-map, button-height);
+  @include ffamily("bold");
+  text-transform: uppercase;
+  color: map-get($c-map, button-text-color);
+  border: 1px solid map-get($c-map, button-border);
+  border-width: 1px 0 1px 1px;
+  text-decoration: none !important;
+
+  &:active, &:focus {
+    color: map-get($c-map, button-text-color);
+  }
+}
+
+.c-basic-button-group__icon {
+  position: relative;
+  top: 0px;
+  display: inline-block;
+  margin-right: map-get($c-map, icon-size)/2 - 4px;
+  font-size: map-get($c-map, icon-size);
+  color: map-get($c-map, icon-color);
+  line-height: 0px;
+  vertical-align: middle;
+  .icon__n--add {
+    position: relative;
+    top: 1px;
+    font-size: 1.3em;
+  }
+}
+
+
+// Reset
+$c-map: null;

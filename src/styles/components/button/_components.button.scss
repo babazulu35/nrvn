@@ -1,0 +1,435 @@
+/* --------------------------------------------------------
+author: Abdullah Karadeniz
+----------------------------------------------------------*/
+
+$c-button: ( themes: ( primary: ( color: #ffffff, background-color: #21242b, border-color: #21242b, icon-color: #21242b), secondary: ( color: #21242b, background-color: #ffffff, border-color: #dcdce5, icon-color: #B1B1B1, ), danger: ( color: #ffffff, background-color: #ec4e48, border-color: #ec4e48, icon-color: #ec4e48), light: ( color: #21242b, background-color: #ffffff, border-color: #dcdce5, icon-color: #ffffff), warning: ( color: #21242b, background-color: #FCC200, border-color: #FCC200, icon-color: #FCC200)), button: ( font-size: 12px, padding: 0.1em 2.5em 0px, border-radius: 1.5em, height: 3em, hover: ( color: #ffffff, background-color: #2985ef, border-color: #2985ef), active: ( color: darken(#ffffff, 10%), background-color: darken(#2985ef, 20%), border-color: darken(#2985ef, 20%), )), icon: ( font-size: 24px, ), shapes: ( circle: ( border-radius: 1.5em, height: 1.5em, width: 1.5em), rounded:(border-radius:50%, height:40px, width:40px)), sizes: ( full-width: ( padding: 0.1em 0px 0px, ), xs: ( font-size: 16px, ), sm: ( font-size: 18px, ), md: ( font-size: 24px, ), lg: ( font-size: 32px, ), xlg: ( font-size: 40px, ), xl: ( font-size: 64px, )));
+$c-button: map-merge($c-button, getSettingsMap("c-button"));
+$c-map: $c-button;
+$theme: map-deep-get($c-map, themes, primary);
+.c-button {
+    display: inline-block;
+    line-height: 0px;
+    vertical-align: middle;
+    font-size: map-deep-get($c-map, button, font-size);
+    white-space: nowrap;
+
+    &:focus,
+    &:hover,
+    &.active,
+    &:active {
+        outline: none;
+        &:focus {
+            outline: none;
+        }
+      }
+
+    cursor: pointer;
+    &.c-button--xl {
+        font-size: (map-deep-get($c-map, sizes, xl, font-size) / map-deep-get($c-map, sizes, md, font-size)) * map-deep-get($c-map, button, font-size);
+    }
+
+    &.c-button--xlg {
+        font-size: (map-deep-get($c-map, sizes, xlg, font-size) / map-deep-get($c-map, sizes, md, font-size)) * map-deep-get($c-map, button, font-size);
+    }
+
+    &.c-button--lg {
+        font-size: (map-deep-get($c-map, sizes, lg, font-size) / map-deep-get($c-map, sizes, md, font-size)) * map-deep-get($c-map, button, font-size);
+    }
+
+    &.c-button--md {
+        font-size: (map-deep-get($c-map, sizes, md, font-size) / map-deep-get($c-map, sizes, md, font-size)) * map-deep-get($c-map, button, font-size);
+    }
+
+    &.c-button--sm {
+        font-size: (map-deep-get($c-map, sizes, sm, font-size) / map-deep-get($c-map, sizes, md, font-size)) * map-deep-get($c-map, button, font-size);
+    }
+
+    &.c-button--xs {
+        font-size: (map-deep-get($c-map, sizes, xs, font-size) / map-deep-get($c-map, sizes, md, font-size)) * map-deep-get($c-map, button, font-size);
+    }
+
+    .c-promise-icon {
+        vertical-align: middle;
+    }
+    &--disabled,
+    &--promising {
+        cursor: not-allowed;
+        opacity: 0.65;
+        >* {
+            pointer-events: none;
+        }
+    }
+    &--full-width {
+        display: block;
+        width: 100%;
+        button {
+            padding: map-deep-get($c-map, sizes, full-width, padding) !important;
+            display: block;
+            margin: auto;
+            width: 100%;
+        }
+    }
+    &--autosize {
+        font-size: inherit !important;
+    }
+    &:not(.c-button--disabled):not(.c-button--promising) {
+        cursor: pointer;
+    }
+    &--primary {
+        $theme: map-deep-get($c-map, themes, primary);
+        button {
+            color: map-deep-get($theme, color);
+            background-color: map-deep-get($theme, background-color);
+            border-color: map-deep-get($theme, border-color);
+            .c-promise-icon__spinner-blade {
+                background-color: map-deep-get($theme, color);
+            }
+        }
+        &.c-button--icon {
+            color: map-deep-get($theme, icon-color);
+        }
+        &.c-button--shape {
+            .c-button__wrapper {
+                color: map-deep-get($theme, color);
+                background-color: map-deep-get($theme, background-color);
+                border-color: map-deep-get($theme, border-color);
+            }
+        }
+        a {
+            color: map-deep-get($theme, icon-color);
+        }
+    }
+    &--secondary {
+        $theme: map-deep-get($c-map, themes, secondary);
+        button {
+            color: map-deep-get($theme, color);
+            background-color: map-deep-get($theme, background-color);
+            border-color: map-deep-get($theme, border-color);
+            .c-promise-icon__spinner-blade {
+                background-color: map-deep-get($theme, color);
+            }
+        }
+        &.c-button--icon {
+            color: map-deep-get($theme, icon-color);
+        }
+        &.c-button--shape {
+            .c-button__wrapper {
+                color: map-deep-get($theme, color);
+                background-color: map-deep-get($theme, background-color);
+                border-color: map-deep-get($theme, border-color);
+            }
+        }
+        a {
+            color: map-deep-get($theme, icon-color);
+        }
+    }
+    &--danger {
+        $theme: map-deep-get($c-map, themes, danger);
+        button {
+            color: map-deep-get($theme, color);
+            background-color: map-deep-get($theme, background-color);
+            border-color: map-deep-get($theme, border-color);
+            .c-promise-icon__spinner-blade {
+                background-color: map-deep-get($theme, color);
+            }
+        }
+        &.c-button--icon {
+            color: map-deep-get($theme, icon-color);
+        }
+        &.c-button--shape {
+            .c-button__wrapper {
+                color: map-deep-get($theme, color);
+                background-color: map-deep-get($theme, background-color);
+                border-color: map-deep-get($theme, border-color);
+            }
+        }
+        a {
+            color: map-deep-get($theme, icon-color);
+        }
+    }
+    &--light {
+        $theme: map-deep-get($c-map, themes, light);
+        button {
+            color: map-deep-get($theme, color);
+            background-color: map-deep-get($theme, background-color);
+            border-color: map-deep-get($theme, border-color);
+            .c-promise-icon__spinner-blade {
+                background-color: map-deep-get($theme, color);
+            }
+        }
+        &.c-button--icon {
+            color: map-deep-get($theme, icon-color);
+        }
+        &.c-button--shape {
+            .c-button__wrapper {
+                color: map-deep-get($theme, color);
+                background-color: map-deep-get($theme, background-color);
+                border-color: map-deep-get($theme, border-color);
+            }
+        }
+        a {
+            color: map-deep-get($theme, icon-color);
+        }
+    }
+    &--warning {
+        $theme: map-deep-get($c-map, themes, warning);
+        button {
+            color: map-deep-get($theme, color);
+            background-color: map-deep-get($theme, background-color);
+            border-color: map-deep-get($theme, border-color);
+            .c-promise-icon__spinner-blade {
+                background-color: map-deep-get($theme, color);
+            }
+        }
+        &.c-button--icon {
+            color: map-deep-get($theme, icon-color);
+        }
+        &.c-button--shape {
+            .c-button__wrapper {
+                color: map-deep-get($theme, color);
+                background-color: map-deep-get($theme, background-color);
+                border-color: map-deep-get($theme, border-color);
+            }
+        }
+        a {
+            color: map-deep-get($theme, icon-color);
+        }
+    }
+    &--icon {
+        font-size: map-deep-get($c-map, icon, font-size);
+        &.c-button--xl {
+            font-size: map-deep-get($c-map, sizes, xl, font-size)
+        }
+    
+        &.c-button--xlg {
+            font-size: map-deep-get($c-map, sizes, xlg, font-size)
+        }
+    
+        &.c-button--lg {
+            font-size: map-deep-get($c-map, sizes, lg, font-size)
+        }
+    
+        &.c-button--md {
+            font-size: map-deep-get($c-map, sizes, md, font-size)
+        }
+    
+        &.c-button--sm {
+            font-size: map-deep-get($c-map, sizes, sm, font-size)
+        }
+    
+        &.c-button--xs {
+            font-size: map-deep-get($c-map, sizes, xs, font-size)
+        }
+    
+    }
+    &--shape {
+        .c-button__wrapper {
+            display: flex;
+            position: relative;
+            align-items: center;
+            justify-content: center;
+            align-content: center;
+            border-style: solid;
+            border-width: 1px;
+            text-align: center;
+            &:before {
+                content: "";
+                position: absolute;
+                display: inline-block;
+                vertical-align: middle;
+                height: 100%;
+                top: 0px;
+                left: 0px;
+            }
+        }
+    }
+    &--circle {
+        .c-button__wrapper {
+            width: map-deep-get($c-map, shapes, circle, width);
+            height: map-deep-get($c-map, shapes, circle, height);
+            border-radius: map-deep-get($c-map, shapes, circle, border-radius);
+        }
+    }
+    &--rounded {
+        .c-button__wrapper {
+            width: map-deep-get($c-map, shapes, rounded, width);
+            height: map-deep-get($c-map, shapes, rounded, height);
+            border-radius: map-deep-get($c-map, shapes, rounded, border-radius);
+            font-size: 30px;
+            margin-right: map-deep-get($c-map, shapes, rounded, width) / 2;
+            padding-top: 2px;
+        }
+    }
+    &:hover:not(.c-button--disabled):not(.c-button--promising) {
+        $theme: map-deep-get($c-map, button, hover);
+        button {
+            color: map-deep-get($theme, color);
+            background-color: map-deep-get($theme, background-color);
+            border-color: map-deep-get($theme, border-color);
+            transition: all .2s getEase(out-sine);
+        }
+        &.c-button--shape {
+            .c-button__wrapper {
+                color: map-deep-get($theme, color);
+                background-color: map-deep-get($theme, background-color);
+                border-color: map-deep-get($theme, border-color);
+                transition: all .2s getEase(out-sine);
+            }
+        }
+        &.c-button--icon {
+            color: map-deep-get($theme, background-color);
+            transition: all .2s getEase(out-sine);
+        }
+        .c-button__link {
+            color: map-deep-get($theme, background-color);
+            .c-promise-icon {
+                color: inherit;
+            }
+        }
+        a {
+            color: map-deep-get($theme, background-color);
+        }
+    }
+    &:active:not(.c-button--disabled):not(.c-button--promising) {
+        $theme: map-deep-get($c-map, button, active);
+        button {
+            color: map-deep-get($theme, color);
+            background-color: map-deep-get($theme, background-color);
+            border-color: map-deep-get($theme, border-color);
+            transition: all .2s getEase(out-sine);
+        }
+        &.c-button--shape {
+            .c-button__wrapper {
+                color: map-deep-get($theme, color);
+                background-color: map-deep-get($theme, background-color);
+                border-color: map-deep-get($theme, border-color);
+                transition: all .2s getEase(out-sine);
+            }
+        }
+        &.c-button--icon {
+            color: map-deep-get($theme, background-color);
+            transition: all .2s getEase(out-sine);
+        }
+        &.c-button--link {
+            a {
+                color: map-deep-get($theme, background-color);
+                transition: all .2s getEase(out-sine);
+            }
+        }
+    }
+    
+    
+    a {
+        height: map-deep-get($c-map, button, height);
+        font-size: inherit;
+        @include ffamily('bold');
+        line-height: 1.2em;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        &:focus,
+        &:hover,
+        &.active,
+        &:active {
+            outline: none;
+            &:focus {
+                outline: none;
+            }
+        }
+    }
+    button {
+        width: 100%;
+        font-size: inherit;
+        padding: map-deep-get($c-map, button, padding);
+        border-radius: map-deep-get($c-map, button, border-radius);
+        height: map-deep-get($c-map, button, height);
+        border-style: solid;
+        border-width: 1px;
+        line-height: 1.2em;
+        @include ffamily('bold');
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        &:focus,
+        &:hover,
+        &.active,
+        &:active {
+            outline: none;
+            &:focus {
+                outline: none;
+            }
+        }
+    }
+}
+
+$c-map: null;
+
+/* --------------------------------------------------------
+author: Abdullah Karadeniz
+----------------------------------------------------------*/
+
+// Butonlarımız buradan Oluşacak
+$buttons: ( border-radius: 18px, btn-primary:( color: #ffffff, background:#21242b, border-color:#21242b, padding-y:6px, height:36px), btn-secondary:( color: #21242b, background:#fff, border-color:#dcdce5, padding-y:6px, height:36px), btn-danger:( color: #fff, background: #ec4e48, border-color:#ec4e48, padding-y:6px, height:36px), btn-transparent:( color: inherit, background: transparent, border-color:#dcdce5, padding-y:6px, height:36px));
+$buttons: map-merge($buttons, getSettingsMap("buttons"));
+.font-smooth {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.btn {
+    @include ffamily('bold');
+    @extend .font-smooth;
+    text-transform: uppercase;
+    &:focus,
+    &:hover,
+    &.active,
+    &:active {
+        outline: none;
+        &:focus {
+            outline: none;
+        }
+    }
+}
+
+.btn-primary {
+    $btn-primary: map-get($buttons, btn-primary);
+    @include t--create-button(map-get($btn-primary, color), map-get($btn-primary, background), map-get($btn-primary, border-color), map-get($btn-primary, padding-y), map-get($btn-primary, height) / 2, map-get($btn-primary, font-size), map-get($btn-primary, height) / 2);
+    height: map-get($btn-primary, height);
+    @include t--font-size(12px);
+    &:hover,
+    &:focus {
+        background: lighten(map-get($btn-primary, background), 10);
+    }
+}
+
+.btn-secondary {
+    $btn-secondary: map-get($buttons, btn-secondary);
+    @include t--create-button(map-get($btn-secondary, color), map-get($btn-secondary, background), map-get($btn-secondary, border-color), map-get($btn-secondary, padding-y), map-get($btn-secondary, height) / 2, map-get($btn-secondary, font-size), map-get($btn-secondary, height) / 2);
+    height: map-get($btn-secondary, height);
+    @include t--font-size(12px);
+    border-width: 1px;
+    border-style: solid;
+    &:hover,
+    &:focus {
+        background: darken(map-get($btn-secondary, background), 3);
+    }
+}
+
+.btn-danger {
+    $btn-danger: map-get($buttons, btn-danger);
+    height: map-get($btn-danger, height);
+    @include t--create-button(map-get($btn-danger, color), map-get($btn-danger, background), map-get($btn-danger, border-color), map-get($btn-danger, padding-y), map-get($btn-danger, height) / 2, map-get($btn-danger, font-size), map-get($btn-danger, height) / 2);
+    @include t--font-size(12px);
+}
+
+.btn-transparent {
+    $btn-transparent: map-get($buttons, btn-transparent);
+    height: map-get($btn-transparent, height);
+    @include t--create-button(map-get($btn-transparent, color), map-get($btn-transparent, background), map-get($btn-transparent, border-color), map-get($btn-transparent, padding-y), map-get($btn-transparent, height) / 2, map-get($btn-transparent, font-size), map-get($btn-transparent, height) / 2);
+    @include t--font-size(12px);
+}
+
+.btn-block {
+    display: block !important;
+    &.c-button button {
+        width: 100% !important;
+    }
+}

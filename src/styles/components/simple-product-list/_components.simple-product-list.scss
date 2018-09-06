@@ -1,0 +1,106 @@
+/* --------------------------------------------------------
+author: Can SİVRİ
+----------------------------------------------------------*/
+
+
+/**
+ * Primary Column Line:
+ * `.c-simple-product-list` -
+
+ *     @example
+ *     .c-simple-product-list
+ */
+
+$c-simple-product-list: ( title-font-size: $global-font-size + 3, amount-width: 100px, item-td-padding: 16px 20px 16px 10px, amount-padding: 16px 10px 16px 20px, ticket-check-size: 22px, ticket-effect-width: 20px, ticket-check-selected-circle-size: 12px, border-radius: 2px, border-color: #dcdce5, global-bg-color: #f7f7f7, primary-color: #35383d, );
+// Merge settings and defaults
+$c-simple-product-list: map-merge($c-simple-product-list, getSettingsMap("c-simple-product-list"));
+// Set shortcuts
+$c-map: $c-simple-product-list;
+.c-simple-product-list {
+    display: block;
+    position: relative;
+}
+
+.c-simple-product-list__item {
+    display: block;
+    padding: 0 20px;
+    border: 1px solid map-get($c-map, border-color);
+    border-radius: map-get($c-map, border-radius);
+    margin-bottom: -1px;
+    &--selected {
+        background-color: map-get($c-map, global-bg-color);
+    }
+}
+
+.c-simple-product-list__item-bar {
+    position: relative;
+    display: table;
+    width: 100%;
+    &:after,
+    &:before {
+        content: '';
+        display: block;
+        position: absolute;
+        z-index: 5;
+        top: 50%;
+        border-radius: 100%;
+        background-color: #fff;
+        @include t--size(map-get($c-map, ticket-check-size));
+        @include t--translateY(-50%);
+        border: 1px solid map-get($c-map, border-color);
+        left: - map-get($c-map, ticket-check-size)/2 - 21;
+        clip: rect(0px, map-get($c-map, ticket-check-size), map-get($c-map, ticket-check-size), map-get($c-map, ticket-check-size)/2);
+    }
+    &:before {
+        left: auto;
+        right: - map-get($c-map, ticket-check-size)/2 - 21;
+        clip: rect(0px, map-get($c-map, ticket-check-size)/2, map-get($c-map, ticket-check-size), 0px);
+    }
+}
+
+.c-simple-product-list-item__title {
+    position: relative;
+    display: table-cell;
+    vertical-align: middle;
+    width: calc(100% - #{map-get($c-map, amount-width)});
+    padding: map-get($c-map, item-td-padding);
+    border-left: 1px dashed map-get($c-map, border-color);
+    &-name {
+        display: table-cell;
+        vertical-align: middle;
+        padding-left: 10px;
+        font-size: map-get($c-map, title-font-size);
+        @include ffamily(regular);
+        color: map-get($c-map, primary-color);
+    }
+}
+
+.c-simple-product-list-item__checkbox {
+    display: table-cell;
+    vertical-align: middle;
+    .c-checkbox {
+        vertical-align: middle;
+    }
+}
+
+.c-simple-product-list-item__amount {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    width: map-get($c-map, amount-width);
+    border-left: 1px dashed map-get($c-map, border-color);
+    border-right: 1px dashed map-get($c-map, border-color);
+    border-top: none;
+    border-bottom: none;
+    padding: map-get($c-map, amount-padding);
+}
+
+.c-simple-product-list-item__amount-value {
+    font-size: 18px;
+    color: map-get($c-map, primary-color);
+    @include ffamily(bold);
+    sup {
+        top: -0.4em;
+        font-size: 13px;
+    }
+}

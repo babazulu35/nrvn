@@ -1,0 +1,100 @@
+<app-dialog-box>
+
+  <div #header class="c-dialog-box__header c-dialog-box__header--padding">
+    <div class="c-dialog-box__header-bar">
+      <h1 class="c-dialog-box__header-title">
+        {{title}}
+      </h1>
+      <div class="c-dialog-box__header-actions">
+        <app-button (click)="tetherService.dismiss()" type="icon" icon="close" theme="secondary"></app-button>
+      </div>
+    </div>
+
+    <div class="c-dialog-box__header-sticky-contents">
+      <app-wizard-header currentLevel={{currentLevelIndex+1}} totalLevel={{levels?.length}} (actionEvent)="wizardActionHandler($event)" [historyIsActive]="currentLevel?.historyIsActive">
+        <span><strong>{{wizardHeader.currentLevel}}. Adım: </strong>{{currentLevel?.title}}</span>
+      </app-wizard-header>
+      <app-helper-text *ngIf="currentLevel?.params?.helperText" type="info" [text]="currentLevel?.params?.helperText"></app-helper-text>
+    </div>
+
+  </div>
+
+   <div #body [ngSwitch]="currentLevel?.key" class="c-dialog-box__body c-dialog-box__body--no-padding ">
+     <div *ngSwitchCase="'userSelect'" class="p-container p-container--inherit">     
+        
+      <app-typeahead
+          (actionEvent)="userSelectActionHandler($event)"
+          (searchEvent)="userSelectSearchHandler($event)"
+          (resultEvent)="userSelectResultHandler($event)"
+          (dismissEvent)="userSelectDismissHandler($event)"
+          searchPlaceholder = "Kullanıcı Ara"
+          [feedback] = '{
+            title: "Aramanız ile eşleşen kullanıcı bulunamadı",
+            description: "Arama kriterini değiştirerek yeniden deneyebilir ya da yeni bir kullanıcı ekleyebilirsiniz.",
+            icon: {type: "icon", name: "person"}
+          }'
+          [searchResults] = "userSelectSearchResults"
+          [isPromising]="isPromising"          
+          ></app-typeahead>
+	  </div>
+    <div *ngSwitchCase="'userSettings'" class="p-container">
+        <div class="p-group">
+
+          <div class="p-group__item row">
+
+            <div class="p-formgroup col-xs-8 padding-right-10">
+              <div class="p-form-group__label">
+                BAŞLANGIÇ TARİHİ
+              </div>
+              <div class="p-form-group__input">
+                <app-text-input
+                  type="datepicker"
+                  (changeEvent)="inputChangeHandler($event,'BeginDate')"
+                  [date]="terminalUser?.BeginDate"
+                  [minDate]="today"
+                  [maxDate]="terminalUser?.EndDate"
+                ></app-text-input>
+              </div>
+            </div>
+
+            <div class="p-formgroup col-xs-8 padding-left-10">
+              <div class="p-form-group__label">
+                BİTİŞ TARİHİ
+              </div>
+              <div class="p-form-group__input">
+                <app-text-input
+                  type="datepicker"
+                  (changeEvent)="inputChangeHandler($event,'EndDate')"
+                  [date]="terminalUser?.EndDate"
+                  [minDate]="terminalUser?.BeginDate"
+                ></app-text-input>
+              </div>
+            </div>
+
+          </div>
+
+          <div *ngIf="!isEditMode" class="p-group__item">
+            <div class="p-toggle">
+              <div class="p-toggle__label">
+                Kullanıcı aktif mi?
+              </div>
+              <div class="p-toggle__input">
+                <app-checkbox type="lightswitch" (changeEvent)="inputChangeHandler($event,'IsActive')" [isChecked]="terminalUser?.IsActive"></app-checkbox>
+              </div>
+            </div>
+          </div>
+
+        </div>
+    </div>
+
+  </div>
+
+  <div #footer class="c-dialog-box__footer">
+    <div class="c-dialog-box__footer-content">
+      <div class="col-xs-16">
+        <app-button (clickEvent)="submitClickHandler($event)" [isDisabled]="!isValid" theme="primary" [label]="currentLevel?.key == 'userSettings' ? (isEditMode ? 'KULLANICIYI GÜNCELLE' : 'KULLANICI EKLE') : 'DEVAM ET'"></app-button>
+      </div>
+    </div>
+  </div>
+
+</app-dialog-box>

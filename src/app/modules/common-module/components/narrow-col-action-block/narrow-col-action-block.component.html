@@ -1,0 +1,18 @@
+<div class="c-narrow-col-action-block__body">
+    <i class="c-narrow-col-action-block__top-icons icon__n" 
+        [class.icon__n--visibility_off]="!data.isActive"
+        [class.icon__n--visibility]="data.isActive"
+        [class.c-narrow-col-action-block__top-icons--active]="data.isActive"></i>
+    
+    <app-button *ngIf="contextMenuItems" (click)="openEventsContextMenu($event)" type="icon" icon="more_vert" theme="secondary" class="c-narrow-col-action-block__top-icons c-narrow-col-action-block__top-icons--right"></app-button>
+    <app-button *ngIf="action" (click)="actionClick($event)" type="icon" [icon]="action.iconName" theme="secondary" class="c-narrow-col-action-block__top-icons c-narrow-col-action-block__top-icons--right"></app-button>
+
+    <div class="c-narrow-col-action-block__figure">
+        <div class="c-narrow-col-action-block__normal-content">
+            <app-avatar [source]="data?.image" [letters]="data?.letters" alt=""></app-avatar>
+        </div>
+        <a href="javascript:void(0)" (click)="actionEvent.emit({action: 'gotoEvent', data: data})" class="c-narrow-col-action-block__content">{{data?.label}}</a>
+    </div>
+    <!-- /.c-narrow-col-action-block__figure -->
+</div>
+<!-- /.c-narrow-col-action-block__body -->

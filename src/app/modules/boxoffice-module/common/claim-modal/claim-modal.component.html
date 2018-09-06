@@ -1,0 +1,44 @@
+<div class="c-claim-modal__header">
+    <div class="c-claim-modal__header-bar">
+        <h1 class="c-claim-modal__header-title">
+            {{campaign?.Name}}
+        </h1>
+        <div class="c-claim-modal__header-actions">
+            <app-button (click)="dismiss()" type="icon" icon="close" theme="secondary"></app-button>
+        </div>
+    </div>
+</div>
+
+<div class="c-claim-modal__body">
+    <form [formGroup]="campaignForm">
+        <div *ngFor="let field of campaign?.Fields, let i = index">
+            <div class="c-claim-modal__description">{{field?.Description}}</div>
+            <div class="c-claim-modal__feedback-input"*ngIf="i <= campaign?.Fields.length-1" [ngSwitch]="field.Type">
+                <app-text-input *ngSwitchCase="4"
+                                type="datepicker"
+                                [includeTime]="false"
+                                dateTimeFormat="YYYY-MM-DD"
+                                [required]="true"
+                                [form]="campaignForm"
+                                [name]="field?.Name"
+                                theme="underline"
+                                [placeholder]="field?.Description"
+                                (changeEvent)="dateChangeHandler($event,field?.Name)"
+                                [yearRange]="[today.getFullYear() - 100, today.getFullYear()]"
+                                [minDate]="minDate"
+                                [maxDate]="today"
+                                [icon]="'insert_invitation'"></app-text-input>
+                <!-- <app-text-input *ngSwitchCase="2" type="datepicker" [dateTimeFormat]="'DD.MM.YYYY , HH:mm'" [required]="true" [form]="campaignForm" [name]="field?.Name" theme="underline" [placeholder]="field?.Description" (changeEvent)="dateChangeHandler($event,field?.Name)"
+                    [minDate]="minDate" [maxDate]="today" [icon]="'insert_invitation'"></app-text-input> -->
+                <app-text-input *ngSwitchDefault type="name" [required]="true" [form]="campaignForm" [name]="field?.Name" theme="underline" [placeholder]="field?.Description" [minDate]="minDate" [maxDate]="today" [icon]="'lock'"></app-text-input>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="c-claim-modal__footer">
+    <div class="c-claim-modal__footer-action-bar">
+        <app-button (click)="dismiss()" [type]="'link'" [label]="'VAZGEÇ'"></app-button>
+        <app-button (click)="add()" [isDisabled]="!isValid" [type]="'button'" [label]="'EKLE'" [theme]="'primary'"></app-button>
+    </div>
+</div>

@@ -1,0 +1,339 @@
+/**
+* File Upload Box:
+* Author: Can Sivri
+*
+*/
+
+
+// Variables
+$c-file-upload-box: (
+	border-radius: 3px,
+	border-color: #dcdce5,
+	
+	container: (
+		padding: 20px,
+		border-color: #dcdce5,
+		background-color: #f7f7f7,
+	),
+	localization: (
+        icon: (
+            color: #C2C2C2
+        ),
+        badge: (
+            color: #fff,
+            background-color: #2096F3
+        )
+	),
+	drop-zone: (
+		font-size: 13px,
+		padding: 20px,
+		background-color: #f7f7f7,
+		hover-color: #2985ef,
+		error-color:#ec4e48,
+
+		icon: (
+			font-size: 24px,
+			color: #B1B1B1,
+			active-color: #35383d,
+		)
+	),
+	preview: (
+		width: 240px,
+		ratio-43: calc(100% * 3 / 4),
+		ratio-169: calc(100% * 9 / 16 ),
+	),
+	gray:#9d9d9d,
+	black:#35383d,
+	error-color:#ec4e48,
+	success-color:#6bba18,
+	fill-bg-color:#6bba18,
+	font-size:13px,
+	title-margin: 0 0 5px 0,
+	title-font-size:13px,
+	info-font-size:11px,
+	info-icon-margin:0 3px 2px 0,
+	info-icon-font-size:17px,
+	area-padding:19px 20px 15px,
+	area-border:1px dashed #e3e3ea,
+	area-bg-color:#f7f7f7,
+	area-border-radius:3px,
+	area-icon-margin:0 4px 1px 0,
+	area-icon-color:#bdbdbd,
+	area-icon-font-size:24px,
+	progress-bar-bg:#dcdce5,
+	progress-bar-margin:10px 0 18px,
+	progress-bar-height:3px,
+	progress-bar-info-margin:0 0 15px 0,
+	progress-bar-font-size:11px,
+	progress-bar-icon-font-size:24px,
+);
+
+// Merge settings and defaults
+$c-file-upload-box: map-merge($c-file-upload-box, getSettingsMap("c-file-upload-box"));
+
+// Set shortcuts
+$c-map: $c-file-upload-box;
+
+.c-file-upload-box {
+	display: inline-block;
+	position: relative;
+	line-height: 0px;
+	font-size: 0px;
+	width: 100%;
+	border-radius: map-deep-get($c-map, border-radius);
+	border: 1px solid map-deep-get($c-map, border-color);
+	overflow: hidden;
+	
+	&--disabled {
+        cursor: not-allowed;
+        opacity: 0.8;
+        * {
+            pointer-events: none;
+            user-select: none;
+        }
+	}
+
+	&--transparent {
+		border: none;
+		.c-file-upload-box__drop-zone-bar {
+			width: auto;
+			border: none;
+			background-color: transparent;
+			table-layout: fixed;
+
+			.c-file-upload-box__drop-zone {
+				&-icon {
+					padding: 0px;
+					width: auto;
+					color: map-deep-get($c-map, drop-zone, icon, color);
+
+					& + .c-file-upload-box__drop-zone-info {
+						padding-left: 0.75em;
+					}
+				}
+				&-info {
+					width: auto;
+					padding-right: 0px;
+				}
+				&-action {
+					padding: 0px 0px 0px 0.25em;
+					margin-left: 1em;
+					border: none;
+
+					.c-button + .c-button { margin-left: 0px; }
+				}
+			}
+			.c-file-upload-box__drop-zone-action:before { display: none };
+		}
+	}
+
+	&--promise {
+        cursor: not-allowed;
+        * {
+            pointer-events: none;
+            user-select: none;
+        }
+	}
+
+	&--drag-over {
+		border: 1px dashed map-deep-get($c-map, drop-zone, hover-color) !important;
+	}
+
+	&--not-allowed {
+		cursor: not-allowed;
+		border: 1px dashed map-deep-get($c-map, drop-zone, error-color);
+	}
+
+	&--has-preview {
+		.c-file-upload-box__drop-zone {
+			> span:first-of-type {
+				padding: map-deep-get($c-map, drop-zone, padding)/2 map-deep-get($c-map, drop-zone, padding);
+			}
+			
+			&-action {
+				padding: map-deep-get($c-map, drop-zone, padding)/2 map-deep-get($c-map, drop-zone, padding);
+			}
+		}
+
+		.c-file-upload-box__localization {
+			padding: map-deep-get($c-map, drop-zone, padding)/2 map-deep-get($c-map, drop-zone, padding);
+		}
+	}
+	
+	&--empty:not(.c-file-upload-box--transparent) {
+		border: 1px dashed map-deep-get($c-map, border-color);
+		
+		.c-file-upload-box__drop-zone {
+			&-icon {
+				color: map-deep-get($c-map, drop-zone, icon, color);
+			}
+		}
+		.c-file-upload-box__localization {
+			&:before {
+				border-left: dashed 1px map-get($c-map, border-color);
+			}
+		}
+	}
+  
+	&:hover {
+	  
+	}
+  
+	&__container {
+	  display: flex;
+	  position: relative;
+	  align-items: center;
+	  justify-content: center;
+	  background-color: map-deep-get($c-map, container, background-color);
+	  border-radius: map-deep-get($c-map, border-radius);
+	  padding: map-deep-get($c-map, container, padding);
+	  border: 1px solid map-deep-get($c-map, container, border-color);
+	}
+
+	&__preview {
+		display: table;
+		position: relative;
+		background-color: map-deep-get($c-map, drop-zone, background-color);
+		border-bottom: 1px solid map-deep-get($c-map, border-color);
+		width: 100%;
+		table-layout: fixed;
+		min-width: map-deep-get($c-map, preview, width);
+		width: 100%;
+		padding-top: map-deep-get($c-map, preview, ratio-43);
+
+		>svg {
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			top: 0px;
+			left: 0px;
+		}
+	}
+
+	&__drop-zone {
+		display: block;
+
+		&-bar {
+			display: table;
+			position: relative;
+			font-size: map-deep-get($c-map, drop-zone, font-size);
+			background-color: map-deep-get($c-map, drop-zone, background-color);
+			line-height: map-deep-get($c-map, drop-zone, icon, font-size);
+			width: 100%;
+			margin: 0px;
+			padding: 0px;
+
+			>* {
+				vertical-align: middle;
+			}
+	
+			> span:first-of-type {
+				padding: map-deep-get($c-map, drop-zone, padding);
+			}
+		}
+
+		input[type=file] {
+			position: absolute;
+			opacity: 0;
+			top: 0px; left: 0px;
+			pointer-events: none;
+		}
+
+		&-icon {
+			display: table-cell;
+			vertical-align: middle;
+			color: map-deep-get($c-map, drop-zone, icon, active-color);
+			font-size: map-deep-get($c-map, drop-zone, icon, font-size);
+			width: 1.25em;
+		}
+
+		&-info{
+			display: table-cell;
+			vertical-align: middle;
+			line-height: 1.2em;
+			width: 100%;
+			word-break: keep-all;
+			padding-right: 1.2em;
+
+			>* {
+				vertical-align: middle;
+			}
+		}
+
+		&-record-info {
+			@include ffamily(regular, i);
+
+			strong, b {
+				@include ffamily(bold, i);
+			}
+		}
+
+		&-action {
+			display: table-cell;
+			position: relative;
+			vertical-align: middle;
+			font-size: map-deep-get($c-map, drop-zone, icon, font-size);
+			width: auto;
+			text-align: right;
+			padding: map-deep-get($c-map, drop-zone, padding);
+			white-space: nowrap;
+
+			&:before {
+				content: "";
+				position: absolute;
+				display: block;
+				width: 1px;
+				height: 100%;
+				top: 0px;
+				left: 0px;
+				border-left: solid 1px map-get($c-map, border-color);
+			}
+
+			.c-button + .c-button {
+				margin-left: map-deep-get($c-map, drop-zone, padding) / 4;
+			}
+		}
+	}
+
+	&__localization {
+		display: table-cell;
+		position: relative;
+        vertical-align: middle;
+        text-align: center;
+        white-space: nowrap;
+        line-height: 0px;
+		padding: map-deep-get($c-map, drop-zone, padding);
+
+        &:before {
+            content: "";
+            position: absolute;
+            display: block;
+            width: 1px;
+            height: 100%;
+            top: 0px;
+            left: 0px;
+            border-left: solid 1px map-get($c-map, border-color);
+        }
+        &-btn {
+            display: inline-block;
+            vertical-align: middle;
+            color: map-deep-get($c-map, localization, icon, color);
+            font-size: 1.6em;
+            line-height: 0px;
+            margin-top: 2px;
+        }
+        &-badge {
+            display: inline-block;
+            vertical-align: middle;
+            white-space: nowrap;
+            @include ffamily('semi', 'i');
+            font-size: 0.75em;
+            line-height: 2.2em;
+            width: 4em;
+            letter-spacing: 0.05em;
+            border-radius: 1em;
+            color: map-deep-get($c-map, localization, badge, color);
+            background-color: map-deep-get($c-map, localization, badge, background-color);
+        }
+    }
+}

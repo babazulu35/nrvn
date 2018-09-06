@@ -1,0 +1,22 @@
+.c-invitation-settings {
+    .p-group__list-item {
+        padding-top: 0;
+        padding-bottom: 0;
+        border: 0;
+        &:last-child {
+            border: 0;
+        }
+    }
+    .p-group__list-item-label {
+        width: auto;
+        min-width: 180px;
+    }
+    .p-group__list-item-action {
+        position: relative;
+        left: 20px;
+    }
+    .p-modal-container__body .p-group__list-item-action {
+        text-align: center;
+        width: 80px;
+    }
+}

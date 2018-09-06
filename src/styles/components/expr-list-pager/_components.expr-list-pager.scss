@@ -1,0 +1,61 @@
+/***
+ * Expr List Pager Component:
+ * Author: Halil Nuroğlu
+ */
+
+ /**
+ * Expr List Pager:
+ * `.c-narrow-index`
+ *
+ *     @example
+ *     <div class="c-expr-list-pager">
+ *       <a href="#" class="icon__n icon__n--keyboard_arrow_left"></a>
+ *       <strong>EKİM 2016</strong>
+ *       <a href="#" class="icon__n icon__n--keyboard_arrow_right"></a>
+ *     </div>
+ *     <!--end c-expr-list-pager-->
+ */
+
+// Set defaults
+$c-expr-list-pager: (
+  c-primary-color: #3a2e39
+);
+
+// Merge settings and defaults
+$c-expr-list-pager: map-merge($c-expr-list-pager, getSettingsMap("c-expr-list-pager"));
+
+// Set shortcuts
+$c-map: $c-expr-list-pager;
+
+// Component
+.c-expr-list-pager {
+  text-align: center;
+  * {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  a {
+    text-decoration: none;
+    font-size: 23px;
+
+    color: map-get($c-map, c-primary-color);
+
+    @include transition(all 0.1s ease-out);
+
+    &:hover { opacity: .8; }
+    &:first-child:hover { @include t--translateX(-2px); }
+    &:last-child:hover { @include t--translateX(2px); }
+  }
+
+  strong {
+    margin-right: 4px;
+    margin-left: 4px;
+    font-size: 13px;
+
+    @include ffamily('semi');
+  }
+}
+
+//Reset
+$c-map: null;

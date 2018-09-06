@@ -1,0 +1,3 @@
+<i class="c-helper-text__icon icon__n icon__n--{{icon}}"></i>
+<span *ngIf="text" class="c-helper-text__value" [innerHTML]="text | sanitizeHtml"></span>
+<span *ngIf="!text" class="c-helper-text__value"><ng-content></ng-content></span>

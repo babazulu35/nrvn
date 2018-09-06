@@ -1,0 +1,150 @@
+<app-dialog-box [isLoading]="isLoading">
+    <div #header class="c-dialog-box__header c-dialog-box__header--padding">
+        <div class="c-dialog-box__header-bar">
+            <h1 class="c-dialog-box__header-title">
+                {{title}}
+            </h1>
+            <div class="c-dialog-box__header-actions">
+                <app-button (click)="tetherService.dismiss()" type="icon" icon="close" theme="secondary"></app-button>
+            </div>
+        </div>
+        <div class="c-dialog-box__header-sticky-contents">
+            <app-wizard-header currentLevel={{currentLevelIndex+1}} totalLevel={{levels?.length}} (actionEvent)="wizardActionHandler($event)">
+                <span><strong>{{wizardHeader.currentLevel}}. Adım: </strong>{{currentLevel?.title}}</span>
+            </app-wizard-header>
+        </div>
+    </div>
+    <div #body class="c-dialog-box__body c-dialog-box__body--no-padding" [ngSwitch]="currentLevel?.key"
+        [class.c-dialog-box__body--no-scroll]="!currentLevel?.hasScroll">
+
+        <div *ngSwitchCase="'product'" class="p-container p-container--inherit">
+            <div class="oc-add-invitation__product-list">
+                <app-simple-product-list 
+                    *ngIf="productList?.length"
+                    (changeEvent)="productListHandler($event)"
+                    [selectedProductId]="product?.id"
+                    [productItems]="productList"></app-simple-product-list>
+
+                <app-no-data *ngIf="!productList?.length"
+                    [title]="'Davetiye oluşturulabilecek uygun ürün bulunamadı'"
+                    [icon]="{type: 'svg', name: 'tickets'}" ></app-no-data>
+
+            </div>
+        </div>
+
+        <div *ngSwitchCase="'customer'" class="p-container p-container--inherit">
+
+            <app-customer-search-typeahead *ngIf="!guestFormIsOpen" 
+                (actionEvent)="customerActionHandler($event)"> </app-customer-search-typeahead>
+            <app-guest-form *ngIf="guestFormIsOpen" [hasCityTown]="false" [hasIdNo]="false" [showQuickFill]="false"></app-guest-form>
+        </div>
+
+        <div *ngSwitchCase="'invitationOptions'" class="p-container p-container">
+            <div class="p-group">
+                <div class="p-group__item">
+                    <app-text-input theme="underline" 
+                        placeholder="Davetiyinize isim verin"
+                        [isTypeEmitting]="true"
+                        [value]="invitationOptions?.RsvpName" (typeEvent)="inputChangeHandler($event, 'RsvpName')" ></app-text-input>
+                </div>
+                <div class="p-group__item">
+                    <app-text-input theme="underline" 
+                        placeholder="Açıklama"
+                        [isTypeEmitting]="true"
+                        [value]="invitationOptions?.Description" (typeEvent)="inputChangeHandler($event, 'Description')" ></app-text-input>
+                </div>
+            </div>
+
+            <div class="p-group">
+
+                <div class="p-group__item">
+                    <div class="p-toggle">
+                        <span class="p-toggle__label">Davetiyeler onaysız. (RSVP İsteniyor)</span>
+                        <span class="p-toggle__input">
+                            <app-checkbox type="lightswitch" (changeEvent)="inputChangeHandler($event, 'IsRsvp')" [isChecked]="invitationOptions?.IsRsvp"></app-checkbox>
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+            
+            <div class="p-group" *ngIf="invitationOptions?.IsRsvp">
+                <div class="p-group__header">
+                    <div class="p-group__header-bar">
+                        <div class="p-group__header-title">
+                            Davetiye geçerlilik süresini seçin
+                        </div>
+                    </div>
+                </div>
+                <div class="p-group__item" *ngIf="expirationTypes">
+                    <app-radio-group 
+                        (changeEvent)="inputChangeHandler($event, 'ExpirationType')"
+                        name="ExpirationType" 
+                        [value]="invitationOptions?.ExpirationType">
+                        <div class="oc-add-invitation__table-row">
+                            <span class="oc-add-invitation__table-column-left"><app-checkbox [value]="expirationTypes[0].value" [label]="expirationTypes[0].label"></app-checkbox></span>
+                            <span class="oc-add-invitation__table-column-right"></span>
+                        </div>
+                        <div class="oc-add-invitation__table-row">
+                            <span class="oc-add-invitation__table-column-left"><app-checkbox [value]="expirationTypes[1].value" [label]="expirationTypes[1].label"></app-checkbox></span>
+                            <span class="oc-add-invitation__table-column-right" *ngIf="invitationOptions?.ExpirationType == 1"><app-selectbox placeholder="Seçiniz" [options]="hoursRange" [value]="invitationOptions?.ExpirationTime" (changeEvent)="inputChangeHandler($event, 'ExpirationTime')"></app-selectbox></span>
+                        </div>
+                        <div class="oc-add-invitation__table-row">
+                            <span class="oc-add-invitation__table-column-left"><app-checkbox [value]="expirationTypes[2].value" [label]="expirationTypes[2].label"></app-checkbox></span>
+                            <span class="oc-add-invitation__table-column-right" *ngIf="invitationOptions?.ExpirationType == 2"><app-selectbox placeholder="Seçiniz" [options]="hoursRange" [value]="invitationOptions?.ExpirationTime" (changeEvent)="inputChangeHandler($event, 'ExpirationTime')"></app-selectbox></span>
+                        </div>
+                    </app-radio-group>
+                </div>
+            </div>
+
+            <div class="p-group">
+                <div class="p-group__item">
+                    <div class="p-toggle">
+                        <span class="p-toggle__label">En uygun seçeneğe göre belirle</span>
+                        <span class="p-toggle__input">
+                            <app-checkbox type="lightswitch" (changeEvent)="inputChangeHandler($event, 'BestAvailable')" [isChecked]="invitationOptions?.BestAvailable"></app-checkbox>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-group">
+                <div class="p-group__header">
+                    <div class="p-group__header-bar">
+                        <div class="p-group__header-title">
+                            Kapasite bilgileri
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-group__item">
+                    <div class="p-toggle">
+                        <span class="p-toggle__label">Rezervasyon yapılacak koltuk adedini girin</span>
+                        <span class="p-toggle__input">
+                            <!--<app-selectbox *ngIf="rsvpType == RsvpType.Individual" placeholder="Seçiniz" [numberRanges]="{placeholder: 'Seçiniz', min: 1, max: 10, label:' Adet'}" [value]="invitationOptions?.Count" (changeEvent)="inputChangeHandler($event, 'Count')"></app-selectbox>-->
+                            <app-text-input type="number" [min]="1" [max]="performanceProduct?.Capacity" placeholder="Adet Giriniz" [value]="invitationOptions?.Count" (changeEvent)="inputChangeHandler($event, 'Count')"></app-text-input>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="p-group__item" *ngIf="rsvpType == RsvpType.TargetGroup">
+                    <div class="p-toggle">
+                        <span class="p-toggle__label">Davetiyenin sakladığı giriş hakkını seçin</span>
+                        <span class="p-toggle__input">
+                            <app-selectbox placeholder="Seçiniz" [options]="ticketPerUserRange" [value]="invitationOptions?.TicketPerUser" (changeEvent)="inputChangeHandler($event, 'TicketPerUser')"></app-selectbox>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--<app-reservation-settings [toggleFields]="{autoSelectFieldVisible:true}" (resultEvent)="reservationHandler($event)" *ngSwitchCase="'invitationOptions'"></app-reservation-settings>-->
+    </div>
+    <div #footer class="c-dialog-box__footer row">
+        <div class="c-dialog-box__footer-content">
+            <div class="col-xs-16">
+                <app-button (click)="submitClickHandler($event)" [isDisabled]="!isValid" theme="primary" [label]="currentLevel?.key == 'invitationOptions' ? 'REZERVASYONU TAMAMLA' : 'DEVAM ET'"></app-button>
+            </div>
+        </div>
+    </div>
+
+</app-dialog-box>

@@ -1,0 +1,221 @@
+/*@font-face {
+    font-family: 'Material Icons';
+    font-style: normal;
+    font-weight: 400;
+    src: url('../../../bower_components/material-design-icons/iconfont/MaterialIcons-Regular.eot');
+    
+    src: local('Material Icons'), local('MaterialIcons-Regular'), url('../../../bower_components/material-design-icons/iconfont/MaterialIcons-Regular.woff2') format('woff2'), url('../../../bower_components/material-design-icons/iconfont/MaterialIcons-Regular.woff') format('woff'), url('../../../bower_components/material-design-icons/iconfont/MaterialIcons-Regular.ttf') format('truetype');
+}*/
+
+@font-face {
+    font-family: 'Nirvana Icons';
+    font-style: normal;
+    font-weight: 400;
+    src: url('/assets/fonts/nirvana-icons/nirvana-icons.eot');
+    /* For IE6-8 */
+    src: url('/assets/fonts/nirvana-icons/nirvana-icons.ttf') format('truetype');
+}
+
+$icon-degrees: 45 90 135 180 225 270 315;
+.icon__n {
+    @if $dev-mode==true {
+        @each $key,
+        $value in $tempIcons {
+            &.icon__n--#{$key}:before {
+                content: $value;
+            }
+        }
+    }
+    @each $key,
+    $value in $icons {
+        &.icon__n--#{$key}:before {
+            content: $value;
+        }
+    }
+    @each $degree in $icon-degrees {
+        &.icon__n--#{$degree} {
+            transform: rotate(#{$degree}deg) !important;
+        }
+    }
+    &--flip-horizontal {
+        -webkit-transform: scaleX(-1);
+        transform: scaleX(-1) !important;
+        filter: FlipH;
+        -ms-filter: "FlipH";
+    }
+    &--flip-vertical {
+        -webkit-transform: scaleY(-1);
+        transform: scaleY(-1) !important;
+        filter: FlipV;
+        -ms-filter: "FlipV";
+    }
+    display: inline-block;
+    font-size: inherit;
+    /* Preferred icon size */
+    line-height: 1em;
+    height: 1em;
+    &--sm {
+        font-size: 18px;
+    }
+    &--md {
+        font-size: 24px;
+    }
+    &--lg {
+        font-size: 36px;
+    }
+    &--color-success {
+        color: #6bba18;
+    }
+    &--color-danger {
+        color: #ec4e48;
+    }
+    &--color-info {
+        color: #2b98f0;
+    }
+    &--color-warning {
+        color: #FABC00;
+    }
+    &:before {
+        font-family: 'Nirvana Icons';
+        font-weight: normal;
+        font-style: normal;
+        font-size: inherit;
+        display: inline-block;
+        line-height: 1em;
+        text-transform: none;
+        letter-spacing: normal;
+        word-wrap: normal;
+        white-space: nowrap;
+        direction: ltr;
+        /* Support for all WebKit browsers. */
+        -webkit-font-smoothing: antialiased;
+        /* Support for Safari and Chrome. */
+        text-rendering: optimizeLegibility;
+        /* Support for Firefox. */
+        -moz-osx-font-smoothing: grayscale;
+        /* Support for IE. */
+        font-feature-settings: 'liga';
+    }
+}
+
+.icon__svg {
+    @each $key,
+    $value in $svgImages {
+        &.icon__svg--#{$key}:before {
+            background-image: inline-svg($value);
+        }
+    }
+    @each $degree in $icon-degrees {
+        &.icon__n--#{$degree} {
+            transform: rotate(#{$degree}deg) !important;
+        }
+    }
+    &--flip-horizontal {
+        -webkit-transform: scaleX(-1);
+        transform: scaleX(-1) !important;
+        filter: FlipH;
+        -ms-filter: "FlipH";
+    }
+    &--flip-vertical {
+        -webkit-transform: scaleY(-1);
+        transform: scaleY(-1) !important;
+        filter: FlipV;
+        -ms-filter: "FlipV";
+    }
+    display: inline-block;
+    font-size: inherit;
+    /* Preferred icon size */
+    line-height: 1em;
+    height: 1em;
+    &--xs {
+        font-size: 36px;
+    }
+    &--sm {
+        font-size: 64px;
+    }
+    &--md {
+        font-size: 128px;
+    }
+    &--lg {
+        font-size: 256px;
+    }
+    &--xl {
+        font-size: 512px;
+    }
+    &:before {
+        content: "";
+        display: inline-block;
+        font-size: inherit;
+        line-height: 1em;
+        width: 1em;
+        height: 1em;
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: center;
+    }
+}
+
+
+/*.icon--m {
+    font-family: 'Material Icons';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    
+    display: inline-block;
+    line-height: 1;
+    text-transform: none;
+    letter-spacing: normal;
+    word-wrap: normal;
+    white-space: nowrap;
+    direction: ltr;
+   
+    -webkit-font-smoothing: antialiased;
+    
+    text-rendering: optimizeLegibility;
+   
+    -moz-osx-font-smoothing: grayscale;
+   
+    font-feature-settings: 'liga';
+}*/
+
+@mixin icon($content,
+$family:null,
+$size:24px) {
+    /* Preferred icon size */
+    @if ($family=="nirvana" or $family==null) {
+        @if map-has-key($icons,
+        $content) {
+            font-family: 'Nirvana Icons';
+            content: map-get($icons, $content);
+        }
+        @else {
+            font-family: 'Nirvana Icons';
+            content: map-get($tempIcons, $content);
+        }
+        font-weight: normal;
+        font-style: normal;
+        font-size: $size;
+        display: inline-block;
+        line-height: 1em;
+        text-transform: none;
+        letter-spacing: normal;
+        word-wrap: normal;
+        white-space: nowrap;
+        direction: ltr;
+    }
+    @else {
+        content: $content;
+        font-family: $family;
+        font-weight: normal;
+        font-style: normal;
+        font-size: $size;
+        display: inline-block;
+        line-height: 1;
+        text-transform: none;
+        letter-spacing: normal;
+        word-wrap: normal;
+        white-space: nowrap;
+        direction: ltr;
+    }
+}

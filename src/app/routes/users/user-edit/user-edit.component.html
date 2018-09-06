@@ -1,0 +1,179 @@
+<div>
+    <div class="p-title-container">
+        <div class="p-title-container__title">
+            <h4>{{ isEditMode ? 'Kullanıcıyı Düzenle' : 'Yeni Kullanıcı Ekle' }}</h4>
+        </div>    
+        <div class="p-title-container__right">
+            <app-button (clickEvent)='discard($event)' type="icon" icon="close" theme="secondary" size="lg"></app-button>
+        </div>
+        
+    </div>
+
+    <div class="p-container" [ngClass]="{'main-loader': isLoading }">
+        <div class="p-group">
+            <div class="p-group__item row">
+                <div class="p-formgroup col-xs-16">
+                    <div class="or-users__profile-picture">
+                        <app-profile-photo (changeEvent)="inputChangeHandler($event, 'Images')" [source]="user?.Images | image : 'User'" type='avatar'></app-profile-photo>
+                    </div>
+                </div>
+            </div>
+            <div class="p-group__item row">
+                <div class="p-formgroup col-xs-8 padding-right-10">
+                    <div class="p-form-group__label">
+                        KULLANICI ADI <sup>*</sup>
+                    </div>
+                    <div class="p-form-group__input">
+                        <app-text-input
+                            (changeEvent)="inputChangeHandler($event, 'UserName')" 
+                            placeholder="Kullanıcı Adı" 
+                            [value]="user?.UserName"
+                            type="username"></app-text-input>
+                    </div>
+                </div>
+                <div class="p-formgroup col-xs-8 padding-left-10">
+                    <div class="p-form-group__label">
+                        PAROLA <sup *ngIf="!isEditMode">*</sup>
+                    </div>
+                    <div *ngIf="!isEditMode" class="p-form-group__input">
+                        <app-text-input
+                            (changeEvent)="inputChangeHandler($event, 'Password')" 
+                            [patternString]="'.{6,12}'"
+                            [maxlength]="12"
+                            placeholder="Parola" 
+                            [value]="user?.Password"></app-text-input>
+                        <app-helper-text type="info" text="Parola en az 6 haneli olmalıdır."></app-helper-text>
+                    </div>
+                    <div *ngIf="isEditMode" class="p-form-group__content">
+                        ******
+                    </div>
+                </div>
+            </div>
+            <div class="p-group__item row">
+                <div class="p-formgroup col-xs-8 padding-right-10">
+                    <div class="p-form-group__label">
+                        ADI <sup>*</sup>
+                    </div>
+                    <div class="p-form-group__input">   
+                        <app-text-input (changeEvent)="inputChangeHandler($event, 'FirstName')" 
+                                        placeholder="Adı" 
+                                        [value]="user?.FirstName"></app-text-input>
+                    </div>
+                </div>
+                <div class="p-formgroup col-xs-8 padding-left-10">
+                    <div class="p-form-group__label">
+                        SOYADI <sup>*</sup>
+                    </div>
+                    <div class="p-form-group__input">
+                        <app-text-input (changeEvent)="inputChangeHandler($event, 'LastName')" 
+                                        placeholder="Soyadı" 
+                                        [value]="user?.LastName"></app-text-input>
+                    </div>
+                </div>
+            </div>
+            <div class="p-group__item row">
+                <div class="p-formgroup col-xs-8 padding-right-10">
+                    <div class="p-form-group__label">
+                        TELEFON NUMARASI <sup>*</sup>
+                    </div>
+                    <div class="p-form-group__input">   
+                        <app-phone-input #phone 
+                                         (changeEvent)="inputChangeHandler($event, 'PhoneNumber')"
+                                         [value]="user?.PhoneNumber"
+                                         countryCode="TR"></app-phone-input>
+                    </div>
+                </div>
+                <div class="p-formgroup col-xs-8 padding-left-10">
+                    <div class="p-form-group__label">
+                        E-POSTA ADRESİ <sup>*</sup>
+                    </div>
+                    <div class="p-form-group__input">
+                        <app-text-input type="email" 
+                                        (changeEvent)="inputChangeHandler($event, 'Email')" 
+                                        placeholder="@" 
+                                        [value]="user?.Email" 
+                                        name="email"></app-text-input>
+                    </div>
+                </div>
+            </div>
+            <div class="p-group__item row">
+                <div class="or-users__role-groups">
+                    <div class="or-users__role-groups-title">
+                        <span>Firmalar</span>
+                    </div>
+                    <div class="or-users__role-groups-content">
+                        <div *ngFor="let firm of firmsToShow">
+                                <div class="or-users__role-groups-content--item">
+                                    <div class="or-users__role-groups-content--item-left">
+                                        <i class="icon__n icon__n--md icon__n--work"></i>
+                                        <span class="or-users__role-groups-content--item-left-name">{{ firm.Promoter?.Localization?.Address ? (firm.Promoter?.Localization?.Name | ellipsis:26) :  (firm.Promoter?.Localization?.Name | ellipsis:50)}}</span>
+                                        <span class="or-users__role-groups-content--item-left-desc">{{ firm.Promoter?.Localization?.Address  | ellipsis:30}}</span>
+                                    </div>
+                                    <div class="or-users__role-groups-content--item-right">
+                                        <app-button (click)="deleteFirm(firm)" type="icon" icon="delete" theme="secondary"></app-button>
+                                    </div>
+                                </div>
+                        </div>
+                        <app-pagination size="xs"
+                                        [options]="pageSizes"
+                                        [totalItem]="firms?.length"
+                                        [showItemPerPage]="pageSize"
+                                        [currentPage]="currentPage"
+                                        (changeEvent)="changePageSize($event)"
+                                        (transistPage)="transistPage($event)"></app-pagination>
+                        <div class="or-users__role-groups-add-more">
+                            <app-button (click)="openFirmSelectionBox($event)" type="icon" icon="plus" shape="circle" theme="secondary" size="lg"></app-button>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+                             
+            <div class="p-group__item">
+                
+                <div class="p-form-group__label">
+                    ROLLER <sup>*</sup>
+                </div>
+                <div class="p-form-group__input" style="display:flex;">
+                    <div class="p-group__item-element" *ngFor="let essentialRole of essentialRoles">
+                        <app-checkbox inputType="radio" (checkedAction)="checkAction($event, essentialRole.Name)" [isChecked]="essentialRole.isChecked" type="square"></app-checkbox>
+                        <span class="p-group__item-label">{{essentialRole.Name}}</span>
+                    </div>
+                </div>
+            </div>
+                             
+            <div class="p-group__item row">
+                <div class="or-users__role-groups">
+                    <div class="or-users__role-groups-title">
+                        <span>Rol Grupları</span>
+                    </div>
+                    <div class="or-users__role-groups-content">
+                        <div *ngFor="let roleGroup of user?.Groups">
+                                <div class="or-users__role-groups-content--item">
+                                    <div class="or-users__role-groups-content--item-left">
+                                        <i class="icon__n icon__n--md icon__n--people"></i><span class="or-users__role-groups-content--item-left-name">{{ roleGroup }}</span><span class="or-users__role-groups-content--item-left-desc"></span>
+                                    </div>
+                                    <div class="or-users__role-groups-content--item-right">
+                                        <app-button (click)="deleteRole(roleGroup)" type="icon" icon="delete" theme="secondary"></app-button>
+                                    </div>
+                                </div>
+                        </div>
+                        <div class="or-users__role-groups-add-more">
+                            <app-button (click)="openRoleGroupSelectionBox($event)" type="icon" icon="plus" shape="circle" theme="secondary" size="lg"></app-button>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <div #footer class="or-users__footer">
+        <div class="or-users__footer-content">
+          <div class="col-xs-16">
+            <app-button [isDisabled]="!isValid" (clickEvent)="updateOrSaveUser($event)">{{ isEditMode ? 'KAYDET' : 'EKLE' }}</app-button>
+          </div>
+        </div>
+      </div>
+</div>

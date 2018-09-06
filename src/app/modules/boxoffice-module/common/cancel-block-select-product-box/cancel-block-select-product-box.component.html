@@ -1,0 +1,33 @@
+<app-dialog-box [isLoading]="isLoading">
+	<div #header class="c-dialog-box__header c-dialog-box__header--border c-dialog-box__header--padding">
+		<div class="c-dialog-box__header-bar">
+			<h1 class="c-dialog-box__header-title">Ürün Seçin</h1>
+			<div class="c-dialog-box__header-actions">
+				<app-button (click)="tetherDialog.dismiss()" type="icon" icon="close" theme="secondary"></app-button>
+			</div>
+		</div>
+	</div>
+
+	<div #body class="c-dialog-box__body c-dialog-box__body--no-padding"  [ngClass]="{'main-loader': isLoading }">
+		<div class="p-container p-container--inherit">
+			<div class="p-group">
+				<div class="p-group__item">
+					<div class="p-toggle">
+						<span class="p-toggle__label">İşlem yapılacak ürünü seçiniz:</span>
+						<span class="p-toggle__input">
+							<app-selectbox [options]="options" (changeEvent)="onInputChange($event)"></app-selectbox>
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div #footer class="c-dialog-box__footer row">
+		<div class="c-dialog-box__footer-content">
+			<div class="col-xs-16">
+				<app-button [isDisabled]="isDisabled" (clickEvent)="submitClickHandler($event)" heme="primary" label="SEÇ"></app-button>
+			</div>
+		</div>
+	</div>
+</app-dialog-box>

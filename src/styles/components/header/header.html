@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<link rel="stylesheet" href="../../../css/main.css">
+  <script src="../../../bower_components/jquery/dist/jquery.min.js"></script>
+
+
+  <style>
+    .theme-section {
+      padding: 20px
+    }
+
+    .theme-section--dark {
+      background-color: #35383d;
+      color: #aeaeae;
+    }
+
+    .theme-section--dark .preview-card {
+      border: solid 1px #878787;
+    }
+
+    .preview-card {
+      display: inline-block;
+      position: relative;
+      margin: 0px;
+      border: solid 1px #ececea;
+      width: 100%;
+      height: 800px;
+      padding: 10px;
+      overflow: hidden;
+    }
+
+    .preview-card__header {
+
+    }
+
+    .preview-card__content {
+      position: absolute;
+      top: 70px;
+      left: 10px;
+      width: calc(100% - 20px);
+      height: calc(100% - 80px);
+    }
+
+  </style>
+
+</head>
+<body>
+
+  <div class="theme-section">
+
+    <div class="preview-card">
+      <div class="preview-card__header">
+        <h3>Header</h3>
+      </div>
+
+      <div class="preview-card__content">
+        <header class="c-header">
+          <h1 class="c-header__title">Etkinlikler</h1>
+          <ul class="c-header__tools">
+            <li class="c-header__tools-item"><i class="icon__n icon__n--search"></i></li>
+            <li class="c-header__tools-item"><i class="icon__n icon__n--help_outline"></i></li>
+            <li class="c-header__tools-item c-header__tools-item--active"><i class="icon__n icon__n--notifications"></i><span class="tag-pill tag-danger">3</span></li>
+          </ul>
+          <span class="c-header__user">
+            <span class="c-header__user-name">Merhaba <b>Altuğ</b></span>
+            <span class="c-header__user-avatar">
+              <span class="c-avatar c-avatar--circle c-avatar--sm">
+                <figure>
+      						<img src="http://lorempixel.com/600/400/people/9" alt="">
+      					</figure>
+              </span>
+            </span>
+            <span class="c-header__user-action-button">
+              <i class="icon__n icon__n--more_vert"></i>
+            </span>
+          </span>
+          <span class="c-header__logo">
+            <img src="../../../images/logo/pozitif.png"/>
+          </span>
+        </header>
+      </div>
+    </div>
+
+
+  </div>
+
+	<div class="c-tether-dialog" style="display:none">
+    <div class="c-tether-dialog__content">
+			<div class="c-header-search-bar">
+
+				<div class="c-header-search-bar__header">
+					<div class="c-header-search-bar__header-title">
+						ARAYIN
+					</div>
+					<div class="c-header-search-bar__close-btn">
+						<i class="icon__n icon__n--close"></i>
+					</div>
+				</div>
+
+				<div class="c-header-search-bar__content">
+					<div class="c-typeahead">
+						<div class="c-typeahead__search-box">
+							<!-- Inline Search Input -->
+							<div class="c-inline-search-input c-inline-search-input--border">
+								<div class="input-group">
+
+									<input type="text" class="form-control" placeholder="Etkinlikler Arasında Arayın" aria-describedby="basic-addon1">
+									<div class="c-inline-search-input__icon">
+										<div class="c-promise-icon ">
+											<div class="c-promise-icon__before">
+												<i class="icon__n icon__n--search"></i>
+											</div>
+											<div class="c-promise-icon__spinner c-promise-icon__spinner--sm">
+												<div class="c-promise-icon__spinner-blade"></div>
+												<div class="c-promise-icon__spinner-blade"></div>
+												<div class="c-promise-icon__spinner-blade"></div>
+												<div class="c-promise-icon__spinner-blade"></div>
+												<div class="c-promise-icon__spinner-blade"></div>
+												<div class="c-promise-icon__spinner-blade"></div>
+												<div class="c-promise-icon__spinner-blade"></div>
+												<div class="c-promise-icon__spinner-blade"></div>
+												<div class="c-promise-icon__spinner-blade"></div>
+												<div class="c-promise-icon__spinner-blade"></div>
+												<div class="c-promise-icon__spinner-blade"></div>
+												<div class="c-promise-icon__spinner-blade"></div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+						</div>
+						<div class="c-typeahead__result-box">
+								<div class="c-typeahead__result-group">
+									<div class="c-typeahead__result-group-title">ETKİNLİKLER</div>
+									<ul class="c-typeahead__result-list">
+										<li class="c-typeahead__result-list-item">
+											<span class="c-typeahead__result-list-item-icon">
+												<i class="icon__n icon__n--insert_invitation"></i>
+											</span>
+											<span class="c-typeahead__result-list-item-content">
+												<span class="c-typeahead__result-list-item-content--primary">Akbank Caz Festivali: Imany</span>
+												<span class="c-typeahead__result-list-item-content--secondary"><i>(21 Ekim 2016 Cuma Saat 22:00, <b>Volkswagen Arena</b>)</i></span>
+											</span>
+										</li>
+
+										<li class="c-typeahead__result-list-item">
+											<span class="c-typeahead__result-list-item-icon">
+												<i class="icon__n icon__n--insert_invitation"></i>
+											</span>
+											<span class="c-typeahead__result-list-item-content">
+												<span class="c-typeahead__result-list-item-content--primary">Akbank Caz Festivali: Timuçin Şahin Trio</span>
+												<span class="c-typeahead__result-list-item-content--secondary"><i>(21 Ekim 2016 Cuma Saat 22:00, <b>Volkswagen Arena</b>)</i></span>
+											</span>
+										</li>
+									</ul>
+								</div>
+
+								<div class="c-typeahead__result-group">
+									<div class="c-typeahead__result-group-title">SANATÇILAR</div>
+									<ul class="c-typeahead__result-list">
+										<li class="c-typeahead__result-list-item">
+											<span class="c-typeahead__result-list-item-icon">
+												<i class="icon__n icon__n--person"></i>
+											</span>
+											<span class="c-typeahead__result-list-item-content">
+												<span class="c-typeahead__result-list-item-content--primary">Cazyapjazz</span>
+											</span>
+										</li>
+
+										<li class="c-typeahead__result-list-item">
+											<span class="c-typeahead__result-list-item-icon">
+												<i class="icon__n icon__n--people"></i>
+											</span>
+											<span class="c-typeahead__result-list-item-content">
+												<span class="c-typeahead__result-list-item-content--primary">Anathema</span>
+											</span>
+										</li>
+									</ul>
+								</div>
+
+								<div class="c-typeahead__result-group">
+									<div class="c-typeahead__result-group-title">SANATÇILAR</div>
+									<ul class="c-typeahead__result-list">
+										<li class="c-typeahead__result-list-item">
+											<span class="c-typeahead__result-list-item-icon">
+												<i class="icon__n icon__n--person"></i>
+											</span>
+											<span class="c-typeahead__result-list-item-content">
+												<span class="c-typeahead__result-list-item-content--primary">Cazyapjazz</span>
+											</span>
+										</li>
+
+										<li class="c-typeahead__result-list-item">
+											<span class="c-typeahead__result-list-item-icon">
+												<i class="icon__n icon__n--people"></i>
+											</span>
+											<span class="c-typeahead__result-list-item-content">
+												<span class="c-typeahead__result-list-item-content--primary">Anathema</span>
+											</span>
+										</li>
+									</ul>
+								</div>
+
+								<div class="c-typeahead__result-group">
+									<div class="c-typeahead__result-group-title">SANATÇILAR</div>
+									<ul class="c-typeahead__result-list">
+										<li class="c-typeahead__result-list-item">
+											<span class="c-typeahead__result-list-item-icon">
+												<i class="icon__n icon__n--person"></i>
+											</span>
+											<span class="c-typeahead__result-list-item-content">
+												<span class="c-typeahead__result-list-item-content--primary">Cazyapjazz</span>
+											</span>
+										</li>
+
+										<li class="c-typeahead__result-list-item">
+											<span class="c-typeahead__result-list-item-icon">
+												<i class="icon__n icon__n--people"></i>
+											</span>
+											<span class="c-typeahead__result-list-item-content">
+												<span class="c-typeahead__result-list-item-content--primary">Anathema</span>
+											</span>
+										</li>
+									</ul>
+								</div>
+
+								<div class="c-typeahead__result-group">
+									<div class="c-typeahead__result-group-title">SANATÇILAR</div>
+									<ul class="c-typeahead__result-list">
+										<li class="c-typeahead__result-list-item">
+											<span class="c-typeahead__result-list-item-icon">
+												<i class="icon__n icon__n--person"></i>
+											</span>
+											<span class="c-typeahead__result-list-item-content">
+												<span class="c-typeahead__result-list-item-content--primary">Cazyapjazz</span>
+											</span>
+										</li>
+
+										<li class="c-typeahead__result-list-item">
+											<span class="c-typeahead__result-list-item-icon">
+												<i class="icon__n icon__n--people"></i>
+											</span>
+											<span class="c-typeahead__result-list-item-content">
+												<span class="c-typeahead__result-list-item-content--primary">Anathema</span>
+											</span>
+										</li>
+									</ul>
+								</div>
+
+								<div class="c-typeahead__result-group">
+									<div class="c-typeahead__result-group-title">SANATÇILAR</div>
+									<ul class="c-typeahead__result-list">
+										<li class="c-typeahead__result-list-item">
+											<span class="c-typeahead__result-list-item-icon">
+												<i class="icon__n icon__n--person"></i>
+											</span>
+											<span class="c-typeahead__result-list-item-content">
+												<span class="c-typeahead__result-list-item-content--primary">Cazyapjazz</span>
+											</span>
+										</li>
+
+										<li class="c-typeahead__result-list-item">
+											<span class="c-typeahead__result-list-item-icon">
+												<i class="icon__n icon__n--people"></i>
+											</span>
+											<span class="c-typeahead__result-list-item-content">
+												<span class="c-typeahead__result-list-item-content--primary">Anathema</span>
+											</span>
+										</li>
+									</ul>
+								</div>
+
+
+						</div>
+					</div>
+				</div>
+
+				<div class="c-header-search-bar__footer">
+					<div class="c-header-search-bar__more-btn">
+						<div class="c-promise-icon">
+							<div class="c-promise-icon__before">
+								<span>DAHA FAZLA SONUÇ GÖSTER</span>
+							</div>
+							<div class="c-promise-icon__spinner c-promise-icon__spinner--sm">
+								<div class="c-promise-icon__spinner-blade"></div>
+								<div class="c-promise-icon__spinner-blade"></div>
+								<div class="c-promise-icon__spinner-blade"></div>
+								<div class="c-promise-icon__spinner-blade"></div>
+								<div class="c-promise-icon__spinner-blade"></div>
+								<div class="c-promise-icon__spinner-blade"></div>
+								<div class="c-promise-icon__spinner-blade"></div>
+								<div class="c-promise-icon__spinner-blade"></div>
+								<div class="c-promise-icon__spinner-blade"></div>
+								<div class="c-promise-icon__spinner-blade"></div>
+								<div class="c-promise-icon__spinner-blade"></div>
+								<div class="c-promise-icon__spinner-blade"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	<script src="../../../bower_components/jquery/dist/jquery.min.js"></script>
+	<script src="../../../bower_components/tether/dist/js/tether.min.js"></script>
+	<script src="../../../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script src="../../../script/main.js"></script>
+
+  <script>
+
+		$('.c-header__tools li:nth-child(1)').click(function()
+		{
+			tetherDialog("show", {
+          target: $(this).get(0),
+          attachment: 'top right',
+          targetAttachment: 'top right'
+      });
+		});
+
+
+		$('.c-header__tools li:nth-child(2)').click(function()
+		{
+			tetherDialog("show");
+		});
+		
+		$('.c-header__tools li:nth-child(3)').click(function()
+		{
+			tetherDialog("show", {
+          target: document.body,
+          attachment: 'top right',
+          targetAttachment: 'top right',
+					height: "100vh",
+					width: "60vh"
+      });
+		});
+
+  </script>
+
+</body>
+</html>

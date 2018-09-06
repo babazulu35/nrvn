@@ -1,0 +1,52 @@
+/* --------------------------------------------------------
+author: Abdullah Karadeniz
+----------------------------------------------------------*/
+
+$or-cms-content-type-create: ( border-color: #dcdce5, switch-bar: ( label: ( color: #373a3c, font-size: 14px, )));
+$or-cms-content-type-create: map-merge($or-cms-content-type-create, getSettingsMap("or-cms-content-type-create"));
+$oc-map: $or-cms-content-type-create;
+.or-cms-content-type-create {
+    display: block;
+    position: relative;
+
+    &__component-containers {
+        display: block;
+        list-style: none;
+
+        > li {
+            & + li {
+                margin-top: 10px;
+            }    
+        }
+    }
+
+    &__selected-component-containers {
+
+        ul {
+            display: block;
+            list-style: none;
+
+            li {
+                & + li {
+                    margin-top: 10px;
+                }    
+            }
+        }
+    }
+
+    &__related-events {
+        display: block;
+        list-style: none;
+
+        li {
+            & + li {
+                margin-top: 10px;
+            }    
+        }
+    }
+
+}
+
+$oc-map: null;/* --------------------------------------------------------
+author: Abdullah Karadeniz
+----------------------------------------------------------*/

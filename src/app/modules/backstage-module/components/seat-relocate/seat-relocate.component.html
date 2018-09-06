@@ -1,0 +1,29 @@
+<div class="p-group">
+    <div class="p-group__header">
+        <div class="p-group__header-bar">
+            <div class="p-group__header-title">
+                Selamlık
+            </div>
+        </div>
+    </div>
+</div>
+<div class="c-seat-selection__item">
+    <div class="c-seat-selection__item-seat c-seat-selection__item-seat--selected margin-right-10" *ngFor="let selectedSeat of selectedSeats">
+        {{selectedSeat.data}}
+    </div>
+</div>
+
+<div class="c-seat-selection__item" *ngFor="let selectedSeat of selectedSeats; let i = index">
+    <div class="c-seat-selection__item-seat">{{selectedSeat.data}}</div>
+    <i class="icon__n icon__n--arrow_forward"></i>
+    <div class="c-seat-selection__item-seat c-seat-selection__item-seat--changed">
+        {{ relocatedSeats}}
+        <div class="c-seat-selection__seat-clear" (click)="removeSelection(relocatedSeats,i)">
+            <a href="javascript:void(0)" class="icon__n icon__n--close"></a>
+        </div>
+    </div>
+
+
+
+    <div class="c-seat-selection__item-status c-seat-selection__item-status--{{statusIcon}}"></div>
+</div>

@@ -1,0 +1,191 @@
+<div class="or-venue-create" [class.loader-before-send]="isLoading">
+    <div class="p-header-bar" sticky sticky-main-scroller sticky-release-offset="30" sticky-height-property="55" sticky-width-property="100%" sticky-follow-menu-moves>
+        <div class="p-header-bar__left">
+            <app-header-inline-edit [value]="venue?.Localization?.Name" [hasLocalization]="true" [placeholder]="'Mekan Adını Giriniz*'" [breadcrumbs]="isEditMode ? [{label:'Mekan Düzenle'}] : [{label:'Mekan Ekle'}]" (changeEvent)="titleChangeHandler($event)"></app-header-inline-edit>
+        </div>
+
+        <div class="p-header-bar__right">
+            <app-button (clickEvent)='submitVenue($event)' [isPromising]="isLoading || isPromising" [isDisabled]="!isValid">KAYDET</app-button>
+            <app-button (clickEvent)='exit($event)' type="icon" icon="close" theme="secondary"></app-button>
+        </div>
+    </div>
+
+    <app-split-container fixedFloat="left" [hasBorder]="false" [fixedWidth]="320">
+        <div fixed left>
+            <div class="p-container">
+                <div class="p-group">
+                    <div class="p-group__item">
+                        <app-profile-photo (changeEvent)="photoChangeHandler($event)" [source]="venue?.Images | image : 'Venue'"></app-profile-photo>
+                        <app-helper-text type="info">Görselin En Az 1024x768px çözünürlükte ve 4:3 oranında olması önerilir Max.10MB</app-helper-text>
+                    </div>
+
+                    <div class="p-group__item">
+                        <app-profile-photo type="logo" (changeEvent)="logoChangeHandler($event)" [source]="venue?.Logo | image : 'Venue'"></app-profile-photo>
+                        <app-helper-text type="info">Görselin En Az 1024x768px çözünürlükte ve 4:3 oranında olması önerilir Max.10MB</app-helper-text>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div fluid>
+            <div class="p-container">
+                <div class="p-group">
+                    <div class="p-group__item row">
+                        <div class="col-lg-8 padding-right-15">
+                            <div class="p-form-group">
+                                <div class="p-form-group__label">
+                                    KISA İSİM
+                                </div>
+                                <div class="p-form-group__input">
+                                    <app-text-input name="ShortName" [localization]="venue?.Localization?.ShortName" [hasLocalization]="true" 
+                                        (changeEvent)="inputChangeHandler('ShortName', $event)"
+                                        (typeEvent)="inputChangeHandler('ShortName', $event)"></app-text-input>
+                                </div>
+                            </div>
+                        </div>
+                        <!--<div class="col-lg-8 padding-left-15">
+                        <div class="p-form-group">
+                            <div class="p-form-group__label">
+                                KOD
+                            </div>
+                            <div class="p-form-group__input">
+                                <app-text-input [value]="venue?.Code" [max]='3' (changeEvent)="inputChangeHandler('Code', $event)"></app-text-input>
+                            </div>
+                        </div>
+                    </div>-->
+                    </div>
+                </div>
+
+                <div class="p-group">
+                    <div class="p-group__item">
+                        <div class="p-form-group">
+                            <div class="p-form-group__label">
+                                ADRES
+                            </div>
+                            <div class="p-form-group__input">
+                                <app-text-input name="Address" [localization]="venue?.Localization?.Address" [hasLocalization]="true" 
+                                    (changeEvent)="inputChangeHandler('Address', $event)"
+                                    (typeEvent)="inputChangeHandler('Address', $event)"></app-text-input>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-group__item row">
+                        <div class="col-lg-8 padding-right-15">
+                            <app-city-town-selector (changeEvent)="townChangeHandler($event)" [data]="{cityId: venue?.Town?.City?.Id, townId: venue?.Town?.Id}">
+                                <div class="col-lg-8 padding-right-5">
+                                    <div class="p-form-group">
+                                        <div class="p-form-group__label">
+                                            İL<sup>*</sup>
+                                        </div>
+                                        <div class="p-form-group__input">
+                                            <app-selectbox  name="City" #city></app-selectbox>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-8 padding-left-5">
+                                    <div class="p-form-group">
+                                        <div class="p-form-group__label">
+                                            İLÇE<sup>*</sup>
+                                        </div>
+                                        <div class="p-form-group__input">
+                                            <app-selectbox name="Town" #town></app-selectbox>
+                                        </div>
+                                    </div>
+                                </div>
+                            </app-city-town-selector>
+                        </div>
+                        <div class="col-lg-8 padding-left-15">
+                            <div class="p-form-group">
+                                <div class="p-form-group__label">
+                                    GOOGLE HARİTA KOORDİNATLARI<sup>*</sup>
+                                </div>
+                                <div class="p-form-group__input row">
+                                    <div class="col-lg-5 padding-right-7">
+                                        <app-text-input #lat  name="Latitude" type="lat" [value]="venue?.Location?.Latitude" (changeEvent)="inputChangeHandler('Latitude', $event)" [required]="true"></app-text-input>
+                                    </div>
+                                    <div class="col-lg-5 padding-right-7 padding-left-7">
+                                        <app-text-input #lon  name="Longitude" type="lon" [value]="venue?.Location?.Longitude" (changeEvent)="inputChangeHandler('Longitude', $event)" [required]="true"></app-text-input>
+                                    </div>
+                                    <div class="col-lg-6 padding-left-10 padding-top-8" *ngIf="venue?.Location?.Longitude && venue?.Location?.Latitude">
+                                        <a [attr.href]="getMapUrl(venue.Location.Latitude, venue.Location.Longitude)" target="_blank" class="c-cta-link"><i class="icon__n icon__n--place"></i>Haritada Gör</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-group__item row">
+                        <div class="col-lg-8 padding-right-15">
+                            <div class="p-form-group__label">
+                                TELEFON
+                            </div>
+                            <div class="p-form-group__input">
+                                <app-text-input #phone  name="Phone" type="tel" [value]="venue?.Phone" (changeEvent)="inputChangeHandler('Phone', $event)"></app-text-input>
+                            </div>
+                        </div>
+                        <div class="col-lg-8 padding-left-15">
+                            <div class="p-form-group__label">
+                                WEB ADRESİ
+                            </div>
+                            <div class="p-form-group__input">
+                                <app-text-input #weburl  name="WebUrl" type="url" [value]="venue?.WebUrl" (changeEvent)="inputChangeHandler('WebUrl', $event)"></app-text-input>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-group">
+                    <div class="p-group__item">
+                        <div class="p-form-group">
+                            <div class="p-form-group__label">
+                                AÇIKLAMA
+                            </div>
+                            <div class="p-form-group__input">
+                                <app-md-editor  name="Description" (changeEvent)="descriptionChangeHandler($event)" [localization]="venue?.Localization?.Description" [hasLocalization]="true" [options]="{previewOn:true}"></app-md-editor>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-group" *ngIf="attributeTypes?.length">
+                    <div class="p-group__header">
+                        <div class="p-group__header-bar">
+                            <div class="p-group__header-title">
+                                Özellikler
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-group__item">
+                        <app-attributes-select-add-bar [entityTypeId]="entityTypeId" (changeEvent)="attributesChangeHandler($event)" (actionEvent)="attributesActionHandler($event)" [types]="attributeTypes" [attributes]="attributes"></app-attributes-select-add-bar>
+                    </div>
+                </div>
+
+                <div class="p-group">
+                    <div class="p-group__header">
+                        <div class="p-group__header-bar">
+                            <div class="p-group__header-title">
+                                Sahibi
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-group__item">
+                        <app-firm-search-select (changeEvent)="ownerChangeHandler($event)" (actionEvent)="ownerActionHandler($event)" [firmSearchResult]="firmSearchResult" [firmList]="owners" [settings]="{
+                            addLabel: 'FİRMA EKLE',
+                            search: {
+                                title: 'Firma Ekle',
+                                placeholder: 'Eklemek istediğiniz firma ismini yazın',
+                                presets: firmPresets,
+                                feedback: {
+                                    title: 'Aramanız ile eşleşen firma kaydı bulunamadı',
+                                    description: 'Arama kriterlerini değiştirerek yeniden deneyebilirsiniz.',
+                                    icon: {type: 'icon', name:'local_atm'}
+                                }
+                            }
+                        }"></app-firm-search-select>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </app-split-container>
+</div>

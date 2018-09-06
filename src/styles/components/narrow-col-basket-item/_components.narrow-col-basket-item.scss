@@ -1,0 +1,187 @@
+/**
+* Narrow Col Basket Item:
+* Author: Can Sivri
+*
+*/
+
+// Variables
+$c-narrow-col-basket-item: ( bg: #fff, title-color: #9d9d9d, black: #35383d, delete-btn-color: #bdbdbd, border-color: #dcdce5, add-by-reservation-code-button: #35383d, add-by-reservation-code-icon: #21242b, total-area-bg: #F7F7F7, type-offset-x: 30px, total-area-h: 70px, primary-color: #35383C);
+// Merge settings and defaults
+$c-narrow-col-basket-item: map-merge($c-narrow-col-basket-item, getSettingsMap("c-narrow-col-basket-item"));
+// Set shortcuts
+$c-map: $c-narrow-col-basket-item;
+.c-narrow-col-basket-item {
+    box-sizing: border-box;
+    background-color: map-get($c-map, bg);
+    position: relative;
+    height: 100%;
+    display: block;
+}
+
+.c-narrow-col-basket-sub {
+    &__total {
+        background-color: map-get($c-map, total-area-bg);
+        background-image: url('/assets/images/icon/torn-paper-effect.svg');
+        background-position: top;
+        background-repeat: repeat-x;
+        margin-top: 10px;
+        &-content {
+            display: table;
+            width: 100%;
+            padding-left: map-get($c-map, type-offset-x);
+            padding-right: map-get($c-map, type-offset-x);
+        }
+        &-label {
+            display: table-cell;
+            @include ffamily('semi');
+            font-size: 13px;
+            text-align: left;
+            vertical-align: middle;
+            padding-top: 10px;
+            height: map-get($c-map, total-area-h);
+        }
+        &-price {
+            display: table-cell;
+            @include ffamily('bold');
+            font-size: 22px;
+            color: map-get($c-map, primary-color);
+            text-align: right;
+            vertical-align: middle;
+            padding-top: 10px;
+            height: map-get($c-map, total-area-h);
+            sup {
+                font-size: 13px;
+            }
+        }
+    }
+}
+
+.c-narrow-col-basket-item__title {
+    @include ffamily("semi");
+    font-size: 11px;
+    margin-bottom: 2px;
+    text-transform: uppercase;
+    color: map-get($c-map, title-color);
+}
+
+.c-narrow-col-basket-item__sub-title {
+    margin: 0 0 2px 0;
+    @include ffamily("bold");
+    font-size: 13px;
+    color: map-get($c-map, black);
+}
+
+.c-narrow-col-basket-item__date {
+    margin: 0;
+    @include ffamily("regular");
+    font-size: 11px;
+    color: map-get($c-map, black);
+}
+
+.c-narrow-col-basket-item__location {
+    margin: 0;
+    @include ffamily("regular");
+    font-size: 11px;
+    color: map-get($c-map, black);
+}
+
+.c-narrow-col-basket-item__list {
+    margin-top: 20px;
+    overflow: hidden;
+    border-radius: 3px;
+    position: relative;
+    border: 1px solid map-get($c-map, border-color);
+}
+
+.c-narrow-col-basket-item__list-item {
+    position: relative;
+    padding: 15px;
+    border-bottom: 1px solid map-get($c-map, border-color);
+    &:last-child {
+        border: none;
+    }
+}
+
+.c-narrow-col-basket-item__list-item-title {
+    margin: 0 0 10px 0;
+    padding: 0 26px 0 0;
+    @include ffamily("bold");
+    font-size: 13px;
+    line-height: 19px;
+    color: map-get($c-map, black);
+}
+
+.c-narrow-col-basket-item__list-item-delete {
+    position: absolute;
+    top: 0px;
+    right: 8px;
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 24px;
+    color: map-get($c-map, delete-btn-color);
+}
+
+.c-narrow-col-basket-item__list-item-action-bar {
+    display: table;
+    width: 100%;
+    .c-selectbox {}
+}
+
+.c-narrow-col-basket-item__list-item-price {
+    //display: table-cell;
+    vertical-align: middle;
+    @include ffamily("bold");
+    font-size: 18px;
+    color: map-get($c-map, black);
+    sup {
+        @include ffamily("semi");
+        font-size: 10px;
+        top: -0.7em;
+    }
+}
+
+.c-narrow-col-basket-item__list-item-action {
+    display: table-cell;
+    vertical-align: middle;
+    min-width: 70px;
+    //height: 36px;
+    border-radius: 30px;
+    text-align: right;
+    select {
+        @include ffamily("regular");
+        font-size: 15px;
+        color: map-get($c-map, black);
+    }
+}
+
+.c-narrow-col-basket-item__variant {
+    @include ffamily("regular");
+    font-size: 13px;
+    vertical-align: middle;
+    display: table-cell;
+    strong {
+        @include ffamily("bold");
+        font-size: 14px;
+    }
+    &--times {
+        display: inline-block;
+        margin: 0px 3px;
+    }
+}
+
+.c-narrow-col-basket-item__add-code-button {
+    font-size: 11px;
+    @include ffamily("semi");
+    color: map-get($c-map, add-by-reservation-code-button);
+    text-decoration: none;
+    &:hover {
+        color: darken(map-get($c-map, add-by-reservation-code-button), 15%);
+        text-decoration: none;
+    }
+    .icon__n {
+        position: relative;
+        top: 8px;
+        font-size: 32px;
+        color: map-get($c-map, add-by-reservation-code-icon);
+    }
+}

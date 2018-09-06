@@ -1,0 +1,15 @@
+$or-multiple-performance-create: ();
+$or-multiple-performance-create: map-merge($or-multiple-performance-create, getSettingsMap("or-multiple-performance-create"));
+$o-map: $or-multiple-performance-create;
+
+.or-multiple-performance-create {
+    display: block;
+    
+    &__wizard-header {
+        display: block;
+        text-align: center;
+        // padding: 50px;
+    }
+}
+
+$o-map: null;

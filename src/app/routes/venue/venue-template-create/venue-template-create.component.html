@@ -1,0 +1,28 @@
+<div class="p-header-bar">
+    <div class="p-header-bar__left">
+        <app-header-inline-edit placeholder="Oturma Düzeni Adı Giriniz"
+                                [hasLocalization]="true"
+                                [value]="templateName" 
+                                [breadcrumbs]="isEdit ?  [{ label: 'Oturma Düzeni Düzenle', routerLink: '#' }] : [{ label: 'Oturma Düzeni Ekle*', routerLink: '#' }]" 
+                                [action]="'openTemplateSettingBox'"
+                                (actionEvent)="titleActionHandler($event)"
+                                (changeEvent)="titleChangeHandler($event)"></app-header-inline-edit>
+    </div>
+
+    <div class="p-header-bar__right">
+        <app-button (clickEvent)='saveTemplateAndContinue($event)' [isPromising]="isLoading || isPromising" [isDisabled]="!isValid">KAYDET</app-button>
+        <app-button (clickEvent)='saveTemplate()' [isPromising]="isLoading || isPromising" [isDisabled]="!isValid" theme="secondary">KAYDET VE ÇIK</app-button>
+        <app-button (clickEvent)='exit($event)' type="icon" icon="close" theme="secondary"></app-button>
+    </div>
+</div>
+
+<div *ngIf="editorIsShown" class="editor-container">
+        <app-venue-template-editor
+            (editorEvent)="venueEditorEventHandler($event)"
+            [role]="editorRole"
+            [venueId]="venueId"
+            [templateId]="venueTemplateId || -1"
+            [templateName]="templateName"
+            [performanceId]="performanceId"
+        ></app-venue-template-editor>
+</div>

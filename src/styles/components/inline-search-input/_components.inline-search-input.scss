@@ -1,0 +1,81 @@
+/**
+ * inline-search-input Component:
+ * Author: Coşkun BALTACI
+**/
+
+
+/**
+* Bootstrap input kullanıldı.
+* https://v4-alpha.getbootstrap.com/components/input-group/
+*
+* @attributes
+* icon-color:#C2C2C2,
+* text-color:#C2C2C2,
+* border-color: #2096F3,
+*
+* <div class="c-inline-search-input">
+* 	<div class="input-group">
+* 		<i class="main-menu__list-item-icon icon--m">search</i>
+* 		<input type="text" class="form-control" placeholder="Etkinlikler Arasında Arayın" aria-describedby="basic-addon1">
+* 	</div>
+* </div>
+*
+* İkonu sağa almak için ikon ile input'un yerinin değiştirilmesi yeterlidir.
+*
+* <div class="c-inline-search-input">
+* 	<div class="input-group">
+* 		<i class="main-menu__list-item-icon icon--m">search</i>
+* 		<input type="text" class="form-control" placeholder="Etkinlikler Arasında Arayın" aria-describedby="basic-addon1">
+* 	</div>
+* </div>
+**/
+
+// Set defaults
+$c-inline-search-input: ( font-size: 15px, icon-color:#C2C2C2, color: #C2C2C2, active-color: #21242b, border-color: #3a2e39, active-border-color: #2096F3, );
+// Merge settings and defaults
+$c-inline-search-input: map-merge($c-inline-search-input, getSettingsMap("c-inline-search-input"));
+$c-map: $c-inline-search-input;
+// Component
+.c-inline-search-input {
+    display: table;
+    font-size: map-get($c-map, font-size);
+    padding-bottom: 0.25em;
+    &--border {
+        border-bottom: 1px solid map-get($c-map, "border-color");
+        &.c-inline-search-input--focus {
+            border-bottom: 1px solid map-get($c-map, "active-border-color");
+        }
+    }
+    &__container {
+        display: table-cell;
+        position: relative;
+        vertical-align: middle;
+        width: 100%;
+        font-size: inherit;
+        input {
+            font-size: inherit;
+            border: none;
+            width: 100%;
+            //color: map-get($c-map, "color");
+            background-color: transparent;
+            @include ffamily('regular');
+            &:focus {
+                color: map-get($c-map, "active-color");
+                border: none;
+                outline: none;
+                -webkit-border-radius: 0px;
+                -moz-border-radius: 0px;
+                border-radius: 0px;
+            }
+        }
+    }
+    &__icon {
+        font-size: 1.45em;
+        width: 1em;
+        height: 1em;
+        line-height: 0px;
+        display: table-cell;
+        vertical-align: bottom;
+        color: map-get($c-map, "icon-color");
+    }
+}

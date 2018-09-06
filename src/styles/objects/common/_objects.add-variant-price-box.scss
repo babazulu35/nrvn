@@ -1,0 +1,88 @@
+/* --------------------------------------------------------
+author: Abdullah Karadeniz
+----------------------------------------------------------*/
+$oc-add-variant-price-box: (
+    padding: 30px,
+    toggle: (
+        label: (
+            color: #3a2e39,
+            font-size: 13px
+        )
+    ),
+	channel-list: (
+        item: (
+            icon: (
+                color: #B0B0B0
+            ),
+            label: (
+                color: #3a2e39
+            )
+        )
+    )
+);
+
+$oc-add-variant-price-box: map-merge($oc-add-variant-price-box, getSettingsMap("oc-add-variant-price-box"));
+$oc-map: $oc-add-variant-price-box;
+
+.oc-add-variant-price-box {
+    display: block;
+    position: relative;
+
+    &__select-all-toggle {
+        display: inline-block;
+        position: absolute;
+        top: map-deep-get($oc-map, padding);
+        right: map-deep-get($oc-map, padding);
+
+        &-label {
+            display: inline-block;
+            @include ffamily('semi');
+            font-size: map-deep-get($oc-map, toggle, label, font-size);
+            color: map-deep-get($oc-map, toggle, label, color);
+            padding-right: 1em;
+            vertical-align: middle;
+        }
+
+        &-input {
+            display: inline-block;
+            vertical-align: middle;
+        }
+    }
+    
+    &__channel-list {
+        list-style-type: none;
+        min-height: 300px;
+
+        &-item {
+            line-height: 0px;
+            @include ffamily('regular');
+            font-size: 15px;
+            display: table;
+
+            & + li {
+                margin-top: 15px;
+            }
+
+            &-input {
+                display: table-cell;
+                vertical-align: middle;
+            }
+
+            &-icon {
+                display: table-cell;
+                color: map-deep-get($oc-map, channel-list, item, icon, color);
+                padding-left: 1em;
+                vertical-align: middle;
+            }
+
+            &-label {
+                display: table-cell;
+                color: map-deep-get($oc-map, channel-list, item, label, color);
+                padding-left: 1em;
+                vertical-align: middle;
+            }
+        }
+    }
+}
+
+$oc-map: null;

@@ -1,0 +1,20 @@
+<!-- > abdullah -->
+<span class="c-header-inline-edit__bar">
+	<span class="c-header-inline-edit__breadcrumb">
+		<span *ngFor="let breadcrumb of breadcrumbs" class="c-header-inline-edit__breadcrumb-item" [routerLink]="breadcrumb.routerLink">{{breadcrumb.label}}</span>
+	</span>
+	<span class="c-header-inline-edit__input-bar">
+		<app-inline-edit
+			(changeEvent)="changeEventHandler($event)"
+			[action]="action"
+			(actionEvent)="actionEventHandler($event)"
+			[action]="action"
+			[placeholder]='placeholder'
+			[hasLocalization]="hasLocalization"
+			[value]='value'
+			[theme]="'underline'"
+			[isPromising]="isPromising"
+		></app-inline-edit>
+	</span>
+</span>
+<!-- abdullah < -->

@@ -1,0 +1,163 @@
+<div class="or-cms-datasource-create">
+    
+    <div class="p-header-bar" sticky sticky-main-scroller sticky-release-offset="30" sticky-height-property="55" sticky-width-property="100%" sticky-follow-menu-moves>
+        <div class="p-header-bar__left">
+            <app-breadcrumb [breadcrumbs]="[{title: 'Veri Kaynakları'}, {title: datasource?.Name || 'Yeni Veri Kaynağı'}]"></app-breadcrumb>
+        </div>
+
+        <div class="p-header-bar__right">
+            <app-button (clickEvent)='saveDatasource()' [isPromising]="isLoading || isPromising" [isDisabled]="!isValid" [label]="'KAYDET'"></app-button>
+            <app-button (clickEvent)='exit($event)' type="icon" icon="close" theme="secondary"></app-button>
+        </div>
+    </div>
+
+    <app-split-container fixedFloat="right" [fixedWidth]="370">
+      <div fixed right>
+        <div class="p-container">
+            
+            <div class="p-group" *ngIf="firmList?.length">
+                <div class="p-group__header">
+                    <div class="p-group__header-bar">
+                        <span class="p-group__header-title">
+                            Organizatör<!--<sup>*</sup>-->
+                        </span>
+                    </div>
+                </div>
+                <div class="p-group__item">
+                    <app-selectbox [options]="firmList" [value]="datasource?.PromoterCode" (changeEvent)="inputChangeHandler($event, 'PromoterCode')"></app-selectbox>
+                </div>
+            </div>
+            <div class="p-group">
+                <div class="p-group__header">
+                    <div class="p-group__header-bar">
+                        <div class="p-group__header-title">
+                            Varlık türü
+                        </div>
+                    </div>
+                </div>
+                <div class="p-group__item">
+                    <app-selectbox
+                        [options]="entityTypes"
+                        (changeEvent)="inputChangeHandler($event, 'EntityType')"
+                        [value]="datasource?.EntityType"></app-selectbox>
+                </div>
+            </div>
+
+            <div class="p-group">
+                <div class="p-group__list">
+                    <div class="p-group__list-item">
+                        <div class="p-group__list-item-key">
+                            Bu veri kaynağı zorunludur
+                        </div>
+                        <div class="p-group__list-item-value">
+                            <app-checkbox
+                                type="lightswitch"
+                                (changeEvent)="inputChangeHandler($event, 'Required')"
+                                [isChecked]="datasource?.Required"></app-checkbox>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+
+      <div fluid>
+          <div class="p-container">
+            
+            <div class="p-group">
+                <div class="p-group__item">
+                    <div class="p-form-group">
+                        <div class="p-form-group__label">
+                            VERİ KAYNAĞI ADI<sup>*</sup>
+                        </div>
+                        <div class="p-form-group__input">
+                            <app-text-input 
+                                (typeEvent)="inputChangeHandler($event, 'Name')"
+                                [isTypeEmitting]="true"
+                                [typeDebounceTime]="100"
+                                [value]="datasource?.Name"></app-text-input>
+                            <app-helper-text type="info"><span>Veri kaynağı görüntülenirken kullanılan metindir.</span></app-helper-text>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="p-group__item">
+                    <div class="p-form-group">
+                        <div class="p-form-group__label">
+                            TEKİL İSİM
+                        </div>
+                        <div class="p-form-group__input">
+                            <app-text-input 
+                                (changeEvent)="inputChangeHandler($event, '_id')"
+                                [value]="datasource?._id"></app-text-input>
+                            <app-helper-text type="info"><span>Veri kaynağığnı tanımlamak için kullanılan tekil isimdir.</span></app-helper-text>
+                        </div>
+                    </div>
+                </div> -->
+
+                <div class="p-group__item">
+                    <div class="p-form-group">
+                        <div class="p-form-group__label">
+                            URL METODU ve ADRESİ<sup>*</sup>
+                        </div>
+                        <div class="p-form-group__input">
+                            <div class="row">
+                                <span class="col-xs-4 col-lg-4 padding-right-10">
+                                  <app-selectbox
+                                    [options]="[
+                                      {text: 'GET', value: 'GET'},
+                                      {text: 'POST', value: 'POST'}
+                                    ]"
+                                    (changeEvent)="inputChangeHandler($event, 'Method')"
+                                    [value]="datasource?.Method?.toUpperCase()"></app-selectbox>
+                                </span>
+                                <span class="col-xs-16 col-lg-12">
+                                    <app-text-input type="url"
+                                      (changeEvent)="inputChangeHandler($event, 'Url')"
+                                      [value]="datasource?.Url"></app-text-input>
+                                </span>
+                            </div>
+                            <app-helper-text type="info"><span>Veri kaynağığna erişmek için gerekli adres.</span></app-helper-text>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="p-group">
+                <div class="p-group__header">
+                    <div class="p-group__header-bar">
+                        <div class="p-group__header-title">
+                            Parametre Ayarları
+                        </div>
+
+                    </div>
+                </div>
+                <div class="p-group__item" *ngIf="parameters?.length">
+                  <app-container-canvas>
+                    <ul class="or-cms-datasource-create__list">
+                      <li class="or-cms-datasource-create__list-item" *ngFor="let parameter of parameters">
+                          <app-mini-card
+                            (actionEvent)="parameterActionHandler($event)"
+                            [title]="parameter?.label || parameter?.key"
+                            [actions]="[
+                              {action: 'edit', icon: 'edit', label: 'DÜZENLE', params:{parameter: parameter}},
+                              {action: 'remove', icon: 'delete', label: 'SİL', params:{parameter: parameter}}
+                            ]"></app-mini-card>
+                      </li>
+                    </ul>
+                  </app-container-canvas>
+                </div>
+                
+                <div class="p-group__item">
+                    <app-container-canvas [isEmpty]="true">
+                        <app-button (clickEvent)="addNewParameter()" theme="secondary">PARAMETRE EKLE</app-button>
+                    </app-container-canvas>
+                </div>
+            </div>
+
+          </div>
+      </div>
+
+    </app-split-container>
+
+</div>

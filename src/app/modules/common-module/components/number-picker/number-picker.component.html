@@ -1,0 +1,15 @@
+<div class="c-number-picker c-number-picker--md" style="display:table">
+  <span class="c-number-picker__label">{{label}}</span>
+  <div class="input-group c-number-picker__content">
+      <span class="input-group-btn">
+    <button class="btn icon__n icon__n--remove" [disabled]="disableDec" (click)="
+decrease()" type="button"></button>
+  </span>
+      <span style="width:50px;display:block;">
+             <input #input class="form-control" [formControl]="numberStep" [(ngModel)]="value" class="form-control" type="number" min="{{min}}" max="{{max}}">
+      </span>
+      <span class="input-group-btn">
+    <button  class="btn icon__n icon__n--add" [disabled]="disableInc" (click)="increase()" type="button"></button>
+  </span>
+  </div>
+</div>

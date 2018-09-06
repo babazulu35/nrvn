@@ -1,0 +1,64 @@
+<app-grid-list [itemWidth]="125" [gutter]="15">
+	<li *ngFor="let item of data; let i = index" class="pull-left">
+		<div class="c-icon-grid__item">
+			<div class="c-icon-grid__item-content" [ngClass]="{ 'c-icon-grid__item--selected' : selectedItemKey == i}">
+				<span (click)="select($event, item, i)" >
+					<figure>
+						<img *ngIf="!item.actions" src={{item.path}} alt="" />
+						<app-container-rollover-actions *ngIf="item.actions">
+							<img content src={{item.path}} alt="">
+							<ul actions>
+								<li *ngFor="let action of item.actions;">
+									<a href (click)="actionOnClick($event, item, action)" >{{ action.label }}</a>
+								</li>
+							</ul>
+						</app-container-rollover-actions>
+					</figure>
+					<span class="c-icon-grid__item__title">{{item.text}}</span>
+				</span>
+			</div>
+		</div>
+	</li>
+	<li *ngIf="isNewButtonEnabled">
+		<div class="c-icon-grid__item">
+			<div class="c-icon-grid__item-content">
+				<a (click)="newButtonClick()" >
+					<div class="c-icon-grid__item__new">
+						<span class="c-add-button c-add-button"><i class="icon__n icon__n--add"></i></span>
+					</div>
+					<span class="c-icon-grid__item__title">{{newButtonLabel}}</span>
+				</a>
+			</div>
+		</div>
+	</li>
+</app-grid-list>
+<!--<ul class="c-icon-grid">
+	<li *ngFor="let item of data; let i = index" class="c-icon-grid__item">
+		<div class="c-icon-grid__item-content" [ngClass]="{ 'c-icon-grid__item--selected' : selectedItemKey == i}">
+			<a (click)="select($event, item, i)" >
+				<figure>
+					<img *ngIf="!item.actions" src={{item.path}} alt="" />
+					<app-container-rollover-actions *ngIf="item.actions">
+						<img content src={{item.path}} alt="">
+						<ul actions>
+							<li *ngFor="let action of item.actions;">
+								<a href="javascript:void(0)" (click)="actionOnClick($event, action)" >{{ action.label }}</a>
+							</li>
+						</ul>
+					</app-container-rollover-actions>
+				</figure>
+				<span class="c-icon-grid__item__title">{{item.text}}</span>
+			</a>
+		</div>
+	</li>
+	<li *ngIf="newButtonLabel" class="c-icon-grid__item">
+		<div class="c-icon-grid__item-content">
+			<a (click)="newButtonClick()" >
+				<div class="c-icon-grid__item__new">
+					<span class="c-add-button c-add-button"><i class="icon__n icon__n--add"></i></span>
+				</div>
+				<span class="c-icon-grid__item__title">{{newButtonLabel}}</span>
+			</a>
+		</div>
+	</li>
+</ul>-->

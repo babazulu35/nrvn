@@ -1,0 +1,28 @@
+<div class="c-firm-search-select__container">
+    <div *ngIf="isEmpty">
+        <app-button (click)="searchFirm()" theme="secondary">{{settings.addLabel}}</app-button>
+    </div>
+    <div *ngIf="!isEmpty" class="c-firm-search-select__list-container">
+        <ul class="c-firm-search-select__list">
+            <li *ngFor="let firm of firmList" class="c-firm-search-select__list-item">
+                <app-avatar *ngIf="avatar" size="sm" [title]="firm?.name" [source]="firm?.params?.user?.Images" class="margin-right-5"></app-avatar>
+                <span class="c-firm-search-select__list-item-title">{{firm?.name}}</span>
+                <span class="c-firm-search-select__list-item-type">
+          <app-selectbox
+            *ngIf="firmTypes?.length > 0"
+            (changeEvent)="changeFirmType(firm, $event)"
+            [value]="firm?.type"
+            [options]="firmTypes"></app-selectbox>
+        </span>
+                <span class="c-firm-search-select__list-item-remove">
+          <app-button [isDisabled]="!isRemovable" type="icon" icon="delete" theme="secondary"
+            (clickEvent)="removeFirm(firm)"></app-button>
+        </span>
+            </li>
+        </ul>
+
+        <div class="c-firm-search-select__add-button" *ngIf="allowMultipleFirm && firmList?.length>=1">
+            <app-button (clickEvent)="searchFirm()" type="icon" icon="plus" shape="circle" theme="secondary" size="autosize"></app-button>
+        </div>
+    </div>
+</div>

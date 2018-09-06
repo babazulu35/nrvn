@@ -1,0 +1,179 @@
+/**
+* Narrow Search Result Statistic:
+* Author: Can Sivri
+*
+*/
+
+// Variables
+$c-search-result-statistic: ( padding: 20px, text-color: #35383d, item-padding: 15px 0, title-padding: 5px 0 25px, border-color: #dcdce5, progress-bar-height: 7px, progress-bar-bg: #eee, more-btn-bg: #f7f7f7, label-after: #2b98f0);
+// Merge settings and defaults
+$c-search-result-statistic: map-merge($c-search-result-statistic, getSettingsMap("c-search-result-statistic"));
+// Set shortcuts
+$c-map: $c-search-result-statistic;
+.c-search-result-statistic {
+    @include t--clearfix;
+    padding: map-get($c-map, padding);
+    border: 1px solid map-get($c-map, border-color);
+    border-radius: 3px;
+    color: map-get($c-map, text-color);
+    &__title {
+        padding: map-get($c-map, title-padding);
+        border-bottom: 1px solid map-get($c-map, border-color);
+        margin-bottom: 20px;
+        &-value {
+            position: relative;
+            font-size: 22px;
+            line-height: 22px;
+            @include ffamily("bold");
+        }
+        &-text {
+            font-size: 18px;
+            line-height: 24px;
+            @include ffamily("regular");
+        }
+    }
+    &__left {
+        float: left;
+        width: 35%;
+        .c-search-result-statistic__list {
+            padding: 0 20px 0 0;
+            border-right: 1px solid map-get($c-map, border-color);
+            border-left: none;
+        }
+    }
+    &__chart {
+        float: left;
+        width: 30%;
+        padding: 80px 30px 30px;
+        span {
+            display: block;
+            margin: 0 auto;
+            border-radius: 50%;
+            @include t--size(190px, 190px);
+        }
+        svg {
+            width: 100%;
+            border-radius: 50%;
+            background: #fff;
+            transform: rotate(-90deg);
+        }
+        circle {
+            fill: none;
+            stroke-width: 32;
+            r: 16;
+            cx: 16;
+            cy: 16;
+        }
+        circle.first {
+            stroke: #2b98f0;
+        }
+    }
+    &__right {
+        float: right;
+        width: 35%;
+        .c-search-result-statistic__sub-title-label:after {
+            background-color: map-get($c-map, label-after);
+        }
+    }
+    &__sub-title {
+        display: table;
+        width: 100%;
+        padding-bottom: 15px;
+        &-label {
+            position: relative;
+            display: table-cell;
+            vertical-align: middle;
+            padding-left: 30px;
+            font-size: 15px;
+            line-height: 22px;
+            @include ffamily("semi");
+            &:after {
+                content: "";
+                position: absolute;
+                left: 0;
+                top: 50%;
+                @include t--size(20px);
+                @include t--translateY(-50%);
+                border: 4px solid map-get($c-map, label-after);
+                border-radius: 50%;
+            }
+        }
+        &-value {
+            display: table-cell;
+            vertical-align: middle;
+            font-size: 18px;
+            line-height: 24px;
+            @include ffamily("bold");
+            text-align: right;
+        }
+    }
+    &__list {
+        border-left: 1px solid map-get($c-map, border-color);
+        border-top: 1px solid map-get($c-map, border-color);
+        list-style: none;
+        padding-left: 20px;
+        &-item {
+            display: table;
+            width: 100%;
+            padding: map-get($c-map, item-padding);
+            border-bottom: 1px solid map-get($c-map, border-color);
+            &:last-child {
+                border-bottom: none;
+                padding-bottom: 0;
+            }
+            &-label {
+                overflow: hidden;
+                display: table-cell;
+                vertical-align: middle;
+                min-width: 200px;
+                padding-right: 10px;
+                font-size: 13px;
+                @include ffamily("regular");
+                white-space: nowrap;
+                text-overflow: ellipsis;
+            }
+            &-value {
+                position: relative;
+                display: table-cell;
+                vertical-align: middle;
+                padding-left: 10px;
+                font-size: 13px;
+                @include ffamily("bold");
+                text-align: right;
+                span {
+                    position: absolute;
+                    right: 0;
+                    bottom: -13px;
+                    font-size: 11px;
+                    @include ffamily("regular");
+                    color: #9d9d9d;
+                }
+            }
+        }
+    }
+    &__more {
+        a {
+            display: inline-block;
+            color: map-get($c-map, text-color);
+            text-decoration: none;
+            &:hover {
+                text-decoration: none;
+            }
+        }
+        &-text {
+            font-size: 12px;
+            @include ffamily("semi");
+            strong {
+                @include ffamily("bold");
+            }
+        }
+        .icon__n {
+            position: relative;
+            top: -7px;
+            left: -4px;
+            height: 20px;
+            font-size: 32px;
+            vertical-align: middle;
+        }
+    }
+}

@@ -1,0 +1,112 @@
+/**
+* Customer Picker:
+* Author: Fatih Turan
+*
+*/
+
+// Set defaults
+$c-customer-picker: (
+	border-color: #dcdce5,
+	bg-light-grey: #f7f7f7,
+	border-radius: 2px,
+	primary-color: #35383d,
+	p-group__header-title-color: #bdbdbd,
+	result-hover-color: #f7f7f7,
+	result-border: #dcdce4,
+	result-icon-color: #bdbdbd,
+	result-name-color: #35383d,
+);
+
+// Merge settings and defaults
+$c-customer-picker: map-merge($c-customer-picker, getSettingsMap("c-customer-picker"));
+
+// Set shortcuts
+$c-map: $c-customer-picker;
+
+
+// Component
+.c-customer-picker {
+	background-color: #fff;
+	color: map-get($c-map, primary-color);
+	.c-dialog-box__footer {
+		button {
+			padding-left: 60px;
+			padding-right: 60px;
+		}
+	}
+	&__create-guest-account {
+		margin-top: 52px;
+		padding: 10px;
+		color: map-get($c-map, primary-color);
+		border-radius: map-get($c-map, border-radius);
+		background-color: map-get($c-map, bg-light-grey);
+		border: 1px dashed map-get($c-map, border-color);
+		font-size: 13px;
+		strong { @include ffamily('bold'); }
+		i { @include ffamily('italic'); }
+	}
+	&__create-guest-account-inner {
+		display: table;
+		width: 100%;
+		& > div {
+			float: none;
+			display: table-cell !important;
+			vertical-align: middle;
+		}
+	}
+}
+
+.c-customer-picker__results {
+	margin-top: 40px;
+	.p-group__header-title {
+		font-size: 11px;
+		@include ffamily("semi");
+		color: map-get($c-map, p-group__header-title-color);
+	}
+
+	.p-group__list-item {
+		.icon__n {
+			font-size: 24px;
+			color: map-get($c-map, result-icon-color);
+			vertical-align: middle;
+		}
+
+		&:hover {
+			background-color: map-get($c-map, result-hover-color);
+			.c-customer-picker__results-add-item {
+				display: inline-block;
+			}
+		}
+	}
+
+	&-add-item {
+		display: none;
+	}
+}
+
+//TODO Burada feedback komponenti kullanılabilir
+.c-customer-picker__not-found {
+	margin: 0 auto;
+	width: 350px;
+	text-align: center;
+	&-title {
+		display: block;
+		font-size: 15px;
+		@include ffamily("bold", "i");
+	}
+	&-text {
+		display: block;
+		margin-bottom: 25px;
+		@include ffamily("regular");
+	}
+}
+
+.c-customer-picker__create-guest-account-form {
+	&-prefix {
+		text-align: center;
+	}
+}
+
+//Reset
+$c-map: null;
+$c-customer-picker: null;

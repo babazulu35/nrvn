@@ -1,0 +1,36 @@
+<div class="c-performance-search-select__container">
+  <app-no-data *ngIf="isEmpty" [hasContainer]="true" [icon]="{type: 'svg', name: 'performance'}" [iconSize]="'lg'" [action]='{label: "PERFORMANS EKLE", action:"addPerformance", params:{} }' (actionEvent)="openSearchBox($event)"></app-no-data>
+  <app-container-canvas *ngIf="!isEmpty">
+    <div class="c-performance-search-select__list-container">
+      <ul class="c-performance-search-select__list">
+        <li *ngFor="let performance of performances" class="c-performance-search-select__list-item">
+          <app-mini-card>
+              <div class="c-mini-card" [class.c-mini-card--active]="performance?.IsEnabled">
+                  <div class="c-mini-card__kind-icon">
+                      <i class="icon__n" [class.icon__n--visibility_off]="!performance?.IsEnabled" [class.icon__n--visibility]="performance?.IsEnabled"></i>
+                  </div>
+                  <div class="c-mini-card__figure">
+                      <app-avatar size="lg" [letters]="performance?.PerformanceName?.charAt(0)" source="{{performance?.Images | image: 'Performance'}}"></app-avatar>
+                  </div>
+
+                  <div class="c-mini-card__info">
+                      {{performance?.Localization?.Name}}
+                  </div>
+                  <div class="c-mini-card__date">
+                      {{performance?.Date | date: 'dd.MM.y, EEEE - HH:mm'}}
+                  </div>
+                  <div class="c-mini-card__action-area">
+                      <app-button type="icon" icon="delete" theme="secondary" (click)="removePerformance(performance.Id)"></app-button>
+                      <!--<app-button type="icon" icon="more_vert" theme="secondary" (click)="openPerformanceActions(performance, $event)"></app-button>-->
+                  </div>
+              </div>
+
+          </app-mini-card>
+        </li>
+      </ul>
+      <div class="c-performance-search-select__add-button">
+          <app-button (click)="openSearchBox($event)" type="icon" icon="plus" shape="circle" theme="secondary" size="lg"></app-button>
+      </div>
+    </div>
+  </app-container-canvas>
+</div>

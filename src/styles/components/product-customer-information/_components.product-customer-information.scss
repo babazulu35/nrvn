@@ -1,0 +1,112 @@
+/**
+* Narrow Vertical Kv List:
+* Author: Can Sivri
+*
+*/
+
+
+// Variables
+$c-product-customer-information: (
+	bg: #fff,
+	padding: 10px 15px,
+	border: 1px solid #dcdce5,
+);
+
+// Merge settings and defaults
+$c-product-customer-information: map-merge($c-product-customer-information, getSettingsMap("c-product-customer-information"));
+
+// Set shortcuts
+$c-map: $c-product-customer-information;
+
+
+.c-product-customer-information {
+	display: block;
+	box-sizing:border-box;
+}
+
+.c-product-customer-information__item {
+	display: table;
+	width: 100%;
+	min-height: 60px;
+	padding: map-get($c-map, padding);
+	border: map-get($c-map, border);
+	background-color: map-get($c-map, bg);
+	margin-bottom: -1px;
+	&:first-child {
+		border-top-left-radius: 3px;
+		border-top-right-radius: 3px;
+	}
+	&:last-child {
+		border-bottom-left-radius: 3px;
+		border-bottom-right-radius: 3px;
+	}
+	>.icon__n {
+		display: table-cell;
+		vertical-align: middle;
+		width: 24px;
+		font-size: 24px;
+		color: #bdbdbd;
+		text-decoration:none;
+	}
+	&-text {
+		display: table-cell;
+		vertical-align:middle;
+		padding: 0 12px;
+		font-size: 13px;
+		line-height: 19px;
+		@include ffamily("bold");
+		span {@include ffamily("regular","i");}
+		sup {
+			top: -0.2em;
+			font-size: 10px;
+		}
+	}
+	.c-product-customer-information__item-phone-number {display: block;}
+	&--add {
+		padding:9px 15px;
+		border-style:dashed;
+		background-color:#f7f7f8;
+		border-top-style:solid;
+		text-align:center;
+		.btn, .c-button {
+			width:100%;
+			height:40px;
+			line-height:2.2;
+		}
+	}
+	&-action {
+		display: table-cell;
+		vertical-align: middle;
+		width:24px;
+		font-size:24px;
+		line-height:24px;
+		color: #bdbdbd;
+		a, .c-button {
+			color: #bdbdbd;
+			text-decoration:none;
+		}
+		a:hover, .c-buttun:hover {color:#35383d}
+	}
+
+}
+
+.c-product-customer-information__other-files {
+	margin: 8px 0 0;
+	text-align: right;
+	font-size:13px;
+	@include ffamily("semi");
+	.icon__n {
+		font-size: 20px;
+		color: #bdbdbd;
+		text-decoration:none;
+	}
+	&--text {
+		display:inline-block;
+		vertical-align:top;
+		padding-left:5px;
+	}
+	a:hover, a:focus {
+		text-decoration:none;
+		color:#32363b;
+	}
+}

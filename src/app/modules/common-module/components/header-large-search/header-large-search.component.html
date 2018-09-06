@@ -1,0 +1,11 @@
+<app-selectbox [value]="inputType" (changeEvent)="onSelectboxChange($event)" [options] ="options"></app-selectbox>
+<app-inline-search-input
+	[placeholder]="selectedPlaceholder"
+	[data]="data"
+	(onInputSave)="onSave($event)"
+	(onInputChange)="onInputChange($event)"
+	[isPromising]="isPromising"
+	[isDate]="inputType=='date'"
+	[pikadayOptions]="{format: 'DD.MM.YYYY, dddd', showTime: false}"
+	[delay]="500"
+	[hasBorder]='true'></app-inline-search-input>

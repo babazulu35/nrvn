@@ -1,0 +1,91 @@
+// Variables
+$c-multi-selection-bar: ( bg-color: #fffef3, border-color: #dcdce5, total-rows-color: #9d9d9d, close-button-color: #bdbdbd, action-item-color: #3a2e39, action-item-hover-color: #bdbdbd, );
+$c-multi-selection-bar: map-merge($c-multi-selection-bar, getSettingsMap("c-multi-selection-bar"));
+$c-map: $c-multi-selection-bar;
+// Component
+.c-multi-selection-bar {
+    margin-bottom: 10px;
+    display: none;
+    padding: 0 30px;
+    height: auto;
+    background-color: map-get($c-map, "bg-color");
+    border: 1px solid map-get($c-map, "border-color");
+    border-width: 1px 0;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, .08);
+    a {
+        font-weight: bold;
+        text-decoration: underline;
+        color: #3a2e39;
+    }
+    @include mobile-lg(portrait) {
+        padding: 0 15px;
+    }
+    &--active {
+        display: block;
+    }
+}
+
+.c-multi-selection-bar--inside-view {
+    background: #F7F7F8;
+    border: none;
+}
+
+.c-multi-selection-bar__wrapper {
+    display:flex;
+    flex-direction:row;
+    justify-content:space-between;
+    align-items:center;
+    height:100%;
+}
+
+.c-multi-selection-bar__selections {
+    display:flex;
+    flex-direction:row;
+    flex-wrap:nowrap;
+    justify-content:flex-start;
+    align-items:center;
+    i {
+        font-size:24px;
+    }
+    .c-multi-selection-bar__rows {
+        font-style: italic;
+        color: map-get($c-map, "total-rows-color");
+    }
+}
+
+.c-multi-selection-bar__actions {
+    display: flex;
+    flex-direction: row;
+    flex-wrap:wrap;
+    justify-content: center;
+    align-items:center;
+    margin:6px 10px 0px 15px;
+    &--item {
+        text-align: center;
+        font-size: 24px;
+        padding:0 10px;
+        a {
+            color: map-get($c-map, "action-item-hover-color");
+            &:hover {
+                color: map-get($c-map, "action-item-color")
+            }
+        }
+    }
+}
+
+.c-multi-selection-bar__cancel {
+    display:flex;
+    flex-direction:row;
+    flex-wrap:nowrap;
+    justify-content:flex-end;
+    align-items:center;
+    &--icon {
+        font-size:24px;
+        margin-top:6px;
+        margin-left: 3px;
+        i {
+            color: map-get($c-map, "close-button-color");
+        }
+        
+    }
+}

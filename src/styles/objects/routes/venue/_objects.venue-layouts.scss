@@ -1,0 +1,17 @@
+$or-venue-create: ();
+.or-venue-create {
+    .o-card-view__item {
+        height: auto;
+    }
+}
+
+$or-venue-layouts: ( aside-color: #f7f7f7);
+// Merge settings and defaults
+$or-venue-layouts: map-merge($or-venue-layouts, getSettingsMap("o-over-image-dates"));
+// Set shortcuts
+$o-map: $or-venue-layouts;
+.or-venue {
+    .o-collapsible-container__aside {
+        background-color: map-get($o-map, aside-color);
+    }
+}

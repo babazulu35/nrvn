@@ -1,0 +1,3 @@
+$o-performance-statiscts: ();
+$o-performance-statiscts: map-merge($o-performance-statiscts, getSettingsMap("o-performance-statiscts"));
+$o-map: $o-performance-statiscts;

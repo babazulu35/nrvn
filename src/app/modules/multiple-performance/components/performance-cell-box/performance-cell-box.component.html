@@ -1,0 +1,30 @@
+<!-- <div class="c-performance-cell-box__container">
+  <div *ngIf="!performance" class="c-performance-cell-box__add-button">
+    <app-button (clickEvent)="addPerformance()" type="link" label="saat girniz"></app-button>
+  </div>
+  <div *ngIf="performance && day" class="c-performance-cell-box__bar">
+    <span class="c-performance-cell-box__input">
+      <app-time-input theme="underline" [value]="time" (changeEvent)="timeInputChangeHandler($event)"></app-time-input>
+    </span>
+    <span class="c-performance-cell-box__action">
+      <app-button type="icon" icon="more_vert" theme="secondary" (clickEvent)="openContextMenu($event)"></app-button>
+    </span>
+    <span *ngIf="isDirty" class="c-performance-cell-box__i ndicator"></span>
+  </div>
+</div> -->
+
+<div class="c-performance-cell-box__container">
+    <div *ngIf="day" class="c-performance-cell-box__bar">
+        <span class="c-performance-cell-box__placeholder" *ngIf="rawTimeData == undefined || !performance?.Date"> -- / --</span>
+
+        <span *ngIf="rawTimeData != undefined && performance?.Date" class="c-performance-cell-box__input">
+            <span>{{rawTimeData}}</span>
+
+        </span>
+        <span class="c-performance-cell-box__action">
+        <app-button type="icon" icon="more_vert" theme="secondary" *ngIf="rawTimeData != undefined" (clickEvent)="openContextMenu($event)"></app-button>
+      </span>
+    </div>
+    <span *ngIf="isDirty" class="c-performance-cell-box__indicator"></span>
+
+</div>

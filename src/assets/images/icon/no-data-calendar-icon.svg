@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid" width="98" height="108" viewBox="0 0 98 108">
+  <defs>
+    <style>
+      .cls-1 {
+        opacity: 0.5;
+      }
+
+      .cls-2 {
+        fill: #dadada;
+      }
+
+      .cls-3, .cls-4 {
+        font-size: 26px;
+      }
+
+      .cls-4 {
+        fill: #fff;
+        font-family: "OpenSans-Bold";
+        font-weight: bold;
+      }
+    </style>
+  </defs>
+  <image xlink:href="data:img/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFYAAABaCAMAAAAVSlG+AAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAA+VBMVEUAAAC9vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb29vb0AAACvJQbTAAAAUnRSTlMALYBLCR0iQ1kUWn8heXoMd3hGal5ybG1ABX0PKxlVYEoQBDhdSTYWAwt8MTInU1J+TU4jdmMIPzM+KAE7H1E1Agp7XHQlIGZERUINZFsON2hpSdKuRgAAAAFiS0dEAIgFHUgAAAAJcEhZcwAACxIAAAsSAdLdfvwAAAIJSURBVFjD7ZdpT8JAEIbXChVFQaB4cIiWKkXF+wAPwBNPxP//Z5zZxWS2+GEMq4lm3w8leRieJrR52xFiNBMOZFIwMomTE5xJq7Xav6KNxV2aKRxOuIwkcHJKQ/HYUDo9k3QMJjkzjdbZOZNSTGpWiPS8aavjZNIii585jyaHKO8xkh/98QKirFiE45LJO2EJ0ILAy7VsUrsMqCDwC7P3rTRardX+trZYgpQ52jJOFpnaMWO1Vmu1Vmu1Vvt/te5KZXVNR341CKq+ztbWKysuX7uBL73zNYpCDwe9kLIa7gfJDa62vik3AI+yLbUVbFMmz+Rs1pnahlIUKNtRbJeyPcUaTK2rxuco21dsn7Lh5uUytb5cYJyDL051SNmBRHmfqRXxI4DHJxo7hcuYPNXQyTGMHcW5lwyW4Gbr7DzCahcXtQg6b7SaMcHXjhWrtdr/pb1sB9nIXhR2EolOqLNiNmhf8rXN0RrvBjgYdClTNd7kaq+uZTUFlA1rfIuyG4mur5jazxqnZbOr2A6dK4xf46pb9Q7+bo3fyvE2ZXdKcUdZW6Jbdo3fZwD29CZ9wMFHDcV6gDL33EsGz97OU6kbYeVWK7q1d0tPnbrga8eK1Vqt1VrtiBYr/tmkNQ3ClHiB42vanLX/CsIX8eb8QN6EPzBvfYfnUN+4d9DHfyOs9lLmnKleFd59PgBUlDVJhDjgdQAAAABJRU5ErkJggg==" width="86" height="90" class="cls-1"/>
+  <circle cx="72" cy="82" r="26" class="cls-2"/>
+  <text x="64" y="92" class="cls-3"><tspan class="cls-4">0</tspan></text>
+</svg>

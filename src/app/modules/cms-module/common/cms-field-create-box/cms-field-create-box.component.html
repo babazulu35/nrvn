@@ -1,0 +1,154 @@
+<app-dialog-box [isLoading]="isLoading">
+    <div #header class="c-dialog-box__header c-dialog-box__header--padding">
+        <div class="c-dialog-box__header-bar">
+            <h1 class="c-dialog-box__header-title">
+                {{title}}
+            </h1>
+            <div class="c-dialog-box__header-actions">
+                <app-button (click)="tetherService.dismiss()" type="icon" icon="close" theme="secondary"></app-button>
+            </div>
+        </div>
+        <div class="c-dialog-box__header-sticky-contents">
+            <app-wizard-header currentLevel={{currentLevelIndex+1}} totalLevel={{levels?.length}} (actionEvent)="wizardActionHandler($event)">
+                <span><strong>{{wizardHeader.currentLevel}}. Adım: </strong>{{currentLevel?.title}}</span>
+            </app-wizard-header>
+        </div>
+    </div>
+    <div #body class="c-dialog-box__body c-dialog-box__body--no-padding" [ngSwitch]="currentLevel?.key"
+        [class.c-dialog-box__body--no-scroll]="!currentLevel?.hasScroll">
+
+        <div *ngSwitchCase="'field'" class="p-container">
+            <form [formGroup]="fieldForm">
+              <div class="p-group">
+                  <div class="p-group__item">
+                      <app-text-input 
+                          (changeEvent)="inputChangeHandler($event, 'Name')"
+                          [icon]="edit"
+                          theme="underline" placeholder="Eklemek istediğiniz alana isim verin" [form]="fieldForm" name="Name" [required]='true' [value]="field?.Name"></app-text-input>
+                  </div>
+              </div>
+              <div class="p-group">
+                  <div class="p-group__item row">
+                      <div class="p-formgroup col-xs-8 padding-right-10">
+                          <div class="p-form-group__label">
+                             TEKİL İSİM
+                          </div>
+                          <div class="p-form-group__input">
+                              <app-text-input 
+                                (changeEvent)="inputChangeHandler($event, 'UniqueName')"
+                                placeholder="" [value]="field?.UniqueName" [form]="fieldForm" name="UniqueName" [required]='true'></app-text-input>
+                          </div>
+                      </div>
+                      <div class="p-formgroup col-xs-8 padding-left-10">
+                          <div class="p-form-group__label">
+                             ALAN TİPİ
+                          </div>
+                          <div class="p-form-group__input">
+                              <app-selectbox [options]="cmsFieldsList" (changeEvent)="inputChangeHandler($event, 'FieldType')"
+                                [value]="field?.FieldType" [form]="fieldForm" name="FieldType" [required]='true'></app-selectbox>
+                          </div>
+                      </div>
+                  </div>
+
+                  <div class="p-group__item row">
+                    <div class="p-formgroup col-xs-8 padding-right-10">
+                        <div class="p-form-group__label">
+                           YARDIMCI METİN TÜRÜ
+                        </div>
+                        <div class="p-form-group__input">
+                            <app-selectbox [options]="helpTextTypes" (changeEvent)="inputChangeHandler($event, 'helpTextType', field?.Settings)"
+                                [value]="field?.Settings?.helpTextType" [form]="fieldForm" name="FieldType" [required]='false'></app-selectbox>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-group__item row">
+                    <div class="p-formgroup">
+                        <div class="p-form-group__label">
+                           YARDIMCI METİN
+                        </div>
+                        <div class="p-form-group__input">
+                            <app-text-area 
+                                (changeEvent)="inputChangeHandler($event, 'HelpText')"
+                                placeholder="" [value]="field?.HelpText" [form]="fieldForm" name="HelpText" [required]='false'></app-text-area>
+                        </div>
+                    </div>
+                </div>
+
+              </div>
+
+              <div class="p-group">
+                <div class="p-group__item">
+                    <div class="p-toggle">
+                      <span class="p-toggle__label">Bu alan zorunludur</span>
+                      <span class="p-toggle__input">
+                          <app-checkbox type="lightswitch" (changeEvent)="inputChangeHandler($event, 'Required')" [form]="fieldForm" name="Required" [isChecked]="field?.Required"></app-checkbox>
+                      </span>
+                    </div>
+                </div>
+              </div>
+            </form>
+        </div>
+
+        <div *ngSwitchCase="'settings'" class="p-container p-container">
+            <div class="p-group" *ngIf="!selectedCmsField?.Settings?.length">
+                <app-no-data title="Bu alana ait herhangi bir ayar yok" [icon]="{type: 'svg', name: 'cms-empty'}"></app-no-data>
+            </div>
+           <form [formGroup]="settingsForm" *ngIf="selectedCmsField?.Settings?.length">
+            <div class="p-group">
+                <div class="p-group__item row" *ngFor="let settingField of selectedCmsField?.Settings">
+                    <div class="p-formgroup col-xs-16">
+                        <div class="p-form-group__label" style="text-transform: uppercase;">
+                            {{settingField?.Label}}
+                        </div>
+                        <div class="p-form-group__input" [ngSwitch]="settingField?.ComponentType">
+                            <div class="row">
+                                <div class="col-xs-16" *ngSwitchCase="'text-input'">
+                                    <app-text-input
+                                        [style.width]="settingField?.ComponentOptions?.type == 'number' || settingField?.ComponentOptions?.type == 'numeric' ? '20%' : '100%'"
+                                        (changeEvent)="inputChangeHandler($event, settingField?.Key, field?.Settings)"
+                                        [value]="field?.Settings[settingField?.Key]"
+                                        [type]="settingField?.ComponentOptions?.type || 'text'" 
+                                        [placeholder]="settingField?.ComponentOptions?.placeholder || ''"
+                                        [required]='settingField?.ComponentOptions?.required'
+                                        [form]="settingsForm" [name]="selectedCmsField?.Key"></app-text-input>
+                                </div>
+                                <div class="col-xs-16" *ngSwitchCase="'text-area'">
+                                    <app-text-area
+                                        (changeEvent)="inputChangeHandler($event, settingField?.Key, field?.Settings)"
+                                        [value]="field?.Settings[settingField?.Key]"
+                                        [placeholder]="settingField?.ComponentOptions?.placeholder || ''"
+                                        [required]='settingField?.ComponentOptions?.required'
+                                        [form]="settingsForm" [name]="selectedCmsField?.Key" [rows]="3"></app-text-area>
+                                </div>
+                                <div class="col-xs-7" *ngSwitchCase="'selectbox'">
+                                    <app-selectbox 
+                                        (changeEvent)="inputChangeHandler($event, settingField?.Key, field?.Settings)"
+                                        [value]="field?.Settings[settingField?.Key]"
+                                        [options]="settingField?.ComponentOptions?.options" 
+                                        [required]='settingField?.ComponentOptions?.required'
+                                        [form]="settingsForm" [name]="selectedCmsField?.Key"></app-selectbox>
+                                </div>
+                                <div class="col-xs-12">
+                                    <app-checkbox *ngSwitchCase="'checkbox'"
+                                        (changeEvent)="inputChangeHandler($event, settingField?.Key, field?.Settings)"
+                                        [isChecked]="field?.Settings[settingField?.Key]"
+                                        [type]="settingField?.ComponentOptions?.type || 'lightswitch'"
+                                        [form]="settingsForm" [name]="selectedCmsField?.Key"></app-checkbox>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </form> 
+        </div>
+    </div>
+    <div #footer class="c-dialog-box__footer row">
+        <div class="c-dialog-box__footer-content">
+            <div class="col-xs-16">
+                <app-button (click)="submitClickHandler($event)" [isDisabled]="!isValid" theme="primary" [label]="currentLevel?.key == 'params' ? 'ALAN EKLE' : 'DEVAM ET'"></app-button>
+            </div>
+        </div>
+    </div>
+
+</app-dialog-box>

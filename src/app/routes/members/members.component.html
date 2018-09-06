@@ -1,0 +1,15 @@
+<div class="or-members">
+    <div>
+
+        <div class="p-search-container">
+            <app-header-large-search inputType="phoneNumber" (onDataSave)="searchValueChanged($event)" [isPromising]="isPromising" [options]="searchOptions.options" [placeholder]="searchOptions.placeholders">
+            </app-header-large-search>
+        </div>
+
+        <app-no-data *ngIf="startScreen || noDataInContent" [ngClass]="{'main-loader': isPromising }" [icon]='{type: "icon", name: "person"}' [hasContainer]="true" style="max-width:50%; margin-top:30px" [title]="noDataTitle" [description]="noDataDescription">
+        </app-no-data>
+
+    </div>
+    <!-- end of boxoffice-members -->
+</div>
+<!-- end of boxoffice -->

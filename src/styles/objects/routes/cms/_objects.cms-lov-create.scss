@@ -1,0 +1,48 @@
+/* --------------------------------------------------------
+author: Abdullah Karadeniz
+----------------------------------------------------------*/
+
+$or-cms-lov-create: ( 
+    border-color: #dcdce5, 
+    switch-bar: ( 
+        label: ( 
+            color: #373a3c, 
+            font-size: 14px, 
+        )
+    ),
+    list: (
+        item: (
+          margin: 6px,
+        )
+    ),
+);
+$or-cms-lov-create: map-merge($or-cms-lov-create, getSettingsMap("or-cms-lov-create"));
+$or-map: $or-cms-lov-create;
+
+.or-cms-lov-create {
+    display: block;
+    position: relative;
+
+    .c-split-container__fluid .p-container {
+        //min-width: 650px;
+        max-width: 750px;
+        //width: 75%;
+        margin: auto;
+    }
+
+    &__list {
+        display: block;
+        width: 100%;
+        list-style-type: none;
+
+        &-item {
+            & + .or-cms-lov-create__list-item {
+                margin-top: map-deep-get($or-map, list, item, margin);
+            }
+        }
+    }
+}
+
+$or-map: null;/* --------------------------------------------------------
+author: Abdullah Karadeniz
+----------------------------------------------------------*/

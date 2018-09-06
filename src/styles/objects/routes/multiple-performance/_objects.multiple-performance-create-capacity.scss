@@ -1,0 +1,34 @@
+$or-multiple-performance-create-capacity: ();
+$or-multiple-performance-create-capacity: map-merge($or-multiple-performance-create-capacity, getSettingsMap("or-multiple-performance-create-capacity"));
+$o-map: $or-multiple-performance-create-capacity;
+
+.or-multiple-performance-create-capacity {
+    display: block;
+    
+    &__statistics {
+        display: block;
+
+        .c-vertical-kv-list {
+            border: none;
+            padding: 0px;
+
+            &__item {
+                height: 24px;
+                
+                &--status {
+                    .c-vertical-kv-list__item {
+                        &-dot {
+                            display: none;
+                        }
+                    }
+                }
+
+                &:hover {
+                    background-color: transparent !important;
+                }
+            }
+        }
+    }
+}
+
+$o-map: null;

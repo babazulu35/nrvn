@@ -1,0 +1,81 @@
+$oc-customer-seat-capacity: (
+	info-list: (
+        border-color: #dcdce5,
+        color: #373a3c,
+        item: (
+            padding: 15px,
+            height: 62px,
+            icon: (
+                color: #B1B1B1,
+                font-size: 24px
+            ),
+            content: (
+
+            )
+        )
+    )
+);
+
+$oc-customer-seat-capacity: map-merge($oc-customer-seat-capacity, getSettingsMap("oc-customer-seat-capacity"));
+$oc-map: $oc-customer-seat-capacity;
+
+.oc-customer-seat-capacity {
+    display: block;
+    background-color: #fff;
+    height: 100%;
+
+    &__info-list {
+        border: solid 1px map-deep-get($oc-map, info-list, border-color);
+        &-item {
+            display: table;
+            color: map-deep-get($oc-map, info-list, item, color);
+            padding: map-deep-get($oc-map, info-list, item, padding);
+            width: 100%;
+            min-height: map-deep-get($oc-map, info-list, item, height);
+
+            & + .oc-customer-seat-capacity__info-list-item {
+                border-top: solid 1px map-deep-get($oc-map, info-list, border-color);
+            }
+
+            &-icon {
+                display: table-cell;
+                vertical-align: middle;
+                text-align: center;
+                font-size: map-deep-get($oc-map, info-list, item, icon, font-size);
+                line-height: 0px;
+                width: map-deep-get($oc-map, info-list, item, height) - map-deep-get($oc-map, info-list, item, padding)*2;
+                color: map-deep-get($oc-map, info-list, item, icon, color);
+                padding-right: map-deep-get($oc-map, info-list, item, padding);
+            }
+
+            &-content {
+                display: table-cell;
+                vertical-align: middle;
+                @include ffamily('regular');
+                > i {
+                    @include ffamily('regular', 'i');
+                }
+            }
+
+            &-title {
+                @include ffamily('bold');
+                > i {
+                    @include ffamily('regular', 'i');
+                }
+            }
+
+            &-action {
+                display: table-cell;
+                vertical-align: middle;
+                text-align: right;
+            }
+        }
+    }
+
+    .c-tag-group {
+        padding: 0px;
+        border-top: none;
+    }
+}
+
+$oc-map: null;

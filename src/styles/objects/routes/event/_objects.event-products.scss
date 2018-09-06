@@ -1,0 +1,61 @@
+// Set defaults
+$o-event-products: (
+	add-product-font-size: 11px,
+	add-product-icon-size: 40px,
+
+	primary-color: #35383d,
+	aside-color: #f7f7f7
+);
+
+// Merge settings and defaults
+$o-event-products: map-merge($o-event-products, getSettingsMap("o-over-image-dates"));
+
+// Set shortcuts
+$o-map: $o-event-products;
+
+.or-event-products {
+	display: block;
+
+	&__list {
+		list-style: none;
+	}
+
+	&__add-button {
+		position: relative;
+		display: inline-block;
+		font-size: map-get($o-map, add-product-font-size);
+		line-height: map-get($o-map, add-product-font-size) + 7;
+		padding-left: 20px;
+		color: map-get($o-map, primary-color);
+
+		@include ffamily('semi');
+
+		.icon__n {
+			position: absolute;
+			left: 0;
+			top: calc(-50% - 3px);
+			display: inline-block;
+			vertical-align: middle;
+
+			font-size: map-get($o-map, add-product-icon-size);
+
+			@include t--translateX(-50%);
+		}
+
+		&:hover {
+			color: map-get($o-map, primary-color);
+		}	
+	}
+
+	.o-collapsible-container__aside {
+		background-color: map-get($o-map, aside-color);
+	}
+
+	.o-collapsible-container__toggle-btn {
+		background-color: map-get($o-map, aside-color);
+	}
+}
+
+//Reset
+$o-map: null;
+$o-event-products: null;

@@ -1,0 +1,267 @@
+<div class="or-transaction-view" [ngClass]="{'main-loader': isLoading }">
+
+    <div class="or-transaction-view__main">
+        <div class="or-transaction-view__main-title">
+            <h2>İşlem Detayı</h2>
+            <!-- <span class="print-icon" (click)="actionHandler('downloadPDF', items.Product)"><i class="icon__n icon__n--print"></i></span> -->
+            <span class="print-icon" (click)="openContextMenu($event)"><i class="icon__n icon__n--more_vert"></i></span>
+        </div>
+
+        <table class="or-transaction-view__process">
+            <tbody>
+                <tr>
+                    <td>
+                        <span>İŞLEM ID</span> {{transaction?.RefId}}
+                    </td>
+                    <td>
+                        <span>TERMİNAL ID</span> {{transaction?.TerminalId || '-'}}
+                    </td>
+                    <td>
+                        <span>KANAL</span> {{transaction?.SalesChannel?.Name || '-'}}
+                    </td>
+                    <td>
+                        <span>ALT KANAL</span> {{transaction?.SalesSubChannel?.Name || '-'}}
+                    </td>
+                    <td>
+                        <span>İŞLEM TARİHİ</span> {{transaction?.PaymentDate | relativeDate}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <!--  end or-transaction-view__process -->
+
+        <h3 class="or-transaction-view__content-title">Ürünler</h3>
+
+        <div class="o-placeholder--multi_selection" [class.active]="isMultiSelectionActive && !isBoxOfficeUser">
+            <app-multi-selection-bar [actionButtons]="actionButtons" [selectedItems]="selectedItems" [numberOfTotalItem]="items.Product.length" (transistAction)="callSelectedItemsAction($event)" (toggleSelectedItems)="selectAllItems($event)"></app-multi-selection-bar>
+        </div>
+
+        <div class="or-transaction-view__product" *ngFor="let performance of groupedItems">
+
+            <div class="or-transaction-view__product-info">
+                <div class="or-transaction-view__product-info-avatar">
+                    <span class="c-avatar c-avatar--autosize c-avatar--circle">
+                            <app-avatar [letters]="performance.Performance.Localization?.Name.charAt(0)" source="{{performance.Performance.Images | image: 'Performance'}}"></app-avatar>
+                            <!-- <figure><img src="performance.Performance.Images" alt=""></figure> -->
+                        </span>
+                </div>
+                <h5>
+                    <span>ETKİNLİK / PERFORMANS</span> {{performance.Performance.Event?.Localization.Name}} / {{performance.Performance.Localization?.Name}},
+                    <i>{{performance.Performance.Date | relativeDate}}</i>
+                </h5>
+            </div>
+            <!-- end or-transaction-view__product-info -->
+
+            <div class="or-transaction-view__product-item" *ngFor="let product of performance.Products">
+                <h4>{{product.Product.Localization?.Name}}</h4>
+                <table>
+                    <tbody>
+                        <tr *ngFor="let item of product.Items.Product; let i = index;">
+
+                            <td class="or-transaction-view__product-item-left">
+                                <span class="or-transaction-view__product-item-left-container">
+                                        <span *ngIf="!isBoxOfficeUser" class="or-transaction-view__product-item-checkbox">
+                                            <app-checkbox theme="ligth" type="circle" 
+                                                        [isDisabled]="isItemDisabled(item)" 
+                                                        [isChecked]="selectedItems.indexOf(item) > -1" 
+                                                        (checkedAction)="selectItem($event, item);"></app-checkbox>
+                                        </span>
+                                <span *ngIf="product.Items.Product.length > 1" class="or-transaction-view__product-item-index">{{i+1}} - </span>
+                                <span class="or-transaction-view__product-item-ticket" [ngClass]="{'or-transaction-view__product-item-disabled' : isItemDisabled(item)}">{{item.Variant.VariantType.Localization?.Name}}</span>
+
+                                <span *ngIf="item.AccessCodeInfo?.ForwardStatus == 1" class="or-transaction-view__product-item-infobadge or-transaction-view__product-item-infobadge--link " (click)="openUserCardContext($event, item)">YÖNLENDİRİLMİŞ</span>
+                                <span *ngIf="item.RefundStatus == 3" class="or-transaction-view__product-item-infobadge">İADE EDİLMİŞ</span>
+                                </span>
+                            </td>
+
+                            <td class="or-transaction-view__product-item-center" [ngClass]="{'or-transaction-view__product-item-disabled' : isItemDisabled(item)}">
+                                <app-promise-icon *ngIf="isSeatInfoLoading"
+                                                  [isPromising]="isSeatInfoLoading"
+                                                  size="autosize"></app-promise-icon>
+                                <!-- <span class="or-transaction-view__product-item-no-number" *ngIf="!isSeatInfoLoading && !item.VenueSeat">NUMARASIZ</span> -->
+                                <span *ngIf="!isSeatInfoLoading && item.AccessCodeInfo">
+                                      {{item.AccessCodeInfo?.BlockName || '-'}} /
+                                      {{item.AccessCodeInfo?.RowName || item.AccessCodeInfo?.RowNumber || '-'}} /
+                                      <strong>{{item.AccessCodeInfo?.SeatName || item.AccessCodeInfo?.SeatNo || "-"}}</strong>
+                                </span>
+                            </td>
+
+                            <td class="or-transaction-view__product-item-right">
+
+                                <app-button *ngIf="item.AccessCodeInfo?.ForwardStatus == 1 && !isSeatInfoLoading && ('Transaction_Item_GetTicketBack' | authRole)" class="or-transaction-view__product-item-returnforward" (click)=returnTicketPromoter(item) theme="secondary">GERİ AL</app-button>
+
+                                <span class="or-transaction-view__product-item-price" [ngClass]="{'or-transaction-view__product-item-disabled' : isItemDisabled(item)}">
+                                        {{item.PaidAmount | number:'1.2-2'}}<sup>{{transaction?.Currency?.Code}}</sup>
+                                    </span>
+
+                                <div *ngIf="!isBoxOfficeUser" class="or-transaction-view__product-item-action-btn">
+                                    <app-button (clickEvent)="openItemContextMenu($event, item)" [isDisabled]="isItemContextMenuDisabled(item)" type="icon" icon="more_vert" theme="secondary"></app-button>
+                                </div>
+
+                            </td>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="or-transaction-view__product-total">
+                <h6>TOPLAM ÜRÜN BEDELİ</h6>
+                <span>{{performance.Totals.Product | number:'1.2-2'}}<sup>{{transaction?.Currency?.Code}}</sup></span>
+            </div>
+
+            <div class="or-transaction-view__product-item or-transaction-view__product-item--border" *ngIf="performance.Discounts?.length">
+                <h5>KAMPANYALAR / İNDİRİMLER</h5>
+                <table>
+                    <tbody>
+                        <tr *ngFor="let ItemCampaign of performance.Discounts">
+                            <td class="or-transaction-view__product-item-left">
+                                {{ItemCampaign.Campaign?.Localization?.Name}}
+                            </td>
+                            <td class="or-transaction-view__product-item-center">
+                                
+                            </td>
+                            <td class="or-transaction-view__product-item-right">
+                                <span class="or-transaction-view__product-item-price or-transaction-view__product-item-price--discount">
+                                    {{ItemCampaign.DiscountAmount | number:'1.2-2'}}<sup>{{transaction?.Currency?.Code}}</sup>
+                                    </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="or-transaction-view__product-item or-transaction-view__product-item--border" *ngIf="performance.Totals.Service || performance.Totals.Ticket || performance.Totals.TicketingTrxFee">
+                <h5>DİĞER</h5>
+                <table>
+                    <tbody>
+                        <tr *ngIf="performance.Totals.Service">
+                            <td class="or-transaction-view__product-item-left">Hizmet Bedeli</td>
+                            <td class="or-transaction-view__product-item-center"></td>
+                            <td class="or-transaction-view__product-item-right">
+                                <span class="or-transaction-view__product-item-price">{{performance.Totals.Service | number:'1.2-2'}}<sup>{{transaction?.Currency?.Code}}</sup></span>
+                            </td>
+                        </tr>
+                        <tr *ngIf="performance.Totals.Ticket">
+                            <td class="or-transaction-view__product-item-left">Biletleme Bedeli</td>
+                            <td class="or-transaction-view__product-item-center"></td>
+                            <td class="or-transaction-view__product-item-right">
+                                <span class="or-transaction-view__product-item-price">{{performance.Totals.Ticket | number:'1.2-2'}}<sup>{{transaction?.Currency?.Code}}</sup></span>
+                            </td>
+                        </tr>
+                        <tr *ngIf="performance.Totals.TicketingTrxFee">
+                            <td class="or-transaction-view__product-item-left">Sepet İşlem Bedeli</td>
+                            <td class="or-transaction-view__product-item-center"></td>
+                            <td class="or-transaction-view__product-item-right">
+                                <span class="or-transaction-view__product-item-price">{{performance.Totals.TicketingTrxFee | number:'1.2-2'}}<sup>{{transaction?.Currency?.Code}}</sup></span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="or-transaction-view__product-total">
+                <h6>TOPLAM</h6>
+                <span>{{performance.Totals.General | number:'1.2-2'}}<sup>{{transaction?.Currency?.Code}}</sup></span>
+            </div>
+
+            <div class="or-transaction-view__product-vat" *ngIf="performance.Totals.Vat">
+                <table>
+                    <tbody>
+                        <tr>
+                            <td class="or-transaction-view__product-vat-left">Vergiler</td>
+                            <td class="or-transaction-view__product-vat-center"></td>
+                            <td class="or-transaction-view__product-vat-right">
+                                <span class="or-transaction-view__product-vat-price">{{performance.Totals.Vat | number:'1.2-2'}}<sup>{{transaction?.Currency?.Code}}</sup></span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+        <!--  end or-transaction-view__product -->
+
+        <div class="or-transaction-view__general-total">
+            <h6>GENEL TOPLAM</h6>
+            <span>{{transaction?.TotalAmount | number:'1.2-2'}}<sup>{{transaction?.Currency?.Code}}</sup></span>
+        </div>
+        <!--  end or-transaction-view__general-total -->
+
+    </div>
+    <!-- end or-transaction-view-main -->
+
+    <div class="or-transaction-view__aside">
+        <div class="or-transaction-view__aside-content">
+            <div class="or-transaction-view__client">
+                <div class="or-transaction-view__client-info">
+                    <div class="or-transaction-view__client-avatar">
+                        <app-avatar [letters]="transaction.MemberInfo?.FirstName?.charAt(0)" [source]="null"></app-avatar>
+                    </div>
+                    <div class="or-transaction-view__client-name">
+                        {{transaction.MemberInfo?.FirstName}} {{transaction.MemberInfo?.FamilyName}}
+                        <i class="icon__n icon__n--person"></i>
+                        <span>{{transaction.MemberInfo?.PhoneNumber | phoneFormat:true}}</span>
+                    </div>
+                </div>
+            </div>
+            <!-- end or-transaction-view__client -->
+
+            <h4>Sipariş Özeti</h4>
+            <table class="or-transaction-view__aside-table or-transaction-view__aside-table--order-summary">
+                <tbody>
+                    <tr>
+                        <td class="or-transaction-view__aside-table-left">ADET</td>
+                        <td class="or-transaction-view__aside-table-right">{{items.Product.length}}</td>
+                    </tr>
+                    <tr *ngIf="!isGroupSale()">
+                        <td class="or-transaction-view__aside-table-left">ÜRÜNLER BEDELİ</td>
+                        <td class="or-transaction-view__aside-table-right">{{totals.Product | number:'1.2-2'}}<sup>{{transaction?.Currency?.Code}}</sup></td>
+                    </tr>
+                    <!-- Group -->
+                    <tr *ngIf="isGroupSale()">
+                        <td class="or-transaction-view__aside-table-left">BİLET FİYATI</td>
+                        <td class="or-transaction-view__aside-table-right">{{totals.Product | number:'1.2-2'}}<sup>{{transaction?.Currency?.Code}}</sup></td>
+                    </tr>
+                    <!-- Group -->
+                    <tr *ngIf="isGroupSale()">
+                        <td class="or-transaction-view__aside-table-left">SATIŞ FİYATI</td>
+                        <td class="or-transaction-view__aside-table-right">{{groupSaleTotal | number:'1.2-2'}}<sup>{{transaction?.Currency?.Code}}</sup></td>
+                    </tr>
+                    <tr>
+                        <td class="or-transaction-view__aside-table-left">ÜCRETLER</td>
+                        <td class="or-transaction-view__aside-table-right">{{(totals.Ticket + totals.Service + totals.TicketingTrxFee) | number:'1.2-2'}}<sup>{{transaction?.Currency?.Code}}</sup></td>
+                    </tr>
+                    <tr>
+                        <td class="or-transaction-view__aside-table-left">İNDİRİMLER</td>
+                        <td class="or-transaction-view__aside-table-right or-transaction-view__aside-table-right--discount">{{totals.Discount | number:'1.2-2'}}<sup>{{transaction?.Currency?.Code}}</sup></td>
+                    </tr>
+                    <tr>
+                        <td class="or-transaction-view__aside-table-left"><strong>GENEL TOPLAM</strong></td>
+                        <td class="or-transaction-view__aside-table-right">{{transaction?.TotalAmount | number:'1.2-2'}}<sup>{{transaction?.Currency?.Code}}</sup></td>
+                    </tr>
+                    <tr>
+                        <td class="or-transaction-view__aside-table-left">VERGİLER</td>
+                        <td class="or-transaction-view__aside-table-right">{{transaction?.TotalVatAmount | number:'1.2-2'}}<sup>{{transaction?.Currency?.Code}}</sup></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h4 *ngIf="paymentItems?.length">İşlem Özeti</h4>
+            <table class="or-transaction-view__aside-table" *ngIf="paymentItems?.length">
+                <tbody>
+                    <tr *ngFor="let paymentItem of paymentItems">
+                        <td class="or-transaction-view__aside-table-left" *ngIf="paymentItem.Status!=3">
+                            {{paymentItem.Type_Desc}} <i *ngIf="paymentItem.CCNumber">( {{paymentItem.CCNumber}} )</i>
+                        </td>
+                        <td *ngIf="paymentItem.Status!=3" class="or-transaction-view__aside-table-right or-transaction-view__aside-table-right--discount">
+                            {{paymentItem.Amount | number:'1.2-2'}}<sup>{{transaction?.Currency?.Code}}</sup>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>        
+        <!-- end or-transaction-view__aside-content  -->
+    </div>
+    <!-- end or-transaction-view-aside -->
+</div>

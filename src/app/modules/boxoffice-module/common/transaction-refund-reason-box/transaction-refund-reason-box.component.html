@@ -1,0 +1,47 @@
+<app-dialog-box>
+	<div #header class="c-dialog-box__header c-dialog-box__header--border c-dialog-box__header--padding">
+		<div class="c-dialog-box__header-bar">
+			<h1 class="c-dialog-box__header-title">{{action}} Edin</h1>
+
+			<div class="c-dialog-box__header-actions">
+				<app-button (click)="tetherDialog.dismiss()" type="icon" icon="close" theme="secondary"></app-button>
+			</div>
+		</div>
+	</div>
+
+	<div #body class="c-dialog-box__body c-dialog-box__body--no-padding">
+		<div class="p-container p-container--inherit">
+
+			<div class="p-group">
+				
+				<div class="p-group__item">
+					<div class="p-toggle">
+						<span class="p-toggle__label">{{action}} nedenini seçiniz:</span>
+						<span class="p-toggle__input text-xs-right">
+							<app-selectbox [options]="refundReasonOptions" (changeEvent)="onInputChange($event)"></app-selectbox>
+						</span>
+					</div>
+					<br>
+					<app-helper-text *ngIf="isTransaction"
+									 type="info"
+									 text="Tüm işlem bazında yapılan iadelerde iade nedeni seçimi zorunludur."></app-helper-text>			
+				</div>
+
+				<div *ngIf="salesChannel == 'Box Office' || salesChannel == 'BoxOffice'" class="p-group__item">		
+					<div *ngIf="paymentType == 'Nakit'" class="p-toggle">
+						<span class="p-toggle__label">{{action}} Kayıt Altına Alındı ve Müşteri Bilgilendirildi.Lütfen Tahsilat Tutarını İade Ediniz.</span>						
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	<div #footer class="c-dialog-box__footer row">
+		<div class="c-dialog-box__footer-content">
+			<div class="col-xs-16">
+				<app-button (clickEvent)="submitClickHandler($event)" [isDisabled]="isTransaction && reasonId === 0" theme="primary" label="{{action | uppercase}} ET"></app-button>
+			</div>
+		</div>
+	</div>
+</app-dialog-box>

@@ -1,0 +1,163 @@
+/* --------------------------------------------------------
+author: Abdullah Karadeniz
+----------------------------------------------------------*/
+
+$c-avatar: ( border-color: #dcdce5, sizes: ( sm: ( width: 40px, height: 40px), md: ( width: 64px, height: 64px), lg: ( width: 128px, height: 128px)), themes: ( primary: ( color: #ffffff, background-color: #21242b, border-color: #21242b, icon-color: #21242b), secondary: ( color: #B1B1B1, background-color: #ffffff, border-color: #dcdce5, icon-color: #B1B1B1, ), danger: ( color: #ffffff, background-color: #ec4e48, border-color: #ec4e48, icon-color: #ec4e48), light: ( color: #21242b, background-color: #ffffff, border-color: #dcdce5, icon-color: #ffffff)));
+// Merge settings and defaults
+$c-avatar: map-merge($c-avatar, getSettingsMap("c-avatar"));
+// Set shortcuts
+$c-map: $c-avatar;
+$sizes: map-get($c-map, sizes);
+$selected-size: map-get($sizes, md);
+$z-index: map-merge($z-index, getSettingsMap("z-index"));
+// Set shortcuts
+$c-map: $c-avatar;
+$map-zindex: $z-index;
+.c-avatar {
+    display: inline-block;
+    position: relative;
+    font-size: map-get($selected-size, width);
+    line-height: 0px;
+    width: 1em;
+    height: 1em;
+    overflow: hidden;
+    opacity: 0.99;
+    // cursor: pointer;
+    &--primary {
+        $theme: map-deep-get($c-map, themes, primary);
+        color: map-deep-get($theme, color);
+        background-color: map-deep-get($theme, background-color);
+        border-color: map-deep-get($theme, border-color) !important;
+    }
+    &--secondary {
+        $theme: map-deep-get($c-map, themes, secondary);
+        color: map-deep-get($theme, color);
+        background-color: map-deep-get($theme, background-color);
+        border-color: map-deep-get($theme, border-color) !important;
+    }
+    &--danger {
+        $theme: map-deep-get($c-map, themes, danger);
+        color: map-deep-get($theme, color);
+        background-color: map-deep-get($theme, background-color);
+        border-color: map-deep-get($theme, border-color) !important;
+    }
+    &--light {
+        $theme: map-deep-get($c-map, themes, light);
+        color: map-deep-get($theme, color);
+        background-color: map-deep-get($theme, background-color);
+        border-color: map-deep-get($theme, border-color) !important;
+    }
+    //Set sizes
+    &--sm {
+        $selected-size: map-get($sizes, sm);
+        font-size: map-get($selected-size, width);
+    }
+    &--md {
+        $selected-size: map-get($sizes, md);
+        font-size: map-get($selected-size, width);
+        .c-avatar__letters {
+            @include ffamily('regular');
+        }
+    }
+    &--lg {
+        $selected-size: map-get($sizes, lg);
+        font-size: map-get($selected-size, width);
+        .c-avatar__letters {
+            @include ffamily('regular');
+        }
+    }
+    &--autosize {
+        font-size: inherit !important;
+    }
+    &.c-avatar--border {
+        border: solid 1px map-get($c-map, border-color);
+    }
+    &--has-icon {
+        >figure,
+        .c-avatar__letters {
+            display: none !important;
+        }
+        &.c-avatar--circle {
+            border: solid 1px map-get($c-map, border-color);
+        }
+    }
+    &--has-letters {
+        >figure,
+        .c-avatar__icon {
+            display: none !important;
+        }
+        &.c-avatar--circle {
+            &.c-avatar--circle {
+                border: solid 1px map-get($c-map, border-color);
+            }
+        }
+    }
+    //Set shapes
+    &--circle {
+        border-radius: 50%;
+        -webkit-mask-image: -webkit-radial-gradient(circle, white, black);
+        >figure {
+            border-radius: 50%;
+            -webkit-mask-image: -webkit-radial-gradient(circle, white, black);
+        }
+        .c-avatar__icon {
+            font-size: 0.5em;
+        }
+    }
+    &__icon {
+        font-size: 0.75em;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translateX(-50%) translateY(-50%);
+    }
+    &__letters {
+        font-size: 0.35em;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translateX(-50%) translateY(-50%);
+        @include ffamily('semi');
+    }
+    >figure {
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        overflow: hidden;
+        opacity: 0.99;
+        z-index: map-get($map-zindex, figure);
+        >img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+            min-width: 50%;
+            min-height: 50%;
+        }
+        // >figure {
+        //  display: inline-block;
+        //  position: relative;
+        //  overflow: hidden;
+        //  -webkit-mask-image: -webkit-radial-gradient(circle, white, black);
+        //  top: 0px;
+        //  left: 0px;
+        //  width: 100%;
+        //  height: 100%;
+        //  >img {
+        //    max-width: inherit;
+        //    max-height: 100%;
+        //    position: absolute;
+        //    top: 0;
+        //    left: 50%;
+        //    @include transform(translateX(-50%));
+        //  }
+    }
+}
+
+//Reset
+$c-map: null;
+$map-zindex: null;

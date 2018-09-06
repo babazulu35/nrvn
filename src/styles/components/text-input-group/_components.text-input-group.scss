@@ -1,0 +1,80 @@
+$c-text-input-group: ( 
+    height: 36px,
+    font-size: 15px, 
+    color: #C2C2C2,
+    active-color: #21242b, 
+    border-color: #dcdce5, 
+    active-border-color: #2096F3, 
+    error-border-color: #ec4e48, 
+    border-radius: 2px,
+    space: 10px,
+);
+// Merge settings and defaults
+$c-text-input-group: map-merge($c-text-input-group, getSettingsMap("c-text-input-group"));
+// Set shortcuts
+$c-map: $c-text-input-group;
+
+.c-text-input-group {
+    display: inline-block;
+    width: 100%;
+    line-height: 0px;
+
+    &--disabled {
+        cursor: not-allowed;
+        opacity: 0.8;
+        * {
+            pointer-events: none;
+            user-select: none;
+        }
+    }
+
+    &--error:not(.c-text-input-group--disabled) {
+        .c-text-input {
+            .c-text-input__bar {
+                border-color: map-get($c-map, error-border-color);
+            }
+            &.c-text-input--underline {
+                .c-text-input__bar {
+                    border-color: map-get($c-map, error-border-color);
+                }
+            }
+        }
+    }
+    
+    &__list {
+        display: flex;
+        flex-direction: row;
+
+        &-item {
+            display: flex;
+            position: relative;
+
+            &:last-child {
+                .c-text-input-group__list-item-seperator {
+                    display: none;
+                }
+            }
+
+            &-input {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                width: calc( 100% - #{map-deep-get($c-map, space)*2});
+            }
+
+            &-seperator {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                padding: 0px map-deep-get($c-map, space);
+                @include ffamily(bold);
+                font-size: map-deep-get($c-map, font-size);
+                color: map-deep-get($c-map, color);
+                
+            }
+        }
+    }
+}
+
+$c-text-input-group: null;
+$c-map:null;

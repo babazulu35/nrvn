@@ -1,0 +1,26 @@
+<div class="oc-seat-select">
+	<app-collapsible-container theme="gray" [isAsideOpen]="true" [asideWidth]="240" [isLoading]="isLoading">
+		<div content>
+			<!--Header-->
+			<div class="p-header p-header--border">
+				<span class="margin-right-5">Lorem Ipsum</span>
+			</div>
+
+			<div class="p-full-content">
+				<app-venue-template-editor *ngIf="performanceId && firmCode && channelCode"
+                    role="sales_screen_box_office"
+                    (editorEvent)="venueEditorEventHandler($event)"
+                    [performanceId]="performanceId"
+                    [productId]="1"
+                    [firmCode]="'MBT'"
+                    [channelCode]="'web'">
+                </app-venue-template-editor>
+            </div>
+            
+        </div>
+
+		<div aside>
+
+		</div>
+	</app-collapsible-container>
+</div>

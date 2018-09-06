@@ -1,0 +1,3 @@
+$o-performance-sponsors: ();
+$o-performance-sponsors: map-merge($o-performance-sponsors, getSettingsMap("o-performance-sponsors"));
+$o-map: $o-performance-sponsors;

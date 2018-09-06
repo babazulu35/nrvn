@@ -1,0 +1,22 @@
+<div class="oc-seat-select">
+    <div class="p-full-content" *ngIf="state">
+        <div class="p-header-bar">
+            <div class="p-header-bar__left">
+                <app-button (clickEvent)='goBackPreviousState()' style="margin-right:10px;" size="lg" type="icon" icon="exit_to_app" theme="secondary"></app-button>
+                <app-breadcrumb [breadcrumbs]="[{title:state.CurrentEvent},{title:state.CurrentPerformance},{title:state.CurrentProduct}]"></app-breadcrumb>
+
+            </div>
+            <div class="p-header-bar__right">
+
+                <h3 *ngIf="state.ProductSelectionType == 2">{{selectedSeatCount == '' || selectedSeatCount == null ? 0 : selectedSeatCount }} / {{ state.RemainingProductSelections }} <i class="icon__n icon__n--event_seat"></i></h3>
+                <app-button (clickEvent)='saveEditorAndGo({validStatus:isValid})' [isPromising]="isLoading || isPromising">KAYDET</app-button>
+
+            </div>
+
+        </div>
+
+        <app-venue-template-editor *ngIf="reRender && state" role="{{editorRole}}" (editorEvent)="selectEditorHandler($event)" [performanceId]="performanceId" [productId]="productId" [firmCode]="firmCode" [environmentApiPath]="environmentApiPath" [channelCode]="channelCode"
+            [seatSelectionEnabled]="state.ProductSelectionType == 2" [selectionLimit]="state.RemainingProductSelections"></app-venue-template-editor>
+
+    </div>
+</div>

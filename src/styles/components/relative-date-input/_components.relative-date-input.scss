@@ -1,0 +1,59 @@
+$c-relative-date-input: ( 
+    height: 36px,
+    font-size: 15px, 
+    color: #C2C2C2,
+    active-color: #21242b, 
+    border-color: #dcdce5, 
+    active-border-color: #2096F3, 
+    error-border-color: #ec4e48, 
+    border-radius: 2px,
+    select: (
+        color: #21242b,
+        background-color: #F5F5F5,
+        padding: 0.75em,
+        font-size: 0.5em
+    )
+);
+// Merge settings and defaults
+$c-relative-date-input: map-merge($c-relative-date-input, getSettingsMap("c-relative-date-input"));
+// Set shortcuts
+$c-map: $c-relative-date-input;
+
+.c-relative-date-input {
+    display: inline-block;
+    width: 100%;
+    line-height: 0px;
+    
+    &__bar {
+        display: flex;
+        width: 100%;
+        align-items: center;
+        justify-content: space-between;
+        white-space: nowrap;
+        line-height: 0px;
+    }
+
+    &__select {
+        display: flex;
+        align-items: center;
+        min-width: 95px;
+        width: 30%;
+        flex-grow: 0;
+        flex-shrink: 0;
+        .c-selectbox {
+            min-width: auto;
+        }
+    }
+
+    &__input {
+        display: flex;
+        flex-grow: 1;
+        flex-shrink: 1;
+        padding: 0px 0.5em;
+    }
+    
+   
+}
+
+$c-relative-date-input: null;
+$c-map:null;

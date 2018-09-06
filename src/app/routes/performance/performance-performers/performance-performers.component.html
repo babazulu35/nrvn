@@ -1,0 +1,96 @@
+<div class="or-performance-performers">
+    <app-collapsible-container theme="gray" [asideWidth]="240" [isAsideOpen]="true">
+        <div content>
+
+            <!--Header-->
+            <div class="p-header p-header--border">
+                Sanatçılar
+            </div>
+
+            <!--<app-no-data *ngIf="noDataInContent" style="max-width: 50%;margin-top:30px" [hasContainer]="true" [icon]='{type: "icon", name: "microphone"}' title="Bu Performansa ait bir sanatçı kaydı bulunamadı" description="Arama kriterini değiştirerek yeniden deneyebilirsiniz"></app-no-data>-->
+            <app-no-data *ngIf="noDataInContent" style="max-width: 50%;margin-top:30px" [hasContainer]="true" title="Bu Performansa ait bir sanatçı kaydı bulunamadı" description="Arama kriterini değiştirerek yeniden deneyebilirsiniz"></app-no-data>
+
+            <div class="p-container" *ngIf="!noDataInContent">
+                <!-- o-card-view-->
+
+                <div class="o-card-view__content">
+                    <app-grid-list [ngClass]="{'main-loader': isLoading }">
+                        <li *ngFor="let performancePerformer of performancePerformers">
+                            <app-card-item (actionEvent)="cardActionHandler($event)" [data]="{entryType: 'performer', model: performancePerformer.Performer}" [isEditable]="false">
+                            </app-card-item>
+                        </li>
+                    </app-grid-list>
+                </div>
+                <div class="o-card-view__footer" *ngIf="performance?.length">
+                    <app-pagination size="lg" (changeEvent)="changePageSize($event)" [options]="pageSizes" [totalItem]="count" [showItemPerPage]="pageSize" [currentPage]=currentPage (transistPage)="transistPage($event)"></app-pagination>
+                </div>
+            </div>
+
+        </div>
+        <div aside>
+            <div *ngIf="performance != null" class="p-group">
+                <!--header-->
+                <div class="p-group__header">
+                    <div class="p-group__header-bar">
+                        <div class="p-group__header-title">
+                            AYARLAR
+                        </div>
+                    </div>
+                </div>
+
+                <!--item-->
+                <div class="p-group__item">
+                    <div class="p-group__list">
+                        <div class="p-group__list-item">
+                            <div class="p-group__list-item-bar">
+                                <div class="p-group__list-item-label">Yayınla</div>
+                                <div class="p-group__list-item-action">
+                                    <app-checkbox (changeEvent)="checkHandler($event, 'PublishDateFieldOn', 'flags')" [isChecked]="flags.PublishDateFieldOn" type="lightswitch"></app-checkbox>
+                                </div>
+                            </div>
+                            <div class="p-group__list-item-content" *ngIf="flags.PublishDateFieldOn">
+                                <div class="p-form-group">
+                                    <app-text-input type="datepicker" size="sm-text" placeholder="Bir Tarih Seçiniz" (changeEvent)="dateChangeHandler($event, 'PublishDate')" [date]="performance?.PublishDate"></app-text-input>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--            <div class="p-group">
+                <div class="p-group__header">
+                    <div class="p-group__header-bar">
+                        <div class="p-group__header-title">
+                            BAĞLI ETKİNLİK
+                        </div>
+                    </div>
+                </div>
+                <div class="p-group__item">
+                    <app-narrow-col-action-block></app-narrow-col-action-block>
+                </div>
+            </div>-->
+
+
+            <div class="p-group" *ngIf="isPerformanceProducted">
+                <div class="p-group__item">
+                    <app-narrow-col-action-offer [data]="{label:'ÜRÜNLEŞTİR',action:'goto'}" (actionOnClick)="onPerformanceProducted($event)">
+                        <!--Content-->
+                        <i>Bu performans henüz ürünleştirilmedi</i> <b> Ürünleştirmek ister misiniz ?</b>
+                    </app-narrow-col-action-offer>
+                </div>
+            </div>
+            <div class="p-group" *ngIf="hasProgramEntry">
+                <div class="p-group__item">
+                    <app-narrow-col-action-offer [data]="{label:'İÇERİK YÖNETİMİNE GİT' ,action:'goto'}" (actionOnClick)="onProgramEntry($event)">
+                        <!--Content-->
+                        <i>Program bilgisi oluşturulmamış </i> <b>Program bilgisini oluşturmak ister misiniz?</b>
+                    </app-narrow-col-action-offer>
+                </div>
+            </div>
+
+        </div>
+        <!-- /.o-collapsible-container__aside -->
+    </app-collapsible-container>
+    <!-- /.o-collapsible-container -->
+</div>

@@ -1,0 +1,21 @@
+<div class="c-product-block-capacity-statistics__bar">
+    <div class="c-product-block-capacity-statistics__bar-title">
+        <span>{{productBlockCapacity?.product?.Localization?.Name | localization}}</span>
+    </div>
+    <div class="c-product-block-capacity-statistics__bar-indicator" [style.background-color]="'#'+productBlockCapacity?.productColor">
+
+    </div>
+</div>
+  
+<div class="c-product-block-capacity-statistics__content">
+    <ul class="c-product-block-capacity-statistics__block-list" *ngIf="productBlockCapacity?.blockSeats?.length">
+        <li class="c-product-block-capacity-statistics__block-item" *ngFor="let blockSeat of blocksHasCapacity">
+          <span class="c-product-block-capacity-statistics__block-item-label">
+            <span>BLOK</span><strong>{{blockSeat?.block?.Name}}</strong>
+          </span>
+          <span class="c-product-block-capacity-statistics__block-item-value">
+            <span>{{blockSeat?.seatIds?.length}}</span><i>Adet</i>
+          </span>
+        </li>
+    </ul>
+</div>

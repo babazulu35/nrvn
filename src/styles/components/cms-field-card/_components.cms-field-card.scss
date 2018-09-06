@@ -1,0 +1,92 @@
+$c-cms-field-card: (
+    border-color: #dcdce5,
+    space: 5px,
+    
+    bar: (
+        background-color: #fff,
+        padding: 18px,
+    ),
+
+    icon: (
+        font-size: 24px,
+        color: #35383d,
+    ),
+    title: (
+        font-size: 15px,
+        color: #35383d,
+    ),
+    sub-title: (
+        font-size: 11px,
+        color: #939393
+    )
+
+);
+
+// Merge settings and defaults
+$c-cms-field-card: map-merge($c-cms-field-card, getSettingsMap("c-cms-field-card"));
+
+// Set shortcuts
+$c-map: $c-cms-field-card;
+
+.c-cms-field-card {
+  display: block;
+  position: relative;
+  width: 100%;
+  border: solid 1px map-deep-get($c-map, border-color);
+
+    &__bar {
+        display: table;
+        width: 100%;
+        background-color: map-deep-get($c-map, bar, background-color);
+        padding: map-deep-get($c-map, bar, padding);
+    }
+
+    &__handle {
+        display: table-cell;
+        vertical-align: middle;
+        white-space: nowrap;
+    }
+
+    &__info {
+        display: table-cell;
+        width: 100%;
+        vertical-align: middle;
+        padding: 0px 1em;
+        text-align: left;
+        line-height: 0px;
+    }
+    
+    &__icon {
+        display: inline-block;
+        margin-right: map-deep-get($c-map, space);
+        line-height: 0px;
+        font-size: map-deep-get($c-map, icon, font-size);
+        color: map-deep-get($c-map, icon, color);
+
+        > * {
+            vertical-align: middle;
+        }
+    }
+
+    &__title {
+        display: inline-block;
+        margin-right: map-deep-get($c-map, space);
+        @include ffamily('semi');
+        font-size: map-deep-get($c-map, title, font-size);
+        color: map-deep-get($c-map, title, color);
+    }
+
+    &__sub-title {
+        display: inline-block;
+        @include ffamily('semi', i);
+        font-size: map-deep-get($c-map, sub-title, font-size);
+        color: map-deep-get($c-map, sub-title, color);
+    }
+
+    &__actions {
+        display: table-cell;
+        vertical-align: middle;
+        white-space: nowrap;
+    }
+
+}

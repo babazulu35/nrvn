@@ -1,0 +1,144 @@
+<div class="or-cms-content-create">
+        
+        <div class="p-header-bar" sticky sticky-main-scroller sticky-release-offset="30" sticky-height-property="55" sticky-width-property="100%" sticky-follow-menu-moves>
+            <div class="p-header-bar__left">
+                <app-breadcrumb [breadcrumbs]="[{title: 'İçerikler'}, {title: contentData?.Title || 'Yeni İçerik'}]"></app-breadcrumb>
+            </div>
+    
+            <div class="p-header-bar__right">
+                <app-button (clickEvent)='saveContent()' [isPromising]="isLoading || isPromising" [isDisabled]="!isValid" [label]="'KAYDET'"></app-button>
+                <app-button *ngIf="contentData && !contentData?.Active" (clickEvent)='saveAndPublsishContent()' [isPromising]="isLoading || isPromising" [isDisabled]="!isValid" [label]="'KAYDET ve YAYINLA'"></app-button>
+                <app-button (clickEvent)='exit($event)' type="icon" icon="close" theme="secondary"></app-button>
+            </div>
+        </div>
+    
+        <app-split-container [fixedWidth]="420" [fixedFloat]="'right'">
+    
+          <div fluid>
+              <div class="p-container">
+                
+                <div class="p-group">
+                    <div class="p-group__item">
+                        <div class="p-form-group">
+                            <div class="p-form-group__label">
+                                İÇERİK BAŞLIĞI<sup>*</sup>
+                            </div>
+                            <div class="p-form-group__input">
+                                <app-text-input 
+                                    (typeEvent)="inputChangeHandler($event, 'Title')"
+                                    [isTypeEmitting]="true"
+                                    [typeDebounceTime]="100"
+                                    [value]="contentData?.Title"></app-text-input>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="p-group" *ngFor="let componentContainerData of containerTypes">
+                    <div class="p-group__item">
+                        <app-cms-component-container 
+                            (actionEvent)="containerActionHandler($event)"
+                            [data]="componentContainerData"
+                            ></app-cms-component-container>
+                    </div>
+                </div>
+    
+              </div>
+          </div>
+    
+          <div fixed right>
+              <div class="p-container">
+                <div class="p-group" *ngIf="firmList?.length">
+                    <div class="p-group__header">
+                        <div class="p-group__header-bar">
+                            <span class="p-group__header-title">
+                                Organizatör<sup>*</sup>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-group__item">
+                        <app-selectbox [options]="firmList" [value]="contentData?.PromoterCode" (changeEvent)="inputChangeHandler($event, 'PromoterCode')"></app-selectbox>
+                    </div>
+                </div>
+                <div class="p-group" *ngIf="relatedEntities">
+                    <div class="p-group__header">
+                        <div class="p-group__header-bar">
+                            <span class="p-group__header-title">
+                                İLİŞKİLİ İÇERİKLER
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-group__item" *ngIf="relatedEntities?.length">
+                        <app-mini-card *ngFor="let relatedEntity of relatedEntities"
+                            (actionEvent)="relatedEntityActionHandler($event)"
+                            [title]="relatedEntity?.title"
+                            [avatar]="relatedEntity?.avatar"
+                            [actions]="[
+                                {action: 'remove', icon: 'delete', label: 'SİL', params:{entity: relatedEntity}}
+                            ]"></app-mini-card>
+                    </div>
+                    <div class="p-group__item">
+                            <app-container-canvas [isEmpty]="true">
+                                <app-button theme="secondary"
+                                    (clickEvent)="openEntitySearchBox($event)">İLİŞKİLENDİR</app-button>
+                            </app-container-canvas>
+                    </div>
+                </div>
+                <div class="p-group" *ngIf="datasources">
+                    <div class="p-group__header">
+                        <div class="p-group__header-bar">
+                            <span class="p-group__header-title">
+                                VERİ KAYNAKLARI
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-group__item" *ngIf="datasources?.length">
+                        <app-mini-card *ngFor="let datasource of datasources"
+                            (actionEvent)="datasourcesActionHandler($event)"
+                            [title]="datasource?.title || datasource?.id"
+                            [actions]="[
+                                {action: 'edit', icon: 'edit', label: 'DÜZENLE', params:{datasource: datasource}},
+                                {action: 'remove', icon: 'delete', label: 'SİL', params:{datasource: datasource}}
+                            ]"></app-mini-card>
+                    </div>
+                    <div class="p-group__item">
+                            <app-container-canvas [isEmpty]="true">
+                                <app-button theme="secondary"
+                                    (clickEvent)="openGetDatasourceBox($event)">VERİ KAYNAĞI EKLE</app-button>
+                            </app-container-canvas>
+                    </div>
+                </div>
+                <div class="p-group">
+                    <div class="p-group__list">
+                        <div class="p-group__list-item">
+                            <span class="p-group__list-item-label">
+                                Yayınla
+                            </span>
+                            <span class="p-group__list-item-action">
+                                <app-checkbox type="lightswitch"
+                                    (changeEvent)="inputChangeHandler($event, 'Active')" 
+                                    [isChecked]="contentData?.Active"
+                                    ></app-checkbox>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-group__item">
+                        <div class="p-form-group">
+                            <div class="p-form-group__input" *ngFor="let publishingPoint of publishingPoints">
+                                <app-checkbox 
+                                    type="square"
+                                    (changeEvent)="inputChangeHandler($event, 'value', publishingPoint)"
+                                    [name]="publishingPoint?.name"
+                                    [label]="publishingPoint?.label"
+                                    [isChecked]="publishingPoint?.value"
+                                    ></app-checkbox>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              </div>
+          </div>
+          
+        </app-split-container>
+    
+    </div>

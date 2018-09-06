@@ -1,0 +1,5 @@
+.theme-venues {
+  .o-collapsible-container__aside {
+    height: calc(100vh - #{map-get($l-header, height) + 322px}) //322px cover-image height... Değişkene nerede bağlanacağı kararlaştırılmalı
+  }
+}

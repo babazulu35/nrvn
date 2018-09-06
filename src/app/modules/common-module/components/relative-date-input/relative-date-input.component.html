@@ -1,0 +1,27 @@
+<div class="c-relative-date-input__bar">
+    <span class="c-relative-date-input__select">
+      <app-selectbox
+        *ngIf="relativeTimeTypes"
+        (changeEvent)="inputChangeHandler($event, 'relativeTimeType')"
+        [options]="relativeTimeTypes"
+        [value]="relativeTimeType"
+        [isDisabled]="!hasBefore || !hasAfter"
+        ></app-selectbox>
+    </span>
+    <span class="c-relative-date-input__input">
+      <app-text-input
+        type="numeric"
+        (changeEvent)="inputChangeHandler($event, 'durationValue')"
+        [value]="durationValue"
+        ></app-text-input>
+    </span>
+    <span class="c-relative-date-input__select">
+        <app-selectbox
+          *ngIf="unitOptions"
+          (changeEvent)="inputChangeHandler($event, 'unitValue')"
+          [options]="unitOptions"
+          [value]="unitValue"
+          [isDisabled]="isDisabled"
+          ></app-selectbox>
+      </span>
+  </div>

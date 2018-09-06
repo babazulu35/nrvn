@@ -1,0 +1,48 @@
+.or-boxoffice-seat-select {
+
+    * {
+        user-select: none;
+    }
+    
+    .c-breadcrumb {
+        // display: table-cell;
+        // width: auto !important;
+        // vertical-align: middle;
+        // &__element {
+        //     white-space: inherit !important;
+        // }
+    }
+    .p-full-content {
+        height: calc(100% - 70px);
+        .p-header-bar {
+            z-index: 1;
+            &__right {
+                h3 {
+                    display: inline-block;
+                    vertical-align: middle;
+                    margin-right: 10px;
+
+                    .icon__n {
+                        vertical-align: text-bottom;
+                    }
+                }
+            }
+        }
+    }
+    /*    .c-breadcrumb {
+        display: table;
+        height: 50px;
+        background: #f8f8f8;
+        z-index: 1;
+        border-bottom: 1px solid #ddd;
+        &__bar {
+            display: table-cell;
+            vertical-align: middle;
+            position: relative;
+            left: 30px;
+        }
+        &__element {
+            width: auto;
+        }
+    }*/
+}

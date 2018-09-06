@@ -1,0 +1,50 @@
+// Ekstra durum Head. Semantik gidilen yapıda H1  font genişliğini değiştirme olanağı verir örn <h1 class="u-h2">
+
+// Variables
+$label-text-color: #939393;
+$label-font-size: 11px;
+
+.u-h1 {
+}
+
+.u-h2 {
+  display: block;
+  margin-bottom: 15px;
+	padding: 25px 30px;
+	@include t--font-size(24px);
+	@include ffamily(light);
+	border-bottom: 1px solid #e0e0e0;
+
+}
+
+.u-h3 {
+
+}
+
+.u-h4 {
+
+}
+
+.u-h5 {
+
+}
+
+.u-h6 {
+
+}
+
+// Master title
+.u-masthead {
+  @include t--font-size(26px);
+  @include ffamily(bold);
+}
+
+// Label like heading
+.u-form-control-label {
+  margin-bottom: 6px;
+  @include ffamily("semi");
+  font-size: $label-font-size;
+  color: $label-text-color;
+  text-transform: uppercase;
+}
+

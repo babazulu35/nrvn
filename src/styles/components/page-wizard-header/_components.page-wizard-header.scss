@@ -1,0 +1,218 @@
+$c-page-wizard-header: (
+	border-color: #dcdce5,
+    background-color: #ffffff,
+    primary-color: #35383d,
+    secondary-color: #9d9d9d,
+    active-color: #2b98f0,
+    active-background-color: #f7f7f7,
+    font-size: 13px,
+    height: 60px,
+    
+    item: (
+        padding: 20px,
+        icon: (
+            font-size: 30px
+        ),
+        label: (
+            font-size: 13px
+        ),
+        indicator: (
+            font-size: 30px
+        )
+    )
+);
+
+// Merge settings and defaults
+$c-page-wizard-header: map-merge($c-page-wizard-header, getSettingsMap("c-page-wizard-header"));
+
+// Set shortcuts
+$c-map: $c-page-wizard-header;
+
+.c-page-wizard-header {
+    display: inline-block;
+    height: map-deep-get($c-map, height);
+
+    &__container {
+        display: flex;
+        border: solid 1px map-deep-get($c-map, border-color);
+        border-radius: 3px;
+        height: 100%;
+        overflow: hidden;
+    }
+
+    &__item {
+        display: flex;
+        color: map-deep-get($c-map, primary-color);
+        height: 100%;
+        
+        &--next {
+            color: map-deep-get($c-map, secondary-color);
+        }
+
+        &--prev {
+            &:not(.c-page-wizard-header__item--active) {
+                .c-page-wizard-header__item {
+                    &-indicator {
+                        &:after {
+                            @include icon("check");
+                            position: absolute;
+                            font-size: inherit;
+                            width: 1em;
+                            height: 1em;
+                            top: 0px;
+                            left: 0px;
+                            color: map-deep-get($c-map, color);
+                        }
+                    }   
+                }
+            }
+        }
+
+        &--active {
+            .c-page-wizard-header__item {
+                &-box {
+                    background-color: map-deep-get($c-map, active-background-color);
+                }
+
+                &-arrow {
+                    &:after {
+                        border-left-color: map-deep-get($c-map, active-background-color);
+                    }
+                }
+
+                &-indicator {
+                    font-size: map-deep-get($c-map, item, label, font-size) + 2px;
+                    &:after {
+                        @include icon("fiber_manual_record");
+                        position: absolute;
+                        font-size: inherit;
+                        width: 1em;
+                        height: 1em;
+                        color: map-deep-get($c-map, active-color);
+                    }
+                }
+            }
+        }
+
+        &--has-action {
+            cursor: pointer;
+            &:not(.c-page-wizard-header__item--disabled) {
+                &:hover {
+                    .c-page-wizard-header__item {
+                        &-box {
+                            background-color: map-deep-get($c-map, active-background-color);
+                        }
+        
+                        &-arrow {
+                            &:after {
+                                border-left-color: map-deep-get($c-map, active-background-color);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        &--done {
+            .c-page-wizard-header__item {
+
+                
+            }
+        }
+
+        &:first-child {
+            .c-page-wizard-header__item {
+                &-box {
+                    padding-left: map-deep-get($c-map, item, padding);
+                }
+            }
+        }
+
+        &:last-child {
+            .c-page-wizard-header__item {
+                &-box {
+                    padding-right: map-deep-get($c-map, item, padding);
+
+                    &::before,
+                    &::after {
+                        content: none;
+                        display: none;
+                    }
+                }
+
+                &-arrow {
+                    display: none;
+                }
+            }
+        }
+
+        &-box {
+            display: flex;
+            padding: map-deep-get($c-map, item, padding);
+            padding-right: 0px;
+            padding-left: map-deep-get($c-map, item, padding) + map-deep-get($c-map, height)/2;
+            align-items: center;
+            position: relative;
+            background-color: map-deep-get($c-map, background-color);
+        }
+
+        &-icon {
+            position: relative;
+            z-index: 1;
+            font-size: map-deep-get($c-map, item, icon, font-size);
+            line-height: 0px;
+
+            & + .c-page-wizard-header__item-label {
+                margin-left: 10px;
+            }
+        }
+
+        &-label {
+            position: relative;
+            z-index: 2;
+            @include ffamily(regular);
+            font-size: map-deep-get($c-map, item, label, font-size);
+            min-width: 100px;
+            text-align: left;
+        }
+
+        &-indicator {
+            position: relative;
+            z-index: 3;
+            font-size: map-deep-get($c-map, item, indicator, font-size);
+            line-height: 0px;
+            width: 1em;
+            height: 1em;
+            justify-self: flex-end;
+            margin-left: auto;
+        }
+
+        &-arrow {
+            position: absolute;
+            z-index: 0;
+            top: -1px;
+            right: 0px;
+            &:after,
+            &:before {
+                content: "";
+                display: block;
+                position: absolute;
+                top: 0px;
+                left: 0px;
+                width: 0px;
+                height: 0px;
+                border-top: map-deep-get($c-map, height)/2 solid transparent;
+                border-bottom: map-deep-get($c-map, height)/2 solid transparent;
+            }
+            &:after {
+                border-left: map-deep-get($c-map, height)/2 solid map-deep-get($c-map, background-color);
+                z-index: 1;
+            }
+            &:before {
+                border-left: map-deep-get($c-map, height)/2 solid map-deep-get($c-map, border-color);
+                z-index: 0;
+                transform: translateX(1px);
+            }
+        }
+    }
+}

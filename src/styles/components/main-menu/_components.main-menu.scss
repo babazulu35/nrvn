@@ -1,0 +1,326 @@
+/* --------------------------------------------------------
+version: 1.0
+last modified: 19.11.2016
+author: Abdullah Karadeniz
+----------------------------------------------------------*/
+
+
+/**
+ * Main Menu:
+ * `.c-main-menu` -
+
+ *     @example
+ *     .c-main-menu
+ */
+
+// Set defaults
+$c-main-menu: ( width: map-get($l-main-menu, max-width), min-width: map-get($l-main-menu, min-width), background-color: $color-ui-sidebar-bg, text-color: $color-text-white, active-background-color: #21242b, active-color: #ffffff, disabled-color: #727478, seperator-color: #484848, logo-background-color: $color-main-theme, transition: getTransition("main-menu"), header: ( height: map-get($l-header, height)), content: ( padding: 20px), item: ( font-size: 13px, font-family: "regular"), toggle: ( radius: 50px, background-color: #414347));
+// Merge settings and defaults
+$c-main-menu: map-merge($c-main-menu, getSettingsMap("c-main-menu"));
+// Set shortcuts
+$c-map: $c-main-menu;
+.c-main-menu {
+    position: fixed;
+    float: left;
+    z-index: map-get($z-index, main-menu);
+    width: map-get($c-map, width);
+    height: 100%;
+    background-color: map-get($c-map, background-color);
+    @include transition(width map-get($c-map, transition));
+    overflow: hidden;
+    &--collapsed {
+        overflow: visible;
+        width: map-get($c-map, min-width);
+        @include transition(width map-get($c-map, transition));
+        .c-main-menu__header {
+            width: map-get($c-map, min-width);
+            @include transition(width map-get($c-map, transition));
+        }
+        .c-main-menu__logo {
+            left: 0px;
+            @include transition(left map-get($c-map, transition));
+        }
+        .c-main-menu__container {
+            overflow: visible;
+        }
+        .c-main-menu__content {
+            padding: 20px 20px;
+            @include transition(padding map-get($c-map, transition));
+        }
+        .c-main-menu--title-label {
+            opacity: 0;
+            @include transition(opacity map-get($c-map, transition));
+        }
+        .c-main-menu__toggle-btn {
+            @include transform(rotate(180deg));
+            @include transition(transform map-get($c-map, transition));
+        }
+        .c-main-menu__list-item {
+            overflow: hidden;
+            width: map-get($c-map, min-width) - map-deep-get($c-map, content, padding)*2;
+            @include transition(width map-get($c-map, transition));
+            &:focus {
+                outline: none;
+            }
+            &:before {
+                left: 0px;
+            }
+            &:not(.c-main-menu__list-item--active):not(.c-main-menu__list-item--disabled):hover {
+                width: map-get($c-map, width);
+                @include transition(width map-get($c-map, transition));
+
+                &:before {
+                    width: map-get($c-map, width);
+                    @include transition(width map-get($c-map, transition));
+                }
+                .c-main-menu__list-item-label {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    flex-grow: 1;
+                    flex-shrink: 0;
+                    width: calc(100% - #{map-get($c-map, min-width) - map-deep-get($c-map, content, padding)*2});
+                    opacity: 1;
+                    padding-left: 1em;
+                    // @include transition(left map-get($c-map, transition));
+                    @include transition(width map-get($c-map, transition));
+                    @include transition(opacity map-get($c-map, transition));
+                }
+
+                .c-main-menu__list-item-icon {
+                    pointer-events: auto;
+                }
+            }
+        }
+        .c-main-menu__list-item-icon {
+            //left: 50%;
+            @include transform(translateX(25%));
+            //@include transition(left map-get($c-map, transition));
+            @include transition(transform map-get($c-map, transition));
+        }
+        .c-main-menu__list-item-label {
+            width: 0px;
+            opacity: 0;
+            @include transition(width map-get($c-map, transition));
+            @include transition(opacity map-get($c-map, transition));
+        }
+    }
+    &__header {
+        position: relative;
+        width: map-get($c-map, width);
+        height: map-deep-get($c-map, header, height);
+        overflow: hidden;
+        @include transition(width map-get($c-map, transition));
+    }
+    &__logo {
+        position: relative;
+        width: map-get($c-map, width) + map-get($c-map, min-width);
+        height: 100%;
+        background-color: map-get($c-map, logo-background-color);
+        padding: 20px;
+        left: map-get($c-map, min-width) * -1;
+        @include transition(left map-get($c-map, transition));
+        >span>img {
+            position: relative;
+            max-width: calc(100% - 40px);
+            //max-height: calc(100% - 40px);
+            left: 50%;
+            top: 50%;
+            //width: 100%;
+            @include t--translate(-50%, -50%);
+        }
+        &--min {
+            position: absolute;
+            width: map-get($c-map, min-width);
+            height: 100%;
+            top: 0px;
+            left: 0px;
+        }
+        &--max {
+            position: absolute;
+            width: map-get($c-map, width);
+            height: 100%;
+            top: 0px;
+            left: map-get($c-map, min-width);
+        }
+    }
+    &__logo-image {
+        position: absolute;
+        max-width: calc(100% - 40px);
+        max-height: calc(100% - 40px);
+        left: 50%;
+        top: 50%;
+        @include t--translate(-50%, -40%);
+    }
+
+    &__container {
+        display: block;
+        height: calc(100% - #{map-deep-get($c-map, header, height)});
+        overflow-x: hidden;
+        overflow-y: auto;
+    }    
+    &__content {
+        position: relative;
+        padding: map-deep-get($c-map, 'content', 'padding');
+        @include transition(padding map-get($c-map, transition));
+    }
+    &__list {
+        list-style-type: none;
+        &-item {
+            position: relative;
+            display: block;
+            color: map-get($c-map, text-color);
+            font-size: 13px;
+            line-height: 1;
+            padding: 0.85em 0px 0.45em;
+            border-bottom: solid 1px map-get($c-map, seperator-color);
+            cursor: pointer;
+            &:focus {
+                outline: none;
+            }
+            &--active {
+                color: map-deep-get($c-map, disabled-color);
+                a {
+                    color: #727478 !important;
+                }
+            }
+            &--disabled {
+                color: lighten(map-deep-get($c-map, disabled-color), 10);
+                cursor: not-allowed;
+                &:hover {
+                    &:before {
+                        background-color: inherit !important;
+                    }
+                }
+                a {
+                    color: darken( #727478, 20) !important;
+                }
+            }
+            &:not(.c-main-menu__list-item--active):not(.c-main-menu__list-item--disabled):hover {
+                &:before {
+                    width: calc(100% + 20px);
+                    @include transition(width map-get($c-map, transition));
+                }
+            }
+            &:before {
+                content: "";
+                position: absolute;
+                background-color: map-get($c-map, active-background-color);
+                width: 0;
+                height: 100%;
+                z-index: 0;
+                top: 0px;
+                left: -10px;
+                @include transition(width map-get($c-map, transition));
+            }
+            a,
+            &-container, {
+                position: relative;
+                display: block;
+                width: 100%;
+                height: 100%;
+                color: map-get($c-map, active-color);
+            }
+            &-icon {
+                position: relative;
+                z-index: 1;
+                display: inline-block;
+                vertical-align: middle;
+                font-size: 30px;
+                line-height: 1;
+                @include transition(transform map-get($c-map, transition));
+            }
+            &-label {
+                position: absolute;
+                z-index: 2;
+                display: inline-block;
+                white-space: nowrap;
+                top: 55%;
+                left: calc(30px + 1em);
+                @include ffamily("regular");
+                font-size: 12px;
+                line-height: 1;
+                @include transform(translateY(-50%));
+                letter-spacing: 0.025em;
+                @include transition(transform map-get($c-map, transition));
+                @include transition(left map-get($c-map, transition));
+
+                .c-checkbox {
+                    max-width: 50px;
+                    margin-left: 1em;
+                }
+            }
+        }
+    }
+    &__detail-list {
+        display: block;
+        position: relative;
+        list-style: none;
+        margin-top: 2em;
+        margin-bottom: 2em;
+        outline: none;
+
+        &-item {
+            display: block;
+            position: relative;
+            & + .c-main-menu__detail-list-item {
+                margin-top: 1em;
+            }
+            &-label{
+                display: block;
+                @include ffamily("regular");
+                font-size: 12px;
+                line-height: 1em;
+                color: map-get($c-map, disabled-color);
+                margin-bottom: 0.5em;
+            }
+            &-value{
+                display: block;
+                @include ffamily("regular");
+                font-size: 12px;
+                line-height: 1.25em;
+                color: map-get($c-map, active-color);
+            }
+        }
+    }
+    &__footer {
+        position: relative;
+        width: 100%;
+        margin-top: 0.5em;
+        text-align: center;
+    }
+    &__toggle-btn {
+        width: map-deep-get($c-map, toggle, radius);
+        height: map-deep-get($c-map, toggle, radius);
+        background-color: map-deep-get($c-map, toggle, background-color);
+        border-radius: 50%;
+        display: inline-block;
+        cursor: pointer;
+        position: absolute;
+        right: map-deep-get($c-map, content, padding);
+        @include transition(background-color 0.25s ease-out);
+        @include transition(transform map-get($c-map, transition));
+        &:hover {
+            background-color: map-deep-get($c-map, active-background-color);
+            @include transition(background-color 0.15s ease-out);
+        }
+        &:after {
+            @include icon('first_page');
+            position: absolute;
+            color: map-get($c-map, active-color);
+            top: 50%;
+            left: 50%;
+            @include transform(translateX(-50%) translateY(-50%));
+        }
+    }
+    &__toggle-label {
+        display: inline-block;
+        @include ffamily('semi');
+        @include t--font-size(12px, 1);
+        color: map-get($c-map, active-color);
+        margin-top: calc(#{map-deep-get($c-map, toggle, radius)/2} - 12px/2);
+    }
+}
+
+// Reset shortcuts
+$c-map: null;

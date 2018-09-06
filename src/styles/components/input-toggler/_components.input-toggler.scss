@@ -1,0 +1,11 @@
+.c-input-toggler {
+    margin-bottom: 20px;
+    display: block;
+    .p-group__list-item {
+        padding-top: 0px;
+        padding-bottom: 0px;
+    }
+    &--disabled {
+        opacity: 0.4;
+    }
+}

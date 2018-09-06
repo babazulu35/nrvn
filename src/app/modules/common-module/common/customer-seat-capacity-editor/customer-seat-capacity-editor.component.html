@@ -1,0 +1,139 @@
+<div class="p-header-bar" >
+    <div class="p-header-bar__left">
+        <app-breadcrumb [breadcrumbs]="breadcrumbs" ></app-breadcrumb>
+    </div>
+
+    <div class="p-header-bar__right">
+        <app-button (clickEvent)='tetherService.dismiss()' type="icon" icon="close" theme="secondary"></app-button>
+    </div>
+</div>
+
+<app-collapsible-container [isAsideOpen]="true" [asideWidth]="330" [asideHasNoPadding]="true" [isLoading]="isLoading" [hasAsideFooter]="true">
+  <div content>
+    <div class="p-full-content">
+      <app-venue-template-editor *ngIf="product && performance"
+              [role]="editorRole"
+              (editorEvent)="venueEditorEventHandler($event)"
+              [performanceId]="performance?.Id"
+              [productId]="product?.Id" >
+          </app-venue-template-editor>
+    </div>
+  </div>
+
+  <div aside>
+    <div class="p-container">
+      <div class="p-group">
+        <div class="p-group__header">
+          <div class="p-group__header-bar">
+            <div class="p-group__header-title">
+              PERFORMANS
+            </div>
+          </div>
+        </div>
+
+        <div class="p-group__item">
+          <p><b>{{performance?.Localization?.Name}}</b></p>
+          <p>{{performance?.Date | relativeDate}}, {{performance?.VenueTemplate?.Venue?.Localization?.Name}}</p>
+        </div>
+      </div>
+
+      <div class="p-group">
+        <!-- <div class="p-group__header p-group__header--border">
+          <div class="p-group__header-bar">
+            <div class="p-group__header-title">
+              MÜŞTERİ VE KAPASİTE SEÇİMİ
+            </div>
+          </div>
+        </div> -->
+
+        <div class="p-group__item">
+          <app-block-capacity-list 
+            [readonly]="true"
+            [caption]="{title: 'KAPASİTE DURUMU', current: 'SEÇİLEN', total: 'MİN / MAKS'}"
+            [items]="[
+              {id: 'seatCapacity', title: 'Koltuk', currentCapacity: (this.selectedSeatCount + this.standingSeatCount), availableCapacity: minSeatCount, totalCapacity: maxSeatCount},
+              {id: 'seatCapacity', title: 'Müşteri', currentCapacity: (customers ? customers.length : 0), availableCapacity: minCustomerCount, totalCapacity: maxCustomerCount}
+            ]"></app-block-capacity-list>
+        </div>
+      </div>
+
+      <div class="p-group">
+        <div class="p-group__header">
+          <div class="p-group__header-bar">
+            <div class="p-group__header-title">
+              ÜRÜN & MÜŞTERİ BİLGİLERİ
+            </div>
+          </div>
+        </div>
+
+        <div class="p-group__item">
+          <div class="oc-customer-seat-capacity__info-list">
+            <div class="oc-customer-seat-capacity__info-list-item">
+              <div class="oc-customer-seat-capacity__info-list-item-icon">
+                <i class="icon__n icon__n--label"></i>
+              </div>
+              <div class="oc-customer-seat-capacity__info-list-item-content">
+                <span class="oc-customer-seat-capacity__info-list-item-title">{{product?.Localization?.Name}} - </span><i>{{currentPrice?.NominalPrice}}</i>
+              </div>
+            </div>
+
+            <div class="oc-customer-seat-capacity__info-list-item" *ngIf="csv">
+              <div class="oc-customer-seat-capacity__info-list-item-icon">
+                <i class="icon__n icon__n--attachment"></i>
+              </div>
+              <div class="oc-customer-seat-capacity__info-list-item-content">
+                <span class="oc-customer-seat-capacity__info-list-item-title">{{csv?.file?.name}}</span>
+              </div>
+              <div class="oc-customer-seat-capacity__info-list-item-action">
+                <app-button type="icon" icon="delete" theme="secondary" (clickEvent)="removeCsv()"></app-button>
+              </div>
+            </div>
+            <div class="oc-customer-seat-capacity__info-list-item" *ngFor="let customer of customerList">
+              <div class="oc-customer-seat-capacity__info-list-item-icon">
+                <i class="icon__n icon__n--person"></i>
+              </div>
+              <div class="oc-customer-seat-capacity__info-list-item-content">
+                <div class="oc-customer-seat-capacity__info-list-item-title">{{customer?.Name}} {{customer?.Surname}}</div>
+                <i>{{customer?.PhoneNumber}}</i>
+              </div>
+              <div class="oc-customer-seat-capacity__info-list-item-action">
+                <app-button type="icon" icon="close" (clickEvent)="removeCustomer(customer)" theme="secondary" size="md"></app-button>
+              </div>
+            </div>
+          </div>
+          <div class="oc-customer-seat-capacity__info-list-new-item" *ngIf="canBeAddedNewCustomer && !csv">
+            <app-container-canvas type="footer" [isEmpty]="true">
+                <app-button 
+                  (click)="openCustomerSearchBox($event)"
+                  theme="secondary">MÜŞTERİ EKLE</app-button>
+            </app-container-canvas>
+          </div>
+        </div>
+        <div class="p-group__item text-xs-right" *ngIf="csvAvailable && !customers?.length">
+          <app-file-upload-box type="csv" (changeEvent)="csvChangeHandler($event)" (validationEvent)="csvValidationHandler($event)" [autoUpload]="false" [value]="csv?.file?.name" theme="button" inputLabel="YA DA DOSYA YÜKLE" [style.width]="'auto'"></app-file-upload-box>
+        </div>
+      </div>
+
+      <div class="p-group" *ngIf="standingBlocks?.length">
+          <h3>Numarasız Koltuklar</h3>
+          <p>Ayakta olan alanlara ait kapasite bilgileri aşağıda listelenmiştir. Maksimum kapasite numarasız bloğun toplam kapasitesidir.</p>
+          <div class="p-group__item">
+              <app-block-capacity-list 
+                  (changeEvent)="standingBlockChangeHandler($event)"
+                  title="Ayakta Bloklar"
+                  [items]="standingBlocks"></app-block-capacity-list>
+          </div>
+      </div>
+      
+    </div>
+
+  </div>
+  <div aside-footer>
+    <div class="col-xs-16">
+        <app-button
+          (clickEvent)='submit($event)'
+          [isPromising]="isLoading || isPromising" 
+          [isDisabled]="!isValid">KAYDET</app-button>
+    </div>
+  </div>
+</app-collapsible-container>

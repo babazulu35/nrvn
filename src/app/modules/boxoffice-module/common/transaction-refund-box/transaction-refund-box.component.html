@@ -1,0 +1,70 @@
+<app-dialog-box [isLoading]="isLoading">
+	<div #header class="c-dialog-box__header c-dialog-box__header--border c-dialog-box__header--padding">
+		<div class="c-dialog-box__header-bar">
+			<h1 class="c-dialog-box__header-title">{{title}}</h1>
+
+			<div class="c-dialog-box__header-actions">
+				<app-button (click)="tetherDialog.dismiss()" type="icon" icon="close" theme="secondary"></app-button>
+			</div>
+		</div>
+	</div>
+
+	<div #body class="c-dialog-box__body c-dialog-box__body--no-padding">
+		<div class="p-container p-container--inherit">
+
+			<div *ngIf="refundAllTransaction" class="p-group">
+				 <div class="p-group__header">
+					<div class="p-group__header-bar">
+						<div class="p-group__header-title">
+							İptal nedenini seçiniz:
+						</div>
+					</div>
+				</div> 
+
+				<div class="p-group__item">
+					<div class="p-toggle">
+						<span class="p-toggle__label">{{basketRefId}}</span>
+						<span class="p-toggle__input text-xs-right">
+							<app-selectbox [options]="refundReasonOptions" (changeEvent)="onInputChange($event)"></app-selectbox>
+						</span>
+					</div>
+				</div>
+			</div>
+
+			<div *ngIf="!refundAllTransaction" class="p-group">
+				 <div class="p-group__header">
+					<div class="p-group__header-bar">
+						<div class="p-group__header-title">
+							İptal nedenini seçiniz:
+						</div>
+					</div>
+				</div> 
+
+				<div class="p-group__item" *ngFor="let item of items">
+					<div class="p-toggle">
+						<span class="p-toggle__label">
+							   	{{item.Variant.VariantType.Localization?.Name}} ({{item.Type_Desc || "-" }})
+						</span>
+						<span class="p-toggle__input text-xs-right">
+							<app-selectbox [options]="refundReasonOptions" (changeEvent)="onInputChange($event, item)"></app-selectbox>
+						</span>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<div #footer class="c-dialog-box__footer row">
+		<div class="c-dialog-box__footer-content">
+			<div class="col-xs-16">
+				<app-button (click)="submitClickHandler($event)" [isDisabled]="!isValid" theme="primary" label="İPTAL ET"></app-button>
+			</div>
+			<!--
+			<div class="col-xs-8">
+				<app-button (click)="tetherDialog.dismiss()" theme="secondary" label="İPTAL"></app-button>
+			</div>
+			-->
+		</div>
+	</div>
+</app-dialog-box>

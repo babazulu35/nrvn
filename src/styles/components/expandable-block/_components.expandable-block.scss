@@ -1,0 +1,116 @@
+$c-expandable-block: (
+    border-color: #dcdce5,
+    
+    bar: (
+        background-color: #fff,
+        padding: 18px,
+
+        title: (
+            font-size: 15px,
+            color: #939393,
+            active-color: #35383d,
+        ),
+        sub-title: (
+            font-size: 11px,
+            color: #939393
+        )
+    ),
+
+    content: (
+        background-color: #F5F5F5
+    )
+
+);
+
+// Merge settings and defaults
+$c-expandable-block: map-merge($c-expandable-block, getSettingsMap("c-expandable-block"));
+
+// Set shortcuts
+$c-map: $c-expandable-block;
+
+.c-expandable-block {
+  display: block;
+  position: relative;
+  width: 100%;
+  border: solid 1px map-deep-get($c-map, border-color);
+
+  &--expanded {
+    >.c-expandable-block__bar {
+        border-bottom: solid 1px map-deep-get($c-map, border-color);
+    }
+    >.c-expandable-block__content {
+        height: auto;
+        min-height: 60px;
+        transition: height 0.3ms getEase(out-sine);
+    }
+  }
+
+  &--hasSubTitle {
+      .c-expandable-block__bar {
+          padding: map-deep-get($c-map, bar, padding)/3*2 map-deep-get($c-map, bar, padding);
+      }
+      .c-expandable-block__bar-title {
+        display: block;
+        line-height: 1.35em;
+        color: map-deep-get($c-map, bar, title, active-color);
+      }
+
+      .c-expandable-block__bar-sub-title {
+        display: block;
+        @include ffamily('semi', i);
+        font-size: map-deep-get($c-map, bar, sub-title, font-size);
+        color: map-deep-get($c-map, bar, sub-title, color);
+        line-height: 1em;
+      }
+  }
+
+  &__bar {
+      display: table;
+      width: 100%;
+      background-color: map-deep-get($c-map, bar, background-color);
+      padding: map-deep-get($c-map, bar, padding);
+
+      &-left {
+        display: table-cell;
+        vertical-align: middle;
+        white-space: nowrap;
+      }
+
+      &-center {
+        display: table-cell;
+        width: 100%;
+        vertical-align: middle;
+        padding: 0px 1em;
+        text-align: center;
+      }
+
+      &-right {
+        display: table-cell;
+        vertical-align: middle;
+        white-space: nowrap;
+      }
+
+      &-title {
+        @include ffamily('semi');
+        font-size: map-deep-get($c-map, bar, title, font-size);
+        color: map-deep-get($c-map, bar, title, color);
+      }
+  }
+
+  &__content {
+      display: block;
+      background-color: map-deep-get($c-map, content, background-color);
+      overflow: hidden;
+      height: 0px;
+      padding: 0px;
+      transition: height 0.3ms getEase(out-sine);
+
+      .c-text-input,
+      .c-time-input,
+      .c-text-area .c-text-area__text,
+      .c-text-area .c-text-area__localization {
+          background-color: #fff;
+      }
+  }
+
+}

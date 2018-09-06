@@ -1,0 +1,30 @@
+<app-dialog-box [isLoading]="isLoading">
+    <div class="p-header p-header--border">
+        <span class="margin-right-5">Salonlar</span>
+
+        <div style="width: 300px; float:right; margin-right: 20px;">
+            <app-text-input type="datepicker" size="sm-text" placeholder="Bir Tarih Seçiniz" (changeEvent)="inputChangeHandler($event,'hallDate')"
+                [includeTime]="false" dateTimeFormat="DD.MM.YYYY, dddd" [date]="hallDate"></app-text-input>
+        </div>
+
+    </div>
+
+    <!-- <app-no-data *ngIf="!halls" style="max-width: 50%;margin-top:30px" [hasContainer]="true" title="Salon kaydı bulunamadı" description="Bulunduğunuz mekan için salon kaydı bulunamadı"
+    [action]='{label: "SALON EKLE", action:"addHall", params:{} }' (actionEvent)="openCreateBox(false ,$event)"></app-no-data> -->
+
+    <app-no-data *ngIf="!halls" [ngClass]="{'main-loader': isLoading }" [hasContainer]="true"
+        style="max-width:50%; margin-top:60px; margin-bottom:60px;" title="Salon kaydı bulunamadı." [description]="isCreateAvailable ? 'Yeni bir salon oluşturabilirsiniz' : 'Bu mekan salon oluşturmaya uygun değildir.'"
+        [action]="isCreateAvailable ? {label: 'SALON EKLE', action:'addHall', params:{} } : null" (actionEvent)="openCreateBox(false ,$event)">
+    </app-no-data>
+
+    <div class="c-hall-row-container">
+        <div *ngFor="let hall of realHalls;">
+            <app-hall-row [hall]="hall" (editEvent)="hallEditEventHandler($event)" (removeEvent)="hallRemoveEventHandler($event)"></app-hall-row>
+        </div>
+
+        <app-container-canvas [isEmpty]="true" style="margin-top: 30px;" *ngIf="realHalls && isCreateAvailable">
+            <app-button (clickEvent)="openCreateBox(false, $event)" theme="secondary">SALON EKLE</app-button>
+        </app-container-canvas>
+
+    </div>
+</app-dialog-box>

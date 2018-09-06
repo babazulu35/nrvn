@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<link rel="stylesheet" href="../../../css/main.css">
+	<script src="../../../bower_components/jquery/dist/jquery.min.js"/>
+</head>
+<body>
+  <div class="c-main-menu">
+
+    <div class="c-main-menu__header">
+      <!-- Main Logo Starts -->
+      <div class="c-main-menu__logo">
+				<span class="c-main-menu__logo--max">
+					<img src="../../../images/logo/nirvana.png"/>
+				</span>
+				<span class="c-main-menu__logo--min">
+					<img src="../../../images/logo/nirvana-min.png"/>
+				</span>
+      </div><!-- Main Logo Ends -->
+    </div>
+
+    <div class="c-main-menu__content">
+			<!--
+      <div class="c-main-menu__title">
+        <i class="c-main-menu__title-icon"></i>
+        <span class="c-main-menu--title-label">KISAYOLLAR</span>
+      </div>
+			-->
+      <!-- Side Menu Starts -->
+      <ul class="c-main-menu__list">
+				<li class="c-main-menu__list-item main-menu__list-item--active">
+          <i class="c-main-menu__list-item-icon icon__n icon__n--event"></i>
+          <span class="c-main-menu__list-item-label">Etkinlikler</span>
+        </li>
+				<li class="c-main-menu__list-item">
+          <i class="c-main-menu__list-item-icon icon__n icon__n--location"></i>
+          <span class="c-main-menu__list-item-label">Mekanlar</span>
+        </li>
+				<li class="c-main-menu__list-item">
+          <i class="c-main-menu__list-item-icon icon__n icon__n--performance"></i>
+          <span class="c-main-menu__list-item-label">Performanslar</span>
+        </li>
+				<li class="c-main-menu__list-item">
+          <i class="c-main-menu__list-item-icon icon__n icon__n--microphone"></i>
+          <span class="c-main-menu__list-item-label">Sanatçılar</span>
+        </li>
+				<li class="c-main-menu__list-item">
+          <i class="c-main-menu__list-item-icon icon__n icon__n--ticket"></i>
+          <span class="c-main-menu__list-item-label">Ürünler</span>
+        </li>
+				<li class="c-main-menu__list-item">
+          <i class="c-main-menu__list-item-icon icon__n icon__n--more_vert"></i>
+          <span class="c-main-menu__list-item-label">Diğer</span>
+        </li>
+      </ul><!-- Side Menu End-->
+    </div>
+
+    <div class="c-main-menu__footer">
+      <span class="c-main-menu__toggle-btn"></span>
+			<span class="c-main-menu__toggle-label">DARALT</span>
+    </div>
+  </div>
+
+	<script>
+    $('.c-main-menu__toggle-btn').click(function(){
+      $( ".c-main-menu" ).toggleClass( "c-main-menu--collapsed");
+			$( this ).toggleClass( "c-light-switch--on");
+			$( ".o-wrapper" ).toggleClass( "is-collapsed");
+    })
+  </script>
+
+</body>
+</html>

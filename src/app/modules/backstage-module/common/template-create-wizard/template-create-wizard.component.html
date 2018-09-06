@@ -1,0 +1,54 @@
+<app-dialog-box>
+
+  <div #header class="c-dialog-box__header c-dialog-box__header--padding">
+    <div class="c-dialog-box__header-bar">
+      <h1 class="c-dialog-box__header-title">
+        {{title}}
+      </h1>
+      <div class="c-dialog-box__header-actions">
+        <app-button (click)="tetherService.dismiss()" type="icon" icon="close"></app-button>
+      </div>
+    </div>
+
+    <div class="c-dialog-box__header-sticky-contents">
+      <app-wizard-header currentLevel={{currentLevelIndex+1}} totalLevel={{levels?.length}} (actionEvent)="wizardActionHandler($event)">
+        <span>
+          <strong>{{wizardHeader.currentLevel}}. Adım: </strong>{{currentLevel?.title}}</span>
+      </app-wizard-header>
+    </div>
+
+  </div>
+
+  <div #body class="c-dialog-box__body c-dialog-box__body--no-padding" [ngSwitch]="currentLevel?.key" [class.c-dialog-box__body--no-scroll]="!currentLevel?.hasScroll">
+
+    <div *ngSwitchCase="'localization'" class="p-container">
+      <app-localization-box #Localization [localization]="template?.Localization?.Name" [showWithoutBox]="true" (changeEvent)="localizationChangeHandler($event)"></app-localization-box>
+    </div>
+    <div *ngSwitchCase="'addHall'" class="p-container">
+      <div class="c-template-create-wizard__form-control" *ngIf="options && options.length > 0">
+          <span>İLİŞKİLİ SALON</span>
+          <app-selectbox #HallSelectbox [value]="template?.HallId" (changeEvent)="selectboxChangeHandler($event)" [options]="options" placeholder="Seçiniz"></app-selectbox>
+      </div>
+      
+      <div class="c-template-create-wizard__inner">
+        <div class="c-template-create-wizard__inner-left">
+            <span>ŞABLON GÖRSELİ</span>
+            <app-profile-photo type="template-pic" (changeEvent)="photoChangeHandler($event)" [source]="template?.LayoutImage | image : 'Template'"></app-profile-photo>
+        </div>
+        <div class="c-template-create-wizard__inner-right">
+            <app-helper-text type="info">Görselin En Az 1024x768px çözünürlükte ve 4:3 oranında olması önerilir Max.10MB</app-helper-text>
+        </div>         
+      </div>           
+    </div>
+
+  </div>
+
+  <div #footer class="c-dialog-box__footer row">
+    <div class="c-dialog-box__footer-content">
+      <div class="col-xs-16">
+        <app-button (clickEvent)="submitClickHandler($event)" [isDisabled]="!isValid" theme="primary" label="DEVAM ET"></app-button>
+      </div>
+    </div>
+  </div>
+
+</app-dialog-box>

@@ -1,0 +1,30 @@
+<div class="c-time-input__bar">
+  <span class="c-time-input__hour">
+    <app-text-input #hour type="digit" theme="no-border"
+      (changeEvent)="changeEventHandler($event, 'hour')"
+      (typeEvent)="typeEventHandler($event, 'hour')"
+      (focusEvent)="focusEventHandler($event)"
+      [isTypeEmitting]="true"
+      [typeDebounceTime]="900"
+      [value]="formattedHour"
+      [isDisabled]="isDisabled"
+      placeholder="--" [min]="0" [max]="23" [maxlength]="2" [required]="required"></app-text-input>
+  </span>
+  <span class="c-time-input__seperator">
+    :
+  </span>
+  <span class="c-time-input__minute">
+    <app-text-input #minute type="digit" theme="no-border"
+      (changeEvent)="changeEventHandler($event, 'minute')"
+      (typeEvent)="typeEventHandler($event, 'minute')"
+      (focusEvent)="focusEventHandler($event)"
+      [isTypeEmitting]="true"
+      [typeDebounceTime]="700"
+      [value]="formattedMinute"
+      [isDisabled]="isDisabled"
+      placeholder="--" [min]="0" [max]="59" [maxlength]="2" [required]="required"></app-text-input>
+  </span>
+  <span class="c-time-input__icon">
+    <i class="icon__n icon__n--schedule"></i>
+  </span>
+</div>

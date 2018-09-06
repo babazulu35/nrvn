@@ -1,0 +1,40 @@
+<app-dialog-box>
+	<div #header class="c-dialog-box__header c-dialog-box__header--padding c-dialog-box__header--border">
+		<div class="c-dialog-box__header-bar">
+			<h1 class="c-dialog-box__header-title">
+				{{title}}
+			</h1>
+			<div class="c-dialog-box__header-actions">
+				<app-button (click)="tetherService.dismiss($event)" type="icon" icon="close" theme="secondary"></app-button>
+			</div>
+		</div>
+	</div>
+
+	<div #body class="c-dialog-box__body c-dialog-box__body--no-padding" [ngClass]="{'main-loader': isLoading }">
+		<div class="p-container">
+			<div class="p-group">
+				<div class="p-group__item row">
+					<div class="p-formgroup">
+						<div class="p-form-group__input">
+							<app-text-input type="text"
+								[theme]="'underline'"
+								(changeEvent)="inputChangeHandler($event, 'Name')"
+								[value]="salesSubChannel?.Name"
+								[placeholder]="'İSİM'"
+								icon="edit"
+							></app-text-input>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div #footer class="c-dialog-box__footer">
+		<div class="c-dialog-box__footer-content">
+			<div class="col-xs-16">
+				<app-button (click)="submitClickHandler($event)" [isDisabled]="!isValid" theme="primary" [label]="isEditMode ? 'ALT SATIŞ KANALINI GÜNCELLE' : 'ALT SATIŞ KANALI EKLE'"></app-button>
+			</div>
+		</div>
+	</div>
+</app-dialog-box>

@@ -1,0 +1,110 @@
+/***
+* Slider Component:
+*/
+
+/**
+* Slider:
+* `.c-slider-input - Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque repellat autem deleniti odit repellendus temporibus placeat ipsa similique, neces
+*
+*     @example
+*     <div id="slider" class="c-slider-input" style="margin:100px 0">
+*       <span id="value" class="c-slider-input__value">0</span>
+*       <span class="c-slider-input__start-value">0</span>
+*       <span class="c-slider-input__end-value">100</span>
+*       <span class="c-slider-input__label">ETİKET</span>
+*     </div>
+*
+*
+*/
+
+
+// Set defaults
+$c-slider-input: (
+	width: 100%,
+	margin: 0,
+	handle-size: 20px,
+	handle-color: #21242b,
+	handle-value-color: #262126,
+	value-color: #bdbdbd,
+	label-color: #9d9d9d,
+	active-handle-color: #2b98f0,
+	active-label-color: #21242b
+);
+
+
+// Merge settings and defaults
+$c-slider-input: map-merge($c-slider-input, getSettingsMap("c-slider-input"));
+
+// Set shortcuts
+$c-map: $c-slider-input;
+
+
+.c-slider-input {
+	position:relative;
+	width: map-get($c-map, width);
+	margin: map-get($c-map, margin);
+	&.noUi-horizontal {
+		height: 5px;
+		box-shadow: none;
+		border: none;
+		border-bottom:2px dashed map-get($c-map, value-color);
+	}
+	.noUi-handle, .noUi-horizontal .noUi-handle, .noUi-vertical .noUi-handle {
+		@include t--size(map-get($c-map, handle-size))
+		border-radius: 50%;
+		background-color: map-get($c-map, handle-color);
+		border: none;
+		box-shadow: none;
+		cursor: pointer;
+		&:after, &:before {display: none;}
+	}
+	&__value {
+		position: absolute;
+		top: -30px;
+		display: block;
+		width: 100%;
+		color: map-get($c-map, handle-value-color);
+		font-size: 13px;
+		text-align: center;
+	}
+	&__label {
+		position: absolute;
+		bottom: -30px;
+		display:block;
+		width:100%;
+		color: map-get($c-map, label-color);
+		@include ffamily("semi");
+		font-size: 11px;
+		text-align: center;
+	}
+	&__start-value, &__end-value {
+		overflow: hidden;
+		position: absolute;
+		top: -26px;
+		left: 0;
+		color: map-get($c-map, value-color);
+		font-size: 14px;
+		.icon__n {
+			position: relative;
+			left: -3px;
+			font-size: 22px;
+			&--looks {left:0;}
+		}
+	}
+	&__end-value {
+		left: auto;
+		right: 0;
+		.icon__n {
+			left: auto;
+			right: -3px;
+			&--looks {right:0;}
+		}
+	}
+	&--active {
+		&.noUi-horizontal {border-bottom: 2px dashed map-get($c-map, active-handle-color); }
+		.noUi-handle, .noUi-horizontal .noUi-handle, .noUi-vertical .noUi-handle {
+			background-color: map-get($c-map, active-handle-color);	
+		}
+		.c-slider-input__label {color:map-get($c-map, active-label-color);}
+	}
+}

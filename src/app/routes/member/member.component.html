@@ -1,0 +1,243 @@
+<div class="or-member">
+    <div class="p-header-bar" sticky sticky-main-scroller sticky-release-offset="30" sticky-height-property="55" sticky-width-property="100%" sticky-follow-menu-moves>
+        <div class="p-header-bar__left">
+            <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+        </div>
+
+        <div class="p-header-bar__right">
+            <app-button (click)="sendOtpAndOpenValidationBox()" [isDisabled]="!defaultPhoneNumber" [isPromising]="isLoading" label="DÜZENLE"></app-button>
+        </div>
+    </div>
+
+    <app-split-container [fixedWidth]="640">
+        <div fluid>
+            <div class="p-container" [ngStyle]="{'min-width':'465px'}" [ngClass]="{'main-loader': isLoading }">
+                <div class="r-customer-edit__block">
+                    <div class="r-customer-display">
+                        <div class="col-xs-4 r-customer-display__avatar">
+                            <app-avatar [source]="member?.ProfilePictureUrl" [letters]='memberLetters'></app-avatar>
+
+                        </div>
+
+                        <div class="r-customer-display__info">
+                            <span class="r-customer-display__name">
+								{{member?.Name}} {{member?.Surname}}
+							</span>
+
+                            <span *ngIf="member?.NationalIdentityNumber" class="r-customer-display__phone">
+								<b>TCKN: </b>{{member?.NationalIdentityNumber | maskString}}
+							</span>
+
+                            <span *ngIf="!member?.NationalIdentityNumber && defaultPhoneNumber" class="r-customer-display__phone">
+								<b *ngIf="defaultPhoneNumber?.PhoneType">{{ defaultPhoneNumber?.PhoneType }}:</b> {{ defaultPhoneNumber?.PhoneNumber | phoneFormat}}
+							</span>
+
+                            <span *ngIf="member?.Gender" class="r-customer-display__text">
+								, {{ member?.Gender }}
+							</span>
+
+                            <span *ngIf="member?.Age" class="r-customer-display__text">
+								, {{ member?.Age }}
+							</span>
+
+                            <span *ngIf="member?.LocationRegion" class="r-customer-display__text">
+								, {{ member?.LocationRegion }}
+							</span>
+                        </div>
+                    </div>
+
+                    <hr>
+                    <!-- Phone -->
+
+                    <div class="r-customer-edit__block-caption">
+                        <div class="r-customer-edit__block-caption-title"><span>Telefon</span></div>
+                        <div class="r-customer-edit__block-caption-title">DOĞRULAMA</div>
+                        <div class="r-customer-edit__block-caption-title">VARSAYILAN</div>
+                    </div>
+
+                    <div *ngFor="let phoneNumber of member?.MemberPhones">
+                        <div class="r-customer-edit__block-row">
+                            <div class="r-customer-edit__block-col">
+                                <strong>{{ phoneNumber.PhoneType || 'Cep Telefonu'}}:</strong> {{ phoneNumber.PhoneNumber | phoneFormat }}
+                            </div>
+                            <div class="r-customer-edit__block-col">
+                                <i *ngIf="phoneNumber.IsActivated" class="icon__n icon__n--check"></i>
+                                <!-- <app-button *ngIf="!phoneNumber.IsActivated" 											
+											type="link" 
+											theme="primary" 
+											label="DOĞRULA"></app-button> -->
+                            </div>
+                            <div class="r-customer-edit__block-col">
+                                <i *ngIf="phoneNumber.IsDefault" class="icon__n icon__n--check"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div *ngIf="!(member?.MemberPhones.length > 0)">
+                        <div class="r-customer-edit__block-row">
+                            <div class="r-customer-edit__block-col">
+                                <p>Kayıtlı telefon numarası bulunmamaktadır.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end r-customer-edit__block -->
+
+                <!-- Emails -->
+
+                <div class="r-customer-edit__block">
+                    <div class="r-customer-edit__block-caption">
+                        <div class="r-customer-edit__block-caption-title"><span>E-Posta</span></div>
+                        <div *ngIf="member?.MemberEmails.length > 0" class="r-customer-edit__block-caption-title">DOĞRULAMA</div>
+                        <div *ngIf="member?.MemberEmails.length > 0" class="r-customer-edit__block-caption-title">VARSAYILAN</div>
+                    </div>
+
+                    <div *ngFor="let emailAddress of member?.MemberEmails">
+                        <div class="r-customer-edit__block-row">
+                            <div class="r-customer-edit__block-col">
+                                {{ emailAddress.EmailAddress }}
+                            </div>
+                            <div class="r-customer-edit__block-col">
+                                <i *ngIf="emailAddress.IsActivated" class="icon__n icon__n--check"></i>
+                                <!-- <app-button *ngIf="!emailAddress.IsActivated" 								
+								type="link" theme="primary" label="DOĞRULA"></app-button>								 -->
+                            </div>
+                            <div class="r-customer-edit__block-col">
+                                <i *ngIf="emailAddress.IsDefault" class="icon__n icon__n--check"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div *ngIf="!(member?.MemberEmails.length > 0)">
+                        <div class="r-customer-edit__block-row">
+                            <div class="r-customer-edit__block-col">
+                                <p>Kayıtlı e-posta adresi bulunmamaktadır.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- end r-customer-edit__block  -->
+
+                <div class="r-customer-edit__block r-customer-edit__block--licence">
+                    <div class="r-customer-edit__block-caption">
+                        <div class="r-customer-edit__block-caption-title"><span>İzinler</span></div>
+                        <div *ngIf="member?.MemberLicenses" class="r-customer-edit__block-caption-title">VERSİYON</div>
+                        <div *ngIf="member?.MemberLicenses" class="r-customer-edit__block-caption-title">DURUM</div>
+                    </div>
+
+                    <div *ngIf="!member?.MemberLicenses">
+                        <div class="r-customer-edit__block-row">
+                            <div class="r-customer-edit__block-col">
+                                Kayıtlı izin bulunmamaktadır.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div *ngFor="let licence of member?.MemberLicenses">
+                        <div class="r-customer-edit__block-row">
+                            <div class="r-customer-edit__block-col">
+                                <strong>{{ licence.LicenseName }}</strong>
+                            </div>
+                            <div class="r-customer-edit__block-col">
+                                <p>{{ licence.LatestLicenseVersion }}</p>
+                            </div>
+                            <div class="r-customer-edit__block-col">
+                                <i *ngIf="licence.IsLatestLicenseConfirmed" class="icon__n icon__n--check"></i>
+                                <i *ngIf="!licence.IsLatestLicenseConfirmed" class="icon__n icon__n--block"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end r-customer-edit__block -->
+
+                <div class="r-customer-edit__block">
+                    <div class="r-customer-edit__block-caption">
+                        <div class="r-customer-edit__block-caption-title"><span>Sosyal Medya Bağlantıları</span></div>
+                    </div>
+
+                    <div class="r-customer-edit__block-row" [ngClass]="{ 'r-customer-edit__block-row--inactive' : !member?.FacebookConnected }">
+                        <div class="r-customer-edit__block-col">
+                            <span><i class="icon__n icon__n--ss-facebook"></i></span>
+                            <span>Facebook</span>
+                        </div>
+                    </div>
+
+                    <div class="r-customer-edit__block-row" [ngClass]="{ 'r-customer-edit__block-row--inactive' : !member?.SpotifyConnected }">
+                        <div class="r-customer-edit__block-col">
+                            <span><i class="icon__n icon__n--ss-spotify"></i></span>
+                            <span>Spotify</span>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- end r-customer-edit__block -->
+
+            </div>
+        </div>
+        <div fixed>
+
+            <div class="r-title-container">
+                <div class="r-title-container__left">
+                    <h2>İşlemler</h2>
+                </div>
+            </div>
+
+            <app-no-data *ngIf="noDataInContent" [ngClass]="{'main-loader': transactionLoading }" [icon]='{type: "icon", name: "location"}' [hasContainer]="true" style="max-width:80%; margin-top:30px" title="Müşterinin işlem kaydı bulunamadı.">
+            </app-no-data>
+
+            <div class="o-list-view" *ngIf="!noDataInContent">
+                <div class="o-list-view__content">
+                    <app-responsive-table [ngClass]="{ 'main-loader' : transactionsLoading }">
+                        <div class="c-responsive-table__caption row">
+                            <div class="c-responsive-table__primary-column col-md-4">
+                                <app-sort-title sortTitle="İŞLEM ID" sortBy="RefId" [activeTitle]="entityService.queryParamSubject" (toggleSortTitle)="toggleSortTitle($event)"></app-sort-title>
+                            </div>
+                            <div class="c-responsive-table__secondary-column col-md-12">
+                                <div class="col-md-6">
+                                    <app-sort-title sortTitle="TARİH" sortBy="PaymentDate" [activeTitle]="entityService.queryParamSubject" (toggleSortTitle)="toggleSortTitle($event)"></app-sort-title>
+                                </div>
+                                <div class="col-md-5">
+                                    <app-sort-title sortTitle="KANAL" sortBy="SalesChannel/Name" [activeTitle]="entityService.queryParamSubject" (toggleSortTitle)="toggleSortTitle($event)"></app-sort-title>
+                                </div>
+                                <div class="col-md-5">
+                                    <app-sort-title sortTitle="BEDEL" sortBy="TotalAmount" [activeTitle]="entityService.queryParamSubject" (toggleSortTitle)="toggleSortTitle($event)"></app-sort-title>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="c-responsive-table__row row" *ngFor="let transaction of transactions">
+                            <div class="c-responsive-table__primary-column col-md-4">
+                                <div class="c-primary-column-line">
+                                    <a class="c-primary-column-line__title" [routerLink]="['/transaction', transaction.Id]">
+										{{transaction.RefId}}
+									</a>
+                                </div>
+                            </div>
+
+                            <div class="c-responsive-table__secondary-column col-md-12">
+                                <div class="col-md-6">
+                                    <span class="text">{{transaction.PaymentDate | relativeDate}}</span>
+                                </div>
+                                <div class="col-md-5">
+                                    <span class="text">{{transaction.SalesChannel?.Name || "-"}}</span>
+                                </div>
+                                <div class="col-md-4">
+                                    <span class="text">{{transaction.TotalAmount | number:"1.2-2"}} {{transaction.Currency?.Code}}</span>
+                                </div>
+
+                                <div class="or-transaction-view__product-item-action-btn col-md-1">
+                                    <app-button (clickEvent)="openItemContextMenu($event, transaction)" type="icon" icon="more_vert" theme="secondary"></app-button>
+                                </div>
+                            </div>
+                        </div>
+                    </app-responsive-table>
+                </div>
+
+                <div class="o-list-view__footer">
+                    <app-pagination size="xs" [options]="pageSizes" [totalItem]="count" [showItemPerPage]="pageSize" [currentPage]="currentPage" (changeEvent)="changePageSize($event)" (transistPage)="transistPage($event)"></app-pagination>
+                </div>
+            </div>
+        </div>
+    </app-split-container>
+</div>
+<!-- end of or-member -->

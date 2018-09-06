@@ -1,0 +1,49 @@
+<div class="c-customer-search-select__input" *ngIf="!customer">
+    <app-phone-input (changeEvent)="phoneChangeHandler($event)" countryCode="TR" [isPromising]="isPromising" [emitOnlyEnter]="true"></app-phone-input>
+</div>
+<div class="c-customer-search-select__view" *ngIf="customer">
+    <div class="c-customer-search-select__view-info">
+        <span class="c-customer-search-select__view-title">
+            {{customer?.MemberId ? fullname : (customer?.PhoneNumber | phoneFormat)}}
+        </span>
+        <span *ngIf="customer?.MemberId && customer?.PhoneNumber" class="c-customer-search-select__view-sub-title">{{customer?.PhoneNumber | phoneFormat}}</span>
+    </div>
+    <div class="c-customer-search-select__view-action">
+        <span *ngIf="!customer?.MemberId">
+            <app-button (clickEvent)="openGuestForm(guestBox)" type="icon" icon="edit" theme="secondary"></app-button>
+        </span>
+        <!--         <span *ngIf="customer?.MemberId">
+            <app-button (clickEvent)="actionHandler('edit', $event)" type="icon" icon="refresh" theme="secondary"></app-button>
+        </span> -->
+        <span>
+            <app-button (clickEvent)="actionHandler('remove', $event)" type="icon" icon="delete" theme="secondary"></app-button>
+        </span>
+    </div>
+</div>
+
+<ng-template #guestBox>
+    <app-dialog-box>
+        <div #header class="c-dialog-box__header c-dialog-box__header--padding c-dialog-box__header--underline">
+            <div class="c-dialog-box__header-bar">
+                <h1 class="c-dialog-box__header-title">
+                    Konuk Hesap Bilgilerini Düzenle
+                </h1>
+                <div class="c-dialog-box__header-actions">
+                    <app-button (clickEvent)="tether.dismiss()" type="icon" icon="close" theme="secondary"></app-button>
+                </div>
+            </div>
+        </div>
+        <div class="c-dialog-box__body c-dialog-box__body--no-padding">
+            <div class="p-container">
+                <app-guest-form #guestForm [customer]="customer"></app-guest-form>
+            </div>
+        </div>
+        <div class="c-dialog-box__footer row">
+            <div class="c-dialog-box__footer-content">
+                <div class="col-xs-16">
+                    <app-button [isDisabled]="!guestForm?.isValid" (clickEvent)="guestSubmitClickHandler($event)" theme="primary" label="EKLE"></app-button>
+                </div>
+            </div>
+        </div>
+    </app-dialog-box>
+</ng-template>

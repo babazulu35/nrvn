@@ -1,0 +1,131 @@
+/***
+ * Mini Card:
+ * Author: Can Sivri
+ */
+
+
+/**
+ * Mini Card:
+ * `.c-mini-card` sınıfı ile oluşturulur.
+ *
+ * @example
+ */
+
+// Set defaults
+$c-mini-card: ( min-width: 200px, height: 350px, border-radius: 3px, info-font-size: 13px, photo-size: 40px, padding: 8px 10px, icon-size: 24px, gutter: 10px, icon-color: #bdbdbd, border-color: #dcdce5, add-edit-color:#35383d, container-padding: 0, container-margin: 0px, );
+// Merge settings and defaults
+$c-mini-card: map-merge($c-mini-card, getSettingsMap("c-mini-card"));
+// Set shortcuts
+$c-map: $c-mini-card;
+.c-mini-card-container {
+    padding: map-get($c-map, container-padding);
+    margin: map-get($c-map, container-margin);
+}
+
+.c-mini-card {
+    display: table;
+    width: 100%;
+    background-color: $color-text-white;
+    padding: map-get($c-map, padding);
+    border: 1px solid map-get($c-map, border-color);
+    border-radius: map-get($c-map, border-radius);
+    text-align: left;
+    
+    & + .c-mini-card {
+        margin-top: map-get($c-map, gutter) / 2;
+    }
+    &--active {
+        .c-mini-card__kind-icon .icon__n {
+            color: #7cb342;
+        }
+    }
+}
+
+.c-mini-card__kind-icon {
+    display: table-cell;
+    vertical-align: middle;
+    font-size: map-get($c-map, icon-size);
+    width: 1em;
+    height: 1em;
+    padding-right: map-get($c-map, gutter);
+    .icon__n {
+        margin-top: 5px;
+        font-size: map-get($c-map, icon-size);
+        color: map-get($c-map, icon-color);
+    }
+    .icon__n--menu {
+        cursor: ns-resize;
+    }
+}
+
+.c-mini-card__info,
+.c-mini-card__date {
+    width: auto;
+    display: table-cell;
+    padding-right: map-get($c-map, gutter);
+    vertical-align: middle;
+    @include ffamily("regular");
+    font-size: map-get($c-map, info-font-size);
+    strong {
+        @include ffamily("bold");
+
+        & + span {
+            margin-left: map-get($c-map, gutter);
+        }
+    }
+}
+
+.c-mini-card__date {
+    @include ffamily("regular");
+}
+
+.c-mini-card__figure {
+    display: table-cell;
+    vertical-align: middle;
+    width: map-get($c-map, photo-size) + map-get($c-map, gutter);
+    //padding-right: map-get($c-map, gutter);
+    .c-avatar {
+        display: block;
+        font-size: map-get($c-map, photo-size);
+    }
+}
+
+.c-mini-card__action-area {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: right;
+    // min-width: map-get($c-map, icon-size) * 3;
+    line-height: 0;
+    .c-mini-card_add-edit {
+        color: map-get($c-map, add-edit-color);
+        font-size: 13px;
+        @include ffamily("regular");
+        &:hover,
+        &:focus {
+            text-decoration: none;
+        }
+        strong {
+            font-size: 11px;
+            @include ffamily("bold");
+        }
+        .icon__n {
+            margin-left: 5px;
+        }
+    }
+    .c-inline-edit {
+        display: inline-block;
+        vertical-align: middle;
+    }
+    //  .icon__n {
+    // 	vertical-align: middle;
+    // 	 font-size: map-get($c-map, icon-size );
+    // 	 color: map-get($c-map, icon-color);
+    //  }
+    //  .icon__n--more_vert {
+    // 	 margin-left: -4px;
+    // 	 margin-right: -8px;
+    //  }
+}
+
+//Reset
+$c-map: null;

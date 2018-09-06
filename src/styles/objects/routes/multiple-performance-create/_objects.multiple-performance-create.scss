@@ -1,0 +1,264 @@
+// Set defaults
+$or-multiple-performance-create: ( toggle-btn: ( height: 50px, width: 40px, color: #bdbdbd, hover-color: #333, top: 10px, theme: ( gray: ( background-color: #F7F7F7))), content: ( placeholder: ( space: 30px, header: ( font-size: 2rem, padding: 20px 30px 15px, border-color: #e0e0e0, height: 70px), container: ( padding: 30px), group: ( margin-bottom: 40px, header: ( border-color: #dcdce5, title: ( color: #35383d, font-size: 15px)), item: ( margin-bottom: 20px, ), wings: ( border-color: #dcdce5, )), form-group: ( title: ( color: #939393, font-size: 11px)))), aside: ( padding: 48px 10px 10px, border-color: #dcdce5, background-color: #ffffff, min-width: 20px, max-width: 240px, theme: ( gray: ( background-color: #F7F7F7)), footer: ( width: 100%, height: 70px, padding: 0 30px, margin: 0, background-color: #35383d, border-color: #dcdce5, button: ( background-color: #21242b, color: #ffffff)), placeholder: ( space: 10px, color: #35383d, font-size: 1rem, container: ( padding: 20px), group: ( margin-bottom: 20px, header: ( border-color: #dcdce5, title: ( color: #939393, font-size: 11px)), item: ( margin-bottom: 10px, ), list: ( label: ( font-size: 13px, color: #333333))), form-group: ( title: ( color: #939393, font-size: 11px)))));
+// Merge settings and defaults
+$or-multiple-performance-create: map-merge($or-multiple-performance-create, getSettingsMap("or-multiple-performance-create"));
+$c-map: $or-multiple-performance-create;
+$content: map-get($c-map, content);
+.or-multiple-performance-create {
+    .c-container-canvas {
+        .c-text-input {
+            &__bar {
+                background-color: #ffffff;
+            }
+        }
+    }
+    .p-header {
+        @include ffamily('light');
+        font-size: map-deep-get($content, placeholder, header, font-size);
+        padding: map-deep-get($content, placeholder, header, padding);
+        max-height: map-deep-get($content, placeholder, header, height);
+        &+.p-full-content {
+            height: calc(100% - #{map-deep-get($content, placeholder, header, height)});
+        }
+        &--border {
+            border-bottom: solid 1px map-deep-get($content, placeholder, header, border-color);
+        }
+        .c-button--circle.c-button--lg {
+            vertical-align: middle;
+            transform: translateY(-0.2em);
+        }
+    }
+    //placeholder
+    .p-container {
+        padding: map-deep-get($content, placeholder, container, padding);
+        &--no-padding {
+            padding: 0px;
+        }
+        &--fixed-height {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0px;
+            left: 0px;
+        }
+    }
+    .p-group {
+        .p-form-group,
+        .p-form-group__input {
+            >.c-container-canvas,
+            >.c-firm-search-select__container {
+                background-color: #ffffff;
+            }
+            >.c-container-canvas {
+                padding: 10px;
+                .c-text-input {
+                    &__bar {
+                        background-color: #ffffff;
+                    }
+                }
+                .c-mini-card {
+                    border: 0;
+                    border-radius: inherit;
+                    padding: 0;
+                }
+            }
+            .c-basic-button-group {
+                justify-content: center;
+            }
+        }
+        &+.p-group,
+        &+.p-form-group {
+            margin-top: map-deep-get($content, placeholder, space)*2;
+        }
+        &__header {
+            display: block;
+            padding-bottom: map-deep-get($content, placeholder, space);
+            &--border {
+                display: block;
+                padding-bottom: map-deep-get($content, placeholder, space);
+                border-bottom: 1px solid map-deep-get($aside, placeholder, group, header, border-color);
+                margin-bottom: map-deep-get($content, placeholder, space);
+            }
+            &-bar {
+                display: table;
+                width: 100%;
+            }
+            &-title {
+                display: table-cell;
+                vertical-align: bottom;
+                width: 100%;
+                @include ffamily('semi');
+                font-size: map-deep-get($content, placeholder, group, header, title, font-size);
+                line-height: 1em;
+                color: map-deep-get($content, placeholder, group, header, title, color);
+            }
+            &-action {
+                display: table-cell;
+                vertical-align: bottom;
+                line-height: 1em;
+                white-space: nowrap;
+            }
+        }
+        &__item {
+            &+.p-group__item,
+            &+.p-group__list {
+                margin-top: map-deep-get($content, placeholder, space)*1.25;
+            }
+            .c-venue-select-bar {
+                .c-venue-select-bar__container {
+                    padding: 0;
+                    border: 0;
+                }
+            }
+            app-mini-card {
+                >.c-mini-card {
+                    border: 0;
+                    border-radius: inherit;
+                    padding: 0;
+                }
+            }
+            .c-profile-photo__container {
+                background: #ffffff;
+            }
+            .c-helper-text {
+                margin-bottom: 30px;
+            }
+        }
+        &__wings {
+            display: table;
+            width: 100%;
+            border-top: solid 1px map-deep-get($content, placeholder, group, wings, border-color);
+            &-left,
+            &-right {
+                width: 50%;
+                display: table-cell;
+                position: relative;
+            }
+            &-left {
+                &-title {
+                    @include ffamily('semi');
+                    font-size: map-deep-get($content, placeholder, group, header, title, font-size);
+                    line-height: 1em;
+                    padding-top: map-deep-get($content, placeholder, group, margin-bottom);
+                    padding-bottom: map-deep-get($content, placeholder, group, margin-bottom)/2;
+                }
+            }
+            &-right {
+                vertical-align: middle;
+                text-align: right;
+                border-left: solid 1px map-deep-get($content, placeholder, group, wings, border-color);
+            }
+        }
+    }
+    .p-form-group {
+        &--multi-element {
+            span {
+                vertical-align: middle;
+                margin-right: 20px;
+            }
+        }
+        &--center {
+            max-width: 650px;
+            margin: auto;
+            &-performances {
+                min-width: 550px;
+                max-width: 90%;
+                width: auto;
+                margin: auto;
+            }
+        }
+        &+.p-group {
+            margin-top: map-deep-get($c-map, content, placeholder, space)*2;
+        }
+        &+.p-form-group {
+            margin-top: map-deep-get($c-map, content, placeholder, space);
+        }
+        &__label {
+            display: inline-block;
+            width: 100%;
+            text-align: left;
+            margin-bottom: map-deep-get($c-map, content, placeholder, space)*0.25;
+            @include ffamily('semi');
+            font-size: map-deep-get($c-map, content, placeholder, form-group, title, font-size);
+            line-height: 1em;
+            color: map-deep-get($c-map, content, placeholder, form-group, title, color);
+            min-height: 1em;
+        }
+        &__input {
+            display: inline-block;
+            width: 100%;
+            &+.c-helper-text {
+                margin-top: map-deep-get($content, placeholder, space)*0.25;
+            }
+            >input {
+                width: 100%;
+                min-height: 36px;
+            }
+            >textarea {
+                width: 100%;
+            }
+        }
+        &--flex {
+            display: flex;
+            justify-content: space-between;
+            .c-text-input {
+                background: #fff;
+            }
+        }
+    }
+    .p-group__vertical {
+        ul {
+            list-style: none;
+            li {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                border-bottom: 1px solid #ccc;
+                padding: 12px 0px;
+                &:first-child:not(:last-child) {
+                    //border-top: 1px solid #ccc;
+                }
+                .p-group__vertical {
+                    &-label {
+                        flex: 1;
+                        @include ffamily('semi');
+                        font-size: 13px;
+                        text-align: left;
+                    }
+                    &-switch {
+                        flex: 0;
+                        >.c-text-input,
+                        >.c-selectbox {
+                            min-width: 120px;
+                        }
+                        margin-right: 25px;
+                    }
+                    &-input {
+                        flex: 1;
+                        margin-left: 10px;
+                    }
+                    &-field {
+                        flex: 1;
+                        text-align: left;
+                    }
+                    &--inline-edit {
+                        width: 100%;
+                        margin-bottom: 10px;
+                        &-label {
+                            width: 100%;
+                            display: block;
+                            @include ffamily('semi');
+                            font-size: 11px;
+                            color: #939393;
+                            margin-bottom: 10px;
+                        }
+                        .c-text-input {
+                            background: #fbfbfb;
+                            width: 100%;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

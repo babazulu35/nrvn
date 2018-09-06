@@ -1,0 +1,39 @@
+<div *ngIf="model" [ngClass]="{'main-loader': basketClearLoader }">
+    <div class="c-narrow-col-basket-item__title">{{model.type}}</div>
+    <div class="c-narrow-col-basket-item__sub-title">
+        <a [routerLink]="['/boxoffice', model.id, 'products']">{{model.title}}</a>
+    </div>
+    <div class="c-narrow-col-basket-item__date">{{model.date | relativeDate}}</div>
+    <div *ngIf='model.location' class="c-narrow-col-basket-item__location">{{model.location}}</div>
+
+    <ul class="c-narrow-col-basket-item__list ">
+        <li *ngFor="let product of model.products" class="c-narrow-col-basket-item__list-item">
+            <p class="c-narrow-col-basket-item__list-item-title">{{product.title}}</p>
+
+            <app-button theme="secondary" disabled="singleLoader[product.id]" [isPromising]="singleLoader[product.id]" icon="{{deleteIcon}}" type="icon" class="c-narrow-col-basket-item__list-item-delete" (click)="removeProduct(model, product)"></app-button>
+            <!--            <span (click)='removeProduct(model, product)' href="#" class="">
+           	<i class="icon__n icon__n--delete"></i>
+           </span>-->
+
+            <div class="c-narrow-col-basket-item__list-item-action-bar">
+                <span class="c-narrow-col-basket-item__variant">{{product.variant}} <i class="c-narrow-col-basket-item__variant--times">x</i><strong> {{product.count}} </strong></span>
+                <span class="c-narrow-col-basket-item__list-item-action">
+        <!--
+        <app-selectbox
+          (changeEvent) = 'countChangeHandler(model, product, $event)'
+          *ngIf='product.count'
+          [value]='product.count.current'
+          [numberRanges] = 'product.count'></app-selectbox>
+		-->
+        <!-- <span class="c-narrow-col-basket-item__list-item-price" >{{product.price.amount | number: '2.2-2' }} <sup>{{product.price.currency}}</sup></span> -->
+                    <span class="c-narrow-col-basket-item__list-item-price">{{product.price.amount }} <sup>{{product.price.currency}}</sup></span>
+                    <button (click)='updateProduct(model, product)' *ngIf='product.isCustom' class="btn btn-secondary">GÜNCELLE</button>
+
+                </span>
+            </div>
+
+
+        </li>
+    </ul>
+
+</div>

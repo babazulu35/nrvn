@@ -1,0 +1,76 @@
+<app-collapsible-container theme="gray" [isAsideOpen]="true" [asideWidth]="240">
+    <div content>
+        <!--Header-->
+        <div class="p-header p-header--border">
+            <span class="margin-right-5">Performanslar</span>
+            <app-button *ngIf="'Event_Performances_Create' | authRole"
+                        [routerLink]="['/multiple-performance/create/event']"
+                        [queryParams]="{ eventId: pageID }"
+                        type="icon"
+                        icon="plus"
+                        shape="circle"
+                        theme="secondary"
+                        size="lg"></app-button>
+        </div>
+
+        <app-no-data [ngClass]="{'main-loader': isLoading }" *ngIf="noDataInContent" style="max-width: 50%;margin-top:30px" [hasContainer]="true" [icon]='{type: "icon", name: "performance"}' title="Bu Etkinliğe ait bir performans kaydı bulunamadı" description="Arama kriterini değiştirerek yeniden deneyebilirsiniz"></app-no-data>
+
+        <div class="p-container" *ngIf="!noDataInContent">
+            <div class="or-event-performances">
+                <div class="o-card-view">
+                    <div class="o-card-view__content">
+                        <app-grid-list [ngClass]="{'main-loader': isLoading }">
+                            <li *ngFor="let performance of performances">
+                                <app-card-item (actionEvent)="cardActionHandler($event)" [data]="{entryType: 'performance', model: performance}"></app-card-item>
+                            </li>
+                        </app-grid-list>
+                    </div>
+
+                    <div class="o-card-view__footer" *ngIf="count > 10">
+                        <app-pagination size="lg" (changeEvent)="changePageSize($event)" [options]="pageSizes" [totalItem]="count" [showItemPerPage]="pageSize" [currentPage]="currentPage" (transistPage)="transistPage($event)"></app-pagination>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.o-collapsible-container__content -->
+    <div aside>
+        <div class="p-group">
+            <!--header-->
+            <div class="p-group__header">
+                <div class="p-group__header-bar">
+                    <div class="p-group__header-title">
+                        AYARLAR
+                    </div>
+                </div>
+            </div>
+
+            <!--item-->
+            <div class="p-group__item">
+                <div class="p-group__list">
+                    <div class="p-group__list-item">
+                        <label for="" class="p-group__list-item-label">Yayınla</label>
+                        <div class="p-group__list-item-action">
+                            <app-checkbox (changeEvent)="checkHandler($event, 'PublishDateFieldOn', 'flags')" [isChecked]="flags.PublishDateFieldOn" type="lightswitch"></app-checkbox>
+                        </div>
+                    </div>
+                    <div class="p-group__list-item-content" *ngIf="flags.PublishDateFieldOn">
+                        <div class="p-form-group">
+                            <app-text-input (focusout)="savePublishDate()" type="datepicker" size="sm-text" placeholder="Bir Tarih Seçiniz" (changeEvent)="dateChangeHandler($event, 'PublishDate')" [date]="event?.PublishDate"></app-text-input>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--
+        <div class="p-group">
+            <div class="p-group__item">
+                <app-narrow-col-action-offer></app-narrow-col-action-offer>
+            </div>
+        </div>
+        -->
+    </div>
+    <!-- /.o-collapsible-container__aside -->
+</app-collapsible-container>
+<!-- /.o-collapsible-container -->

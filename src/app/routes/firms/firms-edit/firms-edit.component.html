@@ -1,0 +1,394 @@
+<div class="or-firms-edit" [class.loader-before-send]="isLoading">
+    <div class="p-header-bar" sticky sticky-main-scroller sticky-release-offset="30" sticky-height-property="55" sticky-width-property="100%" sticky-follow-menu-moves>
+        <div class="p-header-bar__left">
+            <app-header-inline-edit [value]="title"
+                                    [hasLocalization]="true"
+                                    placeholder="Yeni Firma *"
+                                    [breadcrumbs]="isEditMode ? [{label:'Firma Düzenle'}] : [{label:' Firmalar',routerLink:'/firms'}]"
+                                    (changeEvent)="titleChangeHandler($event)"></app-header-inline-edit>
+        </div>
+        <div class="p-header-bar__right">
+
+            <app-button (clickEvent)='submitFirm($event)' [isPromising]="isLoading || isPromising" [isDisabled]="!isValid"> KAYDET </app-button>
+            <app-button (clickEvent)='cancel($event)' type="icon" icon="close" theme="secondary"></app-button>
+
+        </div>
+    </div>
+    <app-split-container fixedFloat="right" [hasBorder]="true" [fixedWidth]="380">
+        <div fluid>
+            <div class="p-container" style="width:280px;display:inline-block;float:left;">
+                <div class="p-group">
+                    <div class="p-gorup__item">
+                        <app-profile-photo (changeEvent)="photoChangeHandler($event)" [source]="firm?.Images | image : 'Firm'"></app-profile-photo>
+                        <app-helper-text class="margin-top-5" type="info">Görselin En Az 1024x768px çözünürlükte ve 4:3 oranında olması önerilir Max.10MB</app-helper-text>
+                    </div>
+                    <div class="p-group__item margin-top-20">
+                        <app-profile-photo type="logo" (changeEvent)="logoChangeHandler($event)" [source]="firm?.Logo | image : 'Firm'"></app-profile-photo>
+                        <app-helper-text class="margin-top-5" type="info">Görselin En Az 1024x768px çözünürlükte ve 4:3 oranında olması önerilir Max.10MB</app-helper-text>
+                    </div>
+                </div>  
+            </div>
+            <div class="p-container" style="width: calc(100% - 295px);float:left;">
+                <div class="p-group">
+                    <div class="p-group__item" *ngIf="isEditMode">
+                        <div class="form-group">
+                            <div class="p-form-group__label">
+                                API KEY
+                            </div>
+                            <div class="p-form-group__content">
+                                {{firm?.ApiKey == null ? '----' : firm?.ApiKey}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-group__item" *ngIf="isEditMode">
+                        <div class="form-group">
+                            <div class="p-form-group__label">
+                                E-BİLET KULLANICISI
+                            </div>
+                            <div class="p-form-group__content">
+                                {{firm?.EticketUser == null ? '----' : firm?.EticketUser}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-group__item" *ngIf="isEditMode">
+                        <div class="form-group">
+                            <div class="p-form-group__label">
+                                E-BİLET ŞİFRESİ <app-button (click)="toggleVisibility('EticketPassword')"
+                                                            type="icon"
+                                                            [icon]="showEticketPassword ? 'visibility_off' : 'visibility'"
+                                                            theme="secondary"></app-button>
+                            </div>
+                            <div class="p-form-group__content">
+                                {{firm?.EticketPassword == null ? '----' : (showEticketPassword ? firm?.EticketPassword : (firm?.EticketPassword | maskString:'password') ) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-group__item" *ngIf="isEditMode">
+                        <div class="form-group">
+                            <div class="p-form-group__label">
+                                E-ARŞİV KULLANICISI
+                            </div>
+                            <div class="p-form-group__content">
+                                {{firm?.EArchiveUser == null ? '----' : firm?.EArchiveUser}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-group__item" *ngIf="isEditMode">
+                        <div class="form-group">
+                            <div class="p-form-group__label">
+                                E-ARŞİV ŞİFRESİ <app-button (click)="toggleVisibility('EArchivePassword')"
+                                                            type="icon"
+                                                            [icon]="showEArchivePassword ? 'visibility_off' : 'visibility'"
+                                                            theme="secondary"></app-button>
+                            </div>
+                            <div class="p-form-group__content">
+                                {{firm?.EArchivePassword == null ? '----' : (showEArchivePassword ? firm?.EArchivePassword : (firm?.EArchivePassword | maskString:'password') ) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-group__item row">
+                        <div class="p-form-group">
+                            <div class="p-form-group__label">
+                                KOD <sup *ngIf="!isEditMode">*</sup>
+                            </div>
+                            <div class="p-form-group__input">
+                                <app-text-input *ngIf="!isEditMode"
+                                                [value]="firm?.Code"
+                                                maxlength="3"
+                                                required="true"
+                                                (changeEvent)="inputChangeHandler('Code', $event)"></app-text-input>
+                                <span *ngIf="isEditMode">{{firm?.Code}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-group__item row">
+                        <div class="p-form-group">
+                            <div class="p-form-group__label">
+                                TİCARİ ÜNVAN
+                            </div>
+                            <div class="p-form-group__input">
+                                <app-text-input [localization]="firm?.Localization?.ShortName"
+                                                [hasLocalization]="true"
+                                                required="true"
+                                                [maxlength]="128"
+                                                (changeEvent)="inputChangeHandler('ShortName', $event)"
+                                                (typeEvent)="inputChangeHandler('ShortName', $event)"></app-text-input>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-group__item row">
+                        <div class="p-form-group">
+                            <div class="p-form-group__label">
+                                VERGİ NUMARASI
+                            </div>
+                            <div class="p-form-group__input">
+                                <app-text-input [value]="firm?.IdentityNumber"
+                                                type="numeric"
+                                                [maxlength]="10"
+                                                required="true"
+                                                (changeEvent)="inputChangeHandler('IdentityNumber', $event)"></app-text-input>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-group__item row">
+                        <!-- <div class="p-form-group">
+                            <div class="p-form-group__label">
+                                AÇIKLAMA
+                            </div>
+                            <div class="p-form-group__input">
+                                <app-md-editor [hasLocalization]="true"
+                                               [localization]="firm?.Localization?.Description"
+                                               (changeEvent)="descriptionChangeHandler($event)"
+                                               [options]="{previewOn:true}"></app-md-editor>
+                                <app-helper-text class="margin-top-5" type="info">MAX 255 KARAKTER</app-helper-text>
+                            </div>
+                        </div> -->
+                        <div class="p-form-group">
+                            <div class="p-form-group__label">
+                                GOOGLE HARİTA KOORDİNATLARI
+                            </div>
+                            <div class="p-form-group__input row">
+                                <div class="col-lg-4 padding-right-20">
+                                    <app-text-input #lat type="lat" [value]="firm?.Location?.Latitude" (changeEvent)="inputChangeHandler('Latitude', $event)" [required]="true"></app-text-input>
+                                </div>
+                                <div class="col-lg-4 padding-right-20">
+                                    <app-text-input #lon type="lon" [value]="firm?.Location?.Longitude" (changeEvent)="inputChangeHandler('Longitude', $event)" [required]="true"></app-text-input>
+                                </div>
+                                <div class="col-lg-8 padding-top-8" *ngIf="firm?.Location">
+                                    <a [attr.href]="getMapUrl(firm.Location.Latitude, firm.Location.Longitude)" target="_blank" class="c-cta-link"><i class="icon__n icon__n--place"></i>Haritada Gör</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-form-group">
+                            <div class="p-form-group__label">
+                                ADRES
+                            </div>
+                            <div class="p-form-group__input">
+                                <app-text-input [localization]="firm?.Localization?.Address"
+                                                [hasLocalization]="true"
+                                                (changeEvent)="inputChangeHandler('Address', $event)"
+                                                (typeEvent)="inputChangeHandler('Address', $event)"></app-text-input>
+                            </div>
+                        </div>
+                        <div class="p-form-group">
+                            <div class="p-form-group__label">
+                                TELEFON<sup>*</sup>
+                            </div>
+                            <div class="p-form-group__input">
+                                <app-phone-input #phone
+                                                 countryCode="TR"
+                                                 [value]="firm?.MobilePhone"
+                                                 [required]="true"
+                                                 [icon]="null"
+                                                 (changeEvent)="inputChangeHandler('MobilePhone',$event)"></app-phone-input>
+                            </div>
+                        </div>
+                        <div class="p-form-group">
+                            <div class="p-form-group__label">
+                                WEB SAYFASI
+                            </div>
+                            <div class="p-form-group__input">
+                                <app-text-input type="url"
+                                                [value]="firm?.WebPageUrl"
+                                                (changeEvent)="inputChangeHandler('WebPageUrl', $event)"></app-text-input>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="p-container">
+                <div class="p-group">
+                    <div class="p-group-item row " *ngIf="isEditMode">
+                        <div class="p-group__list-item-action">
+                            <app-firm-search-select (changeEvent)="firmChangeHandler($event)"
+                                                    (actionEvent)="firmActionHandler($event)"
+                                                    [firmSearchResult]="firmSearchResult"
+                                                    [firmList]="firmData"
+                                                    [settings]="{
+                                                                    addLabel: 'ALT FİRMA EKLE',
+                                                                    search: {
+                                                                        title: 'ALT Firma Ekle',
+                                                                        placeholder: 'Eklemek istediğiniz firma ismini yazın',
+                                                                        presets: firmPresets,
+                                                                        feedback: {
+                                                                            title: 'Aramanız ile eşleşen firma kaydı bulunamadı',
+                                                                            description: 'Arama kriterlerini değiştirerek yeniden deneyebilirsiniz.',
+                                                                            icon: {type: 'icon', name:'local_atm'}
+                                                                        }
+                                                                    }
+                                                                }">
+                            </app-firm-search-select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div fixed right>
+            <div class="p-container">
+                <div class="p-group">
+                    <div class="p-group__item">
+                        <div class="p-group__list">
+                            <div class="p-group__header">
+                                <div class="p-group__header-bar">
+                                    <div class="p-group__header-title">AYARLAR</div>
+                                </div>
+                            </div>
+                            <div class="p-group__list-item">
+                                <div class="p-group__list-item-bar">
+                                    <div class="p-group__list-item-label or-firms-edit__firm-switch">Aktif<sup></sup></div>
+                                    <div class="p-group__list-item-action">
+                                        <app-checkbox (changeEvent)="checkStatusHandler('IsActive',$event)"
+                                                      [isChecked]="firm?.IsActive"
+                                                      type="lightswitch"></app-checkbox>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-group__list-item">
+                                <div class="p-group__list-item-bar">
+                                    <div class="p-group__list-item-label or-firms-edit__firm-switch">Rezervasyon Yapılabilir<sup></sup></div>
+                                    <div class="p-group__list-item-action">
+                                        <app-checkbox (changeEvent)="checkStatusHandler('ReservationAvailable',$event)"
+                                                      [isChecked]="firm?.ReservationAvailable"
+                                                      type="lightswitch"></app-checkbox>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-group" *ngIf="firm?.IsPlatform">
+                    <div class="p-group__item">
+                        <div class="p-group__list">
+                            <div class="p-group__header">
+                                <div class="p-group__header-bar">
+                                    <div class="p-group__header-title">HİZMET</div>
+                                </div>
+                            </div>
+                            <div class="p-group__list-item">
+                                <div class="p-group__list-item-bar">
+                                    <div class="p-group__list-item-label">Hizmet Bedeli<sup></sup></div>
+                                    <div class="p-group__list-item-action text-center">
+                                        <app-text-input (changeEvent)="inputChangeHandler('ServiceFee', $event)"
+                                                        min="0"
+                                                        [value]="firm?.ServiceFee"
+                                                        type="price"></app-text-input>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-group__list-item">
+                                <div class="p-group__list-item-bar">
+                                    <div class="p-group__list-item-label">Hizmet Bedeli KDV (%)<sup></sup></div>
+                                    <div class="p-group__list-item-action text-center">                                                                                                                                                                                                  
+                                        <app-text-input (changeEvent)="inputChangeHandler('ServiceFeeVat', $event)"
+                                                        placeholder="%"
+                                                        min="0"
+                                                        max="100"
+                                                        [value]="firm?.ServiceFeeVat ? (firm?.ServiceFeeVat * 100) : 0"
+                                                        type="number"></app-text-input>                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-group" *ngIf="firm?.IsPlatform">
+                    <div class="p-group__header">
+                        <div class="p-group__header-bar">
+                            <div class="p-group__header-title">BİLETLEME</div>
+                        </div>
+                    </div>
+                    
+                    <div class="p-group__list-item">
+                        <div class="p-group__list-item-bar">
+                            <div class="p-group__list-item-label">Biletleme Ücreti<sup></sup></div>
+                            <div class="p-group__list-item-action text-center">
+                                <app-text-input (changeEvent)="inputChangeHandler('TicketingFee', $event)"
+                                                min="0"
+                                                type="price"
+                                                [value]="firm?.TicketingFee"></app-text-input>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-group__list-item">
+                        <div class="p-group__list-item-bar">
+                            <div class="p-group__list-item-label">Biletleme Ücreti KDV (%)<sup></sup></div>
+                            <div class="p-group__list-item-action text-center">
+                                <app-text-input (changeEvent)="inputChangeHandler('TicketingFeeVat', $event)"
+                                                type="number"
+                                                min="0"
+                                                max="100"
+                                                placeholder="%"
+                                                [value]="firm?.TicketingFeeVat ? (firm?.TicketingFeeVat * 100) : 0"></app-text-input>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-group__list-item">
+                        <div class="p-group__list-item-bar">
+                            <div class="p-group__list-item-label">İşlem Ücreti<sup></sup></div>
+                            <div class="p-group__list-item-action text-center">
+                                <app-text-input (changeEvent)="inputChangeHandler('TicketingTrxFee', $event)"
+                                                [value]="firm?.TicketingTrxFee"
+                                                min="0"
+                                                type="price"
+                                                readonly></app-text-input>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-group__list-item">
+                        <div class="p-group__list-item-bar">
+                            <div class="p-group__list-item-label">İşlem Ücreti KDV (%)<sup></sup></div>
+                            <div class="p-group__list-item-action text-center">
+                                <app-text-input (changeEvent)="inputChangeHandler('TicketingTrxFeeVat', $event)"
+                                                [value]="firm?.TicketingTrxFeeVat ? (firm?.TicketingTrxFeeVat * 100) : 0"
+                                                type="number"
+                                                min="0"
+                                                max="100"
+                                                placeholder="%"></app-text-input>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-group" *ngIf="firm?.IsPlatform">
+                    <div class="p-group__item">
+                        <div class="p-group__list">
+                            <div class="p-group__header">
+                                <div class="p-group__header-bar">
+                                    <div class="p-group__header-title">VERGİLENDİRME</div>
+                                </div>
+                            </div>
+                            <div class="p-group__list-item">
+                                <div class="p-group__list-item-bar">
+                                    <div class="p-group__list-item-label">Taksitlendirme KDV (%)<sup></sup></div>
+                                    <div class="p-group__list-item-action text-center">
+                                        <app-text-input min="0"
+                                                        max="100"
+                                                        placeholder="%"
+                                                        (changeEvent)="inputChangeHandler('InstallmentVat', $event)"
+                                                        [value]="firm?.InstallmentVat ? (firm?.InstallmentVat * 100) : 0"
+                                                        type="number"></app-text-input>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-group__list-item">
+                                <div class="p-group__list-item-bar">
+                                    <div class="p-group__list-item-label">KDV (%)<sup></sup></div>
+                                    <div class="p-group__list-item-action text-center">
+                                        <app-text-input min="0"
+                                                        max="100"
+                                                        placeholder="%"
+                                                        (changeEvent)="inputChangeHandler('Vat', $event)"
+                                                        [value]="firm?.Vat ? (firm?.Vat * 100) : 0"
+                                                        type="number"></app-text-input>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </app-split-container>
+</div>

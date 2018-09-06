@@ -1,0 +1,14 @@
+<div class="c-selectbox__field">
+    <select 
+      [(ngModel)]="value" 
+      [disabled]="isDisabled"
+      [tabindex]="isDisabled ? -1 : 0"
+      (focus)="onFocus()"
+      (focusout)="onFocusOut()" 
+      (ngModelChange)="changeHandler($event)">
+    <option
+      *ngFor="let option of options; let i = index;"
+      [attr.selected]="value == option.value ? true : null"
+      [ngValue]="option.value" [disabled]="option.disabled || option.value === '-1'">{{option.text}}</option>
+  </select>
+</div>

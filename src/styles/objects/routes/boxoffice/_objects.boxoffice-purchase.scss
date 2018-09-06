@@ -1,0 +1,16 @@
+$or-boxoffice-purchase:();
+.or-boxoffice-purchase {
+    display: block;
+    height: 100%;
+
+    * {
+        user-select: none;
+    }
+    
+    .c-split-container__fixed .p-container {
+        padding: 25px;
+    }
+    .c-wizard-header {
+        border-top: inherit;
+    }
+}

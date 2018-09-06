@@ -1,0 +1,347 @@
+/***
+ * Container Canvas:
+ * Author: Fatih Turan
+ */
+
+
+/**
+ * Container Canvas:
+ * `.c-container-canvas` sınıfı ile oluşturulur.
+ *
+ * @example
+ * <div class="c-container-canvas">
+ *   Canvas İçeriği
+ * </div><!-- /.c-container-canvas -->
+ */
+
+// Set Defaults
+$c-container-canvas: ( 
+    canvas-bg: #f7f7f7, 
+    canvas-border: #dcdce5, 
+    canvas-radius: 3px, 
+    canvas-padding: 20px, 
+    canvas-text-align:center, 
+    split-padding: 15px 20px, 
+    border-style: dashed,
+
+    empty: (
+        padding: 10px 10px
+    ),
+    footer: (
+        padding: 20px
+    ),
+    header: (
+        padding: 20px
+    ),
+
+    content: ( 
+        placeholder: ( 
+            space: 20px, 
+            header: ( font-size: 2rem, padding: 20px 30px 15px, border-color: #e0e0e0, height: 70px), 
+            container: ( padding: 30px), 
+            group: ( 
+                margin: 40px, 
+                header: ( border-color: #dcdce5, title: ( color: #35383d, font-size: 13px)), 
+                item: ( margin: 20px, ), 
+                list: ( 
+                    label: ( font-size: 13px, color: #333333)
+                ),
+                wings: ( border-color: #dcdce5 )
+            ), 
+            form-group: ( 
+                title: ( color: #939393, font-size: 11px)
+            ),
+            label: (
+                font-size: 13px,
+                color: #333333
+            ),
+            toggle: (
+                label: (
+                    color: #3a2e39,
+                    font-size: 13px
+                ),
+                input: (
+                    min-height: 36px
+                )
+            )
+        )
+    )
+);
+// Merge settings and defaults
+$c-container-canvas: map-merge($c-container-canvas, getSettingsMap("c-container-canvas"));
+// Set shortcuts
+$c-map: $c-container-canvas;
+
+.c-collapsible-container__content .c-container-canvas,
+.c-container-canvas {
+    display: block;
+    background-color: map-get($c-map, canvas-bg);
+    border: 1px solid map-get($c-map, canvas-border);
+    border-radius: map-get($c-map, canvas-radius);
+    padding: map-get($c-map, canvas-padding);
+    text-align: map-get($c-map, canvas-text-align);
+
+    &--dashed-border {
+        border-style: map-get($c-map, border-style);
+    }
+
+    &--empty {
+        border-style: map-get($c-map, border-style);
+        padding: map-deep-get($c-map, empty, padding);
+    }
+
+    & + .c-container-canvas {
+        border-radius: 0px 0px map-get($c-map, canvas-radius) map-get($c-map, canvas-radius);
+        padding: map-deep-get($c-map, footer, padding);
+        margin-top: map-get($c-map, canvas-radius)*-1;
+    }
+
+    &--footer {
+        border-radius: 0px 0px map-get($c-map, canvas-radius) map-get($c-map, canvas-radius);
+        padding: map-deep-get($c-map, footer, padding);
+        margin-top: -1px;
+
+        &.c-container-canvas--empty {
+            border-style: map-get($c-map, border-style);
+            padding: map-deep-get($c-map, empty, padding);
+        }
+    }
+
+    &--header {
+        border-radius: map-get($c-map, canvas-radius) map-get($c-map, container-radius) 0px 0px;
+        padding: map-deep-get($c-map, header, padding);
+        margin-bottom: -1px;
+    }
+
+    &__content {
+        display: block;
+        position: relative;
+        max-width: 560px;
+        margin: auto;
+        text-align: left;
+        padding: map-deep-get($c-map, content, placeholder, space)/2 0px;
+
+        .c-text-input {
+            background-color: #fff;
+        }
+
+        &--wide {
+            max-width: none;
+        }
+
+        .p-group {
+            &+.p-group,
+            &+.p-form-group {
+                margin-top: map-deep-get($c-map, content, placeholder, space)*2;
+            }
+            &__header {
+                display: block;
+                padding-bottom: map-deep-get($c-map, content, placeholder, space)/2.5;
+
+                &-bar {
+                    display: table;
+                    width: 100%;
+                }
+                &-title {
+                    display: table-cell;
+                    vertical-align: bottom;
+                    width: 100%;
+                    @include ffamily('semi');
+                    font-size: map-deep-get($c-map, content, placeholder, group, header, title, font-size);
+                    line-height: 1em;
+                    color: map-deep-get($c-map, content, placeholder, group, header, title, color);
+                }
+                &-action {
+                    display: table-cell;
+                    vertical-align: bottom;
+                    line-height: 0px;
+                    white-space: nowrap;
+                }
+            }
+            &__item {
+                &--disabled {
+                    opacity: 0.7;
+                    cursor: not-allowed;
+                    > * {
+                        pointer-events: none;
+                    }
+                }
+
+                &+.p-group__item,
+                &+.p-group__list {
+                    margin-top: map-deep-get($c-map, content, placeholder, space)*1.25;
+                }
+            }
+            &__list {
+                list-style: none;
+                width: 100%;
+                &+.p-group__item,
+                &+.p-group__list {
+                    margin-top: map-deep-get($c-map, content, placeholder, space)*2;
+                }
+                &-item {
+                    &+.p-group__item,
+                    &+.p-group__list {
+                        margin-top: map-deep-get($c-map, content, placeholder, space/2);
+                    }
+                    display: table;
+                    width: 100%;
+                    padding-top: map-deep-get($c-map, content, placeholder, space)/3;
+                    padding-bottom: map-deep-get($c-map, content, placeholder, space)/3;
+                    border-top: 1px solid #dcdce5;
+                    line-height: 0px;
+                    &:last-child {
+                        border-bottom: 1px solid #dcdce5;
+                    }
+                    &-bar {
+                        display: flex;
+                        width: 100%;
+                        align-items: center;
+                        justify-content: space-between;
+                        &+.p-group__list-item-content {
+                            margin-top: map-deep-get($c-map, content, placeholder, space)/3;
+                        }
+                    }
+                    &-content {
+                        display: inline-table;
+                        width: 100%;
+                        animation: getAnimation(fade-in, 0.3s getEase(in-out-sine));
+                    }
+                    &-label {
+                        display: flex;
+                        align-items: center;
+                        flex-grow: 1;
+                        flex-shrink: 1;
+                        padding-right: 1em;
+                        @include ffamily('semi');
+                        font-size: map-deep-get($c-map, content, placeholder, group, list, label, font-size);
+                        color: map-deep-get($c-map, content, placeholder, group, list, label, color);
+                        line-height: 1.2em;
+                    }
+                    &-action {
+                        display: flex;
+                        align-items: middle;
+                        min-width: 60px;
+                        flex-grow: 0;
+                        flex-shrink: 1;
+                        text-align: right;
+                    }
+                }
+            }
+            &__seperator {
+                display: block;
+                height: 1px;
+                font-size: 0px;
+                line-height: 0px;
+                margin: map-deep-get($c-map, content, placeholder, space)/2 0px;
+                border-bottom: 1px solid map-deep-get($c-map, content, placeholder, group, header, border-color);
+            }
+        }
+        .p-form-group {
+            &+.p-group {
+                margin-top: map-deep-get($c-map, content, placeholder, space)*2;
+            }
+            &+.p-form-group {
+                margin-top: map-deep-get($c-map, content, placeholder, space);
+            }
+            &__label {
+                display: inline-block;
+                width: 100%;
+                margin-bottom: map-deep-get($c-map, content, placeholder, space)/2;
+                @include ffamily('semi');
+                font-size: map-deep-get($c-map, content, placeholder, form-group, title, font-size);
+                line-height: 1em;
+                color: map-deep-get($c-map, content, placeholder, form-group, title, color);
+                min-height: 1em;
+            }
+            &__input {
+                display: inline-block;
+                width: 100%;
+                >input {
+                    width: 100%;
+                    min-height: 36px;
+                }
+                >textarea {
+                    width: 100%;
+                }
+            }
+        }
+        .p-label {
+            @include ffamily('semi');
+            font-size: map-deep-get($c-map, content, placeholder, label, font-size);
+            color: map-deep-get($c-map, content, placeholder, label, color);
+            line-height: 30px;
+            vertical-align: middle;
+        }
+        .p-toggle {
+            display: flex;
+            width: 100%;
+            align-items: center;
+            min-height: map-deep-get($c-map, content, placeholder, toggle, input, min-height);
+            
+            &__label {
+                display: flex;
+                align-items: center;
+                white-space: nowrap;
+                flex-grow: 1;
+                flex-shrink: 1;
+                @include ffamily('semi');
+                font-size: map-deep-get($c-map, content, placeholder, toggle, label, font-size);
+                color: map-deep-get($c-map, content, placeholder, toggle, label, color);
+                padding-right: 1em;
+            }
+
+            &__input {
+                display: flex;
+                align-items: center;
+                flex-grow: 0;
+                flex-shrink: 0;
+            }
+        }
+    }
+
+    .p-group__list {
+        text-align: right;
+    }
+    .p-group__list-item {
+        display: inline-block;
+        width: auto;
+        &-label,
+        &-input {
+            display: inline-block;
+        }
+        &-label {
+            @include ffamily('semi');
+            font-size: 14px;
+            vertical-align: middle;
+            margin-right: 10px
+        }
+    }    
+   
+    &--split-view {
+        padding: map-get($c-map, split-padding);
+        border-top: 1px solid map-get($c-map, canvas-border);
+        border-style: map-get($c-map, border-style);
+        border-bottom: none;
+        border-left: none;
+        border-right: none;
+        margin-top: 80px;
+        .p-group__list {
+            text-align: right;
+        }
+        .p-group__list-item {
+            display: inline-block;
+            width: auto;
+            &-label,
+            &-input {
+                display: inline-block;
+            }
+            &-label {
+                @include ffamily('semi');
+                font-size: 14px;
+                vertical-align: middle;
+                margin-right: 10px
+            }
+        }
+    }
+}

@@ -1,0 +1,80 @@
+<form [formGroup]="guestForm">
+    <div class="p-group" *ngIf="showQuickFill">
+        <div class="p-group__item">
+            <div class="p-toggle">
+                <span class="p-toggle__label">
+                    Hızlı gişe bilgileri kullanılsın mı?
+                </span>
+                <span class="p-toggle__input">
+                    <app-checkbox type="lightswitch" (changeEvent)="quickFillChangeHandler($event)"></app-checkbox>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="p-group">
+        <div class="p-group__item row">
+            <div class="p-formgroup col-xs-8 padding-right-15">
+                <div class="p-form-group__label">
+                    ADI<sup>*</sup>
+                </div>
+                <div class="p-form-group__input">
+                    <app-text-input type="alpha" (changeEvent)="inputChangeEventHandler($event, 'Name')" placeholder="Adınız" [value]="customer?.Name" [form]="guestForm" name="Name" [required]='true'></app-text-input>
+                </div>
+            </div>
+            <div class="p-formgroup col-xs-8 padding-left-15">
+                <div class="p-form-group__label">
+                    SOYADI<sup>*</sup>
+                </div>
+                <div class="p-form-group__input">
+                    <app-text-input type="alpha" (changeEvent)="inputChangeEventHandler($event, 'Surname')" placeholder="Soyadınız" [value]="customer?.Surname" [form]="guestForm" name="Surname" [required]='true'></app-text-input>
+                </div>
+            </div>
+        </div>
+
+        <div class="p-group__item row">
+            <div class="p-formgroup col-xs-8 padding-right-15">
+                <div class="p-form-group__label">
+                    GSM NO<sup>*</sup>
+                </div>
+                <div class="p-form-group__input">
+                    <!-- <app-text-input type="tel" (changeEvent)="inputChangeEventHandler($event, 'PhoneNumber')" placeholder="Telefon Numaranız" [value]="customer?.PhoneNumber" [form]="guestForm" name="PhoneNumber" [required]='true'></app-text-input> -->
+                    <app-phone-input (changeEvent)="inputChangeEventHandler($event, 'PhoneNumber')" [value]="customer?.PhoneNumber" countryCode="TR" name="PhoneNumber" [form]="guestForm" [required]='true'></app-phone-input>
+                </div>
+            </div>
+            <div class="p-formgroup col-xs-8 padding-left-15">
+                <div class="p-form-group__label">
+                    E-POSTA ADRESİ<sup>*</sup>
+                </div>
+                <div class="p-form-group__input">
+                    <app-text-input type="email" (changeEvent)="inputChangeEventHandler($event, 'Email')" placeholder="@" [value]="customer?.Email" [form]="guestForm" name="Email" [required]='true'></app-text-input>
+                </div>
+            </div>
+        </div>
+
+        <div class="p-group__item row" *ngIf="hasIdNo">
+            <div class="p-formgroup col-xs-8 padding-right-15">
+                <div class="p-form-group__label">
+                    TC KİMLİK NO<sup>*</sup>
+                </div>
+                <div class="p-form-group__input">
+                    <app-text-input type="tckn" (changeEvent)="inputChangeEventHandler($event, 'TCNumber')" placeholder="TC Kimlik No" [value]="customer?.TCNumber" [form]="guestForm" name="TCNumber" [required]='true'></app-text-input>
+                </div>
+            </div>
+        </div>
+        <div class="p-group__item row" *ngIf="hasCityTown">
+            <app-city-town-selector>
+                <div class="col-xs-16">
+                    <div class="float-sm-left col-xs-8 padding-right-15">
+                        <label for="il" class="col-sm-16 form-control-label">İL</label>
+                        <app-selectbox #city (changeEvent)="inputChangeEventHandler($event, 'City')" [form]="guestForm" name="City"></app-selectbox>
+                    </div>
+                    <div class="float-sm-left col-xs-8 padding-left-15">
+                        <label for="ilce" class="col-sm-16 form-control-label">İLÇE </label>
+                        <app-selectbox #town (changeEvent)="inputChangeEventHandler($event, 'Town')" [form]="guestForm" name="Town"></app-selectbox>
+                    </div>
+                </div>
+            </app-city-town-selector>
+        </div>
+
+    </div>
+</form>

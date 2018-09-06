@@ -1,0 +1,105 @@
+/* --------------------------------------------------------
+author: Abdullah Karadeniz
+----------------------------------------------------------*/
+$c-inline-edit: (
+  padding: 0.4em 0px,
+  font-size: 15px,
+  color: #35383d,
+  disabled-color: lighten(#35383d, 50%),
+  disabled-background-color: #f7f7f7,
+  
+  label: (
+    color: #9d9d9d,
+    margin: 0.15em 0px 0.1em //input'tan kaynaklanan boşlukları dengelemek için
+  ),
+
+  input: (
+
+  ),
+
+  edit-btn: (
+    color: #bdbdbd,
+    hover-color: darken(#bdbdbd, 25%),
+    font-size: 1.1em
+  )
+);
+
+$c-inline-edit: map-merge($c-inline-edit, getSettingsMap("c-inline-edit"));
+$c-map: $c-inline-edit;
+
+.c-inline-edit {
+  display: inline-block;
+  position: relative;
+  width: 100%;
+  font-size: map-get($c-map, font-size);
+  line-height: 0px;
+  color: map-get($c-map, color);
+  @include ffamily("regular");
+
+  &--underline {
+    .c-inline-edit__input-bar {
+      //padding-top: 0.5em;
+    }
+
+    .c-inline-edit__label-bar {
+      //margin-bottom: calc(1px + #{map-deep-get($c-map, label, margin-bottom)});
+    }
+  }
+
+  &--dirty {
+    .c-inline-edit__label-bar {
+      color: map-get($c-map, color);
+    }
+  }
+
+  &__input-bar {
+    display: flex;
+    width: auto;
+    color: map-get($c-map, color);
+    white-space: nowrap;
+    overflow: hidden;
+    animation: getAnimation(fade-in, 0.35s getEase(in-out-sine));
+
+    .c-text-input {
+      font-size: inherit !important;
+      font-family: inherit;
+    }
+  }
+
+  &__label-bar {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: auto;
+    color: map-deep-get($c-map, label, color);
+    white-space: nowrap;
+    padding: map-get($c-map, padding);
+    margin: map-deep-get($c-map, label, margin);
+  }
+
+  &__label {
+    position: relative;
+    vertical-align: middle;
+    overflow: hidden;
+    padding-right: 0.3em;
+    text-overflow: ellipsis;
+    line-height: 1.2em;
+  }
+
+  &__edit-button {
+    position: relative;
+    cursor: pointer;
+    vertical-align: middle;
+    color: map-deep-get($c-map, edit-btn, color);
+    font-size: map-deep-get($c-map, edit-btn, font-size);
+    padding-top: 0.15em;
+    &:hover {
+      color: map-deep-get($c-map, edit-btn, hover-color);
+    }
+  }
+}
+
+$c-map: null;
+/* --------------------------------------------------------
+author: Abdullah Karadeniz
+----------------------------------------------------------*/

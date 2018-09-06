@@ -1,0 +1,245 @@
+<div class="or-reservations">
+    <app-no-data *ngIf="noReservations"
+                 [ngClass]="{'main-loader': isLoading }"
+                 [icon]='{type: "svg", name: "cms-empty"}'
+                 [hasContainer]="true"
+                 style="max-width:50%; margin-top:60px; margin-bottom:60px;"
+                 title="Performansa ait rezervasyon kaydı bulunamadı"
+                 [description]="isSuitableForNew ? 'Yeni bir rezervasyon oluşturabilirsiniz' : 'Bu performans rezervasyon oluşturmaya uygun değildir'"
+                 [action]="isSuitableForNew ? {label: 'REZERVASYON EKLE', action:'goToCreate', params:{} } : null"
+                 (actionEvent)="goToCreate($event)">
+    </app-no-data>
+
+
+    <div class="p-title-container row" style="margin:30px;" *ngIf="!noReservations">
+        <div class="p-title-container__left col-sm-8">
+            <div class="p-title-container__left-item">
+                <app-inline-search-input placeholder="Referans Koduyla Arayın" [isIconAlignLeft]='false' (onInputSave)="onInputChange($event)"
+                        (onInputChange)="onInputChange($event)">
+                        </app-inline-search-input>
+            </div>
+        </div>
+        <div class="p-title-container__right col-sm-8" style="text-align:right">
+            <span class="p-title-container__right-item">
+                <app-pill-group [pills]="pills" (selectPillFilterAction)="pillFilter($event)" [canToggle]="false"></app-pill-group>
+            </span>
+        </div>
+    </div>
+
+    <app-split-container [fixedWidth]="480" fixedFloat="left" [hasBorder]="true" *ngIf="!noReservations">
+        <div fixed left class="or-reservations--reservation-list">
+            <app-no-data *ngIf="noReservationsSearch"
+                        [ngClass]="{'main-loader': isLoading }"
+                        [icon]='{type: "svg", name: "cms-empty"}'
+                        [hasContainer]="true"
+                        style="max-width:80%; margin-top:30px; margin-bottom:60px;"
+                        title="Aramanızla eşleşen rezervasyon kaydı bulunamadı"
+                        description="Arama kriterini değiştirerek yeniden deneyebilirsiniz">
+            </app-no-data>
+
+            <div class="p-container p-container--aside-padding p-container--has-footer" *ngIf="!noReservationsSearch">
+                <app-responsive-table>
+                    <div class="c-responsive-table__row row" *ngFor="let reservation of reservations" [ngClass]="{'c-responsive-table__row__selected' : reservation.isSelected}">
+                        <div class="or-reservations--reservation-item" >
+                            <div class="or-reservations--reservation-item__header">
+                                <div (click)="selectReservation($event, reservation)" class="col-sm-15">
+                                    <i class="icon__n icon__n--md icon__n--access_time"></i>
+                                    <span class="or-reservations--reservation-item--name">{{reservation.Name}}</span>
+                                </div>
+                                <div class="col-sm-1 text-right">
+                                    <app-button (click)="openReservationContextMenu($event, reservation)" type="icon" icon="more_vert" theme="secondary"></app-button>
+                                </div>
+                            </div>
+                            <div *ngIf="reservation.isSelected">
+                                <hr>
+                                <p *ngIf="reservation.Description" class="or-reservations--reservation-item--description">{{ reservation.Description }}</p>
+                                <ul style="list-style:none;">
+                                    <li class="or-reservations--reservation-item__info">
+                                        <div class="or-reservations--reservation-item__info--content">
+                                            <span class="or-reservations--reservation-item__info--content-title">
+                                                TİPİ
+                                            </span>
+                                            <span class="or-reservations--reservation-item__info--content-text">
+                                                {{reservation.Type_Desc}}
+                                            </span>
+                                        </div>
+                                    </li>
+                                    <li class="or-reservations--reservation-item__info">
+                                        <div class="or-reservations--reservation-item__info--content">
+                                            <span class="or-reservations--reservation-item__info--content-title">
+                                                DURUM
+                                            </span>
+                                            <span class="or-reservations--reservation-item__info--content-text">
+                                                {{reservation.Status_Desc}}
+                                            </span>
+                                        </div>
+                                    </li>
+                                    <li class="or-reservations--reservation-item__info">
+                                        <div class="or-reservations--reservation-item__info--content">
+                                            <span class="or-reservations--reservation-item__info--content-title">
+                                                GİRİŞ HAKKI
+                                            </span>
+                                            <span class="or-reservations--reservation-item__info--content-text">
+                                                <strong>{{reservation.EntryCount}}</strong>
+                                            </span>
+                                        </div>
+                                    </li>
+                                    <li class="or-reservations--reservation-item__info">
+                                        <div class="or-reservations--reservation-item__info--content">
+                                            <span class="or-reservations--reservation-item__info--content-title">
+                                                AÇIK
+                                            </span>
+                                            <span class="or-reservations--reservation-item__info--content-text">
+                                                <strong>{{reservation.OpenCount}}</strong>
+                                            </span>
+                                        </div>
+                                    </li>
+                                    <li class="or-reservations--reservation-item__info">
+                                        <div class="or-reservations--reservation-item__info--content">
+                                            <span class="or-reservations--reservation-item__info--content-title">
+                                                ONAYLANAN
+                                            </span>
+                                            <span class="or-reservations--reservation-item__info--content-text">
+                                                <strong>{{reservation.AcceptedCount}}</strong>
+                                            </span>
+                                        </div>
+                                    </li>
+                                    <li class="or-reservations--reservation-item__info">
+                                        <div class="or-reservations--reservation-item__info--content">
+                                            <span class="or-reservations--reservation-item__info--content-title">
+                                                REDDEDİLEN
+                                            </span>
+                                            <span class="or-reservations--reservation-item__info--content-text">
+                                                <strong>{{reservation.RejectedCount}}</strong>
+                                            </span>
+                                        </div>
+                                    </li>
+                                    <li class="or-reservations--reservation-item__info">
+                                        <div class="or-reservations--reservation-item__info--content">
+                                            <span class="or-reservations--reservation-item__info--content-title">
+                                                İPTAL EDİLEN
+                                            </span>
+                                            <span class="or-reservations--reservation-item__info--content-text">
+                                                <strong>{{reservation.ClosedCount}}</strong>
+                                            </span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </app-responsive-table>
+            </div>
+            <div class="p-footer" [ngClass]="{'p-footer--white': showPagination}">
+                <div class="p-footer__pagination" *ngIf="showPagination">
+                    <app-pagination size="xs"
+                        [options]="pageSizes"
+                        [totalItem]="countReservation"
+                        [showItemPerPage]="pageSizeReservation"
+                        [currentPage]="currentPageReservation"
+                        (changeEvent)="changePageSizeReservation($event)"
+                        (transistPage)="transistPageReservation($event)"></app-pagination>
+                </div>
+                <div class="p-footer__line-actions" *ngIf="showPagination">
+                    <app-button (clickEvent)="goToCreate($event)" type="icon" icon="plus" shape="circle" theme="secondary"></app-button>
+                </div>
+                <span *ngIf="!showPagination">
+                    <app-button (clickEvent)="goToCreate($event)" type="icon" icon="plus"></app-button>
+                    <app-button (clickEvent)="goToCreate($event)" type="link" label="REZERVASYON EKLE"></app-button>
+                </span>
+            </div>
+        </div>
+        <div fluid>
+            <div>
+                <app-no-data *ngIf="noDataInContent"
+                             [ngClass]="{'main-loader': isLoading }"
+                             [icon]='{type: "svg", name: "cms-empty"}'
+                             [hasContainer]="true"
+                             style="max-width:50%; margin-top:30px"
+                             title="Aramanız ile eşleşen rezervasyon kaydı bulunamadı"
+                             description="Arama kriterini değiştirerek yeniden deneyebilirsiniz">
+                </app-no-data>
+
+                <div class="o-list-view" *ngIf="!noDataInContent">
+                    <div class="o-list-view__content">
+                        <app-responsive-table [ngClass]="{'main-loader': isLoading }">
+                            <div class="c-responsive-table__caption row">
+                                <div class="c-responsive-table__primary-column hidden-sm-down col-md-3">
+                                    <span>MÜŞTERİ</span>
+                                </div>
+                                <div class="c-responsive-table__secondary-column hidden-sm-down col-md-12">
+                                    <div class="col-md-3">
+                                        <span>KOLTUK</span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <span>TELEFON</span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <span>REFID / KOD</span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <span>RSVP TARİHİ</span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <span>TİP</span>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <span>DURUM</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="c-responsive-table__row row" *ngFor="let customer of reservationCustomers">
+                                <div class="c-responsive-table__primary-column col-sm-15 col-md-3">
+                                    <div class="c-primary-column-line">
+                                        <div class="c-primary-column-line__primary-content">
+                                            <span class="c-primary-column-line__title">
+                                                {{ customer.AnonymousMember ? customer.AnonymousMember.FirstName : (customer.CrmMember ? (customer.CrmMember.Name || '-')
+                                                  : "-")}} {{ customer.AnonymousMember ? customer.AnonymousMember.LastName : (customer.CrmMember ? (customer.CrmMember.Surname || '_')
+                                                  : "") }}
+                                            </span>
+                                        </div>
+                                              
+                                    </div>
+                                </div>
+                            
+
+                                <div class="c-responsive-table__secondary-column hidden-sm-down col-md-12">
+                                    <div class="col-md-3">
+                                        <app-button (click)="openCustomerSeatInfoBox($event, customer)" theme="secondary" [label]="customer.Quantity"></app-button>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <span class="text">{{ customer.AnonymousMember ? (customer.AnonymousMember.PhoneNumber | phoneFormat) : (customer.CrmMember ? (customer.CrmMember.PhoneNumber | phoneFormat)
+                                        : "-") }}
+                                        </span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <span class="text">{{customer.ReservationCode}}</span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <span class="text">{{customer.ExpirationDate | relativeDate}}</span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <span class="text">{{customer.Reservation?.Type_Desc}}</span>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <i class="icon__n icon__n--md icon__n--color-success icon__n--done" *ngIf="customer.Status == 1"></i>
+                                        <i class="icon__n icon__n--md icon__n--color-danger icon__n--block" *ngIf="customer.Status == 2"></i>
+                                        <i class="icon__n icon__n--md icon__n--color-warning icon__n--schedule" *ngIf="customer.Status == 3"></i>
+                                    </div>
+                                </div>
+                              
+                                <div class="c-responsive-table__action-btn col-sm-1">
+                                    <app-button [isDisabled]="customer.Status === 2" (clickEvent)="openReservationCustomerContextMenu($event, customer)" type="icon" icon="more_vert" theme="secondary"></app-button>
+                                </div>
+                            </div>
+                        </app-responsive-table>
+                    </div>
+                    <div class="o-list-view__footer">
+                        <app-pagination size="xs" [options]="pageSizes" [totalItem]="count" [showItemPerPage]="pageSize" [currentPage]="currentPage"
+                            (changeEvent)="changePageSize($event)" (transistPage)="transistPage($event)"></app-pagination>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </app-split-container>
+</div>

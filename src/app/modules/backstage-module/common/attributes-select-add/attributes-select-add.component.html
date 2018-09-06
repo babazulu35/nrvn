@@ -1,0 +1,54 @@
+<app-dialog-box>
+
+  <div #header class="c-dialog-box__header c-dialog-box__header--border c-dialog-box__header--padding" *ngIf="!showWithoutBox">
+    <div class="c-dialog-box__header-bar">
+      <h1 class="c-dialog-box__header-title">
+        {{title}}
+      </h1>
+      <div class="c-dialog-box__header-actions">
+        <app-button (click)="tether.dismiss()" type="icon" icon="close" theme="secondary"></app-button>
+      </div>
+    </div>
+  </div>
+
+  <div #body
+    class="c-dialog-box__body c-dialog-box__body--no-padding ">
+
+    <div class="p-container" *ngIf="!isLoading && attributes != null">
+		  <app-simple-treeview
+        (actionEvent)="treeActionHandler($event)"
+        [data]="attributes"
+        ></app-simple-treeview>
+	  </div>
+    <div class="p-container padding-top-50 d-block" *ngIf="!isLoading && attributes == null">
+      <app-no-data 
+        [description]="'Bu tip içerisinde bir özellik bulunamadı.'"
+        [icon]="{type: 'icon', name: 'cancel'}"></app-no-data>
+    </div>
+    <div *ngIf="isLoading" class="oc-attributes-select-add__overlay">
+      <app-promise-icon [isPromising]="isLoading" size="lg"></app-promise-icon>
+    </div>
+  </div>
+
+  <div #footer
+    class="c-dialog-box__footer"
+    [class.c-dialog-box__footer--auto-height]="showWithoutBox">
+    <div *ngIf="selectedAttributes?.length > 0"
+      class="c-dialog-box__footer-sticky-contents">
+      <div  class="oc-attributes-select-add__attributes">
+          <app-tag-group
+            [theme]="'secondary'"
+            (changeEvent)="tagChangeHandler($event)"
+            (actionEvent)="tagActionHandler($event)"
+            [tags]="selectedAttributes"
+            ></app-tag-group>
+      </div>
+    </div>
+    <div class="c-dialog-box__footer-content" *ngIf="!showWithoutBox">
+      <div class="col-xs-16">
+        <app-button [isDisabled]="selectedAttributes?.length <= 0" (clickEvent)="submit($event)">EKLE</app-button>
+      </div>
+    </div>
+  </div>
+
+</app-dialog-box>

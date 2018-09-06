@@ -1,0 +1,20 @@
+$oc-transaction-refund-box: (
+	
+);
+
+// Merge settings and defaults
+$oc-transaction-refund-box: map-merge($oc-transaction-refund-box, getSettingsMap("oc-transaction-refund-box"));
+
+// Set shortcuts
+$c-map: $oc-transaction-refund-box;
+
+.oc-transaction-refund-box {
+    display: block;
+    
+    .c-selectbox {
+        width: 300px;
+    }
+}
+
+//Reset
+$c-map: null;

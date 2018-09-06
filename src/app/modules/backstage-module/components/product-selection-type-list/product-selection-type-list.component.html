@@ -1,0 +1,56 @@
+<div class="c-product-selection-type-list__caption">
+  <div class="row">
+    <span class="col-xs-4">SEÇİM KANALI</span>
+    <span class="col-xs-6 text-xs-center">KOLTUK SEÇME</span>
+    <span class="col-xs-6 text-xs-center">KOLTUK YERLEŞTİRME</span>
+  </div>
+</div>
+
+<div *ngIf="!groupSelectionIsActive" class="c-product-selection-type-list__body">
+  <div class="c-product-selection-type-list__item row" *ngFor="let item of items">
+    <span class="col-xs-4">
+      <i class="c-product-selection-type-list__item-icon icon__n icon__n--{{item.icon}}"></i>
+      <span class="c-product-selection-type-list__item-title">{{item.name}}</span>
+    </span>
+    <span class="col-xs-6 text-xs-center">
+      <app-multi-select-group 
+        (changeEvent)="multiSelectGroupChangeHandler($event, item.selectionType, 'SelectionType')"
+        actionType="radio"
+        [selectedValues]="[item?.selectionType?.SelectionType || 0]"
+        [data]="item?.selectionTypes"></app-multi-select-group>
+    </span>
+
+    <span class="col-xs-6 text-xs-center">
+      <app-multi-select-group 
+        (changeEvent)="multiSelectGroupChangeHandler($event, item.selectionType, 'AllocationType')"
+        actionType="radio"
+        [selectedValues]="[item?.selectionType?.AllocationType || 0]"
+        [data]="item?.allocationTypes"></app-multi-select-group>
+    </span>
+
+  </div>
+</div>
+
+<div *ngIf="groupSelectionIsActive && defaultItem" class="c-product-selection-type-list__body">
+    <div class="c-product-selection-type-list__item row">
+      <span class="col-xs-4">
+        <span class="c-product-selection-type-list__item-title">Tüm Satış Kanalları</span>
+      </span>
+      <span class="col-xs-6 text-xs-center">
+        <app-multi-select-group 
+          (changeEvent)="multiSelectGroupChangeHandler($event, null, 'SelectionType')"
+          actionType="radio"
+          [selectedValues]="[defaultItem?.selectionType?.SelectionType || 0]"
+          [data]="defaultItem?.selectionTypes"></app-multi-select-group>
+      </span>
+  
+      <span class="col-xs-6 text-xs-center">
+        <app-multi-select-group 
+          (changeEvent)="multiSelectGroupChangeHandler($event, null, 'AllocationType')"
+          actionType="radio"
+          [selectedValues]="[defaultItem?.selectionType?.AllocationType || 0]"
+          [data]="defaultItem?.allocationTypes"></app-multi-select-group>
+      </span>
+  
+    </div>
+</div>

@@ -1,0 +1,31 @@
+.c-role-group-list {
+    &__title {
+        @include ffamily('semi');
+        font-size: 11px;
+        color: #dcdce5;
+        padding-left: 30px;
+        margin-bottom: 10px;
+        display: block;
+    }
+    ul>li {
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0px 10px 0px 30px;
+        height: 40px;
+        font-size: 13px;
+        line-height: 1;
+        @include ffamily('regular');
+        font-style: normal;
+        font-weight: normal;
+        color: #35383d;
+        text-decoration: none;
+        cursor: pointer;
+        &:hover,
+        &.selected {
+            background-color: #f7f7f7;
+            @include ffamily('bold');
+        }
+    }
+}

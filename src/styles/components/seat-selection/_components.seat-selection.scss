@@ -1,0 +1,103 @@
+/**
+* Seat Selection:
+* Author: Can Sivri
+*
+*/
+
+// Variables
+$c-seat-selection: ( bg: #fff, padding: 18px 20px, border: 1px solid #dcdce5, border-radius-value: 3px, );
+// Merge settings and defaults
+$c-seat-selection: map-merge($c-seat-selection, getSettingsMap("c-seat-selection"));
+// Set shortcuts
+$c-map: $c-seat-selection;
+.c-seat-selection {
+    display: block;
+    box-sizing: border-box;
+    &__item {
+        display: table;
+        vertical-align: middle;
+        margin: 0 0 5px 0;
+        &:last-child {
+            margin-bottom: 0;
+        }
+        >.icon__n {
+            display: inline-block;
+            vertical-align: middle;
+            padding: 1px 6px 0;
+            font-size: 23px;
+            color: #bdbdbd;
+        }
+    }
+    &__item-seat {
+        position: relative;
+        min-width: 100px;
+        display: inline-block;
+        vertical-align: middle;
+        border: map-get($c-map, border);
+        border-radius: map-get($c-map, border-radius-value);
+        background-color: map-get($c-map, bg);
+        padding: 0 30px 0 10px;
+        min-height: 28px;
+        @include ffamily("bold");
+        font-size: 13px;
+        line-height: 28px;
+        color: #bdbdbd;
+        &--new {
+            background-color: #f7f7f7;
+            border-style: dashed;
+        }
+        &--focused {
+            border: 1px solid red;
+        }
+        &--changed,
+        &--selected {
+            background-color: #f7f7f7;
+            color: #35383d;
+            .c-seat-selection__seat-clear {
+                position: absolute;
+                top: 50%;
+                right: 4px;
+                @include t--size(22px, 22px);
+                @include t--translateY(-50%);
+                font-size: 23px;
+                color: #bdbdbd;
+                a,
+                button {
+                    color: #bdbdbd;
+                    text-decoration: underline;
+                    outline: none;
+                }
+            }
+        }
+        &--selected {
+            color: #bdbdbd;
+        }
+    }
+    &__item-status {
+        display: inline-block;
+        vertical-align: middle;
+        margin: 0 0 0 35px;
+        width: 9px;
+        height: 9px;
+        background-color: #bdbdbd;
+        border-radius: 50%;
+        &--up,
+        &--down {
+            position: relative;
+            left: -1px;
+            background-color: transparent;
+            @include t--size(0);
+            border-radius: 0;
+        }
+        &--up {
+            top: -3px;
+            border: 6px solid transparent;
+            border-bottom: 7px solid #ec4e48;
+        }
+        &--down {
+            top: 3px;
+            border: 6px solid transparent;
+            border-top: 7px solid #6bba18;
+        }
+    }
+}

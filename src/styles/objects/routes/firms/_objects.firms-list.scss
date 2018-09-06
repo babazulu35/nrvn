@@ -1,0 +1,75 @@
+/***
+ * Create Venue
+ * Author: Fatih Turan
+ */
+
+// Venue Create Route Object Overrides
+$or-firms-list: ();
+// Merge settings and defaults
+$or-firms-list: map-merge($or-firms-list, getSettingsMap("or-firms-list"));
+// Set shortcuts
+$or-map: $or-firms-list;
+.or-firms-list {
+    .container {
+        &--set-edge-padding {
+            padding: 30px;
+        }
+    }
+    .c-tab-bar {
+        padding: 25px 0px;
+    }
+    .c-tab-bar__content {
+        padding: 0px;
+    }
+    .c-tab-bar__left-column {
+        display: table-cell;
+        float: left;
+        vertical-align: middle;
+    }
+    .c-tab-bar__right-column {
+        display: table-cell;
+        float: right;
+        vertical-align: middle;
+    }
+    h4 {
+        @include ffamily('semi');
+    }
+    // input {
+    //   height: 38px;
+    //   font-size: 15px;
+    //   @include ffamily('regular');
+    //   font-style: normal;
+    //   font-weight: normal;
+    //   color: #262126;
+    //   border: 1px solid #dcdce5;
+    //   border-radius: 2px;
+    //   &::-ms-reveal,
+    //   &::-ms-clear {
+    //       display: none;
+    //   }
+    //   &:required {
+    //       box-shadow: none !important;
+    //   }
+    //   &:invalid {
+    //       box-shadow: none !important;
+    //   }
+    //   &:-webkit-autofill {
+    //       -webkit-box-shadow: 0 0 0px 1000px white inset !important;
+    //   }
+    //   &::-webkit-contacts-auto-fill-button {
+    //       visibility: hidden;
+    //       display: none !important;
+    //       pointer-events: none;
+    //       position: absolute;
+    //       right: 0;
+    //   }
+    //   &::-webkit-outer-spin-button,
+    //   &::-webkit-inner-spin-button {
+    //       -webkit-appearance: none;
+    //       margin: 0;
+    //   }
+    // }
+}
+
+//Reset
+$or-map: null;

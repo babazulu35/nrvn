@@ -1,0 +1,27 @@
+$c-multi-inline-edit:( width: 110%, position:absolute, height:100%); // Merge settings and defaults
+$c-multi-inline-edit: map-merge($c-multi-inline-edit, getSettingsMap("c-multi-inline-edit"));
+// Set shortcuts
+$c-map: $c-multi-inline-edit;
+.c-multi-inline {
+    &__active {
+        position: absolute;
+        width: 115%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        background: #ffffff;
+        z-index: 1;
+        input,
+        i {
+            position: relative;
+            top: 50%;
+            transform: translateY(-50%);
+            left: 0;
+        }
+        i {
+            height: auto !important;
+            cursor: pointer;
+            margin-right: 10px
+        }
+    }
+}

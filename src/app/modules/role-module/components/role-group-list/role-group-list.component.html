@@ -1,0 +1,13 @@
+<div class="c-role-group-list">
+    <span class="c-role-group-list__title">
+      ROL GRUPLARI
+  </span>
+    <ul [ngClass]="{'main-loader': isLoading}">
+        <li *ngFor="let list of roleGroupList " (click)="onClickedGroup(list)" [ngClass]="{'selected':isSelected[list.Id]}">
+            <a> {{list.Name}}</a>
+            <!-- TODO: SILME OZELLİĞİ GELDİKTEN SONRA AKTİF EDİLECK -->
+            <!-- app-button theme="secondary" *ngIf="isSelected[list.Id]" disabled="false" [isPromising]="false" icon="delete" type="icon" (click)="removeProduct(model, product)">
+                </app-button> -->
+        </li>
+    </ul>
+</div>

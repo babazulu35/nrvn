@@ -1,0 +1,50 @@
+<app-split-container [fixedWidth]="480" *ngIf="currentState && previousState">
+    <div fluid>
+        <div class="p-header-bar">
+            <div class="boxoffice-bar">
+                <app-button theme="primary" icon="keyboard_arrow_left" shape="rounded" type="icon" size="md" (clickEvent)="goBack()"></app-button>
+                <h3>Ödeme İşlemleri</h3>
+            </div>
+
+            <!--             <div class="boxoffice-bar-ref">
+                <span><strong>Sepet Id</strong><em> {{refId}} </em></span>
+            </div> -->
+
+        </div>
+        <div class="p-container">
+            <div class="p-group">
+                <!--                <div class="p-group__header">
+                    <div class="p-group__header-bar">
+                        <div class="p-group__header-title">
+                            Ürünler
+                        </div>
+                    </div>
+                </div>-->
+                <div class="" *ngIf="previousState?.UnassignedProducts?.length > 0">
+                    <h5>Koltuk Seçimi Uyarı!</h5>
+                    <ul>
+                        <li *ngFor="let unassignedProduct of previousState?.UnassignedProducts">
+                            <strong>{{unassignedProduct?.Event?.Name}} {{unassignedProduct?.Product?.Name}} {{unassignedProduct?.Variant?.Name}} :</strong>
+                            <i>{{unassignedProduct?.Reason}}</i>
+                        </li>
+                    </ul>
+                </div>
+                <div class="p-group__item full-width">
+                    <app-wide-col-basket-item [state]="currentState"></app-wide-col-basket-item>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div fixed>
+        <div class="p-container full-height">
+            <div class="p-group full-height default-border">
+                <app-multiple-payment-block [expiresIn]="expiresIn" [state]="currentState" (paymentActionEvent)='paymentActionHandler($event)'></app-multiple-payment-block>
+            </div>
+            <!-- /.p-group -->
+        </div>
+        <!-- /.p-container -->
+    </div>
+
+    <!-- /.o-split-container__fixed -->
+</app-split-container>

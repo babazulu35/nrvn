@@ -1,0 +1,93 @@
+/* --------------------------------------------------------
+version: 1.0
+author: Can SİVRİ
+----------------------------------------------------------*/
+
+/***
+* Icon Grid Component:
+*/
+
+/**
+* Icon Grid:
+* `.c-icon-grid - Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque repellat autem deleniti odit repellendus temporibus placeat ipsa similique, neces
+*
+*     @example
+*   	<ul class="c-icon-grid">
+*				<li class="c-icon-grid__item">
+*					<a href="#">
+*						<figure><img src="../../../images/icon-grid/seating-arrangement01.jpg" alt="" /></figure>
+*						<span class="c-icon-grid__item__title">Spor Karşılaşması</span>
+*					</a>
+*				</li>
+*			</ul>
+*
+
+*/
+
+
+// Set defaults
+
+$c-icon-grid: (
+	width: 114px,
+	padding: 0px,
+	radius: 8px,
+	font-size: 13px,
+	text-color: #333,
+	active-border-color: #333,
+	item-figure-width: 112px,
+	item-figure-height: 88px,
+	item-figure-margin: 0 0 8px 0, 
+	item-figure-border: 1px solid #dcdce5
+);
+
+// Merge settings and defaults
+$c-icon-grid: map-merge($c-icon-grid, getSettingsMap("c-icon-grid"));
+
+// Set shortcuts
+$c-map: $c-icon-grid;
+
+
+.c-icon-grid {
+	display: block;
+	box-sizing: border-box;
+	@include ffamily(semi);
+	text-align: center;
+	list-style: none;
+	font-size: 0;
+
+	&__item {
+		display: inline-block;
+		vertical-align: top;
+		padding: map-get($c-map, padding);
+		a, a:focus, a:active, a:hover {text-decoration:none;}
+		&:hover, &:focus, &:active, &--selected {
+			outline:none;
+			figure, .c-icon-grid__item__new, .c-add-button, .c-add-button:hover {border-color:map-get($c-map, active-border-color) !important;}
+		}
+	}
+	.c-icon-grid__item-content {
+		width: map-get($c-map, width);
+	}
+	.c-icon-grid__item__title {
+		@include ffamily("semi");
+		font-size: map-get($c-map, font-size);
+		color: map-get($c-map, text-color);
+		text-decoration: none;
+	}
+	figure, .c-icon-grid__item__new {
+		overflow: hidden;
+		width: map-get($c-map, item-figure-width);
+		height: map-get($c-map, item-figure-height);
+		margin: map-get($c-map, item-figure-margin);
+		border: map-get($c-map, item-figure-border);
+		@include t--border-radius(map-get($c-map, radius));
+		-webkit-mask-image: -webkit-radial-gradient(circle, white 100%, black 100%);
+		img,
+		.c-add-button {
+			position:relative;
+			top: 50%;
+			transform: translateY(-50%);
+			padding-left:2px;
+		}
+	}
+}

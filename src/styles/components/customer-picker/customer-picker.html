@@ -1,0 +1,329 @@
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Müşteri Arayın</title>
+	<link rel="stylesheet" href="../../../css/main.css">
+	<style>
+		html, body {
+			background-color: #353535;
+		}
+		section {
+			margin: 50px auto;
+			width: 590px;
+			display: block;
+		}
+	</style>
+</head>
+<body>
+
+	<section> <!-- step 1 -->
+    <div class="c-customer-picker">
+        <div class="c-dialog-box">
+            <div #header class="c-dialog-box__header c-dialog-box__header--border c-dialog-box__header--padding">
+            <div class="c-dialog-box__header-bar">
+                <h1 class="c-dialog-box__header-title">
+                        Müşteri Arayın
+                <!-- {{title}} -->
+                </h1>
+                <div class="c-dialog-box__header-actions">
+                <a href="#" (click)="tetherService.dismiss()" class="icon__n icon__n--close"></a>
+                </div>
+            </div>
+            </div><!-- /.c-dialog-box__header -->
+
+            <div #body class="c-dialog-box__body c-dialog-box__body--no-padding c-dialog-box__body--no-scroll">
+                <div class="p-container">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="c-selectbox">
+                                <div class="c-selectbox__field">
+                                    <select>
+                                        <option>ADA GÖRE</option>
+                                        <option>SIRAYA GÖRE</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <div class="c-mock-box c-mock-box--small">
+                                <h1>Buraya <strong>c-inline-search-input</strong> komponenti gelecek</h1>
+                                <p>Bu component Html tarafı problemli bu yüzden koymadım.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="c-customer-picker__create-guest-account row">
+                        <div class="c-customer-picker__create-guest-account-inner">
+                            <div class="col-sm-10">
+                                <i>ya da</i> <strong>konuk hesabı oluşturarak devam edin</strong>
+                            </div>
+                            <div class="col-sm-6 text-sm-right">
+                                <button class="btn btn-primary">KONUK HESAP OLUŞTUR</button>
+                            </div>
+                        </div>
+                    </div><!-- /.c-customer-picker__create-guest-account -->
+                </div><!-- /.pcontainer -->
+            </div><!-- /.c-dialog-box__body -->
+        </div><!-- /.c-dialog-box -->
+    </div><!-- /.c-customer-picker -->
+</section> <!-- end step 1 -->
+
+<section> <!-- step 2 -->
+    <div class="c-customer-picker">
+        <div class="c-dialog-box">
+            <div #header class="c-dialog-box__header c-dialog-box__header--border c-dialog-box__header--padding">
+            <div class="c-dialog-box__header-bar">
+                <h1 class="c-dialog-box__header-title">
+                        Müşteri Arayın
+                <!-- {{title}} -->
+                </h1>
+                <div class="c-dialog-box__header-actions">
+                <a href="#" (click)="tetherService.dismiss()" class="icon__n icon__n--close"></a>
+                </div>
+            </div>
+            </div><!-- /.c-dialog-box__header -->
+
+            <div #body class="c-dialog-box__body c-dialog-box__body--no-padding c-dialog-box__body--no-scroll">
+                <div class="p-container">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="c-selectbox">
+                                <div class="c-selectbox__field">
+                                    <select>
+                                        <option>ADA GÖRE</option>
+                                        <option>SIRAYA GÖRE</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <div class="c-mock-box c-mock-box--small">
+                                <h1>Buraya <strong>c-inline-search-input</strong> komponenti gelecek</h1>
+                                <p>Bu component Html tarafı problemli bu yüzden koymadım.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="c-customer-picker__results">
+                        <div class="p-group">
+                <!--header-->
+                <div class="p-group__header">
+                    <div class="p-group__header-bar">
+                        <div class="p-group__header-title">
+                            ARAMA SONUÇLARI
+                        </div>
+                    </div>
+                </div>
+
+                <!--item-->
+                <!--item-->
+                    <div class="p-group__item">
+                        <div class="p-group__list">
+                            <div class="p-group__list-item">
+                                <div class="p-group__list-item-label">
+                                    <i class="icon__n icon__n--person"></i>
+                                    <span class="c-customer-picker__results-name">Altuğ Canıtez</span>
+                                </div>
+                                <div class="p-group__list-item-action">
+                                    <a href="#" class="c-customer-picker__results-add-item"><i class="icon__n icon__n--add"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+                    </div><!-- /.p-container -->
+
+                    <div class="c-customer-picker__create-guest-account row">
+                        <div class="c-customer-picker__create-guest-account-inner">
+                            <div class="col-sm-10">
+                                <i>ya da</i> <strong>konuk hesabı oluşturarak devam edin</strong>
+                            </div>
+                            <div class="col-sm-6 text-sm-right">
+                                <button class="btn btn-primary">KONUK HESAP OLUŞTUR</button>
+                            </div>
+                        </div>
+                    </div><!-- /.c-customer-picker__create-guest-account -->
+                </div><!-- /.p-container -->
+            </div><!-- /.c-dialog-box__body -->
+        </div><!-- /.c-dialog-box -->
+    </div><!-- /.c-customer-picker -->
+</section> <!-- end step 2 -->
+
+<section> <!-- step 3 -->
+    <div class="c-customer-picker">
+        <div class="c-dialog-box">
+            <div #header class="c-dialog-box__header c-dialog-box__header--border c-dialog-box__header--padding">
+            <div class="c-dialog-box__header-bar">
+                <h1 class="c-dialog-box__header-title">
+                        Müşteri Arayın
+                <!-- {{title}} -->
+                </h1>
+                <div class="c-dialog-box__header-actions">
+                <a href="#" (click)="tetherService.dismiss()" class="icon__n icon__n--close"></a>
+                </div>
+            </div>
+            </div><!-- /.c-dialog-box__header -->
+
+            <div #body class="c-dialog-box__body c-dialog-box__body--no-padding c-dialog-box__body--no-scroll">
+                <div class="p-container">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="c-selectbox">
+                                <div class="c-selectbox__field">
+                                    <select>
+                                        <option>ADA GÖRE</option>
+                                        <option>SIRAYA GÖRE</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <div class="c-mock-box c-mock-box--small">
+                                <h1>Buraya <strong>c-inline-search-input</strong> komponenti gelecek</h1>
+                                <p>Bu component Html tarafı problemli bu yüzden koymadım.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="c-customer-picker__not-found">
+                        <div class="c-mock-box c-mock-box--small" style="margin: 25px 0">
+                            <h1>Boş Avatar Sembolü Gelecek</h1>
+                        </div>
+
+                        <span class="c-customer-picker__not-found-title">Aramanız ile eşleşen müşteri kaydı bulunamadı</span>
+                        <span class="c-customer-picker__not-found-text">Arama kriterini değiştirerek yeniden deneyebilir ya da konuk hesabı oluşturup devam edebiliriniz.</span>
+                        <button class="btn btn-primary">KONUK HESAP OLUŞTUR</button>
+                    </div><!-- /.c-customer-picker__not-found -->
+                </div><!-- /.p-container -->
+            </div><!-- /.c-dialog-box__body -->
+        </div><!-- /.c-dialog-box -->
+    </div><!-- /.c-customer-picker -->
+</section> <!-- end step 3 -->
+
+<section> <!-- step 4 -->
+    <div class="c-customer-picker">
+        <div class="c-dialog-box">
+            <div #header class="c-dialog-box__header c-dialog-box__header--border c-dialog-box__header--padding">
+            <div class="c-dialog-box__header-bar">
+                <h1 class="c-dialog-box__header-title">
+                        Konuk Hesabı Ekle
+                <!-- {{title}} -->
+                </h1>
+                <div class="c-dialog-box__header-actions">
+                <a href="#" (click)="tetherService.dismiss()" class="icon__n icon__n--close"></a>
+                </div>
+            </div>
+            </div><!-- /.c-dialog-box__header -->
+
+            <div #body class="c-dialog-box__body c-dialog-box__body--no-padding c-dialog-box__body--no-scroll">
+                <div class="p-container">
+                    <form action="#" class="c-customer-picker__create-guest-account-form row">
+                        <div class="col-xs-16 col-sm-8 padding-right-20">
+                            <div class="p-form-group">
+                                <div class="p-form-group__label">
+                                    <label class="form-control-label" for="guest-account-name">ADI *</label>
+                                </div>
+                                <div class="p-form-group__input">
+                                    <input type="text" class="form-control" id="guest-account-name">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-16 col-sm-8">
+                            <div class="p-form-group">
+                                <div class="p-form-group__label">
+                                    <label class="form-control-label" for="guest-account-surname">SOYADI *</label>
+                                </div>
+                                <div class="p-form-group__input">
+                                    <input type="text" class="form-control" id="guest-account-surname">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-16 col-sm-8 padding-right-20">
+                            <div class="p-form-group">
+                                <div class="p-form-group__label">
+                                    <label class="form-control-label d-block" for="guest-account-gsm">GSM NO</label>
+                                </div>
+                                <div class="p-form-group__input">
+                                    <div class="col-sm-6">
+                                        <div class="padding-right-15">
+                                            <input type="text" class="form-control c-customer-picker__create-guest-account-form-prefix" id="guest-account-gsm">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-16 col-sm-8">
+                            <div class="p-form-group">
+                                <div class="p-form-group__label">
+                                    <label for="guest-account-surname">E-POSTA ADRESİ</label>
+                                </div>
+                                <div class="p-form-group__input">
+                                    <input type="text" class="form-control" id="guest-account-surname" placeholder="@">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-16 padding-bottom-15">
+                            <span class="c-helper-text">
+                                <i class="icon__n icon__n--info_outline c-helper-text__icon"></i>
+                                <span class="c-helper-text__value">0XXX - XXX XXXX</span>
+                            </span>
+                        </div>
+
+                        <div class="col-xs-16 col-sm-8 padding-right-20">
+                            <div class="p-form-group">
+                                <div class="p-form-group__label">
+                                    <label class="form-control-label" for="guest-account-city">ŞEHİR</label>
+                                </div>
+                                <div class="p-form-group__input">
+                                    <div class="c-selectbox">
+                                        <div class="c-selectbox__field">
+                                            <select id="guest-account-city">
+                                                <option>İstanbul</option>
+                                                <option>Ankara</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-16 col-sm-8">
+                            <div class="p-form-group">
+                                <div class="p-form-group__label">
+                                    <label class="form-control-label" for="guest-account-town">İLÇE</label>
+                                </div>
+                                <div class="p-form-group__input">
+                                    <div class="c-selectbox">
+                                        <div class="c-selectbox__field">
+                                            <select id="guest-account-town">
+                                                <option>Seçiniz</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div><!-- /.p-container -->
+            </div><!-- /.c-dialog-box__body -->
+
+            <div #footer class="c-dialog-box__footer">
+            <button (click)="forward()" class="btn">EKLE</button>
+        </div>
+        </div><!-- /.c-dialog-box -->
+    </div><!-- /.c-customer-picker -->
+</section> <!-- end step 4 -->
+
+</body>
+</html>

@@ -1,0 +1,45 @@
+<div class="c-add-multiple-performance__container">
+    <div class="c-add-multiple-performance__row">
+        <div class="c-add-multiple-performance__row-item c-add-multiple-performance__row-item-label " style="">
+            <app-promise-icon iconName="schedule" style="margin-bottom:1px"></app-promise-icon>
+            <!-- <app-checkbox type="square" inputType="checkbox" name="customerType" [isChecked]="false" (changeEvent)="selectAllRow($event)"></app-checkbox> -->
+        </div>
+        <div *ngFor="let rows of field; let i = index" class="c-add-multiple-performance__row-item">
+            <app-button type="icon" icon="delete" theme="secondary" (click)="deleteConfirmation($event,'Row',i)"></app-button>
+            <app-text-input dateTimeFormat="DD.MM.YYYY, dddd" [ngClass]="{'justifyCenter': !dateSelected[i]}" type="datepicker" [includeTime]="false" [required]="true" [name]="i" theme="underline" [placeholder]="'tarih seçiniz'" (changeEvent)="dateChangeHandler($event,i)"
+                [minDate]="minDate[i]" [icon]="'insert_invitation'"></app-text-input>
+            <!-- <app-button type="icon" icon="more_vert" theme="secondary" (click)="openPerformerAction(performer, $event)" ></app-button> -->
+        </div>
+    </div>
+
+    <div class="c-add-multiple-performance__row" *ngFor="let cols of colField; let coli = index">
+
+        <div class="c-add-multiple-performance__row-item--half-size">
+            <app-button *ngIf="colField.length > 1" type="icon" icon="delete" theme="secondary" (clickEvent)="deleteConfirmation($event,'Cell',cols)"></app-button>
+
+            <span class="c-add-multiple-performance--fieldname">{{columnFieldName}}</span>
+            <div class="c-add-multiple-performance__input_field" style="">
+                <app-text-input class="c-add-multiple-performance__order_left" theme="underline" [placeholder]="'00'" maxlength="2" min="00" max="23" (changeEvent)="selectChangeHandler($event,'Hour',cols)" type="numeric"></app-text-input>
+                <span class="c-add-multiple-performance__order_right--dot">:</span>
+
+                <app-text-input class="c-add-multiple-performance__order_right" theme="underline" [placeholder]="'00'" maxlength="2" min="00" max="59" (changeEvent)="selectChangeHandler($event,'Minutes',cols)" type="numeric"></app-text-input>
+            </div>
+
+        </div>
+        <div *ngFor="let rows of field; let rowi = index" class="c-add-multiple-performance__row-item--half-size u-justify">
+            <app-performance-cell-box (countEvent)="performanceCount($event)" (changeEvent)="isDateSelected($event)" [cellPosition]="{'rowIndex':rowi,'colIndex':coli,'colID':cols}" [rawTimeData]="fullTime[cols]" [day]="selectedDate[rowi]"></app-performance-cell-box>
+        </div>
+    </div>
+
+    <div *ngIf="colField.length == 0" class="c-add-multiple-performance__aside--text">
+        <div (click)="addTime($event)"><i class="icon__n icon__n--plus"> </i>SAAT EKLE</div>
+
+    </div>
+    <div *ngIf="colField.length > 0" class="c-add-multiple-performance__aside">
+
+        <app-button (clickEvent)="addTime($event)" type="icon" icon="plus" theme="secondary" size="lg"></app-button>
+    </div>
+</div>
+<div class="c-add-multiple-performance__add-row-button">
+    <app-button (clickEvent)="addDate($event)" type="icon" icon="plus" shape="circle" theme="secondary" size="lg"></app-button>
+</div>

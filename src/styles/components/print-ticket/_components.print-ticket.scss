@@ -1,0 +1,35 @@
+.c-print-ticket {
+    position: relative;
+    height: 100%;
+    background: #fff;
+    .c-button {
+        margin-top: -135px;
+        margin-left: 25px;
+    }
+    .c-dialog-box__header-actions>.c-button {
+        margin-top: 0 !important;
+        margin-left: 0 !important;
+    }
+    .event-name-size-low {
+        float: right;
+        position: relative;
+        top: 15px;
+        font-size: 10px;
+        right: 50px;
+    }
+    .sheet-main {
+        height: 100px;
+        padding-top: 20px;
+        border-bottom: 1px solid #d5d5d5;
+    }
+    .sheet-qr {
+        float: right;
+        top: -18mm;
+        right: 12mm;
+        position: relative;
+        img {
+            width: 80% !important;
+            height: 80% !important;
+        }
+    }
+}

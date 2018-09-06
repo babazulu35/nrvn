@@ -1,0 +1,165 @@
+$c-basket-info-bar:();
+$c-basket-info-bar: map-merge($c-basket-info-bar, getSettingsMap("c-basket-info-bar"));
+$c-map: $c-basket-info-bar;
+.c-basket-info-bar {
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    background: #FFFEF3;
+    height: 80px;
+    z-index: 1026;
+    padding-left: 230px;
+    border-top: 1px solid #d5d5d5;
+    box-shadow: 5px -1px 15px #d5d5d5;
+    .icon__n.icon__n--more_vert {
+        font-size: 34px;
+    }
+    &__btnfield {
+        display: table-cell;
+        width: 380px;
+        vertical-aling: middle;
+        background: #21242b;
+        position: relative;
+        z-index: 1027
+    }
+    &__buttons {
+        width: calc(380px - 40px);
+        position: absolute;
+        right: 0;
+        color: #fff;
+        vertical-align: middle;
+        left: 50px;
+        text-align: center;
+        top: 50%;
+        transform: translateY(-50%);
+        >.c-button {
+            margin-right: 10px;
+            &:last-child:not(:first-child) {
+                margin-right: 0;
+            }
+        }
+        &--single {
+            left: inherit !important;
+            .c-button {
+                &.c-button--secondary {
+                    margin: auto;
+                    position: relative;
+                    display: block;
+                }
+            }
+        }
+        &--manuelsize {
+            .c-button {
+                &.c-button--secondary {
+                    width: 180px;
+                }
+            }
+        }
+        &--linktext {
+            text-decoration: underline;
+            width: 90px;
+            word-break: break-word;
+            display: inline-block;
+            vertical-align: middle;
+            text-underline-position: under;
+            @include ffamily('semi');
+            &:hover {
+                cursor: pointer;
+                color: #ec4e48;
+            }
+            &:focus {
+                outline: inherit;
+            }
+        }
+    }
+    &__corner {
+        width: 40px;
+        background: #ec4e48;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        >span {
+            color: #fff;
+            vertical-aling: middle;
+            transform: translate(-50%, -50%) rotate(-90deg);
+            top: 50%;
+            left: 50%;
+            width: 80px;
+            text-align: center;
+            @include ffamily('semi');
+            display: block;
+            position: absolute;
+        }
+    }
+    &__container {
+        display: table;
+        width: 100%;
+        height: 100%;
+    }
+    &__select {
+        display: table-cell;
+        width: calc(100% - 360px);
+        vertical-align: middle;
+        background: none;
+    }
+    >ul {
+        list-style: none;
+        display: block;
+        height: 100%;
+        >li {
+            border-right: 1px dashed #d5d5d5;
+            height: 100%;
+            width: 19%;
+            padding: 20px 20px 10px 20px;
+            text-align: center;
+            display: inline-block;
+            &:last-child:not(:first-child) {
+                border-right: inherit;
+                /*  padding: 10px 10px; */
+                position: relative;
+                /*  top: -10px; */
+            }
+            .c-pill-group {
+                >span {
+                    width: 100%;
+                }
+                /*                    .c-pill--red-sonja {
+                        text-align: left !important
+                    }*/
+                .c-pill__bagde {
+                    top: 0 !important;
+                }
+            }
+            span.c-basket-info-bar-title {
+                @include ffamily ('semi');
+                color: #D5D5D5;
+                font-size: 12px;
+                display: block;
+            }
+            span.c-basket-info-bar-value {
+                @include ffamily ('bold');
+                font-size: 18px;
+                display: block;
+                sup {
+                    font-size: 11px;
+                    display: inline-block;
+                }
+                &--total {
+                    font-size: 22px;
+                }
+                &--total {
+                    font-size: 22px !important;
+                    margin-top: -5px;
+                }
+            }
+            .c-basket-info-bar-discount {
+                color: #6BBB10 !important;
+                sup {
+                    color: #6BBB10 !important;
+                }
+            }
+        }
+    }
+}

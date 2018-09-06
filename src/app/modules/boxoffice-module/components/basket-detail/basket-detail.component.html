@@ -1,0 +1,61 @@
+<ng-template ngFor [ngForOf]="basketItem" let-items>
+<div class="c-wide-col-basket-item" style="border:1px solid #ccc;padding:20px;margin-bottom:10px;" >
+    <div class="c-wide-col-basket-item__title">
+		<h4 class="c-wide-col-basket-item__title-text">{{items.eventName}} id:{{items.eventId}}</h4>
+        <div class="c-wide-col-basket-item__title-action">
+            <span [ngSwitch]="items.eventSeatsCanBeUpdate">
+                <!--Koltuk Ekleme Özelliği Kapalı Ayakta Etkinlik-->
+                    <span *ngSwitchCase="true">
+                        <app-selectbox  [options]="getOptions()" (changeEvent)="addOrRemoveUser($event,items.eventId)" ></app-selectbox>
+                    </span>
+                    <button *ngSwitchCase="false" class="btn-secondary btn "> Güncelle</button>
+                    <button *ngSwitchDefault class="btn-secondary btn "> Güncelle</button>
+            </span>
+<a  class="c-wide-col-basket-item__title-action-delete"><i class="icon__n icon__n--delete" (click)="removeEventFromBasket(items.eventId)"></i></a>
+<span>{{thisRowsAreSelected}}</span>
+</div>
+</div>
+<div class="etkinlik-ozel" *ngFor="let eventDetail of items.eventDetails" style="margin-top:10px;">
+    <div class="c-wide-col-basket-item__info">
+        <h5 class="c-wide-col-basket-item__info-title">ETKİNLİK / PERFORMANS</h5>
+        <p class="c-wide-col-basket-item__info-desc">{{eventDetail.performanceName }}<span class="c-wide-col-basket-item__info-date">16 Kasım, Çarşamba - 20:00</span></p>
+    </div>
+
+    <div class="c-wide-col-basket-item__table-container">
+
+        <table>
+            <thead>
+                <tr>
+                    <th>BÖLÜM / BLOK</th>
+                    <th><span class="c-wide-col-basket-item__table-seat">KOLTUK</span></th>
+                    <th colspan="2">MÜŞTERİ</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let userInfo of eventDetail.userDetail; let i= index" (click)="selectItem(items.eventId + i)" [class.itemSelected]="clickStatus[items.eventId + i]">
+                    <td>{{userInfo.userSeat}}</td>
+                    <td><span class="c-wide-col-basket-item__table-seat ">{{userInfo.userSeat}}</span></td>
+                    <td>{{userInfo.userName}} index {{i}}<span class="c-wide-col-basket-item__table-phone ">{{userInfo.userPhone}}</span></td>
+                    <td>
+                        <div *ngIf="userInfo.noExpire == true" class="c-wide-col-basket-item__table-price ">
+                            {{ eventDetail.price }}<sup>TL</sup>
+                        </div>
+                        <div *ngIf="userInfo.noExpire == false" class="c-wide-col-basket-item__table-price ">
+                            <span>set timeBomb</span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4 ">
+                        <div class="c-wide-col-basket-item__table-total-price ">50,00<sup>TL</sup></div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+</div>
+</ng-template>
+<!-- /.c-wide-col-basket-item -->

@@ -1,0 +1,12 @@
+<ul class="c-tag-group__list">
+    <li *ngFor="let tag of tags" class="c-tag-group__list-item">
+        <span class="c-tag-group__list-item-bar">
+        <span [innerHTML]="tag.label"
+          class="c-tag-group__list-item-text" [ngClass]="{'c-tag-group__list-item-candeleted': !canBeDeleted }">
+        </span>
+        <span class="c-tag-group__list-item-button" *ngIf="canBeDeleted">
+          <app-button  (click)="removeTag(tag)" type="icon" icon="close" theme="secondary"></app-button>
+        </span>
+        </span>
+    </li>
+</ul>

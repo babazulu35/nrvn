@@ -1,0 +1,118 @@
+/* --------------------------------------------------------
+version: 1.0
+author: Can SİVRİ
+----------------------------------------------------------*/
+
+/***
+* Modal Sub Heading Component:
+*/
+
+/**
+* Modal Sub Heading:
+* `.c-modal-sub-heading - Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque repellat autem deleniti odit repellendus temporibus placeat ipsa similique, neces
+*
+*     @example
+*			<div class="c-modal-sub-heading">
+*				<h1 class="c-modal-sub-heading__text">Oturma Düzeni Ekle</h1>
+*				<a href="#" class="c-modal-sub-heading-heading__close icon__n icon__n--close"></a>
+*				<div class="c-modal-sub-heading--wizard">
+*					<a href="#" class="c-modal-sub-heading--wizard__back icon__n icon__n--navigate_before"></a>
+*					<span class="c-modal-sub-heading--wizard__text"><strong>ADIM 3 :</strong> EKLENEBİLİR DİĞER UNSURLAR</span>
+*					<span class="c-modal-sub-heading--wizard__pill"><strong>3</strong> / 3</span>
+*				</div>	
+*			</div>
+
+*/
+
+
+// Set defaults
+
+$c-modal-sub-heading: (
+	width: 100%,
+	padding: 0,
+	margin: 0,
+	text-color: #392d38,
+	text-size: 20px,
+	close-btn-color: #bdbdbd,
+	close-btn-size: 24px,
+	active-close-btn-color: #392d38,
+	border-color: #dcdce5,
+	back-btn-color: #21242b,
+	back-btn-size: 24px
+);
+
+// Merge settings and defaults
+$c-modal-sub-heading: map-merge($c-modal-sub-heading, getSettingsMap("c-modal-sub-heading"));
+
+// Set shortcuts
+$c-map: $c-modal-sub-heading;
+
+
+
+.c-modal-sub-heading {
+	box-sizing: border-box;
+	width: map-get($c-map, width);
+	padding: map-get($c-map, padding);
+	margin: map-get($c-map, margin);
+	border-bottom:1px solid map-get($c-map, border-color);
+	&__text {
+		display:inline-block;
+		vertical-align:top;
+		@include ffamily("regular");
+		font-size: map-get($c-map, text-size);
+		color: map-get($c-map, text-color);
+	}
+	&__close {
+		float: right;
+		@include ffamily("bold");
+		font-size: map-get($c-map, close-btn-size);
+		color: map-get($c-map, close-btn-color);
+		&:hover, &:focus, &:active {color: map-get($c-map, active-close-btn-color);}
+	}
+	&--wizard {
+		position: relative;
+		@include t--clearfix();
+		margin: 20px 0 0;
+		padding:16px 20px;
+		border-top:1px solid map-get($c-map, border-color);
+		background-color: #f7f7f7;
+		&__back {
+			display:block;
+			position: absolute;
+			top: 50%;
+			left: 12px;
+			@include t--translateY(-50%);
+			@include ffamily("bold");
+			font-size: map-get($c-map, back-btn-size);
+			color: map-get($c-map, close-btn-color);
+			&:hover, &:focus, &:active {color: map-get($c-map, active-close-btn-color);}
+		}
+		&__text {
+			display:block;
+			padding:0 65px;
+			font-size: 13px;
+			@include ffamily("semi");
+			text-align: center;
+		}
+		&__pill {
+			position: absolute;
+			top: 50%;
+			right: 20px;
+			@include t--translateY(-50%);
+			display:block;
+			padding: 5px 15px;
+			border-radius:30px;
+			background-color: #fff;
+			font-size: 13px;
+			@include ffamily("regular");
+			border:1px solid map-get($c-map, border-color);
+			color: #333;
+		}
+		&__icon {
+			position: absolute;
+			top: 50%;
+			right: 20px;
+			@include t--translateY(-50%);
+		}
+	}
+}

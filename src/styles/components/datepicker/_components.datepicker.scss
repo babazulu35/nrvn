@@ -1,0 +1,133 @@
+/* --------------------------------------------------------
+version: 1.0
+author: Can SİVRİ
+----------------------------------------------------------*/
+
+/***
+* Datepicker Component:
+*/
+
+/**
+* Datepicker:
+* `.c-datepicker - Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque repellat autem deleniti odit repellendus temporibus placeat ipsa similique, neces
+*
+*     @example
+*   	<div class="c-datepicker">
+*				<input type="text" id="datepicker">
+*				<i class="icon__n icon__n--date_range"></i>
+*			</div>
+*
+
+*/
+
+
+// Set defaults
+
+$c-datepicker: (
+	width: 100%,
+	input-width: 100%,
+	input-height: 38px,
+	input-background-color: #fff,
+	input-border: 1px solid #dcdce5,
+	input-radius: 3px,
+	input-color: #262126,
+	input-size: 13px,
+	input-padding: 2px 34px 2px 10px,
+	icon-color: #bdbdbd,
+	icon-size: 20px,
+	label-margin: 0 0 8px 0,
+	label-color: #9d9d9d,
+	label-size: 11px
+);
+
+// Merge settings and defaults
+$c-datepicker: map-merge($c-datepicker, getSettingsMap("c-datepicker"));
+
+// Set shortcuts
+$c-map: $c-datepicker;
+
+
+.c-datepicker {
+	position:relative;
+	display: inline-block;
+	vertical-align: top;
+	box-sizing: border-box;
+	width: map-get($c-map, width);
+	&__label {
+		display:block;
+		margin: map-get($c-map, label-margin);
+		@include ffamily("semi");
+		font-size: map-get($c-map, label-size);
+		color: map-get($c-map, label-color);
+	}
+	input[type="text"] {
+		width: map-get($c-map, input-width);
+		height: map-get($c-map, input-height);
+		padding: map-get($c-map, input-padding);
+		background-color: map-get($c-map, input-background-color);
+		border: map-get($c-map, input-border);
+		@include t--border-radius(map-get($c-map, input-radius));
+		font-size: map-get($c-map, input-size);
+		@include ffamily("regular");
+		color: map-get($c-map, input-color);
+		outline:none;
+		&:hover, &:focus {outline:0;}
+	}
+	&__input-wrap {
+		position:relative;
+	}
+	&__icon {
+		position: absolute;
+		top: 50%;
+		right: 7px;
+		@include t--translateY(-50%);
+		font-size: map-get($c-map, icon-size);
+		color: map-get($c-map, icon-color);
+	}
+}
+
+.pika-single.is-bound {
+	box-shadow:none;
+	border: map-get($c-map, input-border);
+	margin-top: -1px;
+	@include t--border-radius(map-get($c-map, input-radius));
+	abbr[title] {
+		border:none;
+		text-decoration: none;
+		cursor: default;
+	}
+	.pika-label {
+		@include ffamily("bold");
+		&:hover {
+			color: #9e9e9e;
+		}
+	}
+	th {@include ffamily("semi");}
+	.pika-button {
+		text-align:center;
+		@include ffamily("regular");
+		@include t--border-radius(0px);
+		outline:none;
+		&:hover, &:focus { background-color: #9e9e9e;}
+	}
+	.is-selected .pika-button {
+		box-shadow: none;
+		background-color: #565656;
+	}
+	.is-today .pika-button {
+		color: #333;
+		@include ffamily("bold");
+	}
+	.pika-prev, .pika-next {
+		position:relative;
+		background:transparent;
+		&:after {
+			content:"\e5cb";
+			position: absolute;
+			left:0;
+			font:22px 'Nirvana Icons';
+			text-indent:0;
+		}
+	}
+	.pika-next:after {content:"\e5cc"; }
+}

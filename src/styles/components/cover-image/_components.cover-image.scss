@@ -1,0 +1,190 @@
+/* --------------------------------------------------------
+version: 1.0
+author: Can SİVRİ
+----------------------------------------------------------*/
+
+
+/***
+* Cover Image Component:
+*/
+
+/**
+* Cover Image:
+* `.c-cover-image - Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque repellat autem deleniti odit repellendus temporibus placeat ipsa similique, neces
+*
+*     @example 
+*     <div class="c-cover-image" style="background-image:url(../../../images/cover-image/cover-image.jpg)">
+*       <span class="c-cover-image__mask"></span>
+*     </div>
+*/
+
+
+// Set defaults
+$c-cover-image: (
+	width: 100%,
+	min-height: 100px,
+	margin:0,
+	default-bg-color: #35383d,
+	opacity: .6,
+	container-padding: 30px 30px 0,
+	footer-margin: 60px,
+	header-margin: 40px,
+
+	over-image-dates-max-width: 320px,
+	over-image-dates-padding: 20px,
+	over-image-border-radius: 2px,
+	time-font-size: 22px,
+	day-font-size: 18px,
+	subtitle-font-size: 11px,
+	over-image-border-color: rgba(255,255,255,.3),
+	over-image-font-color: #fff,
+
+	venue-desc-font-size: 13px,
+	venue-desc-line-height: 25px,
+	venue-desc-title-font-size: 15px,
+
+	collapsed: (
+		container-padding: 0px 30px,
+	)
+);
+
+
+// Merge settings and defaults
+$c-cover-image: map-merge($c-cover-image, getSettingsMap("c-cover-image"));
+
+// Set shortcuts
+$c-map: $c-cover-image;
+
+
+.c-cover-image {
+	display: block;
+	position:relative;
+	box-sizing: border-box;
+	overflow:hidden;
+	width: map-get($c-map, width);
+	min-height: map-get($c-map, min-height);
+	margin: map-get($c-map, margin);
+	background-color: map-get($c-map, default-bg-color);
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: cover;
+
+	&--collapsed {
+		min-height: auto;
+		
+		.c-cover-image {
+			&__container {
+				padding: map-deep-get($c-map, collapsed, container-padding);
+			}
+
+			&__header,
+			&__body {
+				display: none;
+			}
+
+			&__footer {
+				margin: 0px;
+			}
+		}
+	}
+
+	&__mask {
+		position: absolute;
+		top:0;
+		left:0;
+		@include t--size(100%,100%);
+		background-color: map-get($c-map, default-bg-color);
+		opacity: map-get($c-map, opacity);
+	}
+	
+	&__container {
+		position:relative;
+		z-index:2;
+		padding: map-get($c-map, container-padding);
+		color:#fff;
+		a, a:hover, a:focus {
+			color:#fff;
+			text-decoration:underline;
+		}
+	}
+
+	&__button {
+		display: inline-block;
+		float: right;
+	}
+
+	&__header {
+		margin-bottom: map-get($c-map, header-margin);
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	&__body {
+		@include ffamily('regular');
+	}
+
+	&__footer {
+		margin-top: map-get($c-map, footer-margin);
+	}
+
+	&__over-image-dates {
+		max-width: map-get($c-map, over-image-dates-max-width);
+    text-align: center;
+    border:1px solid map-get($c-map, over-image-border-color);
+    border-radius: map-get($c-map, over-image-border-radius);
+    padding: map-get($c-map, over-image-dates-padding);
+    color: map-get($c-map, over-image-font-color);
+
+		&-day{
+			display: block;
+			font-size: map-get($c-map, day-font-size);
+			line-height: map-get($c-map, day-font-size);
+			margin-bottom: 20px;
+			color: map-get($c-map, over-image-font-color);
+
+			@include ffamily('bold');
+		}
+
+		&-subtitle {
+			display: block;
+			font-size: map-get($c-map, subtitle-font-size);
+			line-height: map-get($c-map, subtitle-font-size) + 3;
+			color: map-get($c-map, over-image-font-color);
+
+			@include ffamily('semi');
+		}
+
+		&-time {
+			display: block;
+			font-size: map-get($c-map, time-font-size);
+			line-height: map-get($c-map, time-font-size);
+			color: map-get($c-map, over-image-font-color);
+
+			@include ffamily('bold');
+		}
+
+	}
+
+	&__venue-desc {
+		font-size: map-get($c-map, venue-desc-font-size);
+    line-height: map-get($c-map, venue-desc-line-height);
+    &-title {
+			font-size: map-get($c-map, venue-desc-title-font-size);
+		}
+  }
+
+	//bu ezme işlemi layout tarafında düzenlenmeli.
+	// .c-over-image-stats-grid {margin:0 0 65px; }
+	// h1 {
+	// 	margin-bottom:50px;
+	// 	@include t--font-size(26px);
+	// 	@include ffamily("bold");
+	// }
+	
+	.c-cover-image__expand-icon {
+		font-size: 33px;
+		vertical-align: middle;
+	}
+
+}

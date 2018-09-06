@@ -1,0 +1,65 @@
+/***
+* Sort View Component:
+*/
+
+/**
+* Sort View:
+* `.c-sort-view - Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque repellat autem deleniti odit repellendus temporibus placeat ipsa similique, neces
+*
+*     @example
+*     <div class="c-sort-view">
+*	    	<a href="#" class="c-sort-view__item c-sort-view__item--active">List</a>
+*	    	<a href="#" class="c-sort-view__item c-sort-view__item__box">Box</a>
+*	   </div>
+
+*/
+
+
+// Set defaults
+
+$c-sort-view: (
+	width: auto,
+	height: auto,
+	text-decoration: none,
+	margin:0 5px 0px 0,
+	color: #a8adaf,
+	active-color: #263238
+);
+
+// Merge settings and defaults
+$c-sort-view: map-merge($c-sort-view, getSettingsMap("c-sort-view"));
+
+// Set shortcuts
+$c-map: $c-sort-view;
+
+
+
+.c-sort-view {
+	box-sizing: border-box;
+	font-size:0;
+	.c-sort-view__item {
+		cursor: pointer;
+		overflow:hidden;
+		display:inline-block;
+		vertical-align:top;
+		width: map-get($c-map, width);
+		height: map-get($c-map, height);
+		margin: map-get($c-map, margin);
+		color: map-get($c-map, color);
+		box-sizing: border-box;
+		> * { pointer-events: none; }
+		&__box {
+			width:map-get($c-map, width);
+		}
+		&--active, &:hover, &:focus {
+			text-decoration: map-get($c-map, text-decoration);
+			color: map-get($c-map, active-color);
+		}
+		&--active {
+			cursor: default;
+		}
+	}
+	.icon__n {
+		font-size:33px;
+	}
+}

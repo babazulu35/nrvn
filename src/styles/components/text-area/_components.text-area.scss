@@ -1,0 +1,260 @@
+/* --------------------------------------------------------
+author: Abdullah Karadeniz
+----------------------------------------------------------*/
+
+$c-text-area: ( 
+    font-size: 15px, 
+    color: #C2C2C2, 
+    active-color: #21242b, 
+    border-color: #dcdce5, 
+    active-border-color: #2096F3, 
+    error-border-color: #ec4e48, 
+    border-radius: 2px, 
+    padding: 0.4em 0.6em, 
+    placeholder: ( 
+        color: #cbcbcb, //#9d9d9d
+    ), 
+    icon: ( 
+        color: #C2C2C2, 
+    ), 
+    localization: (
+        icon: (
+            color: #C2C2C2
+        ),
+        badge: (
+            color: #fff,
+            background-color: #2096F3
+        )
+    ),
+    underline: ( 
+        padding: 0.4em 0px, 
+        border-radius: 0px, 
+        border-color: #392d38
+    ), 
+    sizes: ( 
+        sm: ( 
+            font-size: 13px, 
+            padding: 0.2em 0.5em, 
+        ), 
+        sm-text: ( 
+            font-size: 13px, 
+            padding: 0.5775em 0.6775em
+        ), 
+        md: ( 
+            font-size: 15px, 
+            padding: 0.4em 0.6em, 
+        ), 
+        md-text: ( 
+            font-size: 15px, 
+            padding: 0.6775em 0.7775em, 
+        ), 
+        lg: ( 
+            font-size: 17px, 
+            padding: 0.5em 0.7em, 
+        )
+    )
+);
+$c-text-area: map-merge($c-text-area, getSettingsMap("c-text-area"));
+$c-map: $c-text-area;
+.c-text-area {
+    display: inline-block;
+    width: 100%;
+    font-size: map-get($c-map, font-size);
+    line-height: 1em;
+    @include ffamily('regular');
+    border: 1px solid map-get($c-map, border-color);
+    &--disabled {
+        cursor: not-allowed;
+        opacity: 0.8;
+        * {
+            pointer-events: none;
+            user-select: none;
+        }
+    }
+    &--dirty {
+        .c-text-area__text {
+            textarea {
+                color: map-get($c-map, "active-color");
+            }
+        }
+    }
+    &--focused {
+        border-color: map-get($c-map, active-border-color);
+        .c-text-area__text {
+            textarea {
+                color: map-get($c-map, "active-color");
+            }
+        }
+    }
+    &--error:not(.c-text-area--disabled) {
+        border-color: map-get($c-map, error-border-color);
+    }
+    &--underline {
+        .c-text-area__bar {
+            border: none;
+            border-bottom: 1px solid map-deep-get($c-map, underline, border-color);
+            //padding: map-deep-get($c-map, underline, padding);
+            padding-right: 0px !important;
+            padding-left: 0px !important;
+            border-radius: map-deep-get($c-map, underline, border-radius);
+        }
+    }
+    &--no-border {
+        .c-text-area__bar {
+            border: none;
+        }
+    }
+    &--autosize {
+        font-size: inherit;
+        .c-text-area__bar {
+            padding: map-deep-get($c-map, sizes, md, padding);
+        }
+    }
+    &--sm {
+        font-size: map-deep-get($c-map, sizes, sm, font-size);
+        .c-text-area__bar {
+            padding: map-deep-get($c-map, sizes, sm, padding);
+        }
+    }
+    &--sm-text {
+        font-size: map-deep-get($c-map, sizes, sm-text, font-size) !important;
+        .c-text-area__bar {
+            padding: map-deep-get($c-map, sizes, sm-text, padding);
+        }
+    }
+    &--md {
+        font-size: map-deep-get($c-map, sizes, md, font-size);
+        .c-text-area__bar {
+            padding: map-deep-get($c-map, sizes, md, padding);
+        }
+    }
+    &--md-text {
+        font-size: map-deep-get($c-map, sizes, md-text, font-size) !important;
+        .c-text-area__bar {
+            padding: map-deep-get($c-map, sizes, md-text, padding);
+        }
+    }
+    &--lg {
+        font-size: map-deep-get($c-map, sizes, lg, font-size);
+        .c-text-area__bar {
+            padding: map-deep-get($c-map, sizes, lg, padding);
+        }
+    }
+    
+    &__text {
+        display: block;
+        position: relative;
+        width: 100%;
+        font-size: inherit;
+        cursor: text;
+        textarea {
+            position: relative;
+            padding: map-deep-get($c-map, sizes, md, padding);
+            margin: 0px;
+            //top: 50%;
+            left: 0px;
+            //transform: translateY(-50%);
+            font-size: inherit;
+            border: none;
+            width: 100%;
+            color: map-get($c-map, "color");
+            background-color: transparent;
+            outline: none;
+            border-radius: 0;
+            -webkit-appearance: none;
+            -webkit-box-sizing: border-box;
+            text-align: inherit;
+            &::-ms-reveal,
+            &::-ms-clear {
+                display: none;
+            }
+            &:required {
+                box-shadow: none !important;
+            }
+            &:invalid {
+                box-shadow: none !important;
+            }
+            &::-webkit-contacts-auto-fill-button {
+                visibility: hidden;
+                display: none !important;
+                pointer-events: none;
+                position: absolute;
+                right: 0;
+            }
+            &::-webkit-outer-spin-button,
+            &::-webkit-inner-spin-button {
+                -webkit-appearance: none;
+                margin: 0;
+            }
+            &:focus {
+                border: none;
+                outline: none;
+                -webkit-border-radius: 0px;
+                -moz-border-radius: 0px;
+                border-radius: 0px;
+                &::-webkit-contacts-auto-fill-button {
+                    display: none !important;
+                    opacity: 0 !important;
+                }
+            }
+            @include t--placeholder {
+                color: map-deep-get($c-map, placeholder, color);
+                opacity: 1;
+            }
+        }
+    }
+    
+    &__footer {
+        display: table;
+        position: relative;
+        width: 100%;
+        min-height: 2em;
+        border-top: 1px solid map-get($c-map, border-color);
+
+        &-content {
+            display: table-cell;
+            width: 100%;
+            vertical-align: middle;
+            padding: map-deep-get($c-map, padding);
+        }
+    }
+    &__localization {
+        display: table-cell;
+        vertical-align: middle;
+        text-align: center;
+        white-space: nowrap;
+        line-height: 0px;
+        padding: map-deep-get($c-map, padding);
+        border-left: solid 1px map-get($c-map, border-color);
+
+        &-btn {
+            display: inline-block;
+            vertical-align: middle;
+            color: map-deep-get($c-map, localization, icon, color);
+            font-size: 1.6em;
+            line-height: 0px;
+            margin-top: 2px;
+        }
+
+        &-badge {
+            display: inline-block;
+            vertical-align: middle;
+            white-space: nowrap;
+            @include ffamily('semi', 'i');
+            font-size: 0.75em;
+            line-height: 2.2em;
+            width: 4em;
+            letter-spacing: 0.05em;
+            border-radius: 1em;
+            color: map-deep-get($c-map, localization, badge, color);
+            background-color: map-deep-get($c-map, localization, badge, background-color);
+        }
+    }
+    
+}
+
+$c-map: null;
+
+/* --------------------------------------------------------
+author: Abdullah Karadeniz
+----------------------------------------------------------*/

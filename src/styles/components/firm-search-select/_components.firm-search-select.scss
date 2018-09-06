@@ -1,0 +1,138 @@
+$c-firm-search-select: (
+  border-radius: 3px,
+
+  container: (
+    padding: 20px,
+    border-color: #dcdce5,
+    background-color: #f7f7f7,
+  ),
+
+  list: (
+    
+    item: (
+      color: #21242b, 
+      background-color: #ffffff, 
+      border-color: #dcdce5,
+
+      margin: 10px,
+      padding: 13px 20px,
+
+      title: (
+        font-size: 14px
+      ),
+      type: (
+        font-size: 12px,
+        min-width: 170px
+      ),
+      remove: (
+        font-size: 24px,
+        margin: 0px 0px 0px 10px,
+        color: #B1B1B1
+      )
+    )
+  ),
+
+  add-button: (
+    font-size: 33.275px,
+    margin: 20px
+  )
+);
+
+// Merge settings and defaults
+$c-firm-search-select: map-merge($c-firm-search-select, getSettingsMap("c-firm-search-select"));
+
+// Set shortcuts
+$c-map: $c-firm-search-select;
+
+.c-firm-search-select {
+  display: inline-block;
+  position: relative;
+  line-height: 0px;
+  font-size: 0px;
+  min-width: map-deep-get($c-map, width);
+  width: 100%;
+
+  &--empty {
+    .c-firm-search-select__container {
+        padding: map-deep-get($c-map, container, padding)/2;
+        border: 1px dashed map-deep-get($c-map, container, border-color);
+    }
+
+    .c-button {
+      min-width: 180px;
+    }
+  }
+
+  &:hover {
+    
+  }
+
+  &__container {
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    background-color: map-deep-get($c-map, container, background-color);
+    border-radius: map-deep-get($c-map, border-radius);
+    padding: map-deep-get($c-map, container, padding);
+    border: 1px solid map-deep-get($c-map, container, border-color);
+  }
+
+  &__list-container {
+    display: block;
+    width: 100%;
+  }
+
+  &__list {
+    display: block;
+    width: 100%;
+
+    &-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: map-deep-get($c-map, list, item, padding);
+      background-color: map-deep-get($c-map, list, item, background-color);
+      color: map-deep-get($c-map, list, item, color);
+      border: solid 1px map-deep-get($c-map, list, item, border-color);
+
+      & + .c-firm-search-select__list-item {
+        margin-top: map-deep-get($c-map, list, item, margin);
+      }
+
+      &-title {
+        @include ffamily('regular');
+        font-size: map-deep-get($c-map, list, item, title, font-size);
+        display: flex;
+        flex-grow: 1;
+        flex-shrink: 0;
+      }
+
+      &-type {
+        display: inline-block;
+        @include ffamily('regular');
+        font-size: map-deep-get($c-map, list, item, type, font-size);
+        min-width: map-deep-get($c-map, list, item, type, min-width);
+        display: flex;
+        flex-grow: 0;
+        flex-shrink: 1;
+      }
+
+      &-remove {
+        display: inline-block;
+        font-size: map-deep-get($c-map, list, item, remove, font-size);
+        margin: map-deep-get($c-map, list, item, remove, margin);
+        color: map-deep-get($c-map, list, item, remove, color);
+      }
+    }
+  }
+
+  &__add-button {
+    display: block;
+    text-align: center;
+    margin-top: map-deep-get($c-map, add-button, margin);
+    font-size: map-deep-get($c-map, add-button, font-size);
+  }
+
+}

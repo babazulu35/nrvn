@@ -1,0 +1,21 @@
+
+// Full Size Mixin
+@mixin t--full-size() {
+	width:100%;
+	height:100%;
+}
+
+// Setted Size
+@mixin t--size($width,$height:$width) {
+	width:$width;
+	height:$height;
+}
+
+@function em($px, $base: $global-font-size) {
+    @return ($px / $base) * 1em;
+}
+
+@function strip-unit($num) {
+
+  @return $num / ($num * 0 + 1);
+}

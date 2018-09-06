@@ -1,0 +1,32 @@
+<div class="or-boxoffice-events">
+    <div class="p-header-bar">
+        <div class="p-header-bar__left">
+        	<app-breadcrumb [breadcrumbs]="[{title:'Arama Sonuçları'},{title:breadcrumb}]" ></app-breadcrumb>
+    	</div>
+    </div>
+    <!-- /.p-search-container -->
+
+    <div class="p-title-container">
+        <div class="p-title-container__left">
+            <h2>İlişkili Etkinlikler</h2>
+        </div>
+        <div class="p-title-container__right">
+        </div>
+    </div>
+    <!-- /.p-title-container -->
+
+    <div class="o-card-view">
+        <app-no-data *ngIf="!isLoading && (!results || results.length == 0)" style="max-width: 60%;margin-top:30px" [hasContainer]="true" [icon]='{type: "icon", name: "event"}' title="Aramanız ile eşleşen etkinlik kaydı bulunamadı" description="Arama kriterini değiştirerek yeniden deneyebilirsiniz"></app-no-data>
+        <div class="o-card-container__content" *ngIf="results">
+            <app-grid-list [ngClass]="{'main-loader': isLoading }">
+                <li *ngFor="let event of results">
+                	<app-card-item
+	                    (actionEvent)="cardActionHandler($event)"
+	                    [data]="{entryType: 'boevent', model: event}">
+                    </app-card-item>
+                </li>
+            </app-grid-list>
+        </div>
+    </div>
+    <!-- /.o-card-container -->
+</div>

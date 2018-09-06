@@ -1,0 +1,17 @@
+// Img Genel Değişkenleri
+
+$img-max-width: 100%;
+
+img {
+    max-width: $img-max-width;
+    font-style: italic;
+    vertical-align: middle;
+}
+
+// Eğer Attribute'ler ile yükseklik verilmiş ise max genişliği yok say örn:<img width> 
+img[width],
+img[height]{
+	max-width:none;
+}
+
+

@@ -1,0 +1,36 @@
+<div class="c-customer-card-list__container">
+  <div class="c-customer-card-list__add-bar" *ngIf="!customers?.length && !csv">
+      <app-button (clickEvent)="openCustomerSearchBox()" theme="secondary">Müşteri Ekle</app-button>
+      <span class="c-customer-card-list__csv" *ngIf="csvAvailable && !customers?.length">
+          <span>ya da</span>
+          <app-file-upload-box type="csv" (changeEvent)="csvChangeHandler($event)" (validationEvent)="csvValidationHandler($event)" [validateFile]="csvValidateFile" [autoUpload]="false" [value]="csv?.file?.name" theme="button" inputLabel="kişilere ait csv dosyasını yükle" [style.width]="'auto'"></app-file-upload-box>
+      </span>
+  </div>
+  <div class="c-customer-card-list__content">
+
+    <ul *ngIf="!csv" class="c-customer-card-list__items">
+      <li class="c-customer-card-list__item" *ngFor="let customer of customers">
+        <span class="c-customer-card-list__item-icon"></span>
+        <span class="c-customer-card-list__item-avatar">
+          <app-avatar theme="danger" [title]="customer?.FirstName + ' ' + customer?.LastName"></app-avatar>
+        </span>
+        <span class="c-customer-card-list__item-info">
+            <span class="c-customer-card-list__item-title">
+                {{customer?.CrmMemberId ? (customer?.FirstName + ' ' + customer?.LastName) : (customer?.PhoneNumber | phoneFormat)}}
+            </span>
+            <span class="c-customer-card-list__item-sub-title">{{!customer?.CrmMemberId ? (customer?.FirstName + ' ' + customer?.LastName) : (customer?.PhoneNumber | phoneFormat)}}</span>
+        </span>
+        <span class="c-customer-card-list__item-action" *ngIf="!readonly">
+          <app-button (clickEvent)="removeCustomer(customer)" type="icon" icon="delete" theme="secondary"></app-button>
+        </span>
+      </li>
+    </ul >
+
+    <app-file-upload-box *ngIf="csv" type="csv" (changeEvent)="csvChangeHandler($event)" (validationEvent)="csvValidationHandler($event)" [validateFile]="csvValidateFile" [autoUpload]="false" [value]="csv?.file?.name" [recordInfo]="csvRecordInfo"></app-file-upload-box>
+
+    <div class="c-customer-card-list__add-item-button" *ngIf="customers?.length && allowMultipleCustomer && !readonly && !csv">
+      <app-button (click)="openCustomerSearchBox()" type="icon" icon="plus" shape="circle" theme="secondary" size="autosize"></app-button>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,168 @@
+<div class="or-performance-products">
+    <app-collapsible-container theme="gray" [isAsideOpen]="true" [asideWidth]="240" [isLoading]="isLoading">
+        <div content>
+            <!--Header-->
+            <div class="p-header p-header--border">
+                <span class="margin-right-5">Rezervasyon</span>
+                <app-button
+                    *ngIf="performance && performance?.ReservationAvailable && performance?.Status == PerformanceStatus.OnSale || performance?.Status == PerformanceStatus.SoldOut"
+                    type="icon" icon="plus" (click)="openReservationModal($event)" shape="circle" theme="secondary" size="lg"></app-button>
+            </div>
+
+            <!--Container-->
+            <div class="row o-filter-bar">
+                <!--
+				<div class="col-sm-8">
+					<app-inline-search-input (onInputSave)="onInputChange($event)" (onInputChange)="onInputChange($event)" [isIconAlignLeft]='true' placeholder='Rezervasyonlar Arasında Arayın'></app-inline-search-input>
+				</div>
+			-->
+            </div>
+
+            <div class="o-placeholder--multi_selection " [class.active]="isMultiSelectionActive">
+                <app-multi-selection-bar [actionButtons]="actionButtons"
+                                         (toggleSelectedItems)="selectAllItems($event)"
+                                         [selectedItems]="selectedItems"
+                                         [numberOfTotalItem]="reservations.length"
+                                         (transistAction)="callSelectedItemsAction($event)"></app-multi-selection-bar>
+            </div>
+
+            <app-no-data *ngIf="noDataInContent" style="max-width: 50%;margin-top:30px" [hasContainer]="true" title="Aramanız ile eşleşen rezervasyon kaydı bulunamadı" description="Arama kriterini değiştirerek yeniden deneyebilirsiniz"></app-no-data>
+
+            <div class="o-list-view" *ngIf="!noDataInContent">
+                <div class="o-list-view__content">
+                    <app-responsive-table>
+                        <div class="c-responsive-table__caption row">
+                            <div class="c-responsive-table__primary-column hidden-sm-down col-md-9 col-lg-6 col-xl-6">
+                                <app-sort-title sortTitle='MÜŞTERİ' sortBy='Code' [activeTitle]="entityService.queryParamSubject" (toggleSortTitle)="toggleSortTitle($event)"></app-sort-title>
+                            </div>
+
+                            <div class="c-responsive-table__secondary-column text-sm-center hidden-sm-down col-md-7 col-lg-10 col-xl-10">
+                                <div class="hidden-md-down col-lg-5 col-xl-4">
+                                    <app-sort-title sortTitle='KOD' sortBy='Status' [activeTitle]="entityService.queryParamSubject" (toggleSortTitle)="toggleSortTitle($event)"></app-sort-title>
+                                </div>
+                                <div class="hidden-lg-down col-xl-4">
+                                    <app-sort-title sortTitle='DURUM' sortBy='Status' [activeTitle]="entityService.queryParamSubject" (toggleSortTitle)="toggleSortTitle($event)"></app-sort-title>
+                                </div>
+                                <div class="col-md-10 col-lg-8 col-xl-5">
+                                    <app-sort-title sortTitle='BİTİŞ TARİHİ' sortBy='ExpirationDate' [activeTitle]="entityService.queryParamSubject" (toggleSortTitle)="toggleSortTitle($event)"></app-sort-title>
+                                </div>
+
+                                <div class="col-md-6 col-lg-3 col-xl-3">
+                                    <app-sort-title sortTitle='ADET' sortBy='Quantity' [activeTitle]="entityService.queryParamSubject" (toggleSortTitle)="toggleSortTitle($event)"></app-sort-title>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="c-responsive-table__row row" *ngFor="let reservation of reservations">
+                            <div class="c-responsive-table__primary-column col-sm-16 col-md-9 col-lg-6 col-xl-6">
+                                <div class="c-primary-column-line c-primary-column-line--with-select">
+                                    <div class="c-primary-column-line__primary-content">
+                                        <div class="c-primary-column-line__select">
+                                            <app-checkbox theme="ligth" type="circle" [isChecked]="selectedItems.indexOf(reservation) > -1" (checkedAction)="selectItem($event, reservation);"></app-checkbox>
+                                        </div>
+
+                                        <a *ngIf="!reservation.memberInfo" class="c-primary-column-line__title"><strong>-</strong></a>
+                                        <a *ngIf="reservation.memberInfo" class="c-primary-column-line__title">
+                                            <strong>{{reservation.memberInfo?.Name}} {{reservation.memberInfo?.Surname}}</strong>
+                                            <span *ngIf="reservation.memberInfo?.Phone">({{reservation.memberInfo?.Phone}})</span>
+                                        </a>
+                                    </div>
+
+                                    <div class="c-primary-column-line__secondary-content">
+                                        <div class="c-responsive-table__secondary-item hidden-lg-up">
+                                            <span class="c-responsive-table__secondary-item-label">KOD</span>
+                                            <span class="c-responsive-table__secondary-item-value">{{reservation.Code}}</span>
+                                        </div>
+
+                                        <div class="c-responsive-table__secondary-item hidden-xl-up">
+                                            <span class="c-responsive-table__secondary-item-label">DURUM</span>
+                                            <span class="c-responsive-table__secondary-item-value">
+												<i class="icon__n icon__n--md icon__n--color-success icon__n--done" *ngIf="reservation.Status == 1"></i>
+												<i class="icon__n icon__n--md icon__n--color-warning icon__n--timer" *ngIf="reservation.Status == 2"></i>
+												<i class="icon__n icon__n--md icon__n--color-danger icon__n--cancel" *ngIf="reservation.Status == 3"></i>
+												<i class="icon__n icon__n--md icon__n--color-warning icon__n--timer_off" *ngIf="reservation.Status == 4"></i>
+												<span>{{reservationStatus[reservation.Status] | enumTranslator}}</span>
+                                            </span>
+                                        </div>
+
+                                        <div class="c-responsive-table__secondary-item hidden-md-up">
+                                            <span class="c-responsive-table__secondary-item-label">>BİTİŞ TARİHİ</span>
+                                            <span class="c-responsive-table__secondary-item-value">{{reservation.ExpirationDate | relativeDate}}</span>
+                                        </div>
+
+                                        <div class="c-responsive-table__secondary-item hidden-md-up">
+                                            <span class="c-responsive-table__secondary-item-label">ADET</span>
+                                            <span class="c-responsive-table__secondary-item-value">
+												<strong>{{reservation.Quantity}}</strong>
+											</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="c-responsive-table__secondary-column text-sm-center hidden-sm-down col-md-7 col-lg-10 col-xl-10">
+                                <div class="hidden-md-down col-lg-5 col-xl-4">
+                                    <span>{{reservation.Code}}</span>
+                                </div>
+                                <div class="hidden-lg-down col-xl-4">
+                                    <i class="icon__n icon__n--md icon__n--color-success icon__n--done" *ngIf="reservation.Status == 1"></i>
+                                    <i class="icon__n icon__n--md icon__n--color-warning icon__n--timer" *ngIf="reservation.Status == 2"></i>
+                                    <i class="icon__n icon__n--md icon__n--color-danger icon__n--cancel" *ngIf="reservation.Status == 3"></i>
+                                    <i class="icon__n icon__n--md icon__n--color-warning icon__n--timer_off" *ngIf="reservation.Status == 4"></i>
+                                    <span>{{reservationStatus[reservation.Status] | enumTranslator}}</span>
+                                </div>
+                                <div class="col-md-10 col-lg-8 col-xl-5">
+                                    <span>{{reservation.ExpirationDate | relativeDate}}</span>
+                                </div>
+                                <div class="col-md-6 col-lg-3 col-xl-3">
+                                    <strong>{{reservation.Quantity}}</strong>
+                                </div>
+                            </div>
+
+                            <div class="c-responsive-table__action-btn" (click)="openEventsContextMenu($event, reservation)">
+                                <i class="icon__n icon__n--md icon__n--more_vert"></i>
+                            </div>
+                        </div>
+                    </app-responsive-table>
+                </div>
+
+                <div class="o-list-view__footer" *ngIf="count > pageSize">
+                    <app-pagination size="xs" (changeEvent)="changePageSize($event)" [options]="pageSizes" [totalItem]="count" [showItemPerPage]="pageSize" [currentPage]="currentPage" (transistPage)="transistPage($event)"></app-pagination>
+                </div>
+            </div>
+        </div>
+
+        <div aside>
+            <div class="p-group">
+                <!--header-->
+                <div class="p-group__header">
+                    <div class="p-group__header-bar">
+                        <div class="p-group__header-title">
+                            BİLET İSTATİSTİKLERİ
+                        </div>
+
+                        <!--<div class="p-group__header-action">
+							<a>Tümü</a>
+						</div>-->
+                    </div>
+                </div>
+
+				<!--item-->
+				<div class="p-group__item">
+					<app-vertical-kv-list
+						[sections]="[
+							[
+								{key: 'totalCapacity', label: 'TOPLAM KAPASİTE', value: totalCapacity},
+								{key: 'onSale', label: 'SATIŞA AÇIK', value: openCapacity}
+							],
+							[
+								{key: 'open', label: 'AÇIK', value: openReservationCount},
+								{key: 'cancelled', label: 'İPTAL EDİLMİŞ', value: CancelledReservationCount},
+								{key: 'expired', label: 'SÜRESİ DOLMUŞ', value: ExpiredReservationCount}
+							]
+						]"></app-vertical-kv-list>
+				</div>
+			</div>
+		</div>
+	</app-collapsible-container>
+</div>

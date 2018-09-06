@@ -1,0 +1,36 @@
+/* --------------------------------------------------------
+author: Abdullah Karadeniz
+----------------------------------------------------------*/
+$oc-venue-search-select: (
+	
+);
+
+$oc-venue-search-select: map-merge($oc-venue-search-select, getSettingsMap("oc-venue-search-select"));
+$oc-map: $oc-venue-search-select;
+
+.oc-venue-search-select {
+    display: block;
+    
+    &__overlay {
+        display: flex;
+        position: absolute;
+        width: 100%;
+        height: 80%;
+        top: 0px;
+        left: 0px;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+.oc-venue-search-select {
+    app-grid-list {
+        margin: 0 !important;
+        
+        li {
+            margin: 5px;
+        }
+    }
+}
+
+$oc-map: null;

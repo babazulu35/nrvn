@@ -1,0 +1,44 @@
+<div class="c-venue-select-bar__container">
+    <div *ngIf="isEmpty">
+        <app-button (click)="searchVenue()" theme="secondary">{{settings.addLabel}}</app-button>
+    </div>
+    <div *ngIf="!isEmpty" class="c-venue-select-bar__item-list">
+
+        <div class="c-venue-select-bar__item">
+            <div class="c-venue-select-bar__item-bar">
+                <span class="c-venue-select-bar__item-avatar">
+          <app-avatar 
+            [source]="venue?.Image" icon="location"></app-avatar>
+        </span>
+                <span class="c-venue-select-bar__item-content">
+          <span class="c-venue-select-bar__item-title">
+            {{venue?.Name || venue?.Localization?.Name}}
+          </span>
+                </span>
+
+                <span class="c-venue-select-bar__item-action">
+          <app-button (click)="searchVenue()" type="icon" icon="replay" theme="secondary" size="autosize"></app-button>
+        </span>
+            </div>
+        </div>
+
+        <div class="c-venue-select-bar__item">
+            <div class="c-venue-select-bar__item-bar">
+                <span class="c-venue-select-bar__item-content">
+          <span class="c-venue-select-bar__item-top-label">
+            OTURMA DÜZENİ
+          </span>
+                <span class="c-venue-select-bar__item-sub-title">
+            {{template?.Name || template?.Localization?.Name}}
+          </span>
+                </span>
+
+                <span class="c-venue-select-bar__item-action" *ngIf="showTemplateAction">
+          <app-button (click)="selectTemplate()" type="icon" icon="replay" theme="secondary" size="autosize"></app-button>
+          <app-button *ngIf="template" (click)="editTemplate()" type="icon" icon="edit" theme="secondary" size="autosize"></app-button>
+        </span>
+            </div>
+        </div>
+
+    </div>
+</div>

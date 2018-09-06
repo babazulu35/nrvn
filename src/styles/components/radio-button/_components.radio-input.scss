@@ -1,0 +1,44 @@
+/**
+* Radio Input:
+* .c-custom-radio-input sınıfı ile beraber kullanılır. Sadece radio input görünmesini istiyorsanız span.custom-control-description boş olarak HTML'de yer almalı.
+*
+* @example
+* <label class="custom-control custom-radio c-custom-radio-input">
+*   <input id="radio1" name="radio" type="radio" class="custom-control-input" checked>
+*   <span class="custom-control-indicator"></span>
+*   <span class="custom-control-description">Toggle this custom radio</span>
+* </label>
+*/
+
+ $custom-radio-input-color: #dcdce5;
+ $custom-radio-input-active-color: #3a2e39;
+
+.c-custom-radio-input {
+  .custom-control-indicator {
+    top: 0;
+    @include size(20px);
+    background-color: #fff;
+    border: 1px solid $custom-radio-input-color;
+  }
+  .custom-control-input:checked ~ .custom-control-indicator {
+    background-color: #fff;
+    background-image: none;
+    border: 2px solid $custom-radio-input-active-color;
+    &:after {
+      content: "";
+      position: absolute;
+      left: 2px;
+      top: 2px;
+      @include size(12px);
+      background-color: $custom-radio-input-active-color;
+      border-radius: 50%;
+    }
+  }
+  .custom-control-input:focus ~ .custom-control-indicator {
+    box-shadow: none;
+  }
+  .custom-control-input:active ~ .custom-control-indicator {
+    background-color: $custom-radio-input-color;
+  }
+  .custom-control-description { margin-left: 8px }
+}

@@ -1,0 +1,96 @@
+<div class="c-cms-field__label" *ngIf="data?.Name">
+    {{data?.Name}}<sup *ngIf="data?.Required">*</sup> 
+  </div>
+  <div class="c-cms-field__input" [ngSwitch]="data?.FieldType">
+    <!-- "Text" -->
+    <app-text-input *ngSwitchCase="'Text'" 
+      [emitWhenInit]="true"
+      [hasLocalization]="hasLocalization"
+      [localization]="value"
+      (changeEvent)="valueChangeHandler($event)"
+      (typeEvent)="valueChangeHandler($event)"
+      [name]="name" [required]="data?.Required"
+      [type]="data?.Settings?.type || 'text'"
+      [placeholder]="data?.Settings?.placeholder || ''"
+      [maxlength]="data?.Settings?.maxlength"
+      ></app-text-input>
+  
+    <!-- "TextField" -->
+    <app-text-input *ngSwitchCase="'TextField'" 
+      [emitWhenInit]="true"
+      [hasLocalization]="hasLocalization"
+      [localization]="value"
+      (changeEvent)="valueChangeHandler($event)"
+      (typeEvent)="valueChangeHandler($event)" 
+      [name]="name" [required]="data?.Required"
+      [type]="data?.Settings?.type || 'text'"
+      [placeholder]="data?.Settings?.placeholder || ''"
+      [maxlength]="data?.Settings?.maxlength"
+      ></app-text-input>
+  
+    <!-- "Number" -->
+    <app-text-input *ngSwitchCase="'Number'"  type="numeric"
+      [emitWhenInit]="true"
+      [value]="value"
+      (changeEvent)="valueChangeHandler($event)" [name]="name" [required]="data?.Required"
+      [placeholder]="data?.Settings?.placeholder || ''"
+      [min]="data?.Settings?.min"
+      [max]="data?.Settings?.max"
+      ></app-text-input>
+  
+    <!-- "FormattedText" -->
+    <app-text-area *ngSwitchCase="'FormattedText'" 
+      [hasLocalization]="hasLocalization"
+      [localization]="value"
+      (changeEvent)="valueChangeHandler($event)" [name]="name" [required]="data?.Required"
+      [placeholder]="data?.Settings?.placeholder || ''"
+      [maxlength]="data?.Settings?.maxlength"
+      ></app-text-area>
+  
+    <!-- "TextArea" -->
+    <app-text-area *ngSwitchCase="'TextArea'" 
+      [hasLocalization]="hasLocalization"
+      [localization]="value"
+      (changeEvent)="valueChangeHandler($event)" [name]="name" [required]="data?.Required"
+      [placeholder]="data?.Settings?.placeholder || ''"
+      [maxlength]="data?.Settings?.maxlength"
+      ></app-text-area>
+  
+    <!-- "Time" -->
+    <app-time-input *ngSwitchCase="'Time'" 
+      (changeEvent)="valueChangeHandler($event)" [value]="value" [name]="name" [required]="data?.Required"
+      ></app-time-input>
+  
+    <!-- "DateTime" -->
+    <app-text-input *ngSwitchCase="'DateTime'" 
+      type="datepicker" (changeEvent)="valueChangeHandler($event)" [date]="value" [name]="name" [required]="data?.Required"
+      [placeholder]="data?.Settings?.placeholder || ''"
+      [minDate]="data?.Settings?.minDate"
+      [maxDate]="data?.Settings?.maxDate"
+      ></app-text-input>
+  
+    <!-- "Checkbox" -->
+    <app-checkbox *ngSwitchCase="'Checkbox'" 
+      type="lightswitch" (changeEvent)="valueChangeHandler($event)" [isChecked]="value" [name]="name"
+      ></app-checkbox>
+  
+    <!-- "Image" -->
+    <app-file-upload-box *ngSwitchCase="'Image'" type="image"
+      [hasLocalization]="hasLocalization"
+      [localization]="value"
+      (changeEvent)="valueChangeHandler($event)" [name]="name"
+      ></app-file-upload-box>
+  
+    <!-- "Selectbox" -->
+    <app-selectbox *ngSwitchCase="'Selectbox'" style="max-width: 50%;"
+      [placeholder]="data?.Settings?.placeholder"
+      [options]="data?.Settings?.options"
+      (changeEvent)="valueChangeHandler($event)" [value]="value" [name]="name" [required]="data?.Required"
+      ></app-selectbox>
+  
+    <!-- "Default Mock" -->
+    <app-mock-box *ngSwitchDefault [backgroundColor]="'#ffffff'" [title]="data?.FieldType" [description]="'Unique Name: ' + data?.UniqueName"></app-mock-box>
+  </div>
+  <div class="c-cms-field__helper" *ngIf="data?.HelpText?.length">
+    <app-helper-text [type]="data?.Settings?.helpTextType || 'info'" [text]="data?.HelpText"></app-helper-text>
+  </div>

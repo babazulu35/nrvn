@@ -1,0 +1,496 @@
+/***
+ * Author: Can SİVRİ
+*/
+
+$or-transaction-view: ( padding: 30px, border-style: 1px solid #dcdce5, border-dashed-style: 1px dashed #dcdce5, gray-bg: #f7f7f7, text-color: #3a2e39, icon-color: #bdbdbd, gray-color: #9d9d9d, green-color: #6bba18);
+// Merge settings and defaults
+$or-transaction-view: map-merge($or-transaction-view, getSettingsMap("or-transaction-view"));
+// Set shortcuts
+$c-map: $or-transaction-view;
+.or-transaction-view {
+    display: table;
+    width: 100%;
+    height: calc(100vh - 70px);
+    &__product-item-index{
+        padding-right:10px;
+    }
+    &__main {
+        display: table-cell;
+        vertical-align: top;
+        width: 70%;
+        border-right: map-get($c-map, border-style);
+        padding: map-get($c-map, padding);
+    }
+    &__aside {
+        display: table-cell;
+        vertical-align: top;
+        padding: map-get($c-map, padding);
+        &-content {
+            min-width: 290px;
+            border-radius: 3px;
+            padding: 20px;
+            border: map-get($c-map, border-style);
+            h4 {
+                margin-bottom: 10px;
+                font-size: 16px;
+                @include ffamily("semi");
+                color: map-get($c-map, text-color);
+            }
+        }
+        &-table {
+            border-bottom: map-get($c-map, border-style);
+            &--order-summary {
+                margin-bottom: 50px;
+            }
+            td {
+                width: 50%;
+                padding: 11px 5px 9px 0;
+                border-top: map-get($c-map, border-style);
+            }
+            &-left {
+                text-align: left;
+                font-size: 11px;
+                @include ffamily("semi");
+                color: map-get($c-map, gray-color);
+                strong {
+                    font-size: 13px;
+                    color: map-get($c-map, text-color);
+                }
+                i {
+                    font-size: 12px;
+                    @include ffamily("semi", "i");
+                }
+            }
+            &-right {
+                text-align: right;
+                font-size: 18px;
+                @include ffamily("bold");
+                color: map-get($c-map, text-color);
+                sup {
+                    left: 4px;
+                    font-size: 11px;
+                    @include ffamily("regular");
+                }
+                &--discount {
+                    color: map-get($c-map, green-color);
+                }
+            }
+        }        
+    }
+    .or-transaction-view__main-title {
+        @include clearfix;
+        height: 65px;
+        margin: -30px -30px 40px;
+        padding: 18px 30px;
+        border-bottom: map-get($c-map, border-style);
+        background-color: map-get($c-map, gray-bg);
+        h2 {
+            float: left;
+            font-size: 22px;
+            @include ffamily("regular");
+            color: map-get($c-map, text-color);
+        }
+        .print-icon {
+            position: relative;
+            top: 2px;
+            float: right;
+            font-size: 21px;
+            color: map-get($c-map, icon-color);
+            cursor: pointer;
+            &:hover {
+                color: map-get($c-map, text-color);
+            }
+        }
+    }
+    .or-transaction-view__process {
+        margin-bottom: 40px;
+        border-bottom: map-get($c-map, border-style);
+        td {
+            padding-bottom: 30px;
+            font-size: 15px;
+            @include ffamily("regular");
+            color: map-get($c-map, text-color);
+            text-align: left;
+        }
+        span {
+            display: block;
+            margin-bottom: 2px;
+            font-size: 11px;
+            @include ffamily("semi");
+            color: map-get($c-map, gray-color);
+        }
+    }
+    .or-transaction-view__content-title {
+        margin-bottom: 15px;
+        font-size: 16px;
+        @include ffamily("semi");
+        color: map-get($c-map, text-color);
+    }
+    .or-transaction-view__product {
+        margin-bottom: 40px;
+        border: map-get($c-map, border-style);
+        border-radius: 3px;
+        padding: 20px;
+    }
+    .or-transaction-view__product-info {
+        display: table;
+        width: 100%;
+        margin: 0 0 40px 0;
+        padding: 0 0 25px 0;
+        border-bottom: map-get($c-map, border-style);
+        &-avatar {
+            width: 40px;
+            display: table-cell;
+            vertical-align: middle;
+            .c-avatar {
+                font-size: 40px !important;
+            }
+        }
+        h5 {
+            display: table-cell;
+            vertical-align: middle;
+            padding: 0 0 0 12px;
+            font-size: 13px;
+            @include ffamily("regular");
+            color: map-get($c-map, text-color);
+            span {
+                display: block;
+                margin-bottom: 4px;
+                font-size: 11px;
+                @include ffamily("semi");
+                color: map-get($c-map, gray-color);
+            }
+            i {
+                @include ffamily("regular", "i");
+            }
+        }
+    }
+    .or-transaction-view__product-item {
+        margin-bottom: 23px;
+        h4 {
+            margin-bottom: 15px;
+            font-size: 15px;
+            @include ffamily("bold");
+            color: map-get($c-map, text-color);
+        }
+        h5 {
+            margin: 50px 0 20px;
+            font-size: 11px;
+            @include ffamily("semi");
+            color: map-get($c-map, gray-color);
+        }
+        table {
+            border-bottom: map-get($c-map, border-dashed-style);
+        }
+        td {
+            width: 33%;
+            padding: 11px 0;
+            border-top: map-get($c-map, border-dashed-style);
+            font-size: 13px;
+            @include ffamily("regular");
+            color: map-get($c-map, text-color);
+        }
+        &--border {
+            table {
+                border-bottom: map-get($c-map, border-style);
+            }
+            tr:nth-child(odd) td {
+                border-top: map-get($c-map, border-style);
+            }
+        }
+        &-left {
+            text-align: left;
+            &-container {
+                display: table;
+            }
+        }
+        &-center {
+            text-align: center;
+            strong {
+                padding-right: 5px;
+                font-size: 13px;
+                @include ffamily("bold");
+            }
+        }
+        &-right {
+            text-align: right;
+            white-space: nowrap;
+        }
+        &-checkbox {
+            display: table-cell;
+            padding-right: 10px;
+            vertical-align: middle;
+            .c-checkbox {
+                position: relative;
+                top: -1px;
+                vertical-align: middle;
+            }
+        }
+        &-disabled {
+            //change color
+            color: map-get($c-map, gray-color) !important;
+        }
+        &-ticket {
+            display: table-cell;
+            vertical-align: middle;
+        }
+        &-infobadge {
+            // display: table-cell;
+            vertical-align: middle;
+            margin: 0 0 0 25px;
+            font-size: 9px;
+            @include ffamily("bold");
+            padding: 4px;
+            background-color: map-get($c-map, gray-bg);
+            &--link {
+                &:hover {
+                    cursor: pointer;
+                    text-decoration: underline;
+                    color: #014c8c;
+                }
+            }
+        }
+        &-returnforward {
+            margin: 0 25px 0 0;
+        }
+        &-no-number {
+            font-size: 11px;
+            @include ffamily("bold");
+            color: map-get($c-map, icon-color);
+        }
+        &-category {
+            font-size: 13px;
+            @include ffamily("semi", "i");
+            color: map-get($c-map, gray-color);
+        }
+        &-action-list {
+            display: inline-block;
+            vertical-align: middle;
+            margin: 0 25px 0 0;
+            padding: 0;
+            list-style: none;
+            li {
+                display: inline-block;
+                vertical-align: middle;
+            }
+            a {
+                display: block;
+                font-size: 24px;
+                color: map-get($c-map, icon-color);
+                line-height: 24px;
+                &:hover {
+                    color: map-get($c-map, text-color);
+                }
+            }
+            i {
+                position: relative;
+                vertical-align: middle;
+                &.icon__n--qrcode {
+                    top: -2px;
+                }
+                &.icon__n--sync_off {
+                    top: -4px;
+                }
+            }
+        }
+        &-price {
+            display: inline-block;
+            vertical-align: middle;
+            font-size: 18px;
+            @include ffamily("bold");
+            color: map-get($c-map, text-color);
+            sup {
+                left: 4px;
+                font-size: 11px;
+                @include ffamily("regular");
+            }
+            &--discount {
+                color: map-get($c-map, green-color);
+            }
+        }
+        &-action-btn {
+            position: relative;
+            top: 2px;
+            right: -8px;
+            display: inline-block;
+            vertical-align: middle;
+            width: 22px;
+            cursor: pointer;
+            color: map-get($c-map, icon-color);
+            font-size: 24px;
+            line-height: 24px;
+        }
+    }
+    .or-transaction-view__product-total,
+    .or-transaction-view__general-total {
+        @include clearfix;
+        border-top: map-get($c-map, border-style);
+        border-bottom: map-get($c-map, border-style);
+        padding: 8px 15px 8px 10px;
+        background-color: map-get($c-map, gray-bg);
+        margin-top: 45px;
+        h6 {
+            float: left;
+            margin-top: 9px;
+            font-size: 13px;
+            @include ffamily("semi");
+            color: map-get($c-map, text-color);
+        }
+        span {
+            float: right;
+            font-size: 22px;
+            @include ffamily("bold");
+            color: map-get($c-map, text-color);
+            sup {
+                left: 5px;
+                font-size: 13px;
+                @include ffamily("regular");
+            }
+        }
+    }
+    .or-transaction-view__product-vat {
+        margin: 33px 0 23px;
+        padding-left: 10px;
+        padding-right: 15px;
+        border-bottom: map-get($c-map, border-style);
+        border-top: map-get($c-map, border-style);
+        td {
+            width: 33%;
+            padding: 11px 0;
+            // border-top:map-get($c-map, border-dashed-style);
+            font-size: 13px;
+            @include ffamily("regular");
+            color: map-get($c-map, text-color);
+        }
+        &-left {
+            text-align: left;
+            &-container {
+                display: table;
+            }
+        }
+        &-center {
+            text-align: center;
+            strong {
+                padding-right: 5px;
+                font-size: 13px;
+                @include ffamily("bold");
+            }
+        }
+        &-right {
+            text-align: right;
+            white-space: nowrap;
+        }
+        &-price {
+            display: inline-block;
+            vertical-align: middle;
+            font-size: 18px;
+            @include ffamily("bold");
+            color: map-get($c-map, text-color);
+            sup {
+                left: 4px;
+                font-size: 11px;
+                @include ffamily("regular");
+            }
+            &--discount {
+                color: map-get($c-map, green-color);
+            }
+        }
+    }
+    .or-transaction-view__general-total {
+        border: map-get($c-map, border-style);
+        border-radius: 3px;
+        padding: 20px;
+        margin-top: 0;
+        h6 {
+            margin-top: 11px;
+            font-size: 15px;
+        }
+        span {
+            font-size: 26px;
+            sup {
+                font-size: 16px;
+            }
+        }
+    }
+    .or-transaction-view__client {
+        position: relative;
+        margin: -20px -20px 25px;
+        padding: 40px 20px 30px;
+        border-bottom: map-get($c-map, border-style);
+        &-process {
+            position: absolute;
+            top: 15px;
+            right: 5px;
+            list-style: none;
+            li {
+                display: inline-block;
+                vertical-align: middle;
+            }
+            i {
+                font-size: 24px;
+                color: map-get($c-map, gray-color);
+                &:hover {
+                    color: map-get($c-map, text-color);
+                }
+            }
+        }
+        &-info {
+            display: table;
+            width: 100%;
+        }
+        &-avatar {
+            width: 40px;
+            display: table-cell;
+            vertical-align: middle;
+            .c-avatar {
+                font-size: 40px !important;
+                vertical-align: middle;
+            }
+        }
+        &-name {
+            display: table-cell;
+            vertical-align: middle;
+            padding-left: 10px;
+            font-size: 15px;
+            @include ffamily("semi");
+            color: map-get($c-map, text-color);
+            i {
+                vertical-align: bottom;
+                font-size: 24px;
+                color: map-get($c-map, gray-color);
+            }
+            span {
+                display: block;
+                margin-top: 3px;
+                font-size: 11px;
+                @include ffamily("regular");
+            }
+        }
+        &-statistic {
+            list-style: none;
+            margin-top: 12px;
+            li {
+                display: inline-block;
+                vertical-align: middle;
+                margin-right: 14px;
+                font-size: 13px;
+                @include ffamily("bold");
+                color: map-get($c-map, text-color);
+            }
+            i {
+                margin-right: 5px;
+                vertical-align: middle;
+                font-size: 24px;
+                color: map-get($c-map, icon-color);
+            }
+        }
+    }
+}
+
+.okc-screen {
+    .or-transaction-view {
+        * {
+            user-select: none;
+        }
+    }
+}

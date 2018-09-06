@@ -1,0 +1,161 @@
+<div class="or-venue-create">
+	<div class="p-header-bar" sticky sticky-main-scroller sticky-release-offset="30" sticky-height-property="55" sticky-width-property="100%" sticky-follow-menu-moves>
+		<div class="p-header-bar__left">
+			<h2>Terminaller</h2>
+		</div>
+
+		<div class="p-header-bar__right">
+			<app-button [routerLink]="['/terminal/create']">EKLE</app-button>
+		</div>
+	</div>
+
+	<div class="row o-filter-bar">
+		<div class="col-sm-8">
+			<app-inline-search-input placeholder="Terminal adıyla arayın"
+				[isIconAlignLeft]='true'
+				(onInputSave)="onInputChange($event)"
+				(onInputChange)="onInputChange($event)">
+			</app-inline-search-input>
+		</div>
+
+		<div class="col-sm-8">
+			<div class="o-tab__button float-sm-right">
+				<app-pill-group [pills]="pills" (selectPillFilterAction)="pillFilter($event)"></app-pill-group>
+			</div>
+		</div>
+	</div>	
+
+	<app-no-data *ngIf="noDataInContent"
+		style="max-width:50%; margin-top:30px"
+		[ngClass]="{'main-loader': isLoading }"
+		[icon]='{type: "icon", name: "location"}'
+		[hasContainer]="true"
+		[title]="'Aramanız ile eşleşen terminal bulunamadı'"
+		[description]="'Arama kriterini değiştirerek yeniden deneyebilirsiniz'"
+	></app-no-data>
+
+	<div class="o-list-view" *ngIf="!noDataInContent">
+		<div class="o-list-view__content">
+			<app-responsive-table [ngClass]="{'main-loader': isLoading }">
+				<div class="c-responsive-table__caption row">
+					<div class="c-responsive-table__primary-column hidden-sm-down col-md-6 col-xl-4">
+						<app-sort-title sortTitle='ADI' sortBy='Name' [activeTitle]="entityService.queryParamSubject" (toggleSortTitle)="toggleSortTitle($event)"></app-sort-title>
+					</div>
+					<div class="c-responsive-table__secondary-column hidden-sm-down col-md-10 col-xl-12">
+						<div class="col-sm-8 col-md-5 col-xl-3">
+							<app-sort-title sortTitle='IP ADRES' sortBy='IpAddress' [activeTitle]="entityService.queryParamSubject" (toggleSortTitle)="toggleSortTitle($event)"></app-sort-title>
+						</div>
+
+						<!-- <div class="hidden-lg-down col-xl-7">
+							<app-sort-title sortTitle='MAC ADRES' sortBy='MacAddress' [activeTitle]="entityService.queryParamSubject" (toggleSortTitle)="toggleSortTitle($event)"></app-sort-title>
+						</div> -->
+
+						<div class="hidden-lg-down col-xl-3">
+							<!-- <app-sort-title sortTitle='BAŞLANGIÇ TARİHİ' sortBy='SalesSubChannels/SalesSubChannel/Name' [activeTitle]="entityService.queryParamSubject" (toggleSortTitle)="toggleSortTitle($event)"></app-sort-title>							 -->
+							<span>BAŞLANGIÇ TARİHİ</span>
+						</div>
+
+						<div class="hidden-lg-down col-xl-3">
+							<!-- <app-sort-title sortTitle='BİTİŞ TARİHİ' sortBy='SalesSubChannels/SalesSubChannel/Name' [activeTitle]="entityService.queryParamSubject" (toggleSortTitle)="toggleSortTitle($event)"></app-sort-title>							 -->
+							<span>BİTİŞ TARİHİ</span>
+						</div>
+
+						<div class="col-sm-8 col-md-6 col-xl-4">
+							<!-- <app-sort-title sortTitle='ALT SATIŞ KANALI' sortBy='SalesSubChannels/SalesSubChannel/Name' [activeTitle]="entityService.queryParamSubject" (toggleSortTitle)="toggleSortTitle($event)"></app-sort-title>							 -->
+							<span>ALT SATIŞ KANALI</span>
+						</div>
+
+						<div class="hidden-md-down col-md-5 col-xl-3">
+							<app-sort-title sortTitle='AKTİF' sortBy='IsActive' [activeTitle]="entityService.queryParamSubject" (toggleSortTitle)="toggleSortTitle($event)"></app-sort-title>
+						</div>
+					</div>
+				</div>
+
+				<div class="c-responsive-table__row row" *ngFor="let terminal of terminals">
+					<div class="c-responsive-table__primary-column col-sm-16 col-md-6 col-xl-4">
+						<div class="c-primary-column-line c-primary-column-line--with-select c-primary-column-line--with-avatar">
+							<div class="c-primary-column-line__primary-content">
+								<a class="c-primary-column-line__title" [routerLink]="['/terminal', terminal.Id, 'edit']">
+								    {{terminal.Name}}
+								</a>
+							</div>
+
+							<div class="c-primary-column-line__secondary-content">
+								<div class="c-responsive-table__secondary-item hidden-md-up">
+									<span class="c-responsive-table__secondary-item-label">IP ADRES</span>
+									<span class="c-responsive-table__secondary-item-value">{{ terminal.IpAddress || '-' }}</span>
+								</div>
+
+								<!-- <div class="c-responsive-table__secondary-item hidden-md-up">
+									<span class="c-responsive-table__secondary-item-label">MAC ADRES</span>
+									<span class="c-responsive-table__secondary-item-value">{{terminal.MacAddress}}</span>
+								</div> -->
+
+								<div class="c-responsive-table__secondary-item hidden-md-up">
+									<span class="c-responsive-table__secondary-item-label">BAŞLANGIÇ TARİHİ</span>
+									<span class="c-responsive-table__secondary-item-value">{{ terminal.BeginDate ? (terminal.BeginDate | date: 'dd.MM.y HH:mm') : ('-') }}</span>
+								</div>
+
+								<div class="c-responsive-table__secondary-item hidden-md-up">
+									<span class="c-responsive-table__secondary-item-label">BİTİŞ TARİHİ</span>
+									<span class="c-responsive-table__secondary-item-value">{{ terminal.EndDate ? (terminal.EndDate | date: 'dd.MM.y HH:mm') : ('-') }}</span>
+								</div>
+
+								<div class="c-responsive-table__secondary-item hidden-md-up">
+									<span class="c-responsive-table__secondary-item-label">ALT SATIŞ KANALI</span>
+									<span class="c-responsive-table__secondary-item-value">{{ terminal.SalesSubChannelName }}</span>
+								</div>
+
+								<div class="c-responsive-table__secondary-item hidden-md-up">
+									<span class="c-responsive-table__secondary-item-label">AKTİF</span>
+									<span class="c-responsive-table__secondary-item-value">{{ terminal.IsActive ? 'EVET' : 'HAYIR' }}</span>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="c-responsive-table__secondary-column hidden-sm-down col-md-10 col-xl-12">
+						<div class="col-sm-8 col-md-5 col-xl-3">
+							<span class="text">{{ terminal.IpAddress || '-' }}</span>
+						</div>
+
+						<!-- <div class="hidden-lg-down col-xl-7">
+							<span class="text padding-right-30">{{terminal.MacAddress || '-'}}</span>
+						</div> -->
+
+						<div class="hidden-lg-down col-xl-3">
+							<span class="text">{{ terminal.BeginDate ? (terminal.BeginDate | date: 'dd.MM.y HH:mm') : ('-') }}</span>
+						</div>
+
+						<div class="hidden-lg-down col-xl-3">
+							<span class="text">{{ terminal.EndDate ? (terminal.EndDate | date: 'dd.MM.y HH:mm') : ('-') }}</span>
+						</div>
+
+						<div class="col-sm-8 col-md-6 col-xl-4">
+							<span class="text">{{ terminal.SalesSubChannelName }}</span>
+						</div>
+
+						<div class="hidden-md-down  col-md-5 col-xl-3">
+							<span class="text">{{ terminal.IsActive ? 'EVET' : 'HAYIR' }}</span>
+						</div>
+					</div>
+
+					<div class="c-responsive-table__action-btn">						
+						<app-button type="icon" icon="edit" theme="secondary" (clickEvent)="goToTerminal(terminal)"></app-button>
+					</div>					
+				</div>
+			</app-responsive-table>
+		</div>
+
+		<div class="o-list-view__footer">
+			<app-pagination size="xs"
+				[options]="pageSizes"
+				[totalItem]="count"
+				[showItemPerPage]="pageSize"
+				[currentPage]="currentPage"
+				(changeEvent)="changePageSize($event)"
+				(transistPage)="transistPage($event)">
+			</app-pagination>
+		</div>
+	</div>
+</div>

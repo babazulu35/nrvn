@@ -1,0 +1,52 @@
+/***
+ * Author: Can SİVRİ
+*/
+
+$or-boxoffice-events: ();
+.or-boxoffice-events {
+
+    * {
+        user-select: none;
+    }
+    
+    .o-header-large-search-container {
+        padding: 65px 30px;
+        background-color: #f7f7f7;
+        border-bottom: 1px solid #dcdce5;
+    }
+    .o-content-title-container {
+        padding: 20px 30px 10px;
+        display: table;
+        width: 100%;
+        &__left {
+            display: table-cell;
+            vertical-align: bottom;
+            h2 {
+                border: none;
+                margin: 0;
+                padding: 5px 0;
+            }
+        }
+        &__right {
+            display: table-cell;
+            vertical-align: bottom;
+            text-align: right;
+            &-item {
+                display: inline-block;
+                margin-right: 10px;
+                vertical-align: bottom;
+                .c-selectbox {
+                    width: 120px;
+                    vertical-align: top;
+                }
+                .c-pill .c-pill__bagde {
+                    height: auto;
+                    background-color: #eee;
+                }
+                &::last-child {
+                    margin-right: none;
+                }
+            }
+        }
+    }
+}

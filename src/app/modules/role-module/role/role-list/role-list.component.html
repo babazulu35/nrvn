@@ -1,0 +1,65 @@
+<div class="or-role-list">
+    <div class="p-header-bar" sticky sticky-main-scroller sticky-release-offset="30" sticky-height-property="55" sticky-width-property="100%" sticky-follow-menu-moves>
+        <div class="p-header-bar__left">
+            <h2>Tüm Roller</h2>
+        </div>
+
+        <div class="p-header-bar__right">
+            <!-- <app-button type="icon" icon="close" theme="secondary"></app-button> -->
+        </div>
+    </div>
+    <div class="p-container">
+        <div class="row o-filter-bar">
+            <div class="col-sm-5">
+                <app-inline-search-input (onInputSave)="onInputChange($event)" (onInputChange)="onInputChange($event)" [isIconAlignLeft]='true' placeholder='Roller İçinde Arayın'></app-inline-search-input>
+            </div>
+            <div class="col-sm-5 float-sm-right">
+                <div class="o-tab__button float-sm-right">
+                    <app-selectbox [options]="sortParams" style="min-width:180px;" (changeEvent)="sortBy($event)" class="margin-ringClght-10"></app-selectbox>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <app-no-data [ngClass]="{'main-loader': isLoading }" *ngIf="noDataInContent" style="max-width: 50%;margin-top:30px" [hasContainer]="true" [icon]='{type: "icon", name: "performance"}' title="Aramanız ile eşleşen rol kaydı bulunamadı" description="Arama kriterini değiştirerek yeniden deneyebilirsiniz"></app-no-data>
+
+    <div class="o-list-view" *ngIf="!noDataInContent" [ngClass]="{'main-loader': isContentLoading }">
+        <div class="o-list-view__content">
+            <app-responsive-table>
+                <div class="c-responsive-table__caption row">
+                    <div class="c-responsive-table__primary-column hidden-sm-down col-md-7 col-lg-7">
+                        <app-sort-title sortTitle='ROL ADI' [activeTitle]="roleService.queryParamSubject" sortBy='Name' (toggleSortTitle)="toggleSortTitle($event)"></app-sort-title>
+                    </div>
+                </div>
+
+                <div class="c-responsive-table__row row" *ngFor="let roles of roleList">
+                    <div class="c-responsive-table__primary-column col-sm-16 col-md-7 col-lg-7">
+                        <div class="c-primary-column-line">
+                            <div class="c-primary-column-line__primary-content margin-left-5">
+                                <div class="c-primary-column-line__border">
+                                </div>
+                                <div class="c-primary-column-line__title">
+                                    {{roles.Name}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="c-responsive-table__action-btn">
+
+                        <app-checkbox type="lightswitch" (changeEvent)="inputChangeHandler($event,roles)" [isChecked]="roles?.IsActive"></app-checkbox>
+                    </div>
+                </div>
+
+            </app-responsive-table>
+        </div>
+        <div class="o-list-view__footer" *ngIf="roleList?.length > 0">
+            <app-pagination size="xs" (changeEvent)="changePageSize($event)" [options]="pageSizes" [totalItem]="count" [showItemPerPage]="pageSize" [currentPage]="currentPage" (transistPage)="transistPage($event)"></app-pagination>
+        </div>
+    </div>
+
+
+
+
+</div>

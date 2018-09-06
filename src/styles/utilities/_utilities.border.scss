@@ -1,0 +1,21 @@
+.clear-border {
+    &--top {
+        border-top: inherit !important;
+    }
+    &--left {
+        border-left: inherit !important;
+    }
+    &--bottom {
+        border-bottom: inherit !important;
+    }
+    &--right {
+        border-right: inherit !important;
+    }
+    &--all {
+        border: inherit !important;
+    }
+}
+
+.default-border {
+    border: solid 1px #dcdce5;
+}

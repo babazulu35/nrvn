@@ -1,0 +1,65 @@
+/***
+* Over Image Stats Grid Component:
+*/
+
+/**
+* Over Image Stats Grid:
+* `.c-over-image-stats-grid - Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque repellat autem deleniti odit repellendus temporibus placeat ipsa similique, neces
+*
+*     @example
+*			<ul class="c-over-image-stats-grid">
+*				<li class="c-over-image-stats-grid__item"><span>17</span> ETKİNLİK</li>
+*				<li class="c-over-image-stats-grid__item"><span>36</span> PERFORMANS</li>
+*				<li class="c-over-image-stats-grid__item"><span>124</span> KİŞİ / EKİP</li>
+*			</ul>
+
+*/
+
+
+// Set defaults
+$c-over-image-stats-grid: (
+	float: right,
+	min-width: 105px,
+	margin:0,
+	padding: 24px 0 12px,
+	border-radius: 3px,
+	border:1px solid rgba(255,255,255, .2),
+	value-margin: 0 0 10px,
+	value-font-size: 46px,
+	value-line-height: 35px
+);
+
+
+// Merge settings and defaults
+$c-over-image-stats-grid: map-merge($c-over-image-stats-grid, getSettingsMap("c-over-image-stats-grid"));
+
+// Set shortcuts
+$c-map: $c-over-image-stats-grid;
+
+.c-over-image-stats-grid {
+	float: map-get($c-map, float);
+	display:inline-block;
+	margin: map-get($c-map, margin);
+	font-size:0;
+	border-radius: map-get($c-map, border-radius);
+	border: map-get($c-map, border);
+	&__item {
+		display: inline-block;
+		vertical-align: middle;
+		min-width: map-get($c-map, min-width);
+		padding: map-get($c-map, padding);
+		font-size: 10px;
+		@include ffamily("semi");
+		border-right:1px solid rgba(255,255,255, .2);
+		color: #fff;
+		text-align: center;
+		&:last-child { border-right:none; }
+		&__value {
+			display:block;
+			margin: map-get($c-map, value-margin);
+			font-size: map-get($c-map, value-font-size);
+			line-height: map-get($c-map, value-line-height);
+			@include ffamily("bold");
+		}
+	}
+}

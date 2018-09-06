@@ -1,0 +1,34 @@
+<div class="c-event-search-select__container">
+  <app-no-data *ngIf="isEmpty" [hasContainer]="true" [icon]="{type: 'svg', name: 'performance'}" [iconSize]="'lg'" [action]='{label: "ETKİNLİK EKLE", action:"addEvent", params:{} }' (actionEvent)="openSearchBox($event)"></app-no-data>
+  <app-container-canvas *ngIf="!isEmpty">
+    <div class="c-event-search-select__list-container">
+      <ul class="c-event-search-select__list">
+        <li *ngFor="let event of events" class="c-event-search-select__list-item">
+          <app-mini-card>
+              <div class="c-mini-card" [class.c-mini-card--active]="event?.Status != 5">
+                  <div class="c-mini-card__kind-icon">
+                      <i class="icon__n" [class.icon__n--visibility_off]="event?.Status == 5" [class.icon__n--visibility]="event?.Status != 5"></i>
+                  </div>
+                  <div class="c-mini-card__figure">
+                      <app-avatar size="lg" [letters]="event?.Localization?.Name?.charAt(0)" source="{{event?.Images | image: 'Event'}}"></app-avatar>
+                  </div>
+
+                  <div class="c-mini-card__info">
+                      {{event?.Localization?.Name}}
+                  </div>
+                  <!-- <div class="c-mini-card__date" [innerHTML]="relativeDate.transform([event?.SalesBeginDate, event?.SalesEndDate])"></div> -->
+                  <div class="c-mini-card__action-area">
+                      <app-button type="icon" icon="delete" theme="secondary" (click)="removeEvent(event.Id)"></app-button>
+                      <!--<app-button type="icon" icon="more_vert" theme="secondary" (click)="openEventActions(event, $event)"></app-button>-->
+                  </div>
+              </div>
+
+          </app-mini-card>
+        </li>
+      </ul>
+      <div class="c-event-search-select__add-button">
+          <app-button (click)="openSearchBox($event)" type="icon" icon="plus" shape="circle" theme="secondary" size="lg"></app-button>
+      </div>
+    </div>
+  </app-container-canvas>
+</div>

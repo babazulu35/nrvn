@@ -1,0 +1,10 @@
+<div class="c-auth-dialog-box__header"
+  [style.background-color]='headerBackgroundColor'>
+  <img src="{{headerLogo}}"/>
+</div>
+<div class="c-auth-dialog-box__body">
+  <ng-content></ng-content>
+</div>
+<div class="c-auth-dialog-box__footer">
+   <ng-content select="[footer]"></ng-content>
+</div>

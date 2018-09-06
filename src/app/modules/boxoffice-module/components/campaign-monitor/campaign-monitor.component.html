@@ -1,0 +1,26 @@
+<div class="c-campaign-monitor__item-line">
+    <ul>
+
+        <li [class.c-campaign-monitor__item-field--error]="isError[campaign.Id]" [class.c-campaign-monitor__item-field--success]="!campaign?.IsApplied">
+            <span class="c-campaign-monitor__item-brand">
+                
+                <img *ngIf='campaign?.ImageUrl' src="{{campaign?.ImageUrl | image}}" />
+                <span style="display:block;text-align:center;" *ngIf='!campaign?.ImageUrl' ><app-promise-icon size="xl" [iconName]="'card_giftcard'"></app-promise-icon></span>
+            </span>
+            <span class="c-campaign-monitor__item-product">
+                <span class="c-campaign-monitor__item-product--info">
+                    <strong>{{ campaign?.Name | ellipsis:45}}</strong>
+                    <p *ngIf="campaign?.IsApplied == false"> {{ campaign?.Description}}</p>
+                    <em *ngIf="isError[campaign.Id]" class="c-campaign-monitor__item-product--error">{{errorMessage}}</em>
+                </span>
+            </span>
+            <app-button *ngIf="!campaign.IsApplied" [isDisabled]="campaign.ApplicableStatus == 2" (click)="applyCampaign(campaign)" theme="secondary">KULLAN</app-button>
+
+            <app-button *ngIf="campaign.IsApplied && !isError[campaign.Id] && !campaign.IsAccess" (click)="cancelCampaign(campaign)" theme="secondary">İPTAL ET</app-button>
+
+
+            <i *ngIf="isError[campaign.Id]" class="icon__n icon__n--warning icon__n--md c-campaign-monitor__item-product--error_icon"></i>
+
+        </li>
+    </ul>
+</div>

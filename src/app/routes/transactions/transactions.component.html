@@ -1,0 +1,144 @@
+<div class="or-transactions">
+    <div>
+        <div class="p-search-container">
+            <app-header-large-search inputType="refId" (onDataChange)="onInputChange($event)" [isPromising]="isPromising" [options]="searchOptions.options" [placeholder]="searchOptions.placeholders">
+            </app-header-large-search>
+        </div>
+
+        <div class="p-title-container">
+            <div class="p-title-container__left">
+                <h2>İşlemler</h2>
+            </div>
+
+            <div class="p-title-container__right">
+                <span class="p-title-container__right-item">
+					<app-pill-group [pills]="pills" 
+									(selectPillFilterAction)="pillFilter($event)"
+									[canToggle]="false"></app-pill-group>
+				</span>
+            </div>
+        </div>
+
+        <app-no-data *ngIf="noDataInContent" [ngClass]="{'main-loader': isLoading }" [icon]='{type: "icon", name: "location"}' [hasContainer]="true" style="max-width:50%; margin-top:30px" title="Aramanız ile eşleşen işlem kaydı bulunamadı" description="Arama kriterini değiştirerek yeniden deneyebilirsiniz">
+        </app-no-data>
+
+        <div class="o-list-view" *ngIf="!noDataInContent">
+            <div class="o-list-view__content">
+                <app-responsive-table [ngClass]="{'main-loader': isLoading }">
+                    <div class="c-responsive-table__caption row">
+                        <div class="c-responsive-table__primary-column hidden-sm-down col-md-9 col-lg-4 col-xl-4">
+                            <app-sort-title sortTitle='İŞLEM ID' sortBy='RefId' [activeTitle]="entityService.queryParamSubject" (toggleSortTitle)="toggleSortTitle($event)"></app-sort-title>
+                        </div>
+                        <div class="c-responsive-table__secondary-column hidden-sm-down col-md-7 col-lg-12 col-xl-12">
+                            <div class="col-md-16 col-lg-8 col-xl-6">
+                                <app-sort-title sortTitle='SATIŞ KANALI' sortBy='SalesChannel/Name' [activeTitle]="entityService.queryParamSubject" (toggleSortTitle)="toggleSortTitle($event)"></app-sort-title>
+                            </div>
+
+                            <div class="hidden-md-down col-lg-5 col-xl-3">
+                                <span>MÜŞTERİ ADI</span>
+                            </div>
+
+                            <div class="hidden-md-down col-lg-3">
+                                <app-sort-title sortTitle='TARİHİ' sortBy='PaymentDate' [activeTitle]="entityService.queryParamSubject" (toggleSortTitle)="toggleSortTitle($event)"></app-sort-title>
+                            </div>
+
+                            <div class="hidden-lg-down col-xl-2">
+                                <app-sort-title sortTitle='BEDEL' sortBy='TotalAmount' [activeTitle]="entityService.queryParamSubject" (toggleSortTitle)="toggleSortTitle($event)"></app-sort-title>
+                            </div>
+
+                            <div class="hidden-lg-down col-xl-2">
+                                <span>İŞLEM TİPİ</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="c-responsive-table__row row" *ngFor="let transaction of transactions">
+                        <div class="c-responsive-table__primary-column col-sm-16 col-md-9 col-lg-4 col-xl-4">
+                            <div class="c-primary-column-line">
+                                <div class="c-primary-column-line__primary-content">
+                                    <a class="c-primary-column-line__title" [routerLink]="['/transaction', transaction.Id]">
+										{{transaction.RefId}}
+									</a>
+                                </div>
+
+                                <div class="c-primary-column-line__secondary-content margin-left-20">
+                                    <div class="c-responsive-table__secondary-item hidden-md-up">
+                                        <span class="c-responsive-table__secondary-item-label">SATIŞ KANALI</span>
+                                        <span class="c-responsive-table__secondary-item-value">
+											<span class="text-nowrap">{{transaction.SalesChannel?.Name || '-'}} / {{transaction.SalesSubChannel?.Name || '-'}}</span>
+                                        </span>
+                                    </div>
+
+                                    <div class="c-responsive-table__secondary-item hidden-md-up">
+                                        <span class="c-responsive-table__secondary-item-label">TERMİNAL</span>
+                                        <span class="c-responsive-table__secondary-item-value">
+											<span class="text-nowrap">{{transaction.Terminal?.Name || '-'}}</span>
+                                        </span>
+                                    </div>
+
+                                    <div class="c-responsive-table__secondary-item hidden-md-up">
+                                        <span class="c-responsive-table__secondary-item-label">KULLANICI</span>
+                                        <span class="c-responsive-table__secondary-item-value">
+											<span class="text-nowrap">{{transaction.User?.FirstName || '-'}} {{transaction.User?.LastName || ''}}</span>
+                                        </span>
+                                    </div>
+
+                                    <div class="c-responsive-table__secondary-item hidden-lg-up">
+                                        <span class="c-responsive-table__secondary-item-label">MÜŞTERİ ADI</span>
+                                        <span class="c-responsive-table__secondary-item-value">{{transaction.MemberInfo?.FirstName || '-' }} {{transaction.MemberInfo?.FamilyName}}</span>
+                                    </div>
+
+                                    <div class="c-responsive-table__secondary-item hidden-lg-up">
+                                        <span class="c-responsive-table__secondary-item-label">TARİHİ</span>
+                                        <span class="c-responsive-table__secondary-item-value">{{transaction.PaymentDate | relativeDate}}</span>
+                                    </div>
+
+                                    <div class="c-responsive-table__secondary-item hidden-xl-up">
+                                        <span class="c-responsive-table__secondary-item-label">BEDEL</span>
+                                        <span class="c-responsive-table__secondary-item-value">{{transaction.TotalAmount | number:'1.2-2'}} {{transaction.Currency?.Code}}</span>
+                                    </div>
+
+                                    <div class="c-responsive-table__secondary-item hidden-xl-up">
+                                        <span class="c-responsive-table__secondary-item-label">İŞLEM TİPİ</span>
+                                        <span class="c-responsive-table__secondary-item-value">{{transaction.Type | enumTranslator}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="c-responsive-table__secondary-column hidden-sm-down col-md-7 col-lg-12 col-xl-12">
+                            <div class="col-md-16 col-lg-8 col-xl-6">
+                                <span class="text"><strong>Satış Kanalı:</strong> {{transaction.SalesChannel?.Name || '-'}} / {{transaction.SalesSubChannel?.Name || '-'}}</span>
+                                <span class="c-responsive-table__sub-title"><strong>Terminal:</strong> {{transaction.Terminal?.Name || '-'}}</span>
+                                <span class="c-responsive-table__sub-title"><strong>Kullanıcı:</strong> {{transaction.User?.FirstName || '-'}} {{transaction.User?.LastName || ''}}</span>
+                            </div>
+
+                            <div class="hidden-md-down col-lg-5 col-xl-3">
+                                <span class="text">{{transaction.MemberInfo?.FirstName}} {{transaction.MemberInfo?.FamilyName}}</span>
+                            </div>
+
+                            <div class="hidden-md-down col-lg-3">
+                                <span class="text">{{transaction.PaymentDate | relativeDate}}</span>
+                            </div>
+
+                            <div class="hidden-lg-down col-xl-2">
+                                <span class="text">{{transaction.TotalAmount | number:'1.2-2'}} {{transaction.Currency?.Code}}</span>
+                            </div>
+
+                            <div class="hidden-lg-down col-xl-2">
+                                <span class="text">{{transaction.Type | enumTranslator}}</span>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </app-responsive-table>
+            </div>
+
+            <div class="o-list-view__footer">
+                <app-pagination size="xs" [options]="pageSizes" [totalItem]="count" [showItemPerPage]="pageSize" [currentPage]="currentPage" (changeEvent)="changePageSize($event)" (transistPage)="transistPage($event)">
+                </app-pagination>
+            </div>
+        </div>
+
+    </div>
+</div>

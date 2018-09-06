@@ -1,0 +1,66 @@
+/*
+Create Content Route
+Author: Fatih Turan
+*/
+
+// Set defaults
+$or-create-content: (
+  container-fixed-border-color: #e0e0e0,
+);
+
+// Merge settings and defaults
+$or-create-content: map-merge($or-create-content, getSettingsMap("or-create-content"));
+$or-map: $or-create-content;
+
+
+.or-create-content {
+  .c-square-checkbox__label {
+    @include ffamily('semi');
+  }
+  // .c-tab-bar {
+  //   display: table;
+  //   &__content {
+  //     padding-top: 12px;
+  //     padding-bottom: 12px;
+  //   }
+  //   &__left-column, &__right-column {
+  //     display: table-cell;
+  //   }
+  //   &__left-column {
+  //     width: 100%;
+  //     vertical-align: middle;
+  //     text-align: left;
+  //   }
+  //   &__right-column {
+  //     vertical-align: middle;
+  //     text-align: right;
+  //     .btn-primary {
+  //       padding-left: 50px;
+  //       padding-right: 50px;
+  //     }
+  //   }
+  // }
+
+  // .o-split-container__fixed {
+  //   border-left: 1px solid map-get($or-map, container-fixed-border-color);
+  //   .p-group__button .btn {
+  //     padding-left: 70px;
+  //     padding-right: 70px;
+  //   }
+  // }
+}
+
+// Temporary added. Remove after review.
+.or-create-content {
+  // .c-mock-box {
+  //   display: table !important;
+  //   h1 {
+  //     display: table-cell;
+  //     vertical-align: middle;
+  //     font-size: 14px;
+  //   }
+  // }
+}
+
+// Reset
+$oo-map: null;

@@ -1,0 +1,230 @@
+/* --------------------------------------------------------
+author: Abdullah Karadeniz
+----------------------------------------------------------*/
+
+$c-typeahead: (
+  color: #000,
+
+  search-box: (
+    height: 48px,
+    border-color: #3a2e39,
+    active-border-color: #2096F3,
+    color: #C2C2C2,
+	  active-color: #21242b,
+    font-size: 15px
+  ),
+
+  init: (
+    title: (
+      color: #a6a6a6,
+      font-size: 11px
+    ),
+    description: (
+      color: #9d9d9d,
+      font-size: 12px,
+    )
+  ),
+
+  group: (
+    title-color: #a6a6a6,
+    title-size: 11px
+  ),
+  
+  list-item: (
+    padding: 13px 0px 10px 8px,
+    border-color: #dcdce5,
+    active-background-color: #f2f2f2,
+    icon-color: #bdbdbd,
+    icon-size: 24px,
+    
+    primary-color: #3a2e39,
+    primary-size: 13px,
+
+    secondary-color: #9d9d9d,
+    secondary-size: 12px
+  ),
+);
+
+// Merge settings and defaults
+$c-typeahead: map-merge($c-typeahead, getSettingsMap("c-typeahead"));
+
+// Set shortcuts
+$c-map: $c-typeahead;
+
+.c-typeahead {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  white-space: normal;
+
+  &__search-box {
+    display: table;
+    width: 100%;
+    //border-bottom: solid 1px map-deep-get($c-map, search-box, border-color);
+    color: map-deep-get($c-map, search-box, color);
+    padding: 0.25em 0px 0.4em;
+
+    &-left {
+      display: table-cell;
+      width: auto;
+      vertical-align: bottom;
+      padding-right: 10px;
+
+      &--empty {
+        display: none !important;
+      }
+    }
+
+    &-right {
+      display: table-cell;
+      width: 100%;
+      vertical-align: bottom;
+      // .c-text-input {
+      //   .c-text-input__bar {
+      //     border-bottom: 1px solid map-deep-get($c-map, search-box, border-color);
+      //   }
+      // }
+
+    }
+
+    &--scroll {
+      width: calc(100% - #{$global-scroll-width});
+    }
+
+    // &--focused {
+    //   border-bottom: solid 1px map-deep-get($c-map, search-box, active-border-color);
+    // }
+
+    // &-input {
+    //   display: table-cell;
+    //   width: 100%;
+    //   vertical-align: middle;
+    //   font-size: map-deep-get($c-map, search-box, font-size);
+
+    //   input {
+    //     width: 100%;
+    //     border: none;
+
+    //     &:focus {
+    //       color: map-deep-get($c-map, search-box, "active-color");
+    //       border: none;
+    //       border-radius: none;
+    //       outline: none;
+    //     }
+    //   }
+    // }
+
+    // &-button {
+    //   display: table-cell;
+    //   vertical-align: middle;
+
+    //   .c-promise-icon {
+    //     vertical-align: bottom;
+    //   }
+    // }
+  }
+
+  &__result-box {
+    width: 100%;
+    height: calc(100% - #{map-deep-get($c-map, search-box, height)} - #{map-deep-get($c-map, group, title-size)*3});
+    overflow-y: auto;
+    margin-top: map-deep-get($c-map, group, title-size)*3;
+    padding-right: $global-scroll-width;
+    padding-bottom: 1px; //border-width
+  }
+
+  &__result-init-title {
+    @include ffamily('semi');
+    color: map-deep-get($c-map, init, title, color);
+    font-size: map-deep-get($c-map, init, title, font-size);
+  }
+
+  &__result-init-description {
+    @include ffamily('regular');
+    color: map-deep-get($c-map, init, description, color);
+    font-size: map-deep-get($c-map, init, description, font-size);
+    padding-top: 0.25em;
+  }
+
+  &__result-group {
+    width: 100%;
+    margin-bottom: map-deep-get($c-map, group, title-size)*3;
+
+    &:last-child {
+      margin-bottom: 0px;
+    }
+  }
+
+  &__result-group-title {
+    @include ffamily('semi');
+    font-size: map-deep-get($c-map, group, title-size);
+    color: map-deep-get($c-map, group, title-color);
+    margin-bottom: 0.5em;
+  }
+
+  &__result-list {
+    list-style-type: none;
+    width: 100%;
+    border-top: solid 1px map-deep-get($c-map, list-item, border-color);
+  }
+
+  &__result-list-item {
+    display: table;
+    width: 100%;
+    padding: map-deep-get($c-map, list-item, padding);
+    border-bottom: solid 1px map-deep-get($c-map, list-item, border-color);
+    cursor: pointer;
+    @include ffamily('regular');
+
+    transition: background-color 0.4s getEase(out-sine);
+
+    &:not(.c-typeahead__result-list-item--disabled):hover, &:not(.c-typeahead__result-list-item--disabled).c-typeahead__result-list-item--selected {
+      background-color: map-deep-get($c-map, list-item, active-background-color);
+      transition: background-color 0.2s getEase(out-sine)
+    }
+
+    &--disabled {
+      cursor: not-allowed;
+      > * {pointer-events: none; opacity: 0.6;}
+    }
+
+    >* {
+      vertical-align: middle;
+    }
+  }
+
+  &__result-list-item-icon {
+    display: table-cell;
+    font-size: map-deep-get($c-map, list-item, icon-size);
+    color: map-deep-get($c-map, list-item, icon-color);
+    vertical-align: middle;
+    line-height: 1;
+    width: map-deep-get($c-map, list-item, icon-size)*1.5;
+  }
+
+  &__result-list-item-content {
+    display: table-cell;
+    text-align: left;
+    @include ffamily('semi');
+    font-size: map-deep-get($c-map, list-item, primary-size);
+    color: map-deep-get($c-map, list-item, primary-color);
+
+    &--primary {
+      display: inline-block;
+      @include ffamily('semi');
+      font-size: map-deep-get($c-map, list-item, primary-size);
+      color: map-deep-get($c-map, list-item, primary-color);
+    }
+
+    &--secondary {
+      display: inline-block;
+      font-size: map-deep-get($c-map, list-item, secondary-size);
+      color: map-deep-get($c-map, list-item, secondary-color);
+    }
+  }
+}
+
+//Reset
+$c-map: null;
+$selected-size: null;

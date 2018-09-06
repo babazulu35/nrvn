@@ -1,0 +1,68 @@
+$or-group-sale-settings: ( border-color: #dcdce5, switch-bar: ( label: ( color: #373a3c, font-size: 14px, )));
+$or-group-sale-settings: map-merge($or-group-sale-settings, getSettingsMap("or-group-sale-settings"));
+$oc-map: $or-group-sale-settings;
+.or-group-sale-settings {
+    display: block;
+    
+    .c-collapsible-container {
+        &__content {
+            .p-group {
+                &__header {
+                    &-title{
+                        @include ffamily(bold);
+                        font-size: 16px;
+                    }
+                }
+            }
+
+            .c-container-canvas {
+                h3 {
+                    @include ffamily(regular);
+                    font-size: 15px;
+                    b,
+                    strong {
+                        @include ffamily(bold);
+                    }
+                }
+                
+                .c-responsive-table {
+                    &__caption {
+                        padding: 0.5em 0px;
+                        span {
+                            @include ffamily(bold);
+                            font-size: 11px;
+                        }
+                    }
+                    
+                    &__secondary-column {
+                        text-align: center;
+                        font-size: 15px;
+                        b,
+                        strong {
+                            @include ffamily(bold);
+                        }
+                    }
+                }
+
+                .p-amount {
+                    @include ffamily(bold);
+                    font-size: 18px;
+                }
+
+                .p-secondary {
+                    color: #9D9D9D;
+                }
+
+                .p-icon {
+                    color: #DCDCE5;
+                }
+
+                .p-status {
+                    font-size: 13px;
+                }
+            }
+        }
+    }
+}
+
+$oc-map: null;

@@ -1,0 +1,101 @@
+$c-performance-cell-box: ( min-height: 36px, font-size: 13px, color: #C2C2C2, active-color: #21242b, border-color: #dcdce5, active-border-color: #2096F3, error-border-color: #ec4e48, border-radius: 2px, add-button: ( font-size: 13px, color: #9D9D9D), indicator: ( font-size: 10px, color: #2096F3));
+// Merge settings and defaults
+$c-performance-cell-box: map-merge($c-performance-cell-box, getSettingsMap("c-performance-cell-box"));
+// Set shortcuts
+$c-map: $c-performance-cell-box;
+.c-performance-cell-box {
+    display: inline-block;
+    width: 100%;
+    line-height: 0px;
+    &__container {
+        display: flex;
+        width: 100%;
+        align-items: center;
+        justify-content: space-between;
+        min-height: map-deep-get($c-map, min-height);
+        position: relative;
+    }
+    &__add-button {
+        display: flex;
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+        line-height: 1em;
+        .c-button {
+            a {
+                @include ffamily(regular, i);
+                font-size: map-deep-get($c-map, add-button, font-size);
+                color: map-deep-get($c-map, add-button, color);
+                text-decoration: none;
+                &:hover {
+                    @include ffamily(regular, i);
+                }
+            }
+        }
+    }
+    &__bar {
+        display: flex;
+        position: relative;
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+        >span.c-performance-cell-box__placeholder {
+            @include ffamily(regular, i);
+            font-size: map-deep-get($c-map, add-button, font-size);
+            color: map-deep-get($c-map, add-button, color);
+            text-decoration: none;
+            &:hover {
+                @include ffamily(regular, i);
+            }
+        }
+        >span.c-performance-cell-box__input {
+            >span.c-performance-cell-box__input--dirty {
+                color: #ec4e48;
+            }
+            >span {
+                @include ffamily(regular);
+                font-size: 18px;
+                color: map-deep-get($c-map, add-button, color);
+            }
+        }
+    }
+    &__time-input {
+        display: flex;
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+        line-height: 1em;
+        justify-self: center;
+        margin: auto;
+    }
+    &__action {
+        display: flex;
+        position: absolute;
+        right: 0px;
+        top: 50%;
+        transform: translateY(-50%);
+        align-items: center;
+        justify-content: center;
+        line-height: 1em;
+    }
+    &__indicator {
+        display: flex;
+        position: absolute;
+        left: 0px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+        align-self: flex-end;
+        font-size: map-deep-get($c-map, indicator, font-size);
+        line-height: 0px;
+        background-color: map-deep-get($c-map, indicator, color);
+        width: 1em;
+        height: 1em;
+        border-radius: 0.5em;
+    }
+}
+
+$c-performance-cell-box: null;
+$c-map:null;

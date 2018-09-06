@@ -1,0 +1,21 @@
+<div class="row" class="c-product-pill-group">    
+  <div *ngFor="let productGroup of productGroups">
+    <div class="row">
+        <h4 *ngIf="productGroups?.length > 1 && productGroup.products?.length > 0" class="c-product-pill-group__title">{{ productGroup.title }} ({{productGroup.date | relativeDate}})</h4>
+    </div>
+    <div class="row" *ngIf="(productGroups?.length > 1 && productGroup.products?.length > 0) || (productGroups?.length === 1 && productGroup.products?.length > 1)">
+        <div *ngFor="let product of productGroup.products" class="col-xl-4 col-md-8 col-sm-16">
+          <div class="c-product-pill-group__pill-wrapper">
+              <div class="c-product-pill-group__pill" [ngClass]="{'c-product-pill-group__pill--active': product.selected}" [ngStyle]="{'background-color': product.color?.Name}" (click)="toggle(product)">
+                <div class="c-product-pill-group__pill-left" [style.color]="product.color?.isLight ? 'black' : 'white'">
+                  <span class="c-product-pill-group__pill-title">{{ product.name }}</span>
+                </div>
+                <div class="c-product-pill-group__pill-right">
+                  <span class="c-product-pill-group__pill-badge">{{ product.price }} <sup>{{product.currency}}</sup></span>
+                </div>
+              </div>
+            </div>
+        </div>
+    </div>   
+  </div>  
+</div>

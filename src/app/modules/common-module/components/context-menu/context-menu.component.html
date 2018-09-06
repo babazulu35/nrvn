@@ -1,0 +1,31 @@
+<div class="c-context-menu__header">
+	<div class="c-context-menu__header-title">
+	{{title}}
+	</div>
+	<i class="c-context-menu__close-button icon__n icon__n--close" (click)="tetherService.dismiss()"></i>
+</div>
+
+<div class="c-context-menu__content">
+	<ng-template [ngIf]="items && items.length">
+		<ul class="c-context-menu__list">
+			<li *ngFor = "let item of items" 
+				class="c-context-menu__list-item"
+				(click) = callAction(item,$event) >
+				<i *ngIf="item?.icon" class="c-context-menu__list-item-icon icon__n icon__n--{{item.icon}}"></i>
+				<span class="c-context-menu__list-item-label">{{item.label}}</span>
+			</li>
+		</ul>
+		<ng-template [ngIf]="asideItems && asideItems.length">
+			<div class="c-context-menu__seperator"></div>
+
+			<ul class="c-context-menu__list c-context-menu__list--aside">
+				<li *ngFor = "let item of asideItems" 
+					class="c-context-menu__list-item"
+					(click) = callAction(item,$event) > 
+					<span class="c-context-menu__list-item-label">{{item.label}}</span>
+				</li>
+			</ul>
+		</ng-template>
+	</ng-template>
+	<ng-content></ng-content>
+</div>

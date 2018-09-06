@@ -1,0 +1,155 @@
+<div class="or-performance-group-sale">
+	
+	<app-no-data *ngIf="performance && !(performance?.Status == PerformanceStatus.OnSale || performance?.Status == PerformanceStatus.SoldOut)"
+				 [ngClass]="{'main-loader': isLoading }"
+				 [icon]='{type: "svg", name: "cms-empty"}'
+				 [hasContainer]="true"
+				 style="max-width:50%; margin-top:60px; margin-bottom:60px;"
+			     title="Koltuk değiştirilemez"
+			     description="Bu performans koltuk değiştirmeye uygun değildir">
+	</app-no-data>
+
+	<app-collapsible-container *ngIf="performance && (performance?.Status == PerformanceStatus.OnSale || performance?.Status == PerformanceStatus.SoldOut)" theme="toggleGray" [isAsideOpen]="true" [asideWidth]="330" [isLoading]="isLoading" [hasAsideFooter]="true">
+		<div content>
+			<!--Header-->
+			<div class="p-header p-header--border">
+				<span class="margin-right-5">Koltuk Değiştirme</span>
+			</div>
+
+			<div class="p-full-content">
+        	<app-venue-template-editor *ngIf="performance && isEditorEnabled"
+				[role]="editorRole"
+				(editorEvent)="venueEditorEventHandler($event)"
+				[performanceId]="performance?.Id" ></app-venue-template-editor>
+			</div>
+		</div>
+    	<div aside>
+			<div class="p-group" *ngIf="!currentLocations?.length">
+				<!--header-->
+				<div class="p-group__header">
+					<div class="p-group__header-bar">
+						<div class="p-group__header-title">
+							TAŞINACAK KOLTUKLAR
+						</div>
+					</div>
+				</div>
+
+				<!--item-->
+				<div class="p-group__item">
+          			<app-cta-box>
+						<div class="c-cta-box c-cta-box--dark">
+							<i class="c-cta-box__icon icon__n icon__n--announcement"></i>
+							<p class="c-cta-box__content">
+								<i>Koltuk seçimi yapılmamış!</i> <br/>
+								<b>Taşımak istediğiniz</b> koltukları seçin
+							</p>
+						</div>
+					</app-cta-box>
+				</div>
+			</div>
+
+    		<div class="p-group" *ngIf="currentLocations?.length">
+				<!--header-->
+				<div class="p-group__header p-group__header--border">
+					<div class="p-group__header-bar">
+						<div class="p-group__header-title">
+							TAŞINACAK KOLTUKLAR
+						</div>
+						<div class="p-group__header-action">
+							<i [ngClass]="relocationIsActive ? 'icon__n icon__n--lock' : 'icon__n icon__n--lock_open'"></i>
+						</div>
+					</div>
+				</div>
+
+				<!--item-->
+				<div class="p-group__item">
+					<div class="or-performance-relocation__current-locations">
+						<div class="or-performance-relocation__current-locations-item" *ngFor="let location of currentLocations">
+							<app-single-tag 
+								theme="primary"
+								[canBeRemoved]="false"
+								[isDisabled]="relocationIsActive"
+								[data]="location"></app-single-tag>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="p-group" *ngIf="currentLocations?.length && !relocationIsActive">
+				<!--header-->
+				<div class="p-group__header">
+					<div class="p-group__header-bar">
+						<div class="p-group__header-title">
+							YENİ LOKASYON
+						</div>
+					</div>
+				</div>
+
+				<!--item-->
+				<div class="p-group__item">
+          			<app-cta-box>
+						<div class="c-cta-box c-cta-box--dark">
+							<i class="c-cta-box__icon icon__n icon__n--announcement"></i>
+							<p class="c-cta-box__content">
+								<i>Yeni lokasyon seçimi yapılmamış!</i> <br/>
+								<span>Taşınacak koltuk seçimini sonlandırıp <b>yeni yer seçimine</b> başlamak ister misiniz?</span>
+							</p>
+							<span class="c-cta-box__action-button">
+								<app-button
+									(clickEvent)="startRelocation()"
+									 type="link" theme="light" label="YENİ LOKASYON SEÇ"></app-button>
+							</span>
+						</div>
+					</app-cta-box>
+				</div>
+			</div>
+
+			<div class="p-group" *ngIf="currentLocations?.length && relocationIsActive">
+				<!--header-->
+				<div class="p-group__header p-group__header--border">
+					<div class="p-group__header-bar">
+						<div class="p-group__header-title">
+							YENİ LOKASYON
+						</div>
+					</div>
+				</div>
+
+				<!--item-->
+				<div class="p-group__item">
+          			<div class="or-performance-relocation__new-locations">
+						<div class="or-performance-relocation__new-locations-row" *ngFor="let location of currentLocations">
+							<span class="or-performance-relocation__new-locations-current-col">
+								<app-single-tag 
+									theme="secondary"
+									[canBeRemoved]="false"
+									[isDisabled]="true"
+									[data]="location"></app-single-tag>
+							</span>
+							<span class="or-performance-relocation__new-locations-arrow-col"><i class="icon__n icon__n--arrow_forward"></i></span>
+							<span class="or-performance-relocation__new-locations-new-col">
+								<app-single-tag 
+									(actionEvent)="newLocationActionHandler($event)"
+									theme="primary"
+									[isEmpty]="!location?.params?.new"
+									[data]="location?.params?.new"></app-single-tag></span>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+		<div aside-footer>
+			<div class="col-xs-16">
+				<app-button *ngIf="relocationIsActive"
+					class="margin-right-5"
+					type="link"
+					label="İPTAL"
+					(clickEvent)='reset()'></app-button>
+				<app-button
+					(clickEvent)='saveRelocation()'
+					[isPromising]="isLoading || isPromising" 
+					[isDisabled]="!isValid">KAYDET</app-button>
+			</div>
+		</div>
+	</app-collapsible-container>
+</div>

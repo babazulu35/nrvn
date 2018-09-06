@@ -1,0 +1,93 @@
+<app-dialog-box>
+    <div #header class="c-dialog-box__header c-dialog-box__header--border c-dialog-box__header--padding">
+        <div class="c-dialog-box__header-bar">
+            <h1 class="c-dialog-box__header-title">
+                {{title}}
+            </h1>
+            <div class="c-dialog-box__header-actions">
+                <app-button (click)="tetherService.dismiss()" type="icon" icon="close" theme="secondary"></app-button>
+            </div>
+        </div>
+    </div>
+    <div #body class="c-dialog-box__body c-dialog-box__body--no-padding">
+        <div class="p-container p-container">
+          <div class="p-group">
+              <div class="p-group__item">
+                  <app-text-input theme="underline" 
+                      (changeEvent)="inputChangeHandler($event, 'label')"
+                      placeholder="Etiket (label)" [required]='true' [value]="parameter?.label"></app-text-input>
+              </div>
+          </div>
+          <div class="p-group">
+              <div class="p-group__item">
+                  <app-text-input theme="underline" 
+                    (changeEvent)="inputChangeHandler($event, 'key')"
+                    placeholder="Adı (key)" [value]="parameter?.key" [required]='true'></app-text-input>
+              </div>
+
+              <div class="p-group__item">
+                  <div class="p-toggle">
+                      <div class="p-toggle__label">
+                          Çoklu Değer Alabilir
+                      </div>
+                      <div class="p-toggle__input">
+                          <app-checkbox type="lightswitch"
+                            (changeEvent)="inputChangeHandler($event, 'allowMultiple')"
+                            name="allowMultiple"
+                            [isChecked]="parameter?.allowMultiple"  ></app-checkbox>
+                      </div>
+                  </div>
+              </div>
+
+              <div class="p-group__item">
+                <div class="p-toggle">
+                  <div class="p-toggle__label">
+                    Parametre Türü
+                  </div>
+                  <div class="p-toggle__input">
+                    <app-selectbox 
+                      (changeEvent)="inputChangeHandler($event, 'type')"
+                      [options]="parameterTypes" 
+                      [value]="parameter?.type"></app-selectbox>
+                  </div>
+                </div>
+              </div>
+
+              <div class="p-group__item">
+                  <div class="p-toggle">
+                    <div class="p-toggle__label">
+                      İlişkili Varlık Türü
+                    </div>
+                    <div class="p-toggle__input">
+                      <app-selectbox 
+                        (changeEvent)="inputChangeHandler($event, 'relatedEntityType')"
+                        [options]="entityTypes" 
+                        [value]="parameter?.relatedEntityType"></app-selectbox>
+                    </div>
+                  </div>
+                </div>
+                <div class="p-group__item" *ngIf="parameter?.relatedEntityType == 'Contents'">
+                    <div class="p-toggle">
+                      <div class="p-toggle__label">
+                        İçerik Tipi
+                      </div>
+                      <div class="p-toggle__input">
+                        <app-selectbox 
+                            (changeEvent)="inputChangeHandler($event, 'contentType')"
+                            [options]="contentTypes" 
+                            [value]="contentType"></app-selectbox>
+                      </div>
+                    </div>
+                </div>
+          </div>
+        </div>
+    </div>
+    <div #footer class="c-dialog-box__footer row">
+        <div class="c-dialog-box__footer-content">
+            <div class="col-xs-16">
+                <app-button (click)="submitClickHandler($event)" [isDisabled]="!isValid" theme="primary" [label]="isEditMode ? 'DÜZENLE' : 'EKLE'"></app-button>
+            </div>
+        </div>
+    </div>
+
+</app-dialog-box>

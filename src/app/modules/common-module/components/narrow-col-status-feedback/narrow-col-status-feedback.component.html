@@ -1,0 +1,25 @@
+<i class="c-narrow-col-status-feeback__icon icon__n icon__n--{{data?.icon}}"></i>
+
+<span class="c-narrow-col-status-feeback__title">{{data?.title}}</span>
+<span class="c-narrow-col-status-feeback__content" *ngIf="data?.content?.length > 55; else fullDataContent">{{data?.content | slice:0:52}}...</span>
+<ng-template #fullDataContent>
+    <span class="c-narrow-col-status-feeback__content">{{data?.content}}</span>
+</ng-template>
+
+<span class="c-narrow-col-status-feeback__sub-title">{{data?.subTitle}}</span>
+<span class="c-narrow-col-status-feeback__content">{{data?.subContent}}</span>
+
+<app-button *ngIf="action" (clickEvent)="emitAction()" size="full-width" [isDisabled]="action?.isDisabled">{{action?.label}}</app-button>
+
+<!-- /.c-call-to-action-box -->
+
+<!--<div class="c-narrow-col-status-feeback">
+    <i class="c-narrow-col-status-feeback__icon icon__n icon__n--do_not_disturb"></i>
+
+    <span class="c-narrow-col-status-feeback__title">Bu Etinlik İptal Edilmiş</span>
+    <span class="c-narrow-col-status-feeback__content">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
+
+    <span class="c-narrow-col-status-feeback__sub-title">İptal Eden</span>
+    <span class="c-narrow-col-status-feeback__content">altugc, 12.12.2016, 20:30</span>
+</div>-->
+<!-- /.c-call-to-action-box -->

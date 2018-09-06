@@ -1,0 +1,71 @@
+/* --------------------------------------------------------
+version: 1.0
+last modified: 19.11.2016
+author: Abdullah Karadeniz
+----------------------------------------------------------*/
+
+/**
+ * fullscreen-cover:
+ * `.c-fullscreen-cover` -
+
+ *     @example
+ *     .c-fullscreen-cover
+ */
+
+$c-fullscreen-cover: (
+  
+);
+
+// Merge settings and defaults
+$c-fullscreen-cover: map-merge($c-fullscreen-cover, getSettingsMap("c-fullscreen-cover"));
+
+// Set shortcuts
+$c-map: $c-fullscreen-cover;
+
+.c-fullscreen-cover {
+  display: block;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+
+  &__background {
+      position: absolute;
+      z-index: 0;
+      display: block;
+      width: 100%;
+      height: 100%;
+      float: left;
+      >figure {
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+
+        >img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+            min-width: 50%;
+            min-height: 50%;
+        }
+    }
+  }
+
+  &__content {
+      display: block;
+      position: absolute;
+      zoom: 1;
+      width: 100%;
+      //height: 50vh;
+      top: 50%;
+      left: 50%;
+      transform: translateX(-50%) translateY(-50%);
+  }
+}
+
+//Reset
+$c-map: null;

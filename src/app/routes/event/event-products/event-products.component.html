@@ -1,0 +1,71 @@
+<app-collapsible-container theme="gray" [isAsideOpen]="true" [asideWidth]="240">
+    <div content>
+        <!--Header-->
+        <div class="p-header p-header--border">
+            <span class="margin-right-5">Ürünler</span>
+            <app-button [routerLink]="['/product/create']" [queryParams]="{ eventId: pageID }" type="icon" icon="plus" shape="circle" theme="secondary" size="lg"></app-button>
+        </div>
+
+        <div class="p-container">
+            <!--Group-->
+            <div class="p-group" *ngFor="let productPerformance of productPerformances">
+                <!--header-->
+                <div class="p-group__header">
+                    <div class="p-group__header-bar">
+                        <div class="p-group__header-title">
+                            {{productPerformance.performance.Localization.Name}}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-group__item" [class.p-container--promising]="isLoading">
+                    <ul class="or-event-products__list">
+                        <li *ngFor="let product of productPerformance.products;">
+                            <app-product-item-line [name]="product.Localization?.Name" [isViewOnly]="true" [currency]="product.Currency.Code"  [price]="product.CurrentPrice?.toFixed(2)" [id]="product.Id">
+                                <div subtitle *ngIf="product.SalesEndDate">
+                                    <strong>{{product.SalesEndDate | relativeDate}}</strong>'a kadar satışta
+                                </div>
+                            </app-product-item-line>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+        <app-no-data *ngIf="productPerformances.length == 0" style="max-width: 60%;margin-top:30px" [hasContainer]="true" [icon]='{type: "icon", name: "event"}' title="Seçtiğiniz etkinliğe ait ürün kaydı bulunamadı" description=""></app-no-data>
+    </div>
+    <!-- /.o-collapsible-container__content -->
+    <div aside>
+        <div class="p-group">
+            <!--header-->
+            <div class="p-group__header">
+                <div class="p-group__header-bar">
+                    <div class="p-group__header-title">
+                        AYARLAR
+                    </div>
+                </div>
+            </div>
+
+            <!--item-->
+            <div class="p-group__item">
+                <div class="p-group__list">
+                    <div class="p-group__list-item">
+                        <label for="" class="p-group__list-item-label">Yayınla</label>
+                        <div class="p-group__list-item-action">
+                            <app-checkbox type="lightswitch" theme="dark"></app-checkbox>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!--      <div class="p-group">
+        <div class="p-group__item">
+          <app-narrow-col-action-offer></app-narrow-col-action-offer>
+        </div>
+      </div>-->
+    </div>
+    <!-- /.o-collapsible-container__aside -->
+</app-collapsible-container>
+<!-- /.o-collapsible-container -->

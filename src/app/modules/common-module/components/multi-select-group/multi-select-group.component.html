@@ -1,0 +1,66 @@
+<ul class="c-multi-select-group__container">
+	<li *ngFor = "let item of visibleItems" 
+		class="c-multi-select-group__item"
+		[class.c-multi-select-group__item--selected] = item.selected
+		[class.c-multi-select-group__item--disabled] = item.disabled
+		[class.c-multi-select-group__item--no-toggle] = !canToggle
+		[style.width]="itemSize+'px'"
+		[attr.data-value] = item.value 
+		[attr.selected] = item.selected
+		(click) = toggleItem(item,$event) > 
+
+		<a href="javascript:void(0)">
+			<app-promise-icon *ngIf = "viewModeIsTime" [iconName]=item.icon [isPromising]=item.promising >
+				<span class="c-multi-select-group__item-name">{{item.label}}</span>		
+			</app-promise-icon>
+			<div *ngIf = "!viewModeIsTime && item.icon" class="c-multi-select-group__item-icon">	
+				<app-promise-icon [iconName]=item.icon  [isPromising]=item.promising ></app-promise-icon>
+			</div>
+			<span *ngIf = "!viewModeIsTime" class="c-multi-select-group__item-name">{{item.label}}</span>
+		</a>
+	</li>
+	<li #otherItemsButton 
+		*ngIf=hiddenItems 
+		class="c-multi-select-group__item c-multi-select-group__item-other"
+		[class.c-multi-select-group__item-other--selected] = otherMenuIsOpen
+		[class.c-multi-select-group__item-other--selected-badge] = hiddenSelectedItems.length
+		(click) = toggleOtherMenu() >
+		<a href="javascript:void(0)">
+			<div *ngIf=!hiddenSelectedItems.length class="c-multi-select-group__item-icon">	
+				<app-promise-icon iconName="more_horiz"></app-promise-icon>
+			</div>
+			<i *ngIf=hiddenSelectedItems.length class="c-multi-select-group__item-icon">{{hiddenSelectedItems.length}}</i>
+			<span class="c-multi-select-group__item-name">Diğer ({{hiddenItems.length}})</span>
+		</a>
+	</li>	
+</ul>
+
+<div #otherMenu *ngIf=otherMenuIsOpen class="c-multi-select-group__other-list">
+	<div class="c-multi-select-group__other-list-header">
+		<div class="c-multi-select-group__other-list-header-title">
+			DİĞER İÇERİKLER
+		</div>
+		<i class="c-multi-select-group__other-list-close-button icon__n icon__n--close" (click)="toggleOtherMenu()"></i>
+	</div>
+
+	<div class="c-multi-select-group__other-list-content">
+		<ul class="c-multi-select-group__other-list-wrapper">
+			<li *ngFor = "let item of hiddenItems" 
+				class="c-multi-select-group__other-list-item"
+				[class.c-multi-select-group__other-list-item--disabled] = item.disabled
+				[class.c-multi-select-group__other-list-item--selected] = item.selected
+				[attr.data-value] = item.value
+				[attr.selected] = item.selected
+				(click) = toggleItem(item,$event) >
+
+				<i class="c-multi-select-group__other-list-item-icon icon__n icon__n--{{item.icon}}"></i>
+				<span class="c-multi-select-group__other-list-item-label">{{item.label}}</span>
+				<i class="c-multi-select-group__other-list-item-control">
+					<i class="icon__n icon__n--add"></i>
+					<i class="icon__n icon__n--check"></i>
+					<i class="icon__n icon__n--remove"></i>
+				</i>
+			</li>
+		</ul>
+	</div>
+</div>

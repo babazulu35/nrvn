@@ -1,0 +1,34 @@
+<ul class="c-color-picker">
+	<li
+		class="c-color-picker__item"
+		[style.background-color]="'#'+color.color"
+		[style.color]="getIconColor(color)"
+		[class.c-color-picker__item--disabled]="color.isDisabled"
+		[class.c-color-picker__item--dark]="color.iconTheme == 'dark'"
+		(click)="emitSelectEvent($event, color)"
+		*ngFor="let color of colors"
+	>
+		<i class="icon__n icon__n--check" *ngIf="selected && selected.color == color.color"></i>
+		<i class="icon__n icon__n--do_not_disturb" *ngIf="color.isDisabled"></i>
+	</li>
+</ul><!-- /.c-color-picker -->
+
+
+<!-- Kullanim -->
+<!--
+<app-color-picker
+	[colors]="[
+		{color: 'b3d9ff', isDisabled: false, iconTheme: ''},
+		{color: '00ffff', isDisabled: false, iconTheme: ''},
+		{color: '99ff33', isDisabled: false, iconTheme: 'dark'},
+		{color: 'f3f32e', isDisabled: false, iconTheme: 'dark'},
+		{color: 'ffcc66', isDisabled: true, iconTheme: ''},
+		{color: 'ff99ff', isDisabled: true, iconTheme: ''}
+	]"
+	[disabledColors]="['a27927', 'cc3300']"
+	[selectedColor]="'f3f32e'"
+	[nullable]="false"
+	(selectEvent)="log($event)"
+	>
+</app-color-picker>
+-->

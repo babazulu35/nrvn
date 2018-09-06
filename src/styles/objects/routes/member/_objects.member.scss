@@ -1,0 +1,300 @@
+/***
+ * Author: Can SİVRİ
+*/
+
+$or-member: ( padding: 30px, border-style: 1px solid #dcdce5, border-dashed-style: 1px dashed #dcdce5, gray-bg: #f7f7f7, text-color: #3a2e39, icon-color: #bdbdbd, gray-color: #9d9d9d, green-color: #6bba18, black-color: #333, smooth-gray-color: #939393);
+// Merge settings and defaults
+$or-member: map-merge($or-member, getSettingsMap("or-member"));
+// Set shortcuts
+$c-map: $or-member;
+.or-member {
+    display: table;
+    width: 100%;
+    height: calc(100vh - 70px);
+    * {
+        user-select: none;
+    }
+    &__main {
+        display: table-cell;
+        vertical-align: top;
+        width: 100%;
+        border-right: map-get($c-map, border-style);
+        padding: map-get($c-map, padding);
+    }
+    .or-member__main-title {
+        @include clearfix;
+        height: 65px;
+        margin: -30px -30px 40px;
+        padding: 18px 30px;
+        border-bottom: map-get($c-map, border-style);
+        background-color: map-get($c-map, gray-bg);
+        h2 {
+            float: left;
+            font-size: 22px;
+            @include ffamily("regular");
+            color: map-get($c-map, text-color);
+        }
+    }
+}
+
+.r-customer-edit__block {
+    margin: 0 0 40px 0;
+    &-caption {
+        display: table;
+        width: 100%;
+        padding: 15px 0;
+        border-bottom: map-get($c-map, border-style);
+        &-title {
+            display: table-cell;
+            vertical-align: middle;
+            width: 100%;
+            padding: 0 25px;
+            font-size: 11px;
+            @include ffamily("semi");
+            color: map-get($c-map, smooth-gray-color);
+            text-align: center;
+            span {
+                display: block;
+                font-size: 15px;
+                color: map-get($c-map, black-color);
+                text-align: left;
+            }
+            &:first-child {
+                padding-left: 0;
+            }
+            &:last-child {
+                padding-right: 0;
+                min-width: 70px;
+            }
+        }
+    }
+    &-row {
+        display: table;
+        width: 100%;
+        min-height: 50px;
+        padding: 10px 0;
+        border-bottom: map-get($c-map, border-style);
+        &--inactive {
+            .icon__n {
+                color: map-get($c-map, icon-color) !important;
+            }
+            span {
+                color: map-get($c-map, smooth-gray-color) !important;
+            }
+        }
+        &--add {
+            border-bottom: none;
+            span {
+                padding: 0px;
+            }
+        }
+    }
+    &-verify-link {
+        font-size: 11px;
+        @include ffamily("semi");
+        color: map-get($c-map, black-color);
+        text-decoration: underline;
+        cursor: pointer;
+    }
+    &-col {
+        display: table-cell;
+        vertical-align: middle;
+        width: 100%;
+        min-width: 165px;
+        font-size: 13px;
+        text-align: center;
+        @include ffamily("regular");
+        color: map-get($c-map, black-color);
+        strong {
+            position: relative;
+            display: inline-block;
+            min-width: 65px;
+            margin-right: 10px;
+            @include ffamily("semi");
+            &:after {
+                // content: ":";
+                position: absolute;
+                top: 0;
+                right: 0;
+            }
+        }
+        .icon__n {
+            font-size: 24px;
+            color: map-get($c-map, black-color);
+        }
+        a {
+            text-decoration: underline;
+        }
+        p {
+            margin: 5px 0 5px;
+            line-height: 21px;
+        }
+        &:first-child {
+            text-align: left;
+            min-width: 30px;
+        }
+        &:last-child {
+            min-width: 70px;
+        }
+        >span {
+            display: table-cell;
+            position: relative;
+            margin-right: 10px;
+            @include ffamily("semi");
+            &:after {
+                position: absolute;
+                top: 0;
+                right: 0;
+            }
+            vertical-align: middle;
+            padding: 5px;
+        }
+        &--phone {
+            min-width: 190px;
+        }
+    }
+    &-delete {
+        cursor: pointer;
+        .icon__n {
+            color: map-get($c-map, icon-color) !important;
+        }
+    }
+    &--address {
+        .r-customer-edit__block-col strong {
+            margin-top: 5px;
+            &:after {
+                position: static;
+            }
+        }
+    }
+    &--license {
+        .r-customer-edit__block-col strong {
+            margin-top: 5px;
+            &:after {
+                content: "";
+                position: static;
+            }
+        }
+        .r-customer-edit__block-caption-title {
+            padding: 0 34px;
+            &:first-child {
+                padding-left: 0;
+            }
+            &:last-child {
+                padding-right: 13px;
+            }
+        }
+    }
+    hr {
+        margin: 30px 0 30px 0;
+    }
+}
+
+.r-customer-edit__table {
+    margin-bottom: 30px;
+    &-title {
+        margin-bottom: 15px;
+        font-size: 13px;
+        @include ffamily("semi");
+        color: map-get($c-map, black-color);
+        text-align: right;
+    }
+    &-body {
+        padding: 0 20px 25px;
+        border: map-get($c-map, border-style);
+        border-radius: 3px;
+    }
+    table {
+        width: 100%;
+        font-size: 13px;
+        @include ffamily("regular");
+        color: map-get($c-map, black-color);
+        strong {
+            @include ffamily("bold");
+        }
+        th {
+            @include ffamily("semi");
+            color: map-get($c-map, smooth-gray-color);
+        }
+        td,
+        th {
+            padding: 15px 0;
+            border-bottom: map-get($c-map, border-style);
+            text-align: left;
+            &.text-center {
+                text-align: center;
+            }
+            &.text-right {
+                text-align: right;
+            }
+        }
+    }
+}
+
+.r-title-container {
+    padding: 20px 30px 10px;
+    display: table;
+    width: 100%;
+    &__left {
+        display: table-cell;
+        vertical-align: bottom;
+        h2 {
+            border: none;
+            margin: 0;
+            padding: 5px 0;
+        }
+    }
+}
+
+.r-customer-display__avatar {
+    display: table-cell;
+    margin: 0 5px 10px auto;
+    width: 80px;
+    font-size: 80px;
+    line-height: 0;
+    text-align: center;
+    .c-avatar {
+        border: 1px solid #dcdce4;
+    }
+    .icon__n {
+        font-size: 32px;
+        color: #bdbdbd;
+    }
+    vertical-align: middle;
+}
+
+.r-customer-display__text {
+    display: inline-block;
+    font-size: 13px;
+    @include ffamily("regular");
+    color: #3a2e39;
+    text-align: left;
+}
+
+.r-customer-display__phone {
+    display: inline-block;
+    font-size: 13px;
+    @include ffamily("regular");
+    color: #3a2e39;
+    text-align: left;
+}
+
+.r-customer-display__name {
+    display: block;
+    font-size: 25px;
+    @include ffamily("semi");
+    color: #3a2e39;
+    text-align: left;
+}
+
+.r-customer-display__info {
+    display: table-cell;
+    margin: 10px auto 10px 5px;
+    vertical-align: middle;
+}
+
+.r-customer-display {
+    max-width: 80%;
+    margin: 0 auto;
+    display: table;
+}

@@ -1,0 +1,18 @@
+// Set defaults
+$o-event: (
+
+);
+
+// Merge settings and defaults
+$o-event: map-merge($o-event, getSettingsMap("o-over-image-dates"));
+
+// Set shortcuts
+$o-map: $o-event;
+
+.or-event {
+
+}
+
+//Reset
+$o-map: null;
+$o-event: null;

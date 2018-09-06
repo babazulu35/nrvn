@@ -1,0 +1,32 @@
+<div class="c-customer-search-typeahead__customer-types" *ngIf="customerTypes?.length">
+    <span class="c-customer-search-typeahead__customer-type" *ngFor="let customerType of customerTypes">
+        <app-checkbox 
+            inputType="radio"
+            name="customerType"
+            [isChecked]="customerTypeValue == customerType.value"
+            [value]="customerType.value"
+            [label]="customerType.label"
+            (changeEvent)="customerTypeHandler($event)"></app-checkbox>
+    </span>
+</div>
+<div class="c-customer-search-typeahead__search-content">
+    <app-typeahead (actionEvent)="typeaheadActionHandler($event)" (searchEvent)="search($event)" (resultEvent)="resultHandler($event)" (dismissEvent)="dismissHandler($event)" [searchPlaceholder]="selectedPlaceholder" [feedback]="{
+                        title: 'Aramanız ile eşleşen müşteri kaydı bulunamadı',
+                        description: 'Kriteri değiştirip yeniden arama yapınız veya konuk hesabı ile giriniz.',
+                        icon: {type:'icon',name:'person'},
+                        action:{action:'showGuestUserForm',label:'KONUK HESABI EKLE'}
+                    }" [presets]="presets" [searchResults]="searchResults">
+        <app-selectbox (changeEvent)="onSelectboxChange($event)" [options]="options"></app-selectbox>
+    </app-typeahead>
+    <div *ngIf="!typeahead?.hasResult && !typeahead?.searchValue || typeahead?.searchValue?.length == 0" class="c-customer-search-typeahead__guest">
+        <div class="c-customer-search-typeahead__guest-bar">
+                <div class="c-customer-search-typeahead__guest-left">
+                    <span><i>ya da </i><b>konuk hesabı oluşturarak devam edin</b></span>
+                </div>
+                <div class="c-customer-search-typeahead__guest-right">
+                    <app-button theme="primary" (click)="actionEvent.emit({action: 'showGuestUserForm'})" label="KONUK HESABI OLUŞTUR"></app-button>
+                </div>
+        </div>
+        <ng-content select="[guest]"></ng-content>
+    </div>
+</div>

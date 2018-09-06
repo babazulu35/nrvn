@@ -1,0 +1,143 @@
+/**
+* Narrow Vertical Kv List:
+* Author: Can Sivri
+*
+*/
+
+
+// Variables
+$c-product-block-capacity-statistics: (
+  border-color: #dcdce5,
+  padding: 10px,
+
+  bar: (
+    background-color: #FFFFFF,
+    title: (
+      font-size: 13px,
+      color: #35383D
+    ),
+    indicator: (
+      font-size: 12px
+    )
+  ),
+
+  content: (
+    background-color: #F7F7F7
+  ),
+
+  block-list: (
+    item: (
+      font-size: 13px,
+      color: #35383D,
+      secondary-color: #9D9D9D
+    )
+  )
+);
+
+// Merge settings and defaults
+$c-product-block-capacity-statistics: map-merge($c-product-block-capacity-statistics, getSettingsMap("c-product-block-capacity-statistics"));
+
+// Set shortcuts
+$c-map: $c-product-block-capacity-statistics;
+
+
+.c-product-block-capacity-statistics {
+  display: block;
+  border: solid 1px map-deep-get($c-map, border-color);
+  border-radius: 3px;
+  
+  &__bar {
+    display: flex;
+    position: relative;
+    width: 100%;
+    align-items: center;
+    border-bottom: solid 1px map-deep-get($c-map, border-color);
+    padding: map-deep-get($c-map, padding);
+    background-color: map-deep-get($c-map, bar, background-color);
+
+    &-title {
+      @include ffamily(bold);
+      font-size: map-deep-get($c-map, bar, title, font-size);
+      color: map-deep-get($c-map, bar, title, color);
+      padding-right: map-deep-get($c-map, bar, indicator, font-size) * 1.5;
+    }
+
+    &-indicator {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      right: map-deep-get($c-map, padding);
+      font-size: map-deep-get($c-map, bar, indicator, font-size);
+      width: 1em;
+      height: 1em;
+      border-radius: 0.5em;
+      line-height: 0px;
+      background-color: map-deep-get($c-map, secondary-color);
+  }
+  }
+
+  &__content {
+    display: block;
+    padding: map-deep-get($c-map, padding);
+    background-color: map-deep-get($c-map, content, background-color);
+  }
+
+  &__block{
+
+    &-list {
+      display: block;
+      list-style-type: none;
+    }
+    
+    &-item {
+      display: flex;
+      position: relative;
+      width: 100%;
+      justify-content: space-between;
+      font-size: map-deep-get($c-map, block-list, item, font-size);
+      line-height: 1em;
+
+      & + .c-product-block-capacity-statistics__block-item {
+        margin-top: map-deep-get($c-map, padding) / 2;
+      }
+
+      &-label {
+        display: flex;
+        flex-grow: 1;
+        flex-shrink: 1;
+        flex-wrap: wrap;
+        white-space: normal;
+        padding-right: 1em;
+        @include ffamily(regular);
+        font-size: inherit;
+        line-height: inherit;
+        color: map-deep-get($c-map, block-list, item, color);
+        >* {
+          margin-right: 0.3em;
+        }
+        b, strong {
+          @include ffamily(bold);
+        }
+      }
+
+      &-value {
+        display: flex;
+        flex-grow: 0;
+        flex-shrink: 0;
+        @include ffamily(bold);
+        font-size: inherit;
+        line-height: inherit;
+        color: map-deep-get($c-map, block-list, item, color);
+
+        >* + * {
+          margin-left: 0.3em;
+        }
+        i {
+          @include ffamily(regular, i);
+          font-size: 0.9em;
+          color: map-deep-get($c-map, block-list, item, secondary-color);
+        }
+      }
+    }
+  } 
+}

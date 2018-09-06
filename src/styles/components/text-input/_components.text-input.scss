@@ -1,0 +1,337 @@
+/* --------------------------------------------------------
+author: Abdullah Karadeniz
+----------------------------------------------------------*/
+
+$c-text-input: ( 
+    font-size: 15px, color: #C2C2C2, active-color: #21242b, border-color: #dcdce5, active-border-color: #2096F3, error-border-color: #ec4e48, border-radius: 2px, padding: 0.4em 0.6em, 
+    placeholder: ( color: #cbcbcb), //#9d9d9d), 
+    icon: ( 
+        color: #C2C2C2 
+    ), 
+    localization: ( 
+        icon: ( color: #C2C2C2), 
+        badge: ( color: #fff, background-color: #2096F3)
+    ),
+    suffix: ( 
+        background-color: #F7F7F7, color: #9D9D9D, border-color: #DCDCE5,
+        sizes: (
+            md: (
+                padding: 0.4em 0.6em, margin: -0.4em -0.6em -0.4em 0px
+            )
+        )
+    ),
+    underline: ( 
+        padding: 0.4em 0px, border-radius: 0px, border-color: #3a2e39, 
+    ), 
+    sizes: ( 
+        sm: ( 
+            font-size: 13px, padding: 0.2em 0.5em, 
+        ), 
+        sm-text: ( 
+            font-size: 13px, padding: 0.5775em 0.6775em
+        ), 
+        md: ( 
+            font-size: 15px, padding: 0.4em 0.6em, 
+        ), 
+        md-text: ( 
+            font-size: 15px, padding: 0.6775em 0.7775em, 
+        ), 
+        lg: ( 
+            font-size: 17px, padding: 0.5em 0.7em, 
+        )
+    )
+);
+$c-text-input: map-merge($c-text-input, getSettingsMap("c-text-input"));
+$c-map: $c-text-input;
+.c-text-input {
+    display: inline-block;
+    width: 100%;
+    font-size: map-get($c-map, font-size);
+    @include ffamily('regular');
+    &--flex {
+        .c-text-input {
+            &__bar {
+                display: flex;
+                width: 100%;
+                overflow: hidden;
+            }
+            &__text {
+                display: flex;
+                flex-grow: 1;
+                flex-shrink: 1;
+                width: auto;
+                align-items: center;
+                justify-content: center;
+            }
+
+            &__icon {
+                display: flex;
+                flex-grow: 0;
+                flex-shrink: 0;
+                align-items: center;
+                justify-content: center;
+            }
+            &__localization {
+                display: flex;
+                flex-grow: 0;
+                flex-shrink: 0;
+                align-items: center;
+                justify-content: center;
+            }
+            &__suffix {
+                display: flex;
+                flex-grow: 0;
+                flex-shrink: 0;
+                align-items: center;
+                justify-content: center;
+                border-top-right-radius: inherit;
+                border-bottom-right-radius: inherit;
+            }
+        }
+    }
+    &--disabled {
+        cursor: not-allowed;
+        opacity: 0.8;
+        * {
+            pointer-events: none;
+            user-select: none;
+        }
+    }
+    &--dirty {
+        .c-text-input__text {
+            input {
+                color: map-get($c-map, "active-color");
+            }
+        }
+    }
+    &--focused {
+        .c-text-input__text {
+            input {
+                color: map-get($c-map, "active-color");
+            }
+        }
+        .c-text-input__bar {
+            border-color: map-get($c-map, active-border-color);
+        }
+        &.c-text-input--underline {
+            .c-text-input__bar {
+                border-color: map-get($c-map, active-border-color);
+            }
+        }
+    }
+    &--error:not(.c-text-input--disabled) {
+        .c-text-input__bar {
+            border-color: map-get($c-map, error-border-color);
+        }
+        &.c-text-input--underline {
+            .c-text-input__bar {
+                border-color: map-get($c-map, error-border-color);
+            }
+        }
+    }
+    &--underline {
+        .c-text-input__bar {
+            border: none;
+            border-bottom: 1px solid map-deep-get($c-map, underline, border-color);
+            //padding: map-deep-get($c-map, underline, padding);
+            padding-right: 0px !important;
+            padding-left: 0px !important;
+            border-radius: map-deep-get($c-map, underline, border-radius);
+        }
+    }
+    &--no-border {
+        .c-text-input__bar {
+            border: none;
+        }
+    }
+    &--autosize {
+        font-size: inherit;
+        .c-text-input__bar {
+            padding: map-deep-get($c-map, sizes, md, padding);
+        }
+    }
+    &--sm {
+        font-size: map-deep-get($c-map, sizes, sm, font-size);
+        .c-text-input__bar {
+            padding: map-deep-get($c-map, sizes, sm, padding);
+        }
+    }
+    &--sm-text {
+        font-size: map-deep-get($c-map, sizes, sm-text, font-size) !important;
+        .c-text-input__bar {
+            padding: map-deep-get($c-map, sizes, sm-text, padding);
+        }
+    }
+    &--md {
+        font-size: map-deep-get($c-map, sizes, md, font-size);
+        .c-text-input__bar {
+            padding: map-deep-get($c-map, sizes, md, padding);
+        }
+    }
+    &--md-text {
+        font-size: map-deep-get($c-map, sizes, md-text, font-size) !important;
+        .c-text-input__bar {
+            padding: map-deep-get($c-map, sizes, md-text, padding);
+        }
+    }
+    &--lg {
+        font-size: map-deep-get($c-map, sizes, lg, font-size);
+        .c-text-input__bar {
+            padding: map-deep-get($c-map, sizes, lg, padding);
+        }
+    }
+    &__bar {
+        display: table;
+        position: relative;
+        padding: map-deep-get($c-map, padding);
+        width: 100%;
+        border: 1px solid map-get($c-map, border-color);
+        border-radius: map-deep-get($c-map, border-radius);
+        transition: border-color 0.3s getEase('out-sine');
+    }
+    &__text {
+        display: table-cell;
+        position: relative;
+        vertical-align: middle;
+        width: 100%;
+        font-size: inherit;
+        cursor: text;
+        input {
+            position: relative;
+            padding: 0px;
+            margin: 0px;
+            //top: 50%;
+            left: 0px;
+            //transform: translateY(-50%);
+            font-size: inherit;
+            border: none;
+            width: 100%;
+            color: map-get($c-map, "color");
+            background-color: transparent;
+            outline: none;
+            border-radius: 0;
+            -webkit-appearance: none;
+            -webkit-box-sizing: border-box;
+            text-align: inherit;
+            -moz-appearance:textfield;
+            
+            &::-ms-reveal,
+            &::-ms-clear {
+                display: none;
+            }
+            &:required {
+                box-shadow: none !important;
+            }
+            &:invalid {
+                box-shadow: none !important;
+            }
+            &:-webkit-autofill {
+                -webkit-box-shadow: 0 0 0px 1000px white inset !important;
+            }
+            &::-webkit-contacts-auto-fill-button {
+                visibility: hidden;
+                display: none !important;
+                pointer-events: none;
+                position: absolute;
+                right: 0;
+            }
+            &::-webkit-outer-spin-button,
+            &::-webkit-inner-spin-button {
+                -webkit-appearance: none;
+                margin: 0;
+            }
+            
+            &[type="number"] {
+                -moz-appearance: textfield;
+            }
+            &:focus {
+                border: none;
+                outline: none;
+                -webkit-border-radius: 0px;
+                -moz-border-radius: 0px;
+                border-radius: 0px;
+                &::-webkit-contacts-auto-fill-button {
+                    display: none !important;
+                    opacity: 0 !important;
+                }
+                &::-webkit-textfield-decoration-container {
+                    visibility: hidden;
+                }
+            }
+            @include t--placeholder {
+                color: map-deep-get($c-map, placeholder, color);
+                opacity: 1;
+            }
+        }
+    }
+    &__icon {
+        font-size: 1.45em;
+        width: 1em;
+        height: 1em;
+        line-height: 0px;
+        display: table-cell;
+        vertical-align: middle;
+        color: map-deep-get($c-map, icon, color);
+        transform: translateY(0.1em) translateX(0.1em);
+        &--left {
+            padding-right: 0.2em;
+        }
+    }
+    &__localization {
+        display: table-cell;
+        vertical-align: middle;
+        text-align: center;
+        white-space: nowrap;
+        line-height: 0px;
+        padding-left: 0.5em;
+        &:before {
+            content: "";
+            position: absolute;
+            display: block;
+            width: 1px;
+            height: 100%;
+            top: 0px;
+            right: 6em;
+            border-left: solid 1px map-get($c-map, border-color);
+        }
+        &-btn {
+            display: inline-block;
+            vertical-align: middle;
+            color: map-deep-get($c-map, localization, icon, color);
+            font-size: 1.6em;
+            line-height: 0px;
+            margin-top: 2px;
+        }
+        &-badge {
+            display: inline-block;
+            vertical-align: middle;
+            white-space: nowrap;
+            @include ffamily('semi', 'i');
+            font-size: 0.75em;
+            line-height: 2.2em;
+            width: 4em;
+            letter-spacing: 0.05em;
+            border-radius: 1em;
+            color: map-deep-get($c-map, localization, badge, color);
+            background-color: map-deep-get($c-map, localization, badge, background-color);
+        }
+    }
+    &__suffix {
+        font-family: inherit;
+        color: map-deep-get($c-map, suffix, color);
+        background-color: map-deep-get($c-map, suffix, background-color);
+        padding: map-deep-get($c-map, suffix, sizes, md, padding);
+        margin: map-deep-get($c-map, suffix, sizes, md, margin);
+        border-left: solid 1px map-deep-get($c-map, border-color);
+        &-label {
+            font-family: inherit;
+            font-size: 0.8em;
+        }
+    }
+}
+
+$c-map: null;
+
+/* --------------------------------------------------------
+author: Abdullah Karadeniz
+----------------------------------------------------------*/

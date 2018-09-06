@@ -1,0 +1,45 @@
+$c-modal-search-box: (
+  background-color: #ffffff,
+  border-color: #dcdce5,
+  padding-side: 20px,
+
+  close: (
+    font-size: 24px,
+    hover-color: #2985ef
+  ),
+  header: (
+    font-size: 20px,
+    height: 45px,
+    color: #392d38
+  ),
+  footer: (
+    border-color: #dcdce5,
+    margin-top: 20px,
+    height: 40px,
+  ),
+  more-btn: (
+    height: 40px,
+    font-size: 13px,
+    color: #3a2e39,
+    background-color: #f7f7f7
+  )
+);
+
+// Merge settings and defaults
+$c-modal-search-box: map-merge($c-modal-search-box, getSettingsMap("c-modal-search-box"));
+
+// Set shortcuts
+$c-map: $c-modal-search-box;
+
+.c-modal-search-box {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border: solid 1px map-get($c-map, border-color);
+  background-color: map-get($c-map, background-color);
+
+}
+
+//Reset
+$c-map: null;

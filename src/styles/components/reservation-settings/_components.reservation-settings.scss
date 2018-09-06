@@ -1,0 +1,17 @@
+.c-reservation-settings {
+    .p-group__list-item {
+        padding-top: 0;
+        padding-bottom: 0;
+        border: 0;
+        &:last-child {
+            border: 0;
+        }
+    }
+    .p-group__list-item-label {
+        width: auto;
+    }
+    .p-group__list-item-action {
+        position: relative;
+        left: 20px;
+    }
+}

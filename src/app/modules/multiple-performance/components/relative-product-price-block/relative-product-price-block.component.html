@@ -1,0 +1,217 @@
+<app-expandable-block (actionEvent)="emitAction($event)" [contextMenuData]="contextMenuData" [title]="(priceList?.Localization?.Name | localization) || 'Yeni Fiyat'" [isExpanded]="true">
+
+    <div class="c-relative-product-price-block__container">
+
+        <div class="c-relative-product-price-block__content">
+
+            <div class="p-group">
+                <div class="p-group__item row">
+                    <div class="p-form-group col-xs-16">
+                        <div class="p-form-group__label">FİYAT BLOĞU ADI<sup>*</sup></div>
+                        <div class="p-form-group__input">
+                            <app-text-input [isDisabled]="!priceList?.IsEnabled" [isTypeEmitting]="true" [typeDebounceTime]="50" [hasLocalization]="true" (typeEvent)="inputChangeHandler($event,'Name')" [localization]="priceList?.Localization?.Name"></app-text-input>
+                        </div>
+                    </div>
+                </div>    
+
+                <div class="p-group__item row">
+                    <div class="col-xs-4 padding-right-10 d-block margin-right-0">
+                        <div class="p-form-group__label">ÜRÜN FİYATI<sup>*</sup></div>
+                        <div class="p-form-group__input">
+                            <app-text-input 
+                                type="price"
+                                placeholder="0,00"
+                                [isDisabled]="!priceList?.IsEnabled"
+                                (changeEvent)="inputChangeHandler($event,'NominalPrice')"
+                                [value]="priceList?.NominalPrice"></app-text-input>
+                        </div>
+                    </div>
+                    <div class="col-xs-4 padding-left-5 padding-right-5 d-block margin-right-0">
+                        <div class="p-form-group__label">FİYAT GEÇİŞİ<sup>*</sup></div>
+                        <div class="p-form-group__input">
+                            <app-selectbox 
+                                [options]="[{text: 'Tarih', value: 1}, {text: 'Kota', value: 2}, {text: 'Tarih ve Kota', value: 3}]"
+                                [value]="priceList?.Type"
+                                (changeEvent)="inputChangeHandler($event, 'Type')"></app-selectbox>
+                        </div>
+                    </div>
+                    <div class="col-xs-4 padding-left-10 padding-right-5 d-block margin-right-0">
+                        <div class="p-form-group__label">KOTA<sup *ngIf="hasQuota">*</sup></div>
+                        <div class="p-form-group__input">
+                            <app-text-input 
+                                type="number"
+                                placeholder=""
+                                [isDisabled]="!priceList?.IsEnabled || (priceList?.Type === 1) || (priceList?.Type == null)"
+                                (changeEvent)="inputChangeHandler($event,'AllowedSalesTotal')"
+                                [value]="priceList?.AllowedSalesTotal === 0 ? '0' : priceList?.AllowedSalesTotal"></app-text-input>
+                        </div>
+                    </div>
+                    <div class="col-xs-4 padding-left-10 d-block margin-right-0">
+                        <div class="p-form-group__label">SONRAKİ FİYAT<sup *ngIf="hasQuota">*</sup></div>
+                        <div class="p-form-group__input">
+                            <app-selectbox 
+                                placeholder="Seçiniz"
+                                [isDisabled]="!priceList?.IsEnabled || (priceList?.Type === 1) || (priceList?.Type == null) || !getAvailableNextPriceLists?.length"
+                                [options]="getAvailableNextPriceLists"
+                                [value]="priceList?.NextPriceListId"
+                                (changeEvent)="inputChangeHandler($event, 'NextPrice')"></app-selectbox>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            
+            <div class="p-group" *ngIf="priceListFactory?.beginDateTypes?.length">
+                <div class="p-group__header">
+                    <div class="p-group__header-bar">
+                        <div class="p-group__header-title">
+                            Satış Başlangıç Tarihi
+                        </div>
+                    </div>
+                </div>
+                
+                <app-radio-group
+                    (changeEvent)="inputChangeHandler($event, 'BeginDateOptions')"
+                    [name]="priceListFactory?.factoryId + '-BeginDateOptions'" 
+                    [value]="priceListFactory?.beginDateType">
+                    <div class="p-row row">
+                        <span class="col-xs-8">
+                            <app-checkbox [value]="priceListFactory?.beginDateTypes[0].value" [label]="priceListFactory?.beginDateTypes[0].label"></app-checkbox>
+                        </span>
+                        <span class="col-xs-8" *ngIf="priceListFactory?.beginDateType == 0">
+                            <app-text-input [isDisabled]="!priceList?.IsEnabled" type="datepicker" size="sm-text" placeholder="Bir Tarih Seçiniz" (changeEvent)="inputChangeHandler($event,'BeginDate')" [date]="priceList?.BeginDate"></app-text-input>
+                        </span>
+                    </div>
+                    <div class="p-row row">
+                        <span class="col-xs-8">
+                            <app-checkbox [value]="priceListFactory?.beginDateTypes[1].value" [label]="priceListFactory?.beginDateTypes[1].label"></app-checkbox>
+                        </span>
+                        <span class="col-xs-8" *ngIf="priceListFactory?.beginDateType == 1">
+                            <app-relative-date-input (changeEvent)="inputChangeHandler($event, 'beginDateRelatedDuration')" [value]="priceListFactory?.beginDateRelatedDuration || 0" ></app-relative-date-input>
+                        </span>
+                    </div>
+                    <div class="p-row row" *ngIf="index > 0">
+                        <span class="col-xs-8">
+                            <app-checkbox [value]="priceListFactory?.beginDateTypes[2].value" [label]="priceListFactory?.beginDateTypes[2].label"></app-checkbox>
+                        </span>
+                        <span class="col-xs-8" *ngIf="priceListFactory?.beginDateType == 2">
+                            <app-relative-date-input (changeEvent)="inputChangeHandler($event, 'beginDateRelatedDuration')" [value]="priceListFactory?.beginDateRelatedDuration || 0" ></app-relative-date-input>
+                        </span>
+                    </div>
+                </app-radio-group>
+            </div>
+
+            <div class="p-group" *ngIf="priceListFactory?.endDateTypes?.length && (priceList?.Type === 1 || priceList?.Type === 3)">
+                <div class="p-group__header">
+                    <div class="p-group__header-bar">
+                        <div class="p-group__header-title">
+                            Satış Bitiş Tarihi
+                        </div>
+                    </div>
+                </div>
+                
+                <app-radio-group
+                    (changeEvent)="inputChangeHandler($event, 'EndDateOptions')"
+                    [name]="priceListFactory?.factoryId + '-EndDateOptions'" 
+                    [value]="priceListFactory?.endDateType">
+                    <div class="p-row row">
+                        <span class="col-xs-8">
+                            <app-checkbox [value]="priceListFactory?.endDateTypes[0].value" [label]="priceListFactory?.endDateTypes[0].label"></app-checkbox>
+                        </span>
+                        <span class="col-xs-8" *ngIf="priceListFactory?.endDateType == 0">
+                            <app-text-input [isDisabled]="!priceList?.IsEnabled" type="datepicker" size="sm-text" placeholder="Bir Tarih Seçiniz" (changeEvent)="inputChangeHandler($event,'EndDate')" [date]="priceList?.EndDate"></app-text-input>
+                        </span>
+                    </div>
+                    <div class="p-row row">
+                        <span class="col-xs-8">
+                            <app-checkbox [value]="priceListFactory?.endDateTypes[1].value" [label]="priceListFactory?.endDateTypes[1].label"></app-checkbox>
+                        </span>
+                        <span class="col-xs-8" *ngIf="priceListFactory?.endDateType == 1">
+                            <app-relative-date-input (changeEvent)="inputChangeHandler($event, 'endDateRelatedDuration')" [value]="priceListFactory?.endDateRelatedDuration || 0" [date]="priceList?.BeginDate"></app-relative-date-input>
+                        </span>
+                    </div>
+                    <div class="p-row row">
+                        <span class="col-xs-8">
+                            <app-checkbox [value]="priceListFactory?.endDateTypes[2].value" [label]="priceListFactory?.endDateTypes[2].label"></app-checkbox>
+                        </span>
+                        <span class="col-xs-8" *ngIf="priceListFactory?.endDateType == 2">
+                            <app-relative-date-input (changeEvent)="inputChangeHandler($event, 'endDateRelatedDuration')" [value]="priceListFactory?.endDateRelatedDuration || 0"></app-relative-date-input>
+                        </span>
+                    </div>
+                </app-radio-group>
+            </div>
+
+            <div class="p-group" *ngIf="!useFactory">
+                <div class="p-group__item row">
+                    <div class="col-xs-8 padding-right-10">
+                        
+                    </div>
+                    <div class="col-xs-8 padding-left-10">
+                        <div class="p-form-group__label"></div>
+                        <div class="p-form-group__input text-xs-right">
+                            <span class="p-label padding-right-10">Fiyatı Etkinleştir </span>
+                            <app-checkbox type="lightswitch" (changeEvent)="inputChangeHandler($event,'IsEnabled')" [isChecked]="priceList?.IsEnabled"></app-checkbox>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-group">
+                <div class="p-group__item" [class.p-group__item--disabled]="!priceList?.IsEnabled">
+                    <div class="p-form-group" *ngFor="let variant of activeVariants">
+                        <div class="c-relative-product-price-block__variant" [class.c-relative-product-price-block__variant--disabled]="!variant?.IsActive">
+                            <div class="c-relative-product-price-block__variant-header">
+                                <span class="c-relative-product-price-block__variant-header-icon"><i class="icon__n icon__n--tag"></i></span>
+                                <span class="c-relative-product-price-block__variant-header-title">{{variant?.VariantType?.Localization?.Name}}
+                                    <span class="c-relative-product-price-block__variant-header-title-sales">
+                                        <b>{{variant?.ActualSalesTotal || 0}}</b><span *ngIf="variant?.AllowedSalesTotal">/{{variant?.AllowedSalesTotal}}</span> Satıldı
+                                    </span>
+                                </span>
+                                <span class="c-relative-product-price-block__variant-header-price" *ngIf="variant?.DefaultPrice" [class.c-relative-product-price-block__variant-header-price--active]="!(variant?.Prices?.length > 0)">{{variant?.DefaultPrice}} {{currency?.text}}</span>
+                                <span class="c-relative-product-price-block__variant-header-context">
+                                    <app-button (click)="openVariantContextMenu($event, variant)" type="icon" icon="more_vert" theme="secondary"></app-button>
+                                </span>
+                            </div>
+                            <div class="c-relative-product-price-block__variant-content">
+                                <div class="c-relative-product-price-block__variant-list">
+                                    <div class="c-relative-product-price-block__variant-list-item" *ngFor="let variantPrice of variant?.Prices">
+                                        <span class="c-relative-product-price-block__variant-list-item-title">{{variantPrice?.SalesChannel?.Name}}</span>
+                                        <span class="c-relative-product-price-block__variant-list-item-price" *ngIf="variantPrice?.Price">{{variantPrice?.Price}} {{currency?.text}}</span>
+                                        <span class="c-relative-product-price-block__variant-list-item-context">
+                                            <app-button 
+                                                (click)="openVariantPriceContextMenu($event, variantPrice, variant)"
+                                                type="icon" icon="more_vert" theme="secondary"></app-button>
+                                        </span>
+                                    </div>
+                                    <div class="c-relative-product-price-block__variant-list-item c-relative-product-price-block__variant-list-item--new">
+                                        <span class="c-relative-product-price-block__variant-list-item-icon"><i class="icon__n icon__n--plus"></i></span>
+                                        <span>
+                                            <app-button (clickEvent)="openAddVariantPriceBox(null, variant)" type="link" label="SATIŞ KANALI EKLE"></app-button>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="c-relative-product-price-block__variant-footer">
+                                    <span class="p-label padding-right-10">Varyant Etkinleştir </span>
+                                    <app-checkbox type="lightswitch" (changeEvent)="inputChangeHandler($event,'IsActive', variant)" [isChecked]="variant?.IsActive"></app-checkbox>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-form-group">
+                        <app-container-canvas [isEmpty]="true">
+                            <app-button (click)="openAddVariantBox(null, $event)" theme="secondary">VARYANT EKLE</app-button>
+                        </app-container-canvas>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</app-expandable-block>
+<!-- 
+<div class="c-relative-product-price-block__submit" *ngIf="expandableBlock && expandableBlock?.isExpanded">
+    <app-container-canvas type="footer">
+        <app-button (clickEvent)="submitHandler()" [isDisabled]="!isValid" theme="secondary">KAYDET VE KAPAT</app-button>
+    </app-container-canvas>
+</div> -->

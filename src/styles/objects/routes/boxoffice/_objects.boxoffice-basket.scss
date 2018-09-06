@@ -1,0 +1,30 @@
+$or-boxoffice-basket:();
+.or-boxoffice-basket {
+    * {
+        user-select: none;
+    }
+    .or-boxoffice__row-wrapper {
+        padding: 30px 30px 0px 30px;
+    }
+    padding-bottom: 80px;
+    display: block;
+    .c-pill.c-pill--active .c-pill__bagde,
+    .c-pill:hover .c-pill__bagde,
+    .c-pill:focus .c-pill__bagde {
+        border: none !important;
+    }
+    .c-pill {
+        border: none;
+    }
+    .c-pill--campaign {
+        border: 1px solid #d5d5d5;
+    }
+}
+
+.or-boxoffice {
+    &__header {
+        .c-pill-group {
+            display: table-cell;
+        }
+    }
+}

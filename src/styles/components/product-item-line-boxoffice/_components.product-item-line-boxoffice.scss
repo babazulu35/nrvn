@@ -1,0 +1,432 @@
+/* --------------------------------------------------------
+author: Halil İbrahim Nuroğlu
+----------------------------------------------------------*/
+
+
+/**
+ * Primary Column Line:
+ * `.c-product-item-line-boxoffice` -
+
+ *     @example
+ *     .c-product-item-line-boxoffice
+ */
+
+$c-product-item-line-boxoffice: ( title-font-size: $global-font-size + 3, amount-width: 145px, action-area-width: 160px, item-td-padding: 10px 20px, ticket-check-size: 22px, ticket-effect-width: 25px, ticket-check-selected-circle-size: 12px, c-border-radius: 2px, item-min-height: 80px, item-content-padding: 15px 20px, icon-size: 24px, item-content-text-color: #3a2e39, border-color: #dcdce5, global-bg-color: #f7f7f7, primary-color: #35383d, global-grey-color: #9d9d9d, global-light-grey-color: #bdbdbd, ticket-check-selected-circle-color: #2b98f0, icon-check-color: #6bba18, );
+// Merge settings and defaults
+$c-product-item-line-boxoffice: map-merge($c-product-item-line-boxoffice, getSettingsMap("c-product-item-line-boxoffice"));
+// Set shortcuts
+$c-map: $c-product-item-line-boxoffice;
+$z-index: map-merge($z-index, getSettingsMap("z-index"));
+$map-zindex: $z-index;
+.c-product-item-line-boxoffice {
+    display: block;
+    border-top: 1px solid map-get($c-map, border-color);
+    border-left: 1px solid map-get($c-map, border-color);
+    border-right: 1px solid map-get($c-map, border-color);
+    border-radius: map-get($c-map, c-border-radius);
+    margin-bottom: -1px;
+    text-align: left;
+    background-color: #fff;
+    font-size: 13px;
+    &:last-child {
+        border-bottom: 1px solid map-get($c-map, border-color);
+    }
+    &--border_bottom {
+        .c-product-item-line-boxoffice__bar {
+            .c-product-item-line-boxoffice__ticket-content {
+                .c-product-item-line-boxoffice__bar-summary {
+                    .c-product-item-line-boxoffice__amount,
+                    .c-product-item-line-boxoffice__action-area {
+                        border-bottom: 1px dashed map-get($c-map, border-color) !important;
+                    }
+                }
+            }
+        }
+    }
+    &--view {
+        .c-product-item-line-boxoffice__amount {
+            width: 150px;
+            background-color: #fff;
+            border-right: none;
+        }
+        .c-product-item-line-boxoffice__title {
+            width: auto;
+        }
+    }
+}
+
+.c-product-item-line-boxoffice__bar {
+    display: table;
+    width: 100%;
+    // min-height: map-get($c-map, item-min-height);
+    &+.c-product-item-line-boxoffice__bar {
+        border-top: 1px solid map-get($c-map, border-color);
+    }
+}
+
+.c-product-item-line-boxoffice__bar-summary {
+    display: table;
+    width: 100%;
+    // min-height: map-get($c-map, item-min-height);
+}
+
+.c-product-item-line-boxoffice__item-summary {
+    position: relative;
+}
+
+.c-product-item-line-boxoffice__border {
+    position: absolute;
+    top: 0px;
+    left: -1px;
+    display: block;
+    width: 5px;
+    height: 100%;
+}
+
+.c-product-item-line-boxoffice__bar-content {
+    display: none;
+    font-size: 13px;
+    padding: map-get($c-map, item-content-padding);
+    color: map-get($c-map, item-content-text-color);
+    @include ffamily('regular');
+    ul,
+    ol {
+        margin-left: 15px;
+    }
+    ul {
+        list-style: disc;
+    }
+}
+
+.c-product-item-line-boxoffice__title,
+{
+    position: relative;
+    display: table-cell;
+    vertical-align: middle;
+    width: calc(100% - #{map-get($c-map, amount-width)} + #{map-get($c-map, action-area-width)});
+    padding: map-get($c-map, item-td-padding);
+    //padding-right: 50px;
+    .icon__n {
+        &.icon__n--close {
+            display: block !important;
+            position: relative !important;
+            right: inherit !important;
+            top: inherit !important;
+            @include t--translateY(0);
+        }
+    }
+    .c-pill-group {
+        .c-pill .c-pill__bagde {
+            top: -4px;
+            margin-left: 5px;
+            margin-right: 0px;
+        }
+        .icon__n {
+            position: relative;
+            right: inherit;
+            top: 3px;
+            font-size: map-get($c-map, icon-size);
+            color: map-get($c-map, global-light-grey-color);
+            @include t--translateY(0);
+            &:hover {
+                cursor: pointer;
+            }
+            &.icon__n--close {
+                display: block !important;
+            }
+        }
+    }
+    &-name {
+        display: block;
+        font-size: map-get($c-map, title-font-size);
+        @include ffamily(bold);
+        color: map-get($c-map, primary-color);
+    }
+    &-subtitle {
+        display: block;
+        font-size: 13px;
+        margin-top: 4px;
+        @include ffamily(regular);
+        color: map-get($c-map, global-grey-color);
+        time,
+        strong {
+            @include ffamily(bold);
+        }
+    }
+    .icon__n {
+        position: absolute;
+        right: 13px;
+        top: 50%;
+        font-size: map-get($c-map, icon-size);
+        color: map-get($c-map, global-light-grey-color);
+        @include t--translateY(-50%);
+        &:hover {
+            cursor: pointer;
+        }
+        &.icon__n--close {
+            display: none;
+        }
+    }
+}
+
+.or-boxoffice__product-holder-info {
+    padding: 0;
+    .icon__n {
+        &.icon__n--close {
+            display: block !important;
+            position: relative !important;
+            right: inherit !important;
+            top: inherit !important;
+            @include t--translateY(0);
+        }
+    }
+    .c-pill-group {
+        .c-pill .c-pill__bagde {
+            top: -4px;
+            margin-left: 5px;
+            margin-right: 0px;
+        }
+        .icon__n {
+            position: relative;
+            right: inherit;
+            top: 3px;
+            font-size: map-get($c-map, icon-size);
+            color: map-get($c-map, global-light-grey-color);
+            @include t--translateY(0);
+            &:hover {
+                cursor: pointer;
+            }
+            &.icon__n--close {
+                display: block !important;
+            }
+        }
+    }
+}
+
+.c-product-item-line-boxoffice__ticket-content {
+    display: table-cell;
+}
+
+.c-product-item-line-boxoffice__item {
+    position: relative;
+    &:after,
+    &:before {
+        content: '';
+        display: block;
+        position: absolute;
+        z-index: map-get($map-zindex, productItem);
+        top: 50%;
+        border-radius: 100%;
+        background-color: #fff;
+        @include t--size(map-get($c-map, ticket-check-size));
+        @include t--translateY(-50%);
+        border: 1px solid map-get($c-map, border-color);
+        left: - map-get($c-map, ticket-check-size)/2 - 1;
+        clip: rect(0px, map-get($c-map, ticket-check-size), map-get($c-map, ticket-check-size), map-get($c-map, ticket-check-size)/2);
+    }
+    &:before {
+        left: auto;
+        right: - map-get($c-map, ticket-check-size)/2 - 1;
+        clip: rect(0px, map-get($c-map, ticket-check-size)/2, map-get($c-map, ticket-check-size), 0px);
+    }
+}
+
+.c-product-item-line-boxoffice__ticket-effect {
+    position: relative;
+    display: table-cell;
+    vertical-align: middle;
+    background-color: #fff;
+    width: map-get($c-map, ticket-effect-width);
+    text-align: center;
+    &--wide {
+        width: map-get($c-map, ticket-effect-width)*2;
+    }
+    // .icon__n {
+    //     line-height: map-get($c-map, icon-size) * 2 - 7;
+    //     color: map-get($c-map, global-light-grey-color);
+    //     font-size: map-get($c-map, icon-size);
+    //     width: 50px;
+    //     text-align: center;
+    //     padding-right: 5px;
+    // }
+}
+
+.c-product-item-line-boxoffice__ticket-effect-left {
+    border-right: 1px dashed map-get($c-map, border-color);
+    &:before {
+        content: "";
+        position: absolute;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background: #f7f7f7;
+        z-index: map-get($map-zindex, subheader);
+        left: -12px;
+        top: 50%;
+        border-right: 1px solid map-get($c-map, border-color);
+        transform: translateY(-50%);
+    }
+}
+
+.c-product-item-line-boxoffice__ticket-effect-right {
+    border-left: 1px dashed map-get($c-map, border-color);
+    &:before {
+        content: "";
+        position: absolute;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background: #f7f7f7;
+        z-index: map-get($map-zindex, subheader);
+        right: -12px;
+        top: 50%;
+        border-left: 1px solid map-get($c-map, border-color);
+        transform: translateY(-50%);
+    }
+}
+
+.c-product-item-line-boxoffice__amount {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    width: map-get($c-map, amount-width);
+    border: 1px dashed map-get($c-map, border-color);
+    border-top: none;
+    border-bottom: none;
+    padding: map-get($c-map, item-td-padding);
+    background-color: #fff;
+}
+
+.c-product-item-line-boxoffice__seat {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: left;
+    width: 260px;
+    border: 1px dashed map-get($c-map, border-color);
+    border-top: none;
+    border-bottom: none;
+    padding: 10px;
+    background-color: #fff;
+    .c-button {
+        display: table-cell;
+        vertical-align: middle;
+    }
+}
+
+.c-product-item-line-boxoffice__amount-value {
+    font-size: 22px;
+    color: map-get($c-map, primary-color);
+    @include ffamily(bold);
+    sup {
+        font-size: 13px;
+    }
+    del {
+        display: block;
+        color: #EF4C41;
+        position: relative;
+        font-size: 15px;
+        @include ffamily(regular, i);
+    }
+}
+
+.c-product-item-line-boxoffice__amount-fee {
+    font-size: 18px;
+    color: map-get($c-map, primary-color);
+    @include ffamily(regular, i);
+    sup {
+        font-size: 10px;
+    }
+}
+
+.c-product-item-line-boxoffice__action-area {
+    display: table-cell;
+    vertical-align: top;
+    text-align: center;
+    width: map-get($c-map, action-area-width);
+    padding: map-get($c-map, item-td-padding);
+    //padding-top: 22px;
+    vertical-align: middle;
+}
+
+.c-product-item-line-boxoffice__action--available {
+    background: #fff;
+}
+
+.c-product-item-line-boxoffice_small {
+    display: block;
+    text-align: center;
+    margin-top: 3px;
+    font-size: 11px;
+    color: map-get($c-map, global-grey-color);
+}
+
+.c-product-item-line-boxoffice__action-area-elements {
+    display: block;
+}
+
+.c-product-item-line-boxoffice__action-area-results {
+    display: none;
+    font-size: 15px;
+    color: map-get($c-map, primary-color);
+    text-align: center;
+    .icon__n--check {
+        vertical-align: middle;
+        font-size: 24px;
+        color: map-get($c-map, icon-check-color);
+    }
+}
+
+.c-product-item-line-boxoffice__action-area-item {
+    padding-right: 5px;
+    &+.c-product-item-line-boxoffice__action-area-item {
+        padding-left: 5px;
+    }
+}
+
+// Modifiers
+.c-product-item-line-boxoffice__bar--disabled {
+    cursor: not-allowed !important;
+    background-color: map-get($c-map, global-bg-color);
+    pointer-events: none;
+    * {
+        cursor: not-allowed !important;
+        pointer-events: none;
+        color: map-get($c-map, global-grey-color) !important;
+    }
+}
+
+.c-product-item-line-boxoffice__bar--expand {
+    .c-product-item-line-boxoffice__bar-content {
+        display: block;
+    }
+    .c-product-item-line-boxoffice__amount,
+    .c-product-item-line-boxoffice__action-area {
+        border-bottom: 1px dashed map-get($c-map, border-color);
+    }
+    .c-product-item-line-boxoffice__title .icon__n {
+        &.icon__n--close {
+            display: block
+        }
+        &.icon__n--info_outline {
+            display: none
+        }
+    }
+}
+
+.c-product-item-line-boxoffice__bar--basket-added {
+    .c-product-item-line-boxoffice__title-name,
+    .c-product-item-line-boxoffice__title-subtitle,
+    .c-product-item-line-boxoffice__amount {
+        color: map-get($c-map, global-light-grey-color);
+    }
+    .c-product-item-line-boxoffice__action-area {
+        padding-top: 0;
+        vertical-align: middle;
+    }
+    .c-product-item-line-boxoffice__action-area-elements {
+        display: none;
+    }
+    .c-product-item-line-boxoffice__action-area-results {
+        display: block;
+    }
+}

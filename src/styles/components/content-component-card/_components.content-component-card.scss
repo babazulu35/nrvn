@@ -1,0 +1,120 @@
+/* --------------------------------------------------------
+author: Can Sivri
+----------------------------------------------------------*/
+
+/***
+* Sort View Component:
+*/
+
+/**
+* Sort View:
+* `.c-content-component-card - Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque repellat autem deleniti odit repellendus temporibus placeat ipsa similique, neces
+*
+
+*/
+
+
+// Set defaults
+
+$c-content-component-card: (
+	width: 202px,
+	icon-color: #bdbdbd,
+	border-color: #dcdce5,
+	text-color: #35383d
+);
+
+// Merge settings and defaults
+$c-content-component-card: map-merge($c-content-component-card, getSettingsMap("c-content-component-card"));
+
+// Set shortcuts
+$c-map: $c-content-component-card;
+
+
+
+.c-content-component-card {
+	box-sizing: border-box;
+	@include t--clearfix;
+	&__list {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		li {
+			display: inline-block;
+			padding:5px;
+		}
+	}
+	&__list-item {
+		display: block;
+		min-width: map-get($c-map, width);
+		min-height: 40px;
+		padding:8px 0 0 10px;
+		background-color: #fff;
+		border: 1px solid map-get($c-map, border-color);
+		font-size: 13px;
+		@include ffamily("bold");
+		color: map-get($c-map, text-color);
+		border-radius:2px;
+	}
+	.icon__n {
+		margin-right: 6px;
+		vertical-align: middle;
+		font-size: 24px;
+		color: map-get($c-map, icon-color);
+	}
+	&__text {
+		overflow: hidden;
+		display:inline-block;
+		vertical-align: middle;
+		text-overflow: ellipsis;
+		width: calc(100% - 50px);
+		white-space: nowrap;
+	}
+	&__list--ready {
+		.c-content-component-card__list-item {border-style:dashed;}
+	}
+	&__box {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		font-size:0;
+		>li {
+			display:inline-block;
+			text-align:center;
+			padding:5px;
+		}
+	}
+	&__box__item {
+		width: map-get($c-map, width);
+		border-radius: 2px;
+		overflow: hidden;	
+		border: 1px solid map-get($c-map, border-color);
+	}
+	&__label {
+		display:table-cell;
+		vertical-align:middle;
+		width:100vw;
+		height:80px;
+		font-size: 15px;
+		@include ffamily("bold");
+		color: map-get($c-map, text-color);
+	}
+	&__icons {
+		list-style:none;
+		margin:0;
+		padding:0;
+		font-size:0;
+		@include t--clearfix;
+		li {
+			float: left;
+			width: calc(100% / 5);
+			min-width:40px;
+			min-height:40px;
+			padding:8px 0 0;
+			border-right: 1px solid map-get($c-map, border-color);
+			border-top: 1px solid map-get($c-map, border-color);
+			&:last-child {border-right:0;}
+		}
+		.icon__n {margin:0;}
+	}
+
+}

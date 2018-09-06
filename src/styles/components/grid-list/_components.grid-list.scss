@@ -1,0 +1,59 @@
+$c-grid-list: ();
+// Merge settings and defaults
+$c-grid-list: map-merge($c-grid-list, getSettingsMap("c-grid-list"));
+// Set shortcuts
+$c-map: $c-grid-list;
+.c-grid-list {
+    width: 100%;
+    display: block;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+
+    &__wrapper {
+        display: block;
+        position: relative;
+        padding: 0px;
+        margin: 0px auto;
+        max-width: 100%;
+    }
+
+    &__item {
+        display: inline-block;
+        padding: 0px;
+        margin: 0px -4px -4px 0px;
+        //float: left;
+    }
+    
+    // &__wrapper {
+    //     display: flex;
+    //     flex-direction: row;
+    //     padding: 0;
+    //     margin: 0;
+    //     width: 100%;
+    //     max-width: 100%;
+    //     list-style: none;
+    //     flex-wrap: wrap;
+    //     align-items: flex-start;
+    //     align-content: center;
+    //     justify-content: center;
+    // }
+
+    // li,
+    // &__item {
+    //     display: flex;
+    //     align-content: stretch;
+        
+    //     .c-card-item {
+    //         width: 100% !important;
+    //     }
+
+    //     &:empty {
+    //         height: 0px;
+    //     }
+    // }
+}
+
+//Reset
+$c-map: null;
+$selected-size: null;

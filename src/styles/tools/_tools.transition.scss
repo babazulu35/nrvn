@@ -1,0 +1,11 @@
+@mixin hover-transition {
+  &:hover {
+    @include transition(all 0.3s ease-out);
+  }
+}
+
+@mixin active-transition {
+  &:active {
+    @include transition(all 0.2s ease-out);
+  }
+}

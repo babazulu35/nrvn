@@ -1,0 +1,3 @@
+$o-events-index: ();
+$o-events-index: map-merge($o-events-index, getSettingsMap("o-events-index"));
+$o-map: $o-events-index;

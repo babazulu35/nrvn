@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="149px" height="92px" viewBox="0 0 149 92" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 42 (36781) - http://www.bohemiancoding.com/sketch -->
+    <title>bo-performances-cancel</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="bo-performances-cancel">
+            <path d="M14,11.9966343 L14,80.0033657 C14,81.1042545 14.8976764,82 16.0094459,82 L133.990554,82 C135.105078,82 136,81.1064596 136,80.0033657 L136,11.9966343 C136,10.8957455 135.102324,10 133.990554,10 L16.0094459,10 C14.8949218,10 14,10.8935404 14,11.9966343 Z M10,11.9966343 C10,8.68478464 12.6853944,6 16.0094459,6 L133.990554,6 C137.309479,6 140,8.68461881 140,11.9966343 L140,80.0033657 C140,83.3152154 137.314606,86 133.990554,86 L16.0094459,86 C12.6905206,86 10,83.3153812 10,80.0033657 L10,11.9966343 Z" id="Rectangle-3" fill="#DADADA" fill-rule="nonzero"></path>
+            <rect id="Rectangle-2" fill="#D8D8D8" transform="translate(74.746464, 46.007609) rotate(329.000000) translate(-74.746464, -46.007609) " x="-11.253536" y="44.007609" width="172" height="4" rx="1"></rect>
+            <ellipse id="Oval" fill="#D8D8D8" cx="89" cy="27" rx="4" ry="4"></ellipse>
+            <ellipse id="Oval" fill="#D8D8D8" cx="100" cy="27" rx="4" ry="4"></ellipse>
+            <ellipse id="Oval" fill="#D8D8D8" cx="111" cy="27" rx="4" ry="4"></ellipse>
+            <ellipse id="Oval" fill="#D8D8D8" cx="122" cy="27" rx="4" ry="4"></ellipse>
+            <circle id="Oval" fill="#D8D8D8" cx="89" cy="40" r="4"></circle>
+            <circle id="Oval" fill="#D8D8D8" cx="100" cy="40" r="4"></circle>
+            <circle id="Oval" fill="#D8D8D8" cx="111" cy="40" r="4"></circle>
+            <circle id="Oval" fill="#D8D8D8" cx="122" cy="40" r="4"></circle>
+            <ellipse id="Oval" fill="#D8D8D8" cx="89" cy="53" rx="4" ry="4"></ellipse>
+            <ellipse id="Oval" fill="#D8D8D8" cx="100" cy="53" rx="4" ry="4"></ellipse>
+            <ellipse id="Oval" fill="#D8D8D8" cx="111" cy="53" rx="4" ry="4"></ellipse>
+            <ellipse id="Oval" fill="#D8D8D8" cx="122" cy="53" rx="4" ry="4"></ellipse>
+            <ellipse id="Oval" fill="#D8D8D8" cx="89" cy="66" rx="4" ry="4"></ellipse>
+            <ellipse id="Oval" fill="#D8D8D8" cx="100" cy="66" rx="4" ry="4"></ellipse>
+            <ellipse id="Oval" fill="#D8D8D8" cx="111" cy="66" rx="4" ry="4"></ellipse>
+            <ellipse id="Oval" fill="#D8D8D8" cx="122" cy="66" rx="4" ry="4"></ellipse>
+            <ellipse id="Oval" fill="#D8D8D8" cx="29" cy="27" rx="4" ry="4"></ellipse>
+            <ellipse id="Oval" fill="#D8D8D8" cx="40" cy="27" rx="4" ry="4"></ellipse>
+            <ellipse id="Oval" fill="#D8D8D8" cx="51" cy="27" rx="4" ry="4"></ellipse>
+            <ellipse id="Oval" fill="#D8D8D8" cx="62" cy="27" rx="4" ry="4"></ellipse>
+            <circle id="Oval" fill="#D8D8D8" cx="29" cy="40" r="4"></circle>
+            <circle id="Oval" fill="#D8D8D8" cx="40" cy="40" r="4"></circle>
+            <circle id="Oval" fill="#D8D8D8" cx="51" cy="40" r="4"></circle>
+            <circle id="Oval" fill="#D8D8D8" cx="62" cy="40" r="4"></circle>
+            <ellipse id="Oval" fill="#D8D8D8" cx="29" cy="53" rx="4" ry="4"></ellipse>
+            <ellipse id="Oval" fill="#D8D8D8" cx="40" cy="53" rx="4" ry="4"></ellipse>
+            <ellipse id="Oval" fill="#D8D8D8" cx="51" cy="53" rx="4" ry="4"></ellipse>
+            <ellipse id="Oval" fill="#D8D8D8" cx="62" cy="53" rx="4" ry="4"></ellipse>
+            <ellipse id="Oval" fill="#D8D8D8" cx="29" cy="66" rx="4" ry="4"></ellipse>
+            <ellipse id="Oval" fill="#D8D8D8" cx="40" cy="66" rx="4" ry="4"></ellipse>
+            <ellipse id="Oval" fill="#D8D8D8" cx="51" cy="66" rx="4" ry="4"></ellipse>
+            <ellipse id="Oval" fill="#D8D8D8" cx="62" cy="66" rx="4" ry="4"></ellipse>
+        </g>
+    </g>
+</svg>

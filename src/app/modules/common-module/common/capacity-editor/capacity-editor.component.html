@@ -1,0 +1,45 @@
+<div class="p-header-bar">
+    <div class="p-header-bar__left">
+        <app-breadcrumb [breadcrumbs]="breadcrumbs" ></app-breadcrumb>
+    </div>
+
+    <div class="p-header-bar__right">
+        <app-button (clickEvent)='submit()' [isDisabled]="!isValid" [isPromising]="isLoading || isPromising">DEVAM ET</app-button>
+        <app-button (clickEvent)='this.tetherService.dismiss()' type="icon" icon="close" theme="secondary"></app-button>
+    </div>
+
+</div>
+
+
+    
+    <app-collapsible-container [asideWidth]="300" [isAsideVisible]="standingBlocks?.length" [asideHasNoPadding]="true">
+
+        <div content>
+            <div class="p-full-content">    
+                <app-venue-template-editor
+                    [role]="role"
+                    (editorEvent)="venueEditorEventHandler($event)"
+                    [performanceId]="performanceId"
+                    [productId]="productId"
+                    [firmCode]="firmCode"
+                    [channelCode]="channelCode" ></app-venue-template-editor>
+            </div>
+        </div>
+
+        <div aside>
+            <div class="p-container">
+                <div class="p-group" *ngIf="standingBlocks?.length">
+                    <h3>Numarasız Koltuklar</h3>
+                    <p>Ayakta olan alanlara ait kapasite bilgileri aşağıda listelenmiştir. Maksimum kapasite performansa bağlı bütün ürünlerin toplam kapasitesidir.</p>
+                    <div class="p-group__item">
+                        <app-block-capacity-list 
+                            (changeEvent)="standingBlockChangeHandler($event)"
+                            title="Ayakta Bloklar"
+                            [items]="standingBlocks"></app-block-capacity-list>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </app-collapsible-container>
+  

@@ -1,0 +1,50 @@
+<div class="c-main-menu__header">
+    <!-- Main Logo Starts -->
+    <div class="c-main-menu__logo">
+        <span class="c-main-menu__logo--max">
+
+        <img src="assets/images/logo/nirvana.png"/>
+      </span>
+        <span class="c-main-menu__logo--min">
+        <img src="assets/images/logo/nirvana-min.png"/>
+      </span>
+    </div>
+    <!-- Main Logo Ends -->
+</div>
+<div class="c-main-menu__container">
+    <div class="c-main-menu__content" >
+        <ul class="c-main-menu__list" *ngIf="quickSale?.isEnabled">
+            <li class="c-main-menu__list-item"> 
+                <span class="c-main-menu__list-item-container">
+                    <i class="c-main-menu__list-item-icon icon__n icon__n--whatshot"></i>
+                    <span class="c-main-menu__list-item-label">
+                        <span>Hızlı Satış</span>
+                        <app-checkbox #quickSaleCheckbox type="lightswitch" size="sm" (changeEvent)="quickSaleCheckHandler($event)" [isChecked]="quickSale.event != null"></app-checkbox>
+                    </span>
+                </span>
+                <span [routerLink]="'/boxoffice/'+quickSale?.event.Id+'/products'" class="c-main-menu__detail-list" *ngIf="quickSale?.detailList?.length">
+                    <li class="c-main-menu__detail-list-item" *ngFor="let item of quickSale?.detailList">
+                        <span class="c-main-menu__detail-list-item-label">{{item?.label}}</span>
+                        <span class="c-main-menu__detail-list-item-value" [innerHTML]="item?.value"></span>
+                    </li>
+                </span>
+            </li>
+        </ul>
+    
+        <!-- Side Menu Starts -->
+        <ul class="c-main-menu__list">
+            <li *ngFor="let item of items; let i = index" (click)="item?.submenu?.length ? openEventsContextMenu($event,i) : gotoRoute(item?.routerLink)" [class.c-main-menu__list-item--active]="checkIsActive(item?.routerLink)" class="c-main-menu__list-item">
+                <a>
+                    <i class="c-main-menu__list-item-icon icon__n icon__n--{{item.icon}}"></i>
+                    <span class="c-main-menu__list-item-label">{{item?.label}}</span>
+                </a>
+            </li>
+        </ul>
+        <!-- Side Menu End-->
+    </div>
+    
+    <div class="c-main-menu__footer" *ngIf="!quickSale?.isEnabled || !quickSale?.event">
+        <span class="c-main-menu__toggle-btn" [class.c-light-switch--on]="isSideMenuCollapsed" (click)="toggle()"></span>
+        <span class="c-main-menu__toggle-label">DARALT</span>
+    </div>
+</div>

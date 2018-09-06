@@ -1,0 +1,9 @@
+<div *ngIf="iconName" class="c-basic-button-group__icon">
+    <i class="icon__n icon__n--{{iconName}}"></i>
+</div>
+
+<ul class="c-basic-button-group__inner">
+    <li (click)="emitAction(action)" *ngFor="let action of actions" [ngClass]="{'c-basic-button-group__item--selected': action.isSelected, 'c-basic-button-group__item--disabled': action.isDisabled}" class="c-basic-button-group__item">
+        <a href="javascript:void(0)" class="c-basic-button-group__button">{{action.label}}</a>
+    </li>
+</ul>

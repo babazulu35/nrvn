@@ -1,0 +1,96 @@
+<app-dialog-box>
+
+  <div #header class="c-dialog-box__header c-dialog-box__header--border c-dialog-box__header--padding">
+    <div class="c-dialog-box__header-bar">
+      <h1 class="c-dialog-box__header-title">
+        {{title}}
+      </h1>
+      <div class="c-dialog-box__header-actions">
+        <app-button (click)="tether.dismiss()" type="icon" icon="close" theme="secondary"></app-button>
+      </div>
+    </div>
+  </div>
+
+  <div #body class="c-dialog-box__body c-dialog-box__body--no-padding ">
+
+    <div class="p-container">
+
+      <div class="p-group__item row">
+        <div class="col-xs-8 padding-right-10">
+          <div class="p-form-group__label">Hangi türde varyant ekleyeceksiniz?<sup>*</sup></div>
+          <div class="p-form-group__input">
+            <app-selectbox [isDisabled]="!variant?.IsActive" [value]="variant?.VariantTypeId" [options]="variantTypeList" (changeEvent)="inputChangeHandler($event, 'VariantTypeId')"></app-selectbox>
+          </div>
+        </div>
+      </div>
+
+      <!--<div class="p-group__item row">
+        <div class="oc-add-variant-box__toggle">
+          <span class="oc-add-variant-box__toggle-label">Varyan Tipi Seç</span>
+          <span class="oc-add-variant-box__toggle-input">
+            <app-selectbox [value]="variant?.VariantTypeId" [options]="variantTypeList"></app-selectbox>
+          </span>
+        </div>
+          <div class="p-form-group col-xs-16">
+            <div class="p-form-group__input">
+              <app-text-input 
+                [isTypeEmitting]="true"
+                (typeEvent)="inputChangeHandler($event, 'Name')"
+                [isDisabled]="!variant?.IsActive" 
+                placeholder="Varyant Adını Giriniz*" [value]="variant?.Localization?.Name" theme="underline" ></app-text-input>
+              <app-selectbox [value]="variant?.VariantTypeId" [options]="variantTypeList" (changeEvent)="inputChangeHandler($event, 'VariantTypeId')"></app-selectbox>
+            </div>
+          </div>
+        </div>-->
+
+        <div class="p-group__item row">
+          <div class="col-xs-8 padding-right-10">
+            <div class="p-form-group__label">FİYAT<sup>*</sup></div>
+            <div class="p-form-group__input">
+              <app-text-input [isDisabled]="!variant?.IsActive" type="price" (changeEvent)="inputChangeHandler($event, 'DefaultPrice')" [value]="variant?.DefaultPrice" ></app-text-input>
+            </div>
+          </div>
+          <div class="col-xs-8 padding-left-10">
+            <div class="p-form-group__label">HİZMET BEDELİ<sup>*</sup></div>
+            <div class="p-form-group__input">
+              <app-text-input-with-select 
+                (changeEvent)="inputChangeHandler($event, 'DefaultServiceFee')" 
+                [isDisabled]="!variant?.IsActive"
+                [selectOptions]="priceAdjustmentTypes"
+                [selectValue]="variant?.DefaultServiceFeeAdjType"
+                [inputValue]="variant?.DefaultServiceFee" ></app-text-input-with-select>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-group__item row">
+          <div class="col-xs-8 padding-right-10">
+            <div class="p-form-group__label">SATILABİLECEK KOLTUK ADEDİ</div>
+            <div class="p-form-group__input">
+              <app-text-input [isDisabled]="!variant?.IsActive" type="number" (changeEvent)="inputChangeHandler($event, 'AllowedSalesTotal')" [value]="variant?.AllowedSalesTotal" ></app-text-input>
+            </div>
+          </div>
+          <div class="col-xs-8 padding-left-10" *ngIf="isEditMode">
+            <div class="p-form-group__label"></div>
+            <div class="p-form-group__input text-xs-right">
+              <div class="oc-add-variant-box__toggle">
+                <span class="oc-add-variant-box__toggle-label">Varyant Etkinleştir</span>
+                <span class="oc-add-variant-box__toggle-input">
+                  <app-checkbox type="lightswitch" (changeEvent)="inputChangeHandler($event, 'IsActive')" [isChecked]="variant?.IsActive"></app-checkbox>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+
+  <div #footer class="c-dialog-box__footer">
+    <div class="c-dialog-box__footer-content">
+      <div class="col-xs-16">
+        <app-button [isDisabled]="!isValid" (click)="submit($event)">DEVAM</app-button>
+      </div>
+    </div>
+  </div>
+
+</app-dialog-box>

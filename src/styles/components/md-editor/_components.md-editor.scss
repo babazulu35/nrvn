@@ -1,0 +1,216 @@
+$c-md-editor: ( 
+    font-size: 15px, 
+    color: #C2C2C2, 
+    active-color: #21242b, 
+    border-color: #dcdce5, 
+    active-border-color: #2096F3, 
+    error-border-color: #ec4e48, 
+    border-radius: 2px, 
+    padding: 0.4em 0.6em, 
+    placeholder: ( 
+        color: #cbcbcb, //#9d9d9d
+    ), 
+    icon: ( 
+        color: #C2C2C2, 
+    ), 
+    localization: (
+        icon: (
+            color: #C2C2C2
+        ),
+        badge: (
+            color: #fff,
+            background-color: #2096F3
+        )
+    ),
+    sizes: ( 
+        sm: ( 
+            font-size: 13px, 
+            padding: 0.2em 0.5em, 
+        ), 
+        sm-text: ( 
+            font-size: 13px, 
+            padding: 0.5775em 0.6775em
+        ), 
+        md: ( 
+            font-size: 15px, 
+            padding: 0.4em 0.6em, 
+        ), 
+        md-text: ( 
+            font-size: 15px, 
+            padding: 0.6775em 0.7775em, 
+        ), 
+        lg: ( 
+            font-size: 17px, 
+            padding: 0.5em 0.7em, 
+        )
+    )
+);
+$c-md-editor: map-merge($c-md-editor, getSettingsMap("c-md-editor"));
+$c-map: $c-md-editor;
+.c-md-editor {
+    display: inline-block;
+    position: relative;
+    width: 100%;
+    font-size: map-get($c-map, font-size);
+    line-height: 1em;
+    @include ffamily('regular');
+    border: 1px solid map-get($c-map, border-color);
+    border-radius: 3px;
+
+    &--disabled {
+        cursor: not-allowed;
+        opacity: 0.5;
+        * {
+            pointer-events: none;
+            user-select: none;
+        }
+    }
+    &--focused {
+        
+    }
+    .CodeMirror {
+        min-height: 200px;
+        border: none;
+        border-top: 1px solid map-get($c-map, border-color);
+    }
+    .CodeMirror-scroll {
+        min-height: 200px;
+    }
+    .editor-toolbar {
+        opacity: 1;
+        border: none;
+        &:hover {
+            opacity: 1;
+        }
+        
+        a {
+            height: auto;
+            border: none !important;
+            vertical-align: middle;
+            font-weight: bold;
+        }
+        a:hover,
+        a.active {
+            background: inherit;
+            border-color: inherit;
+            color: #73BBF6 !important;
+            border: none !important;
+        }
+        a:before {
+            line-height: inherit !important;
+        }
+        .icon__n {
+            font-size: 16px;
+        }
+    }
+
+    &__input {
+        display: block;
+        position: relative;
+        width: 100%;
+        font-size: inherit;
+        cursor: text;
+        textarea {
+            position: relative;
+            padding: map-deep-get($c-map, sizes, md, padding);
+            margin: 0px;
+            //top: 50%;
+            left: 0px;
+            //transform: translateY(-50%);
+            font-size: inherit;
+            border: none;
+            width: 100%;
+            color: map-get($c-map, "color");
+            background-color: transparent;
+            outline: none;
+            border-radius: 0;
+            -webkit-appearance: none;
+            -webkit-box-sizing: border-box;
+            text-align: inherit;
+            &::-ms-reveal,
+            &::-ms-clear {
+                display: none;
+            }
+            &:required {
+                box-shadow: none !important;
+            }
+            &:invalid {
+                box-shadow: none !important;
+            }
+            &::-webkit-contacts-auto-fill-button {
+                visibility: hidden;
+                display: none !important;
+                pointer-events: none;
+                position: absolute;
+                right: 0;
+            }
+            &::-webkit-outer-spin-button,
+            &::-webkit-inner-spin-button {
+                -webkit-appearance: none;
+                margin: 0;
+            }
+            &:focus {
+                border: none;
+                outline: none;
+                -webkit-border-radius: 0px;
+                -moz-border-radius: 0px;
+                border-radius: 0px;
+                &::-webkit-contacts-auto-fill-button {
+                    display: none !important;
+                    opacity: 0 !important;
+                }
+            }
+            @include t--placeholder {
+                color: map-deep-get($c-map, placeholder, color);
+                opacity: 1;
+            }
+        }
+    }
+    
+    &__footer {
+        display: table;
+        position: relative;
+        width: 100%;
+        min-height: 2em;
+        border-top: 1px solid map-get($c-map, border-color);
+
+        &-content {
+            display: table-cell;
+            width: 100%;
+            vertical-align: middle;
+            padding: map-deep-get($c-map, padding);
+        }
+    }
+    &__localization {
+        display: table-cell;
+        vertical-align: middle;
+        text-align: center;
+        white-space: nowrap;
+        line-height: 0px;
+        padding: map-deep-get($c-map, padding);
+        border-left: solid 1px map-get($c-map, border-color);
+
+        &-btn {
+            display: inline-block;
+            vertical-align: middle;
+            color: map-deep-get($c-map, localization, icon, color);
+            font-size: 1.6em;
+            line-height: 0px;
+            margin-top: 2px;
+        }
+
+        &-badge {
+            display: inline-block;
+            vertical-align: middle;
+            white-space: nowrap;
+            @include ffamily('semi', 'i');
+            font-size: 0.75em;
+            line-height: 2.2em;
+            width: 4em;
+            letter-spacing: 0.05em;
+            border-radius: 1em;
+            color: map-deep-get($c-map, localization, badge, color);
+            background-color: map-deep-get($c-map, localization, badge, background-color);
+        }
+    }
+}

@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<link rel="stylesheet" href="../../../css/main.css">
+  <script src="../../../bower_components/jquery/dist/jquery.min.js"></script>
+
+
+  <style>
+    .theme-section {
+      padding: 10px 30px
+    }
+
+    .theme-section--dark {
+      background-color: #35383d;
+      color: #aeaeae;
+    }
+
+    .theme-section--dark .preview-card {
+      border: solid 1px #878787;
+    }
+
+    .preview-card {
+      display: inline-block;
+      position: relative;
+      margin: 20px 20px 0px 0px;
+      border: solid 1px #ececea;
+      width: 360px;
+      height: 220px;
+      padding: 40px;
+      overflow: hidden;
+    }
+
+    .preview-card__header {
+
+    }
+
+    .preview-card__content {
+      position: absolute;
+      bottom: 40px;
+      left: 40px;
+      width: calc(100% - 80px);
+    }
+  </style>
+
+</head>
+<body>
+
+  <div class="theme-section">
+
+    <div class="preview-card">
+      <div class="preview-card__header">
+        <h3>checkbox</h3>
+      </div>
+
+      <div class="preview-card__content">
+        <label class="c-checkbox">
+          <input type="checkbox">
+          <span class="c-checkbox__indicator"></span>
+        </label>
+      </div>
+
+    </div>
+
+    <div class="preview-card">
+      <div class="preview-card__header">
+        <h3>checkbox <b>with label</b></h3>
+      </div>
+
+      <div class="preview-card__content">
+        <label class="c-checkbox">
+          <input type="checkbox">
+          <span class="c-checkbox__indicator"></span>
+          <span class="c-checkbox__label">With label</span>
+        </label>
+      </div>
+
+    </div>
+
+    <div class="preview-card">
+      <div class="preview-card__header">
+        <h3>checkbox <b>disabled</b></h3>
+        <small>When input disabled</small>
+      </div>
+
+      <div class="preview-card__content">
+        <label class="c-checkbox">
+          <input type="checkbox" disabled>
+          <span class="c-checkbox__indicator"></span>
+          <span class="c-checkbox__label">Not in use</span>
+        </label>
+      </div>
+
+    </div>
+
+    <div class="preview-card">
+      <div class="preview-card__header">
+        <h3>checkbox <b>--disabled</b></h3>
+        <small>with --disabled modifier</small>
+      </div>
+
+      <div class="preview-card__content">
+        <label class="c-checkbox c-checkbox--disabled">
+          <input type="checkbox">
+          <span class="c-checkbox__indicator"></span>
+          <span class="c-checkbox__label">Not in use</span>
+        </label>
+      </div>
+
+    </div>
+
+    <div class="preview-card">
+      <div class="preview-card__header">
+        <h3>checkbox <b>checked and disabled</b></h3>
+      </div>
+
+      <div class="preview-card__content">
+        <label class="c-checkbox">
+          <input type="checkbox" checked disabled>
+          <span class="c-checkbox__indicator"></span>
+          <span class="c-checkbox__label">Not in use</span>
+        </label>
+      </div>
+
+    </div>
+
+    <div class="preview-card">
+      <div class="preview-card__header">
+        <h3>checkbox <b>defaut align</b></h3>
+        <small>Multiline label</small>
+      </div>
+
+      <div class="preview-card__content">
+        <label class="c-checkbox">
+          <input type="checkbox">
+          <span class="c-checkbox__indicator"></span>
+          <span class="c-checkbox__label">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam venenatis lacinia libero at lacinia.</span>
+        </label>
+      </div>
+
+    </div>
+
+    <div class="preview-card">
+      <div class="preview-card__header">
+        <h3>checkbox <b>--align-top</b></h3>
+      </div>
+
+      <div class="preview-card__content">
+        <label class="c-checkbox c-checkbox--align-top">
+          <input type="checkbox">
+          <span class="c-checkbox__indicator"></span>
+          <span class="c-checkbox__label">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam venenatis lacinia libero at lacinia.</span>
+        </label>
+      </div>
+
+    </div>
+
+    <div class="preview-card">
+      <div class="preview-card__header">
+        <h3>checkbox <b>--align-bottom</b></h3>
+      </div>
+
+      <div class="preview-card__content">
+        <label class="c-checkbox c-checkbox--align-bottom">
+          <input type="checkbox">
+          <span class="c-checkbox__indicator"></span>
+          <span class="c-checkbox__label">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam venenatis lacinia libero at lacinia.</span>
+        </label>
+      </div>
+
+    </div>
+
+		<div class="preview-card">
+      <div class="preview-card__header">
+        <h3>checkbox <b>--sm</b></h3>
+      </div>
+
+      <div class="preview-card__content">
+        <label class="c-checkbox c-checkbox--sm">
+          <input type="checkbox">
+          <span class="c-checkbox__indicator"></span>
+          <span class="c-checkbox__label">Small Checkbox</span>
+        </label>
+      </div>
+    </div>
+
+		<div class="preview-card">
+      <div class="preview-card__header">
+        <h3>checkbox <b>--lg</b></h3>
+      </div>
+
+      <div class="preview-card__content">
+        <label class="c-checkbox c-checkbox--lg">
+          <input type="checkbox">
+          <span class="c-checkbox__indicator"></span>
+          <span class="c-checkbox__label">Large Checkbox</span>
+        </label>
+      </div>
+    </div>
+
+		<div class="preview-card">
+      <div class="preview-card__header">
+        <h3>checkbox <b>custom size</b></h3>
+				<smaller>font-size: 40px</smaller>
+      </div>
+
+      <div class="preview-card__content">
+        <label class="c-checkbox" style="font-size: 40px;">
+          <input type="checkbox">
+          <span class="c-checkbox__indicator"></span>
+          <span class="c-checkbox__label">Custom Size</span>
+        </label>
+      </div>
+    </div>
+
+		<div class="preview-card">
+      <div class="preview-card__header">
+        <h3>checkbox <b>--autosize</b></h3>
+				<smaller>parent font-size: 32px</smaller>
+      </div>
+
+      <div class="preview-card__content" style="font-size: 40px;">
+        <label class="c-checkbox">
+          <input type="checkbox">
+          <span class="c-checkbox__indicator"></span>
+          <span class="c-checkbox__label">Custom Size</span>
+        </label>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="theme-section theme-section--dark">
+
+    <div class="preview-card">
+      <div class="preview-card__header">
+        <h3>checkbox--dark</h3>
+      </div>
+
+      <div class="preview-card__content">
+        <label class="c-checkbox c-checkbox--dark">
+          <input type="checkbox">
+          <span class="c-checkbox__indicator"></span>
+        </label>
+      </div>
+
+    </div>
+
+    <div class="preview-card">
+      <div class="preview-card__header">
+        <h3>checkbox--dark <b>with label</b></h3>
+      </div>
+
+      <div class="preview-card__content">
+        <label class="c-checkbox c-checkbox--dark">
+          <input type="checkbox">
+          <span class="c-checkbox__indicator"></span>
+          <span class="c-checkbox__label">With label</span>
+        </label>
+      </div>
+
+    </div>
+
+    <div class="preview-card">
+      <div class="preview-card__header">
+        <h3>checkbox--dark <b>disabled</b></h3>
+        <small>When input disabled</small>
+      </div>
+
+      <div class="preview-card__content">
+        <label class="c-checkbox c-checkbox--dark">
+          <input type="checkbox" disabled>
+          <span class="c-checkbox__indicator"></span>
+          <span class="c-checkbox__label">Not in use</span>
+        </label>
+      </div>
+
+    </div>
+
+    <div class="preview-card">
+      <div class="preview-card__header">
+        <h3>checkbox--dark <b>--disabled</b></h3>
+        <small>with --disabled modifier</small>
+      </div>
+
+      <div class="preview-card__content">
+        <label class="c-checkbox c-checkbox--dark c-checkbox--disabled">
+          <input type="checkbox">
+          <span class="c-checkbox__indicator"></span>
+          <span class="c-checkbox__label">Not in use</span>
+        </label>
+      </div>
+
+    </div>
+
+    <div class="preview-card">
+      <div class="preview-card__header">
+        <h3>checkbox--dark <b>checked and disabled</b></h3>
+      </div>
+
+      <div class="preview-card__content">
+        <label class="c-checkbox c-checkbox--dark">
+          <input type="checkbox" checked disabled>
+          <span class="c-checkbox__indicator"></span>
+          <span class="c-checkbox__label">Not in use</span>
+        </label>
+      </div>
+
+    </div>
+
+    <div class="preview-card">
+      <div class="preview-card__header">
+        <h3>checkbox--dark <b>defaut align</b></h3>
+        <small>Multiline label</small>
+      </div>
+
+      <div class="preview-card__content">
+        <label class="c-checkbox c-checkbox--dark">
+          <input type="checkbox">
+          <span class="c-checkbox__indicator"></span>
+          <span class="c-checkbox__label">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam venenatis lacinia libero at lacinia.</span>
+        </label>
+      </div>
+
+    </div>
+
+    <div class="preview-card">
+      <div class="preview-card__header">
+        <h3>checkbox--dark <br/><b>--align-top</b></h3>
+      </div>
+
+      <div class="preview-card__content">
+        <label class="c-checkbox c-checkbox--dark c-checkbox--align-top">
+          <input type="checkbox">
+          <span class="c-checkbox__indicator"></span>
+          <span class="c-checkbox__label">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam venenatis lacinia libero at lacinia.</span>
+        </label>
+      </div>
+
+    </div>
+
+    <div class="preview-card">
+      <div class="preview-card__header">
+        <h3>checkbox--dark<br/><b>--align-bottom</b></h3>
+      </div>
+
+      <div class="preview-card__content">
+        <label class="c-checkbox c-checkbox--dark c-checkbox--align-bottom">
+          <input type="checkbox">
+          <span class="c-checkbox__indicator"></span>
+          <span class="c-checkbox__label">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam venenatis lacinia libero at lacinia.</span>
+        </label>
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+
+  </script>
+
+</body>
+</html>

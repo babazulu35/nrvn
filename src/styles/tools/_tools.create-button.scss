@@ -1,0 +1,6 @@
+/* bootstrap button mixinini çağırıyor */
+
+@mixin t--create-button($color, $background, $border-color,$padding-y, $padding-x, $font-size, $border-radius) {
+	@include button-variant($color, $background, $border-color);
+	@include button-size($padding-y, $padding-x, $font-size, $border-radius);
+}

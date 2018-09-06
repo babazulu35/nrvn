@@ -1,0 +1,47 @@
+<div class="or-venue-create" [ngClass]="{'main-loader': isLoading }">
+		<div class="p-header-bar" sticky sticky-main-scroller sticky-release-offset="30" sticky-height-property="55" sticky-width-property="100%" sticky-follow-menu-moves>
+				<div class="p-header-bar__left">
+						<h2>Toplu SMS Gönderisi</h2>
+				</div>
+
+				<div class="p-header-bar__right">
+						<app-button (clickEvent)='sendSMS($event)' [isPromising]="isLoading" [isDisabled]="!isValid()">GÖNDER</app-button>
+				</div>
+		</div>
+
+	<div class="bulk-sms">
+
+		<div class="bulk-sms__title">
+			<h3>SMS Listesi</h3>
+			<p>Ayraç olarak "|" kullanarak sırasıyla SMS gönderilecek telefon numarasını ve metni giriniz.</p>
+			<p>Örnek: 90XXXXXXXXXX|Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+		</div>
+
+		<div class="bulk-sms__body">
+
+			<div class="bulk-sms__textarea">
+				<app-text-area (typeEvent)="onInputChange($event)" [isTypeEmitting]="true" [typeDebounceTime]="200">
+				</app-text-area>
+			</div>
+
+			<!--
+			<p class="bulk-sms__text" *ngIf="rows.length">
+				<i class="icon__n icon__n--check"></i> <strong>{{rows.length}}</strong> kayıt eklendi.
+			</p>
+			-->
+
+			<ul class="bulk-sms__info-list" *ngIf="messageList.length">
+				<li class="bulk-sms__info-list-item"
+					[class.bulk-sms__info-list-item--error]="message.type=='error'"
+					*ngFor="let message of messageList">
+					<i class="icon__n" [class.icon__n--warning]="message.type=='error'" [class.icon__n--check]="message.type=='success'"></i>
+					{{message.message}}
+				</li>
+			</ul>
+		</div>
+
+		<p class="bulk-sms__note"><i class="icon__n icon__n--info_outline"></i> Gönderilecek metnin karakter sayısı 320'yi aşmamalıdır. </p>
+
+	</div><!-- end bulk-sms -->
+
+</div>

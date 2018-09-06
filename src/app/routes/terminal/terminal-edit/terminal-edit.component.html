@@ -1,0 +1,126 @@
+<div class="or-terminal-edit" [ngClass]="{'main-loader': isLoading }">
+	<div class="p-header-bar" sticky sticky-main-scroller sticky-release-offset="30" sticky-height-property="55" sticky-width-property="100%" sticky-follow-menu-moves>
+		<div class="p-header-bar__left">
+			<app-breadcrumb [breadcrumbs]="[
+				{title: 'Terminaller', link: '/terminals'},
+				{title: terminal?.Name || 'Yeni Terminal'}
+			]"></app-breadcrumb>
+		</div>
+
+		<div class="p-header-bar__right">
+			<app-button (clickEvent)='save()' [isPromising]="isLoading || isPromising" [isDisabled]="!isValid" [label]="isEditMode ? 'KAYDET' : 'KAYDET VE DEVAM ET'"></app-button>			
+			<app-button (clickEvent)='exit($event)' type="icon" icon="close" theme="secondary"></app-button>
+		</div>
+	</div>
+
+	<app-split-container [fixedWidth]="0">
+		<div fluid>
+			<div class="p-container">
+				<div class="p-group">
+					<div class="p-group__item">
+						<div class="p-form-group">
+							<div class="p-form-group__label">
+								TERMİNAL ADI <sup>*</sup>
+							</div>
+							<div class="p-form-group__input">
+								<app-text-input
+									(typeEvent)="inputChangeHandler($event, 'Name')"
+									[isTypeEmitting]="true"
+									[typeDebounceTime]="100"
+									[value]="terminal?.Name"></app-text-input>
+								<app-helper-text type="info"><span>Terminal adını giriniz.</span></app-helper-text>
+							</div>
+						</div>
+					</div>
+
+					<div class="p-group__item">
+						<div class="p-form-group">
+							<div class="p-form-group__label">
+								TERMİNAL KISA ADI
+							</div>
+							<div class="p-form-group__input">
+								<app-text-input
+									(changeEvent)="inputChangeHandler($event, 'ShortName')"
+									[value]="terminal?.ShortName"></app-text-input>
+								<app-helper-text type="info"><span>Terminal kısa adını giriniz.</span></app-helper-text>
+							</div>
+						</div>
+					</div>
+
+					<div class="p-group__item row">
+						<div class="p-form-group col-xs-8">
+							<div class="p-form-group__label">
+								IPv4 <sup>*</sup>
+							</div>
+							<div class="p-form-group_s_input">
+								<!-- <app-text-input
+									(changeEvent)="inputChangeHandler($event, 'IpAddress')"
+									[value]="terminal?.IpAddress">
+								</app-text-input> -->
+								<app-text-input-group type="ipv4" 
+									(changeEvent)="inputChangeHandler($event, 'IpAddress')"
+									[value]="terminal?.IpAddress"></app-text-input-group>
+							</div>
+						</div>
+					</div>
+
+					<div class="p-group__item">
+						<div class="p-form-group">
+							<div class="p-form-group__label">
+								MAC ID <sup>*</sup>
+							</div>
+							<div class="p-form-group__input">
+								<app-text-input
+									(changeEvent)="inputChangeHandler($event, 'MacAddress')"
+									[value]="terminal?.MacAddress">
+								</app-text-input>
+							</div>
+						</div>
+					</div>
+
+					<div class="p-group__item">
+						<div class="p-form-group">
+							<div class="p-form-group__label">
+								AKTİF
+							</div>
+							<div class="p-form-group__input">
+								<app-checkbox type="lightswitch" (changeEvent)="inputChangeHandler($event, 'IsActive')" [isChecked]="terminal?.IsActive"></app-checkbox>
+							</div>
+						</div>
+					</div>
+
+					<!-- <div class="p-group__item">
+						<div class="p-group__list">
+						    <div class="p-group__list-item">
+						        <div class="p-group__list-item-bar">
+						            <div class="p-group__list-item-label">Aktif</div>
+						            <div class="p-group__list-item-action">
+						                <app-checkbox type="lightswitch" (changeEvent)="inputChangeHandler($event, 'IsActive')" [isChecked]="terminal?.IsActive"></app-checkbox>
+						            </div>
+						        </div>
+						    </div>
+						</div>
+					</div> -->
+				</div>
+
+				<div class="p-group" *ngIf="isEditMode">
+					<div class="p-group__header">
+						<div class="p-group__header-bar">
+							<div class="p-group__header-title">
+								Kullanıcılar
+							</div>
+						</div>
+					</div>
+
+					<div class="p-group__item">
+						<app-terminal-user-list
+							(actionEvent)="terminalUserListActionHandler($event)"
+							[terminalId]="pageID"
+							[(terminalUsers)]="terminalUsers"
+							[hasPreviousTerminalUsers]="hasPreviousTerminalUsers"></app-terminal-user-list>
+					</div>
+				</div>
+			</div>
+		</div>
+	</app-split-container>
+</div>

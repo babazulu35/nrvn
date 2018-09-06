@@ -1,0 +1,17 @@
+<div class="c-text-input-with-select__bar">
+  <span class="c-text-input-with-select__select">
+    <app-selectbox
+      (changeEvent)="selectChangeHandler($event)"
+      [options]="selectOptions"
+      [value]="selectValue"
+      [isDisabled]="isDisabled"
+      ></app-selectbox>
+  </span>
+  <span class="c-text-input-with-select__input">
+    <app-text-input
+      (changeEvent)="inputChangeHandler($event)"
+      [value]="inputValue"
+      [isDisabled]="isDisabled"
+      ></app-text-input>
+  </span>
+</div>

@@ -1,0 +1,130 @@
+$c-field-search-bar: (
+  background-color: #ffffff,
+  border-color: #dcdce5,
+  padding-side: 20px,
+
+  close: (
+    font-size: 24px,
+    hover-color: #2985ef
+  ),
+  header: (
+    font-size: 11px,
+    height: 45px,
+    color: #a6a6a6
+  ),
+  footer: (
+    border-color: #dcdce5,
+    margin-top: 20px,
+    height: 40px,
+  ),
+  more-btn: (
+    height: 40px,
+    font-size: 13px,
+    color: #3a2e39,
+    background-color: #f7f7f7
+  )
+);
+
+// Merge settings and defaults
+$c-field-search-bar: map-merge($c-field-search-bar, getSettingsMap("c-field-search-bar"));
+
+// Set shortcuts
+$c-map: $c-field-search-bar;
+
+.c-field-search-bar {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border: solid 1px map-get($c-map, border-color);
+  padding-top: map-get($c-map, padding-side);
+  background-color: map-get($c-map, background-color);
+
+  &__header {
+    position: relative;
+    display: table;
+    width: 100%;
+    padding-left: map-get($c-map, padding-side);
+    padding-right: map-get($c-map, padding-side) + $global-scroll-width;
+    height: map-deep-get($c-map, header, height);
+    color: map-deep-get($c-map, header, color);
+  }
+
+  &__header-title {
+    display: table-cell;
+    vertical-align: top;
+    @include ffamily('semi');
+    font-size: map-deep-get($c-map, header, font-size);
+    line-height: 1em;
+  }
+
+  &__close-btn {
+    display: table-cell;
+    width: map-deep-get($c-map, close, font-size);
+    height: map-deep-get($c-map, close, font-size);
+    font-size: map-deep-get($c-map, close, font-size);
+    line-height: map-deep-get($c-map, close, font-size);
+    cursor: pointer;
+
+    &:hover {
+      color: map-deep-get($c-map, close, hover-color);
+    }
+    &:active {
+      color: darken(map-deep-get($c-map, close, hover-color), 15%);
+    }
+  }
+
+  &__content {
+    padding-left: map-get($c-map, padding-side);
+    padding-right: map-get($c-map, padding-side) + $global-scroll-width;
+    position: relative;
+    height: calc(100% - #{map-deep-get($c-map, header, height) + map-deep-get($c-map, footer, height) + map-deep-get($c-map, footer, margin-top)});
+  }
+
+  &__footer {
+    width: 100%;
+    margin-top: map-deep-get($c-map, footer, margin-top);
+    border-top: solid 1px map-deep-get($c-map, footer, border-color);
+  }
+
+  &__more-btn {
+    width: 100%;
+    height: map-deep-get($c-map, more-btn, height);
+    background-color: map-deep-get($c-map, more-btn, background-color);
+    color: map-deep-get($c-map, more-btn, color);
+    text-align: center;
+    cursor: pointer;
+
+    @include transition(background-color 0.3s ease(out-sine));
+    &:hover {
+      background-color: darken(map-deep-get($c-map, more-btn, background-color), 5%);
+      @include transition(background-color 0.2s ease(out-quad));
+    }
+    &:active {
+      background-color: darken(map-deep-get($c-map, more-btn, background-color), 10%);
+      @include transition(background-color 0.2s ease(out-quad));
+    }
+
+    .c-promise-icon {
+      width: auto;
+      height: auto;
+
+      &__before {
+        position: relative;
+        vertical-align: middle;
+        @include ffamily('semi');
+        font-size: map-deep-get($c-map, more-btn, font-size);
+        height: auto;
+        width: auto;
+      }
+
+      &__spinner {
+        position: relative;
+        vertical-align: middle;
+      }
+    }
+  }
+}
+
+//Reset
+$c-map: null;

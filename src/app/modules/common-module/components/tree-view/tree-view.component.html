@@ -1,0 +1,9 @@
+<span class="c-tree-view__title">{{title}}</span>
+<ul class="c-tree-view__items">
+  <li *ngIf="isAllEnabled">
+    <a (click)="select(null)" class="c-tree-view__item" [ngClass]="{ 'c-tree-view__item--active' : selectedItemKey == null}">TÜMÜ</a>
+  </li>
+  <li *ngFor="let item of list;">
+    <a [attr.id]="'c-tree-view-a-' + item.id" (click)="select(item)" [ngClass]="{ 'c-tree-view__item--active' : selectedItemKey == item.id}" class="c-tree-view__item">{{item.text}}</a>
+  </li>
+</ul>

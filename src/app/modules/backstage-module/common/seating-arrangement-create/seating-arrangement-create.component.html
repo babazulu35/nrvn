@@ -1,0 +1,157 @@
+<app-dialog-box>
+  <!--Header-->
+  <div #header class="c-dialog-box__header">
+    <div class="c-dialog-box__header-bar">
+      <h1 class="c-dialog-box__header-title">
+        Oturma Düzeni Ekle
+      </h1>
+      <div class="c-dialog-box__header-actions">
+        <!--Kapat butonu dahil bütün diğer action butonları burada tanımlanır-->
+        <a href="javascript:void(0)" (click)="tetherService.dismiss()" class="icon__n icon__n--close"></a>
+      </div>
+    </div>
+
+    <div class="c-dialog-box__header-sticky-contents">
+      <app-wizard-header currentLevel={{level}} totalLevel={{totalLevel}} (historyClicked)="historyClickHandler()">
+        <span><strong *ngIf="level > 1">Adım {{level}}: </strong>{{steps[level-1].title}}</span>
+      </app-wizard-header>
+    </div>
+
+  </div>
+
+  <section *ngIf="level == 1">
+  <!--Body-->
+    <div class="c-dialog-box__body c-dialog-box__body--no-footer">
+
+      <div class="c-dialog-box__body-row c-dialog-box__body-row--space"></div>
+      <div class="c-dialog-box__body-row row">
+        <app-icon-grid [data]="steps[level-1].objects" newButtonLabel='Yeni Düzen'>
+        </app-icon-grid>
+      </div>
+
+      <div class="c-dialog-box__body-row c-dialog-box__body-row--seperator"></div>
+
+    </div>
+    <div #footer class="c-dialog-box__footer">
+      <button (click)="forward()" class="btn">DEVAM ET</button>
+    </div>
+  </section>
+
+  <section *ngIf="level == 2">
+  <!--Body-->
+    <div #body class="c-dialog-box__body">
+      <div class="c-dialog-box__body-row row">
+        <small><i class="icon__n icon__n--info_outline"></i> Bölümlü koltuklar düzenini seçtiniz</small>
+      </div>
+
+      <div class="c-dialog-box__body-row row">
+        Mekanınızda yer alacak <strong>bölüm sayısı</strong>, her bölümdeki <strong>sıra sayısı</strong> ve sıra başına <strong>konuk sayısını</strong> belirleyiniz. Kapasiteniz otomatik olarak hesaplanacaktır.
+      </div>
+
+      <div class="c-dialog-box__body-row row">
+        <div class="col-xs-5">
+          <app-number-picker label="BÖLÜM SAYISI"></app-number-picker>
+        </div>
+        <div class="col-xs-4 offset-xs-1">
+          <app-number-picker label="SIRA SAYISI"></app-number-picker>
+        </div>
+        <div class="col-xs-5 offset-xs-1">
+          <app-number-picker label="SIRA BAŞINA KOLTUK SAYISI"></app-number-picker>
+        </div>
+      </div>
+
+      <div class="c-dialog-box__body-row row text-center">
+        <span class="oc-seating-arrangement-create__capacity-value">1500</span>
+        <span class="oc-seating-arrangement-create__capacity-label">KAPASİTE</span>
+      </div>
+      <div class="c-dialog-box__body-row c-dialog-box__body-row--space"></div>
+    </div>
+
+    <!--Footer-->
+    <div #footer class="c-dialog-box__footer">
+      <button (click)="forward()" class="btn">DEVAM ET</button>
+    </div>
+
+  </section>
+
+  <section *ngIf="level == 3">
+  <!--Body-->
+    <div #body class="c-dialog-box__body">
+      <div class="c-dialog-box__body-row row">
+        <small><i class="icon__n icon__n--info_outline"></i> Bölümlü koltuklar düzenini seçtiniz</small>
+      </div>
+
+      <div class="c-dialog-box__body-row row">
+        Tasarladığınız mekana <strong>sahne, restoran, bar, tuvalet, çıkış kapıları</strong> gibi özel amaçlar için ayrılmış alanlar ekleyebilirisiniz. Aşağıdaki ikonlara tıklayarak seçimizi yapın. Eklediğiniz unsurlar kapasitenizde değişikliğe yol açabilir.
+      </div>
+
+      <div class="c-dialog-box__body-row row text-xs-center">
+        <app-multi-select-group></app-multi-select-group>
+      </div>
+
+      <div class="c-dialog-box__body-row row text-center">
+        <span class="oc-seating-arrangement-create__capacity-value">1500</span>
+        <span class="oc-seating-arrangement-create__capacity-label">KAPASİTE</span>
+      </div>
+      <div class="c-dialog-box__body-row c-dialog-box__body-row--space"></div>
+    </div>
+
+    <!--Footer-->
+    <div #footer class="c-dialog-box__footer">
+      <button (click)="forward()" class="btn">DEVAM ET</button>
+    </div>
+
+  </section>
+
+  <section *ngIf="level == 4">
+  <!--Body-->
+    <div #body class="c-dialog-box__body">
+      <div class="c-dialog-box__body-row row">
+        <small><i class="icon__n icon__n--info_outline"></i> Bölümlü koltuklar düzenini seçtiniz</small>
+      </div>
+
+       <div class="c-dialog-box__body-row">
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget tellus orci. Duis suscipit nibh ex, in consequat dolor faucibus nec. Nullam interdum semper enim, vitae bibendum magna dignissim et. Donec eget blandit massa. Proin egestas pellentesque massa vitae molestie. Suspendisse sed varius risus. Proin finibus arcu sit amet ipsum tempus bibendum. Aenean sed arcu ut dolor fermentum tempor. Nullam quis finibus elit, sed vulputate orci. Cras at magna eu urna malesuada blandit. Proin sagittis vitae nulla vitae eleifend. Donec nec elit est. Vestibulum id tristique felis.
+
+  Nunc nec pretium sem. Suspendisse tincidunt risus eu lacus posuere varius. Pellentesque quis tempor ex, in viverra mi. Aenean augue metus, tristique in varius molestie, porttitor a purus. Suspendisse imperdiet neque non pretium vestibulum. Fusce sed tellus maximus, ultrices tellus ut, sollicitudin nisl. Sed nec metus euismod, mollis sem non, pretium nisi. Nullam at hendrerit urna. Aliquam fringilla, nibh in vehicula euismod, velit nibh elementum dui, eu aliquet nisi libero eu velit. Praesent non neque blandit, scelerisque enim sed, pulvinar magna. Sed enim leo, posuere ut vehicula eu, posuere ut ex. Phasellus viverra tortor consequat, tristique nunc sit amet, ultricies turpis. Suspendisse egestas neque et purus auctor pretium.
+
+  Quisque pretium lorem at congue vestibulum. Etiam eu libero mauris. Nullam pretium, enim eget placerat facilisis, ipsum massa maximus quam, non euismod mauris justo vel risus. Donec ultrices nisl felis, eget tincidunt orci euismod vel. Sed mattis hendrerit nulla, eu finibus nunc dapibus eget. Mauris eget suscipit lectus, vel ultrices magna. Nam porttitor, elit eget auctor finibus, ante elit accumsan velit, venenatis gravida dui orci sit amet velit. Morbi sit amet ullamcorper velit, non finibus nisi. Sed ornare viverra ante consequat elementum.
+
+  Fusce consectetur malesuada leo id semper. Suspendisse tincidunt erat mi, vel pharetra libero tempus ac. Sed accumsan enim non purus pretium vehicula. Aenean sed fringilla ante. Donec ac mauris sem. Maecenas sodales tristique posuere. Nunc vitae nulla pellentesque, tincidunt enim a, porta lectus. Curabitur malesuada diam eu commodo efficitur.
+
+  Nullam vitae gravida mauris. Sed quis quam et velit tristique malesuada ac aliquet urna. Praesent sed finibus nisl, quis egestas arcu. Etiam ut enim auctor elit dictum accumsan vitae vitae nunc. Etiam eget vehicula mi. Donec gravida a ante id lacinia. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Pellentesque at ornare ante.
+
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget tellus orci. Duis suscipit nibh ex, in consequat dolor faucibus nec. Nullam interdum semper enim, vitae bibendum magna dignissim et. Donec eget blandit massa. Proin egestas pellentesque massa vitae molestie. Suspendisse sed varius risus. Proin finibus arcu sit amet ipsum tempus bibendum. Aenean sed arcu ut dolor fermentum tempor. Nullam quis finibus elit, sed vulputate orci. Cras at magna eu urna malesuada blandit. Proin sagittis vitae nulla vitae eleifend. Donec nec elit est. Vestibulum id tristique felis.
+
+  Nunc nec pretium sem. Suspendisse tincidunt risus eu lacus posuere varius. Pellentesque quis tempor ex, in viverra mi. Aenean augue metus, tristique in varius molestie, porttitor a purus. Suspendisse imperdiet neque non pretium vestibulum. Fusce sed tellus maximus, ultrices tellus ut, sollicitudin nisl. Sed nec metus euismod, mollis sem non, pretium nisi. Nullam at hendrerit urna. Aliquam fringilla, nibh in vehicula euismod, velit nibh elementum dui, eu aliquet nisi libero eu velit. Praesent non neque blandit, scelerisque enim sed, pulvinar magna. Sed enim leo, posuere ut vehicula eu, posuere ut ex. Phasellus viverra tortor consequat, tristique nunc sit amet, ultricies turpis. Suspendisse egestas neque et purus auctor pretium.
+
+  Quisque pretium lorem at congue vestibulum. Etiam eu libero mauris. Nullam pretium, enim eget placerat facilisis, ipsum massa maximus quam, non euismod mauris justo vel risus. Donec ultrices nisl felis, eget tincidunt orci euismod vel. Sed mattis hendrerit nulla, eu finibus nunc dapibus eget. Mauris eget suscipit lectus, vel ultrices magna. Nam porttitor, elit eget auctor finibus, ante elit accumsan velit, venenatis gravida dui orci sit amet velit. Morbi sit amet ullamcorper velit, non finibus nisi. Sed ornare viverra ante consequat elementum.
+
+  Fusce consectetur malesuada leo id semper. Suspendisse tincidunt erat mi, vel pharetra libero tempus ac. Sed accumsan enim non purus pretium vehicula. Aenean sed fringilla ante. Donec ac mauris sem. Maecenas sodales tristique posuere. Nunc vitae nulla pellentesque, tincidunt enim a, porta lectus. Curabitur malesuada diam eu commodo efficitur.
+
+  Nullam vitae gravida mauris. Sed quis quam et velit tristique malesuada ac aliquet urna. Praesent sed finibus nisl, quis egestas arcu. Etiam ut enim auctor elit dictum accumsan vitae vitae nunc. Etiam eget vehicula mi. Donec gravida a ante id lacinia. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Pellentesque at ornare ante.
+
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget tellus orci. Duis suscipit nibh ex, in consequat dolor faucibus nec. Nullam interdum semper enim, vitae bibendum magna dignissim et. Donec eget blandit massa. Proin egestas pellentesque massa vitae molestie. Suspendisse sed varius risus. Proin finibus arcu sit amet ipsum tempus bibendum. Aenean sed arcu ut dolor fermentum tempor. Nullam quis finibus elit, sed vulputate orci. Cras at magna eu urna malesuada blandit. Proin sagittis vitae nulla vitae eleifend. Donec nec elit est. Vestibulum id tristique felis.
+
+  Nunc nec pretium sem. Suspendisse tincidunt risus eu lacus posuere varius. Pellentesque quis tempor ex, in viverra mi. Aenean augue metus, tristique in varius molestie, porttitor a purus. Suspendisse imperdiet neque non pretium vestibulum. Fusce sed tellus maximus, ultrices tellus ut, sollicitudin nisl. Sed nec metus euismod, mollis sem non, pretium nisi. Nullam at hendrerit urna. Aliquam fringilla, nibh in vehicula euismod, velit nibh elementum dui, eu aliquet nisi libero eu velit. Praesent non neque blandit, scelerisque enim sed, pulvinar magna. Sed enim leo, posuere ut vehicula eu, posuere ut ex. Phasellus viverra tortor consequat, tristique nunc sit amet, ultricies turpis. Suspendisse egestas neque et purus auctor pretium.
+
+  Quisque pretium lorem at congue vestibulum. Etiam eu libero mauris. Nullam pretium, enim eget placerat facilisis, ipsum massa maximus quam, non euismod mauris justo vel risus. Donec ultrices nisl felis, eget tincidunt orci euismod vel. Sed mattis hendrerit nulla, eu finibus nunc dapibus eget. Mauris eget suscipit lectus, vel ultrices magna. Nam porttitor, elit eget auctor finibus, ante elit accumsan velit, venenatis gravida dui orci sit amet velit. Morbi sit amet ullamcorper velit, non finibus nisi. Sed ornare viverra ante consequat elementum.
+
+  Fusce consectetur malesuada leo id semper. Suspendisse tincidunt erat mi, vel pharetra libero tempus ac. Sed accumsan enim non purus pretium vehicula. Aenean sed fringilla ante. Donec ac mauris sem. Maecenas sodales tristique posuere. Nunc vitae nulla pellentesque, tincidunt enim a, porta lectus. Curabitur malesuada diam eu commodo efficitur.
+
+  Nullam vitae gravida mauris. Sed quis quam et velit tristique malesuada ac aliquet urna. Praesent sed finibus nisl, quis egestas arcu. Etiam ut enim auctor elit dictum accumsan vitae vitae nunc. Etiam eget vehicula mi. Donec gravida a ante id lacinia. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Pellentesque at ornare ante.
+      </div>
+
+      <div class="c-dialog-box__body-row c-dialog-box__body-row--space"></div>
+
+    </div>
+
+    <!--Footer-->
+    <div #footer class="c-dialog-box__footer">
+      <button (click)="forward()" class="btn">DEVAM ET</button>
+    </div>
+
+  </section>
+
+
+</app-dialog-box>

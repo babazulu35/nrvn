@@ -1,0 +1,13 @@
+<div class="c-listbox__container">
+  <ul class="c-listbox__list" *ngIf="list?.length">
+    <li class="c-listbox__item" *ngFor="let item of list" (click)="itemClickHandler($event, item)" [class.c-listbox__item--selected]="item.Selected" [class.c-listbox__item--disabled]="item.Disabled">
+      {{item.Label}}
+    </li>
+  </ul>
+  <div class="c-listbox__empty-box" *ngIf="!list?.length">
+    {{emptyText}}
+  </div>
+  <div class="c-listbox__footer" *ngIf="hasSelectAll">
+    <app-button type="link" label="TÜMÜNÜ SEÇ" (clickEvent)="selectAll()" *ngIf="list?.length"></app-button>
+  </div>
+</div>

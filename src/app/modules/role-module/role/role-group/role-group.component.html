@@ -1,0 +1,33 @@
+<div class="or-role-group">
+    <div class="p-header-bar" sticky sticky-main-scroller sticky-release-offset="30" sticky-height-property="55" sticky-width-property="100%" sticky-follow-menu-moves>
+        <div class="p-header-bar__left">
+            <app-breadcrumb [breadcrumbs]="[{title: 'Rol Grupları'}, {title: groupData?.Name}]"></app-breadcrumb>
+        </div>
+
+        <div class="p-header-bar__right">
+            <app-button (clickEvent)='saveRoleGroup($event)' [isDisabled]="!isValid" [isPromising]="isPromising" type="text" theme="primary">KAYDET</app-button>
+        </div>
+    </div>
+    <app-split-container fixedFloat="left" [fixedWidth]="280">
+        <div fixed left>
+            <div class="p-container p-container--has-footer p-container--no-padding padding-top-30" style="width:100%;">
+                <div class="p-group">
+                    <div class="p-group__item">
+
+                        <app-role-group-list [groupList]="groupService?.data"></app-role-group-list>
+                    </div>
+                </div>
+                <div class="p-footer" style="width:280px;">
+                    <span><app-button (clickEvent)="createNew()" type="icon" icon="plus"></app-button><app-button (clickEvent)="createNew()" type="link" label="ROL GRUBU EKLE"></app-button></span>
+                </div>
+            </div>
+        </div>
+        <div fluid>
+            <div class="p-container">
+
+                <app-role-group-settings></app-role-group-settings>
+            </div>
+        </div>
+
+    </app-split-container>
+</div>

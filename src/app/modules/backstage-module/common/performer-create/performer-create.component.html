@@ -1,0 +1,75 @@
+<app-dialog-box>
+    <!--Header-->
+    <div #header class="c-dialog-box__header c-dialog-box__header--underline c-dialog-box__header--padding">
+        <div class="c-dialog-box__header-bar">
+            <h1 class="c-dialog-box__header-title">
+                <ng-template [ngIf]='!isEditMode'>
+                    Sanatçı Ekle
+                </ng-template>
+                <ng-template [ngIf]='isEditMode'>
+                    Sanatçı Düzenle
+                </ng-template>
+            </h1>
+            <div class="c-dialog-box__header-actions">
+                <!--Kapat butonu dahil bütün diğer action butonları burada tanımlanır-->
+                <app-button (click)="tetherService.dismiss()" type="icon" icon="close" theme="secondary"></app-button>
+            </div>
+        </div>
+    </div>
+
+    <!--Body-->
+    <div #body class="c-dialog-box__body">
+        <div class="c-dialog-box__body-row">
+            <div class="p-split-box">
+                <div class="p-split-box__fixed">
+                    <app-profile-photo (changeEvent)="changePhoto($event)" [source]="performer?.Images | image : 'Performer'" type='avatar'></app-profile-photo>
+                </div>
+
+                <div class="p-split-box__fluid">
+                    <form [formGroup]="createForm" [class.form--promising]="isLoading">
+                        <div class="p-form-group">
+                            <div class="p-form-group__label">
+                                SANATÇI ADI / GRUP ADI
+                            </div>
+                            <div class="p-form-group__input">
+                                <app-text-input [form]="createForm" name="Name" [required]='true' placeholder="" [icon]='null'></app-text-input>
+
+                                <span class="c-helper-text">
+                                  <i class="icon__n icon__n--info_outline c-helper-text__icon"></i>
+                                  <span class="c-helper-text__value">En fazla <strong>255</strong> karakter</span>
+                                </span>
+                            </div>
+                        </div>
+                    </form>
+
+                    <div class="oc-performer-create__space"></div>
+
+                    <div class="p-form-group">
+                        <div class="p-form-group__label">
+                            Tipi
+                        </div>
+                        <div class="p-form-group__input">
+                            <!--<app-attributes-select-add-bar [types]="attributeTypes" [attributes]="attributes" (selectedAttributes)="setAttributes($event)"></app-attributes-select-add-bar>-->
+                            <app-attributes-select-add-bar [entityTypeId]="entityTypeId" (changeEvent)="attributesChangeHandler($event)" (actionEvent)="attributesActionHandler($event)" [types]="attributeTypes" [attributes]="attributes"></app-attributes-select-add-bar>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!--Footer-->
+    <div #footer class="c-dialog-box__footer">
+        <div class="c-dialog-box__footer-content">
+            <div class="col-sm-8 text-sm-right">
+
+            </div>
+            <div class="col-sm-8 text-sm-right">
+                <app-button type="link" label="Kaydetmeden Çık" (click)='exit($event)' class="margin-right-10 oc-performer-create__exitbutton"></app-button>
+                <app-button (clickEvent)='submit($event)' [isPromising]="isLoading || isPromising" [isDisabled]="!createForm.valid">KAYDET</app-button>
+            </div>
+        </div>
+    </div>
+
+</app-dialog-box>

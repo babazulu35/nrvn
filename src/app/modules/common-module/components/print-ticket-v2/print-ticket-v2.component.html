@@ -1,0 +1,19 @@
+<app-dialog-box *ngIf="openInDialog">
+    <div #header class="c-dialog-box__header c-dialog-box__header--border c-dialog-box__header--padding">
+        <div class="c-dialog-box__header-bar">
+            <h1 class="c-dialog-box__header-title">{{title}}</h1>
+
+            <div class="c-dialog-box__header-actions">
+                <app-button type="icon" (click)="closeModal()" icon="close" theme="secondary"></app-button>
+            </div>
+        </div>
+    </div>
+    <div #body class="c-dialog-box__body  c-dialog-box__body--no-padding">
+        <div class="p-container p-container--inherit">
+            <app-promise-icon [isPromising]="true" size="lg" style="position:relative;top:20%;left:40%;display:block;"></app-promise-icon>
+            <h3 style="width:100%;text-align:center;position:relative;top:30%; transform:translateY(-50%)">Toplam {{ticketCount}} Adet Bilet Basılıyor</h3>
+            <!--<app-button type="icon" size="lg" icon="print" theme="secondary" (click)="printAllTicket()"></app-button>-->
+        </div>
+    </div>
+</app-dialog-box>
+<app-button *ngIf="!openInDialog" type="icon" size="lg" icon="print" theme="secondary" (click)="printAllTicket()"></app-button>

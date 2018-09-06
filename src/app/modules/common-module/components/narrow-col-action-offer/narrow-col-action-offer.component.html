@@ -1,0 +1,7 @@
+<div class="c-narrow-col-action-offer c-narrow-col-action-offer--{{theme}}" >
+    <i class="c-narrow-col-action-offer__icon icon__n icon__n--announcement"></i>
+    <p class="c-narrow-col-action-offer__content">
+        <ng-content></ng-content>
+    </p>
+    <app-button *ngIf="data" class="c-narrow-col-action-offer__action-link" type="link" theme="light" (click)="actionClick($event)" [label]="data?.label"></app-button>
+</div>

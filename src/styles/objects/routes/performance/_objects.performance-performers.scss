@@ -1,0 +1,18 @@
+// Performance Route
+// Author: Fatih Turan
+
+// Set Defaults
+$o-performance-performers: (
+  
+);
+
+// Merge settings and defaults
+$o-performance-performers: map-merge($o-performance-performers, getSettingsMap("o-over-image-dates"));
+
+// Set shortcuts
+$o-map: $o-performance-performers;
+
+
+.or-performance-performers {
+  
+}

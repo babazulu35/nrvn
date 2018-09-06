@@ -1,0 +1,70 @@
+<div class="c-expandable-tree-block__bar" [ngClass]="{'c-expandable-tree-block__bar--inactive' : isInactive}">
+    <div class="c-expandable-tree-block__bar-left">
+      <span *ngIf="isDraggable"><app-button type="icon" [icon]="dehaze" theme="secondary"></app-button></span>
+      <span><app-button (click)="toggleExpand($event)" type="icon" [icon]="isExpanded ? 'folder_open' : 'folder'" theme="primary"></app-button></span>
+    </div>
+    <div class="c-expandable-tree-block__bar-center">
+      <span class="c-expandable-tree-block__bar-title">{{title}}</span>
+      <span *ngIf="info" class="c-expandable-tree-block__bar-info">{{info}}</span>
+    </div>
+    <div class="c-expandable-tree-block__bar-right">
+      <span><app-button (click)="toggleExpand($event)" type="icon" [icon]="isExpanded ? 'unfold_less' : 'unfold_more'" theme="secondary"></app-button></span>
+      <span *ngIf="contextMenu?.length"><app-button (click)="openContextMenu($event, contextMenu)" type="icon" [icon]="'more_vert'" theme="secondary"></app-button></span>
+    </div>
+  </div>
+
+  <div class="c-expandable-tree-block__content">
+    <div class="c-expandable-tree-block__content-item" [class.c-expandable-tree-block__content-item--expanded]="item?.isExpanded == undefined || item?.isExpanded" *ngFor="let item of items">
+      <div class="c-expandable-tree-block__bar">
+        <div class="c-expandable-tree-block__bar-left">
+          <span *ngIf="item?.isDraggable"><app-button type="icon" [icon]="dehaze" theme="secondary"></app-button></span>
+          <span><app-button [isDisabled]="item?.isExpanded == undefined" type="icon" [icon]="item?.isExpanded == undefined || item?.isExpanded ? 'folder_open' : 'folder'" theme="primary"></app-button></span>
+        </div>
+        <div class="c-expandable-tree-block__bar-center">
+          <span class="c-expandable-tree-block__bar-title">{{item?.title}}</span>
+          <span *ngIf="item?.info" class="c-expandable-tree-block__bar-info">
+            <span *ngIf="item?.infoType" class="c-expandable-tree-block__bar-info-type c-expandable-tree-block__bar-info-type--{{item?.infoType}}"></span>
+            <span class="c-expandable-tree-block__bar-info-text">{{item?.info}}</span>
+          </span>
+        </div>
+        <div class="c-expandable-tree-block__bar-right">
+          <span *ngIf="item?.isExpanded != undefined"><app-button (click)="toggleExpand($event, item)" type="icon" [icon]="isExpanded ? 'unfold_less' : 'unfold_more'" theme="secondary"></app-button></span>
+          <span *ngIf="item?.contextMenu?.length"><app-button (click)="openContextMenu($event, item?.contextMenu)" type="icon" [icon]="'more_vert'" theme="secondary"></app-button></span>
+        </div>
+      </div>
+
+      <ul *ngIf="item?.items?.length || (item?.canBeAddedNewItem == undefined || item?.canBeAddedNewItem)" class="c-expandable-tree-block__list">
+        <li class="c-expandable-tree-block__list-item" *ngFor="let subItem of item?.items">
+          <div class="c-expandable-tree-block__bar" [ngClass]="{'c-expandable-tree-block__bar--inactive' : !subItem?.isActive}">
+              <div class="c-expandable-tree-block__bar-left" *ngIf="subItem?.isDraggable || subItem?.icon">
+                <span *ngIf="subItem?.isDraggable"><app-button type="icon" [icon]="dehaze" theme="secondary"></app-button></span>
+                <span *ngIf="subItem?.icon"><app-promise-icon [iconName]="subItem?.icon" theme="primary"></app-promise-icon></span>
+              </div>
+              <div class="c-expandable-tree-block__bar-center">
+                <span class="c-expandable-tree-block__bar-title">{{subItem?.title}}</span>
+                <span *ngIf="subItem?.info" class="c-expandable-tree-block__bar-info" [ngClass]="'c-expandable-tree-block__bar-info--' + subItem?.infoType" >
+                  <span *ngIf="subItem?.infoType" class="c-expandable-tree-block__bar-info-type"></span>
+                  <span class="c-expandable-tree-block__bar-info-text" >{{subItem?.info}}</span>
+                </span>
+              </div>
+              <div class="c-expandable-tree-block__bar-right">
+                <span *ngIf="subItem?.contextMenu?.length"><app-button (click)="openContextMenu($event, subItem?.contextMenu)" type="icon" [icon]="'more_vert'" theme="secondary"></app-button></span>
+              </div>
+            </div>
+        </li>
+        <li *ngIf="item?.canBeAddedNewItem == undefined || item?.canBeAddedNewItem" class="c-expandable-tree-block__list-item c-expandable-tree-block__list-item--new">
+          <div class="c-expandable-tree-block__bar c-expandable-tree-block__bar--empty">
+              <div class="c-expandable-tree-block__bar-left">
+                <span><app-button (click)="actionEvent.emit({action: 'addNewSubItem', item: item})" type="icon" icon="add" theme="primary"></app-button></span>
+                <span><app-button (click)="actionEvent.emit({action: 'addNewSubItem', item: item})"  type="link" [label]="item?.newItemLabel"></app-button></span>
+              </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="c-expandable-tree-block__add-button">
+      <app-button (click)="actionEvent.emit({action: 'addNewItem', item: mainItem})" type="icon" icon="plus" shape="circle" theme="secondary" size="autosize"></app-button>
+    </div>
+
+  </div>

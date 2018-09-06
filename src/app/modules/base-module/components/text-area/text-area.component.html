@@ -1,0 +1,26 @@
+<span class="c-text-area__text">
+    <textarea #input
+      [formControl]="formControl"
+      [name]="name"
+      [cols]="cols"
+      [rows]="rows"
+      [readonly]="readonly"
+      [required]="required"
+      [maxlength]="maxlength"
+      [(ngModel)]="value"
+      [placeholder]="placeholder"
+      (focus)="onFocus()"
+      (focusout)="onFocusOut()"
+      (keyup.enter)="save($event)"></textarea>
+  </span>
+<span *ngIf="locales?.length" class="c-text-area__footer">
+  <span class="c-text-area__footer-content">
+    <ng-content></ng-content>
+  </span>
+  <span *ngIf="locales?.length" class="c-text-area__localization">
+    <span class="c-text-area__localization-btn">
+      <app-button (clickEvent)="openLocalizationBox()" type="icon" icon="public" theme="secondary"></app-button>
+    </span>
+    <span class="c-text-area__localization-badge">{{completedLocalizations?.length}} / {{locales?.length}}</span>
+  </span>
+</span>

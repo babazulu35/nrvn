@@ -1,0 +1,71 @@
+.c-installment-options {
+    &__installments-field {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+    }
+    &__bank-name {
+        font-size: 16px;
+        padding: 10px 0px;
+        margin-bottom: 5px;
+    }
+    &--single-pay {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        padding: 0px 0px 15px;
+        border-bottom: 1px solid #efefef;
+        margin-bottom: 10px;
+        span {
+            @include ffamily('bold');
+        }
+        .c-checkbox {
+            margin-right: 10px;
+        }
+    }
+    ul {
+        list-style: none;
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-direction: row;
+        flex-wrap: wrap;
+        border-bottom: 1px solid #efefef;
+        margin-bottom: 10px;
+        &:last-child:not(:first-child) {
+            border-bottom: inherit;
+        }
+        span {
+            flex: 1 100%;
+        }
+        li {
+            flex: 0 33%;
+            padding: 0px 0px 20px;
+            span {
+                @include ffamily('bold');
+                margin-right: 5px;
+            }
+        }
+    }
+    /*     .p-group__list-item {
+        padding-top: 0;
+        padding-bottom: 0;
+        border: 0;
+        &:last-child {
+            border: 0;
+        }
+    }
+    .p-group__list-item-label {
+        width: auto;
+        min-width: 180px;
+    }
+    .p-group__list-item-action {
+        position: relative;
+        left: 20px;
+    }
+    .p-modal-container__body .p-group__list-item-action {
+        text-align: center;
+        width: 80px;
+    } */
+}

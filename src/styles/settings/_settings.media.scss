@@ -1,0 +1,50 @@
+/*
+
+Devices
+BreakPoints
+Portrait 480<
+	Handset
+		-- small 360 <
+		-- med 400 <
+		--large 400 & 600
+	Tablet
+		-- small 600 & 720
+		-- large 720 & 840
+
+Landscape
+	handset
+		-- small 480 = 600
+		-- med  600 = 720
+		-- large 720 = 960
+	tablet
+		--sm 960 = 1024
+		-- large 1024 1280
+Window
+
+
+
+
+*/
+
+
+
+$media-hand-small: 360px;
+$media-hand-med: 400px;
+$media-hand-large: 600px;
+
+$media-land-small: 480px;
+$media-land-medium: 600px;
+$media-land-large: 720px;
+$media-land-max: 960px;
+
+$media-tablet-small: 600px;
+$media-tablet-med: 720px;
+$media-tablet-large: 840px;
+
+$media-tablet-land-small: 960px;
+$media-tablet-land-med:1024px;
+$media-tablet-land-lg: 1220px; 
+
+$media-desktop-small: 1440px;
+$media-desktop-med: 1660px;
+$media-desktop-hd: 1920px;

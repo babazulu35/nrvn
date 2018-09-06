@@ -1,0 +1,116 @@
+<!--
+<div class="o-placeholder--multi_selection " [class.active]="isMultiSelectionActive">
+    <app-multi-selection-bar (toggleSelectedItems)="selectAllItems($event)" (transistAction)="callSelectedItemsAction($event)" [selectedItems]="selectedItems" [actionButtons]="actionButtons" [numberOfTotalItem]="count">
+    </app-multi-selection-bar>
+</div>
+-->
+
+<app-no-data *ngIf="noDataInContent" style="max-width: 50%;margin-top:30px" [icon]='{type: "icon", name: "ticket"}' [hasContainer]="true" title="Aramanız ile eşleşen ürün kaydı bulunamadı" description="Arama kriterini değiştirerek yeniden deneyebilirsiniz"></app-no-data>
+
+<div class="o-list-view" *ngIf="!noDataInContent">
+    <div class="o-list-view__content">
+        <app-responsive-table [hasAction]='true' [ngClass]="{'main-loader': isLoading }">
+            <div class="c-responsive-table__caption row">
+                <div class="c-responsive-table__primary-column hidden-sm-down col-md-7 col-lg-7">
+                    <app-sort-title sortTitle='ÜRÜN ADI' sortBy='Localization/Name' [activeTitle]="entityService.queryParamSubject" (toggleSortTitle)="toggleSortTitle($event)"></app-sort-title>
+                </div>
+                <!--
+                <div class="c-responsive-table__secondary-column hidden-sm-down col-md-9 col-lg-9 text-lg-left">
+                    <div class="col-md-8 col-lg-6 col-xl-6">
+                        <span>SATIŞ BAŞLANGICI</span>
+                    </div>
+
+                    <div class="col-md-8 col-lg-6 col-xl-6">
+                        <span>SATIŞ BİTİŞİ</span>
+                    </div>
+
+                    <div class="hidden-md-down col-lg-4 col-xl-4">
+                        <span>FİYAT</span>
+                    </div>
+                </div>
+                -->
+            </div>
+
+            <div class="c-responsive-table__row row" *ngFor="let product of products">
+                <div class="c-responsive-table__primary-column col-sm-16 col-md-7 col-lg-7">
+                    <div class="c-primary-column-line c-primary-column-line--with-select">
+                        <div class="c-primary-column-line__primary-content">
+                            <!--
+                            <div class="c-primary-column-line__select">
+                                <app-checkbox theme="ligth" type="circle" [isChecked]="selectedItems.indexOf(product) > -1" (checkedAction)="selectItem($event, product);"></app-checkbox>
+                            </div>
+                            -->
+
+                            <div class="c-primary-column-line__title">
+                                {{product.Localization?.Name}}
+                                <span class="c-primary-column-line__sub-title">{{product.EventName}}</span>
+                            </div>
+                        </div>
+
+                        <!--
+                        <div class="c-primary-column-line__secondary-content">
+                            <div class="c-responsive-table__secondary-item hidden-md-up">
+                                <span class="c-responsive-table__secondary-item-label">SATIŞ BAŞLANGICI</span>
+                                <span class="c-responsive-table__secondary-item-value">
+                                    <span class="text-nowrap">
+                                        {{product.SalesBeginDate}}
+                                    </span>
+                                </span>
+                            </div>
+
+                            <div class="c-responsive-table__secondary-item hidden-md-up">
+                                <span class="c-responsive-table__secondary-item-label">SATIŞ BİTİŞİ</span>
+                                <span class="c-responsive-table__secondary-item-value">
+                                    <span class="text-nowrap" >
+                                        {{product.SalesEndDate}}
+                                    </span>
+                                </span>
+                            </div>
+
+                            <div class="c-responsive-table__secondary-item hidden-lg-up">
+                                <span class="c-responsive-table__secondary-item-label">FİYAT</span>
+                                <span class="c-responsive-table__secondary-item-value">
+                                    <strong>
+                                        {{product.CurrentPrice}}
+                                    </strong>
+                                </span>
+                            </div>
+                        </div>
+                        -->
+                    </div>
+                </div>
+                <!--
+                <div class="c-responsive-table__secondary-column hidden-sm-down col-md-9 col-lg-9 text-lg-left">
+                    <div class="col-sm-9 col-md-8 col-lg-6 col-xl-6">
+                        <span class="text-nowrap">
+                            {{product.SalesBeginDate}}
+                        </span>
+                    </div>
+
+                    <div class="col-sm-9 col-md-8 col-lg-6 col-xl-6">
+                        <span class="text-nowrap">
+                            {{product.SalesEndDate}}
+                        </span>
+                    </div>
+
+                    <div class="hidden-md-down col-lg-4 col-xl-4">
+                        <span>
+                            <strong>
+                                {{product.CurrentPrice}}
+                            </strong>
+                        </span>
+                    </div>
+                </div>
+                -->
+
+                <div class="c-responsive-table__action-btn" (click)="openEventsContextMenu($event, product)">
+                    <i class="icon__n icon__n--md icon__n--more_vert"></i>
+                </div>
+            </div>
+        </app-responsive-table>
+    </div>
+
+    <div class="o-list-view__footer" *ngIf="products?.length">
+        <app-pagination size="xs" (changeEvent)="changePageSize($event)" [options]="pageSizes" [totalItem]="count" [showItemPerPage]="pageSize" [currentPage]="currentPage" (transistPage)="transistPage($event)"></app-pagination>
+    </div>
+</div>

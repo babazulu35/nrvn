@@ -1,0 +1,170 @@
+/***
+ * Narrow Index Component:
+ * Author: Halil Nuroğlu
+ */
+
+
+/**
+ * Narrow Index:
+ * `.c-narrow-index`
+ *
+ *     @example
+ *    <div class="c-narrow-index">
+ *
+ *      <div class="text-md-center">
+ *        <div class="c-expr-list-pager">
+ *          <a href="#" class="icon__n icon__n--keyboard_arrow_left"></a>
+ *          <strong>EKİM 2016</strong>
+ *          <a href="#" class="icon__n icon__n--keyboard_arrow_right"></a>
+ *        </div>
+ *        <!--end c-expr-list-pager-->
+ *      </div>
+ *
+ *      <ul class="c-narrow-index-list">
+ *
+ *        <li class="c-narrow-index-list__item">
+ *          <a href="#" title="">
+ *            <span class="c-avatar c-avatar--autosize c-avatar--circle">
+ *              <figure>
+ *                <img src="http://lorempixel.com/90/90/people/1" alt="">
+ *              </figure>
+ *            </span>
+ *            <span class="c-narrow-index-list__item__content">
+ *              <strong>Gaye Su Akyol Konseri</strong>
+ *              <time datetime="2016-09-15 16:00">12 Ekim</time>
+ *            </span>
+ *          </a>
+ *        </li>
+ *
+ *        <li class="c-narrow-index-list__item">
+ *          <a href="#">
+ *            <span class="c-avatar c-avatar--autosize c-avatar--circle">
+ *              <figure>
+ *                <img src="http://lorempixel.com/90/90/people/1" alt="">
+ *              </figure>
+ *            </span>
+ *            <span class="c-narrow-index-list__item__content">
+ *              <strong>Kraak &amp; Smaak Live. Powered by Lenovo</strong>
+ *              <time datetime="2016-09-15 16:00">15 Ekim</time>
+ *            </span>
+ *          </a>
+ *        </li>
+ *
+ *        <li class="c-narrow-index-list__item">
+ *          <a href="#">
+ *            <span class="c-avatar c-avatar--autosize c-avatar--circle">
+ *              <figure>
+ *                <img src="http://lorempixel.com/90/90/people/6" alt="">
+ *              </figure>
+ *            </span>
+ *            <span class="c-narrow-index-list__item__content">
+ *              <strong>Fujiya &amp; Miyagi</strong>
+ *              <time datetime="2016-09-15 16:00">21 Ekim</time>
+ *            </span>
+ *          </a>
+ *        </li>
+ *
+ *      </ul>
+ *      <!--end narrow-index-list-->
+ *
+ *    </div>
+ *    <!--end c-narrow-index-->
+ */
+
+// Set defaults
+$c-narrow-index: ( img-width: 40px, img-margin-right: 20px, large-img-width: 90px, height: 350px, border-radius: 3px, kind-icon-height: 38px, border-color: #dcdce5, c-primary-color: #3a2e39, time-color: #333333, seperate-color: #dcdce5, );
+// Merge settings and defaults
+$c-narrow-index: map-merge($c-narrow-index, getSettingsMap("c-narrow-index"));
+// Set shortcuts
+$c-map: $c-narrow-index;
+// Component
+.c-narrow-index {
+    .c-expr-list-pager {
+        margin-bottom: 30px;
+    }
+}
+
+.c-narrow-index-list {
+    display: block;
+    width: 100%;
+    list-style: none;
+}
+
+.c-narrow-index--spinner {
+    width: 28px;
+    height: 28px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+}
+
+.c-narrow-index-list__item__content {
+    float: left;
+    width: calc(100% - #{map-get($c-map, img-width) + map-get($c-map, img-margin-right)});
+}
+
+.c-narrow-index-list__item {
+    margin-bottom: 25px;
+    a {
+        display: block;
+        @include t--clearfix;
+        text-decoration: none;
+        &:hover .c-narrow-index__item__content {
+            strong {
+                text-decoration: underline;
+            }
+        }
+    }
+    .c-avatar {
+        float: left;
+        margin-right: map-get($c-map, img-margin-right);
+        font-size: 40px;
+    }
+    img {
+        max-width: map-get($c-map, img-width);
+        border-radius: map-get($c-map, img-width);
+    }
+    strong {
+        display: block;
+        font-size: 13px;
+        line-height: 19px;
+        color: map-get($c-map, c-primary-color);
+        @include ffamily('semi');
+    }
+    time {
+        display: block;
+        margin-top: 3px;
+        font-size: 11px;
+        color: map-get($c-map, time-color);
+        @include ffamily('regular');
+    }
+    &:first-child {
+        padding-bottom: 20px;
+        margin-bottom: 20px;
+        text-align: center;
+        border-bottom: 1px solid map-get($c-map, seperate-color);
+        .c-avatar {
+            float: none;
+            display: block;
+            margin-right: auto;
+            margin-left: auto;
+            margin-bottom: 25px;
+            font-size: 90px;
+        }
+        strong {
+            font-size: 14px;
+        }
+        img {
+            max-width: map-get($c-map, large-img-width);
+            border-radius: map-get($c-map, large-img-width);
+        }
+        .c-narrow-index-list__item__content {
+            display: block;
+            float: none;
+            width: 100%;
+        }
+    }
+}
+
+//Reset
+$c-map: null;

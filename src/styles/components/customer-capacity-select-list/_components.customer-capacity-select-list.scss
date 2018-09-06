@@ -1,0 +1,168 @@
+$c-customer-capacity-select-list: (
+	border-color: #dcdce5,
+    background-color: #ffffff,
+    primary-color: #35383d,
+    secondary-color: #9d9d9d,
+    active-color: #2b98f0,
+    active-background-color: #f7f7f7,
+    font-size: 13px,
+    
+    item: (
+        padding: 6px,
+        min-height: none,
+
+        right: (
+            min-width: 60px,
+        ),
+        label: (
+            font-size: 13px
+        ),
+        capacity: (
+            font-size: 11px
+        ),
+        indicator: (
+            font-size: 12px
+        )
+    )
+);
+
+// Merge settings and defaults
+$c-customer-capacity-select-list: map-merge($c-customer-capacity-select-list, getSettingsMap("c-customer-capacity-select-list"));
+
+// Set shortcuts
+$c-map: $c-customer-capacity-select-list;
+
+.c-customer-capacity-select-list {
+    display: inline-block;
+    width: 100%;
+
+    &__container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__item {
+        display: flex;
+        width: 100%;
+        flex-grow: 1;
+        flex-shrink: 0;
+        color: map-deep-get($c-map, primary-color);
+        min-height: map-deep-get($c-map, item, min-height);
+        
+        & + .c-customer-capacity-select-list__item {
+            margin-top: -1px;
+        }
+
+        &--selected {
+            .c-customer-capacity-select-list__item {
+                &-box {
+                    border: solid 1px map-deep-get($c-map, primary-color);
+                    background-color: map-deep-get($c-map, active-background-color);
+                }
+            }
+        }
+
+        &:not(.c-customer-capacity-select-list__item--selected) {
+            &:hover {
+                cursor: pointer;
+
+                .c-customer-capacity-select-list__item {
+                    &-box {
+                        background-color: map-deep-get($c-map, active-background-color);
+                        transition: background-color .3s ease-out;
+                    }
+                }
+            }
+        }
+
+        &:first-child {
+            .c-customer-capacity-select-list__item-box {
+                border-top-left-radius: 3px;
+                border-top-right-radius: 3px;
+            }
+        }
+
+        &:last-child {
+            .c-customer-capacity-select-list__item-box {
+                border-bottom-left-radius: 3px;
+                border-bottom-right-radius: 3px;
+            }
+        }
+
+        &-box {
+            display: flex;
+            width: 100%;
+            flex-grow: 1;
+            flex-shrink: 0;
+            white-space: normal;
+            flex-wrap: wrap;
+            border: solid 1px map-deep-get($c-map, border-color);
+            background-color: map-deep-get($c-map, background-color);
+
+            &-left,
+            &-right {
+                display: flex;
+                padding: map-deep-get($c-map, item, padding);
+                align-items: center;
+                position: relative;
+            }
+
+            &-left {
+                flex-grow: 1;
+                flex-shrink: 0;
+                justify-content: flex-start;
+                width: calc(100% - #{map-deep-get($c-map, item, right, min-width)});
+                padding: map-deep-get($c-map, item, padding) map-deep-get($c-map, item, padding)*2;
+            }
+
+            &-right {
+                flex-grow: 0;
+                flex-shrink: 0;
+                width: map-deep-get($c-map, item, right, min-width);
+                // border-left: dashed 1px map-deep-get($c-map, border-color);
+                justify-content: center;
+            }
+        }
+        &-title {
+            @include ffamily(bold);
+            font-size: map-deep-get($c-map, item, label, font-size);
+            white-space: normal;
+        }
+
+        &-capacity {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            @include ffamily(semi);
+            font-size: map-deep-get($c-map, item, capacity, font-size);
+            color: map-deep-get($c-map, secondary-color);
+            white-space: normal;
+            border: solid 1px map-deep-get($c-map, border-color);
+            border-radius: map-deep-get($c-map, item, capacity, font-size);
+            background-color: map-deep-get($c-map, background-color);
+            width: 100%;
+            min-width: 50%;
+            padding: map-deep-get($c-map, item, padding)/2 0px;
+        }
+
+        &-secondary-text {
+            @include ffamily(semi, i);
+            font-size: map-deep-get($c-map, item, label, font-size);
+            white-space: normal;
+        }
+
+        &-indicator {
+            position: absolute;
+            top: map-deep-get($c-map, item, padding) / 3;
+            right: map-deep-get($c-map, item, padding) / 3;
+            font-size: map-deep-get($c-map, item, indicator, font-size);
+            width: 1em;
+            height: 1em;
+            border-radius: 0.5em;
+            line-height: 0px;
+            background-color: map-deep-get($c-map, secondary-color);
+        }
+
+    }
+}

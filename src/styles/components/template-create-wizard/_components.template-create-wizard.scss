@@ -1,0 +1,57 @@
+.c-template-create-wizard{
+
+    &__form-control{
+        span{
+            color: #9D9D9D; 
+            font-size: 11px;	
+            font-weight: 600;	
+            line-height: 36px;
+        }
+    }
+
+    &__inner{
+        display: flex;
+        align-items: center;
+        flex-direction: flex-start;
+        &-left{
+            max-width: 124px !important;
+            span{
+                color: #9D9D9D; 
+                font-size: 11px;	
+                font-weight: 600;	
+                line-height: 36px; 
+            }
+            app-profile-photo{
+                min-width: 124px !important;
+                height: 124px;
+                width: auto;
+            }
+            .c-profile-photo__empty-box{
+                i{
+                    font-size: 24px;
+                    color: #BDBDBD;
+                }
+                span{
+                    color: #35383D;
+                }
+            }
+        }
+
+        &-right{
+            margin-left: 20px;
+            app-helper-text{
+                display: flex;
+                flex-direction: column;
+                i{
+                    margin-bottom: 5px;
+                }
+            }
+        }
+    }    
+
+    .c-profile-photo__container{
+        width: 124px;
+        height: 124px;
+    }
+
+}

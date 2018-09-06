@@ -1,0 +1,80 @@
+/* --------------------------------------------------------
+author: Abdullah Karadeniz
+----------------------------------------------------------*/
+
+$c-localization-box: (
+  locale: (
+      border-radius: 2px, 
+      border-color: #dcdce5, 
+      code: (
+          font-size: 15px,
+          width: 40px,
+          background-color: #f5f5f5, 
+          active: (
+              color: #fff,
+              background-color: #2096F3, 
+          )
+      )
+  )
+);
+
+// Merge settings and defaults
+$c-localization-box: map-merge($c-localization-box, getSettingsMap("c-localization-box"));
+
+// Set shortcuts
+$c-map: $c-localization-box;
+
+.c-localization-box {
+    display: block;
+
+    &__locale-input-bar {
+        display: table;
+        width: 100%;
+        line-height: 0px;
+    }
+    &__locale-code {
+        display: table-cell;
+        vertical-align: middle;
+        text-align: center;
+        width: map-deep-get($c-map, locale, code, width);
+        background-color: map-deep-get($c-map, locale, code, background-color);
+        border-top-left-radius: map-deep-get($c-map, locale, border-radius);
+        border-bottom-left-radius: map-deep-get($c-map, locale, border-radius);
+        border-left: solid 1px map-deep-get($c-map, locale, border-color);
+        border-top: solid 1px map-deep-get($c-map, locale, border-color);
+        border-bottom: solid 1px map-deep-get($c-map, locale, border-color);
+        font-size: map-deep-get($c-map, locale, code, font-size);
+        text-transform: uppercase;
+
+        &--active {
+            color: map-deep-get($c-map, locale, code, active, color);
+            background-color: map-deep-get($c-map, locale, code, active, background-color);
+        }
+    }
+    &__locale-input {
+        display: table-cell;
+        .c-text-input {
+            &__bar {
+                border-top-left-radius: 0px;
+                border-bottom-left-radius: 0px;
+            }
+        }
+
+        .c-file-upload-box {
+            border-top-left-radius: 0px;
+            border-bottom-left-radius: 0px;
+            border-style: solid;
+
+            .c-file-upload-box__drop-zone {
+                background-color: transparent;
+            }
+
+            &:not(.c-file-upload-box--empty) {
+                width: 60%;
+            }
+        }
+    }
+}
+
+//Reset
+$c-map: null;

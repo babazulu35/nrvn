@@ -1,0 +1,112 @@
+<app-dialog-box [isLoading]="isLoading">
+    <div #header class="c-dialog-box__header c-dialog-box__header--border c-dialog-box__header--padding">
+      <div class="c-dialog-box__header-bar">
+        <h1 class="c-dialog-box__header-title">Bilgi Girişi</h1>
+        <div class="c-dialog-box__header-actions">
+          <app-button (click)="tetherDialog.dismiss()" type="icon" icon="close" theme="secondary"></app-button>
+        </div>
+      </div>
+    </div>
+  
+    <div #body class="c-dialog-box__body c-dialog-box__body--no-padding">
+      <div class="p-container p-container--inherit">
+        <div class="p-group">
+          <div class="p-group__item">
+            <div class="p-formgroup">
+              <div class="p-form-group__label">
+                TCKN/VKN
+              </div>
+              <div class="p-form-group__input">
+                  <app-text-input [isDisabled]="true" theme="underline" [isTypeEmitting]="true" [value]="invoiceCustomerInfo?.NationalIdentityNumber"></app-text-input>
+              </div>
+            </div>
+          </div>
+          <div class="p-group__item">
+            <div class="p-formgroup">
+              <div class="p-form-group__label">
+                E-Posta*
+              </div>
+              <div class="p-form-group__input">
+                <app-text-input theme="underline" type="email" [isTypeEmitting]="true" [value]="invitationOptions?.Email" (typeEvent)="inputChangeHandler($event, 'Email')" ></app-text-input>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="!isCorporateCustomer" class="p-group__item row">
+            <div class="p-formgroup col-xs-8 padding-right-5">
+              <div class="p-form-group__label">
+                Ad*
+              </div>
+              <div class="p-form-group__input">
+                  <app-text-input theme="underline" type="alpha" [isTypeEmitting]="true" [value]="invoiceCustomerInfo?.FirstName" (typeEvent)="inputChangeHandler($event, 'FirstName')" ></app-text-input>
+              </div>
+            </div>
+            <div class="p-formgroup col-xs-8 padding-left-5">
+              <div class="p-form-group__label">
+                Soyad*
+              </div>
+              <div class="p-form-group__input">
+                <app-text-input theme="underline" type="alpha" [isTypeEmitting]="true" [value]="invitationOptions?.FamilyName" (typeEvent)="inputChangeHandler($event, 'FamilyName')" ></app-text-input>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="isCorporateCustomer" class="p-group__item">
+            <div class="p-formgroup">
+              <div class="p-form-group__label">
+                Şirket Adı*
+              </div>
+              <div class="p-form-group__input">
+                <app-text-input theme="underline" type="alpha" [isTypeEmitting]="true" [value]="invoiceCustomerInfo?.FirstName" (typeEvent)="inputChangeHandler($event, 'FirstName')" ></app-text-input>
+              </div>
+            </div>
+          </div>
+          <div class="p-group__item">
+            <div class="p-formgroup">
+              <div class="p-form-group__label">
+                Ülke*
+              </div>
+              <div class="p-form-group__input">
+                  <app-text-input theme="underline" type="alpha" [isTypeEmitting]="true" [value]="invoiceCustomerInfo?.Country" (typeEvent)="inputChangeHandler($event, 'Country')" ></app-text-input>
+              </div>
+            </div>
+          </div>
+          <div class="p-group__item row">
+            <div class="p-formgroup col-xs-8 padding-right-5">
+              <div class="p-form-group__label">
+                Şehir*
+              </div>
+              <div class="p-form-group__input">
+                <app-text-input theme="underline" type="alpha" [isTypeEmitting]="true" [value]="invitationOptions?.CityName" (typeEvent)="inputChangeHandler($event, 'CityName')" ></app-text-input>
+              </div>
+            </div>
+            <div class="p-formgroup col-xs-8 padding-left-5">
+              <div class="p-form-group__label">
+                İlçe*
+              </div>
+              <div class="p-form-group__input">
+                  <app-text-input theme="underline" type="alpha" [isTypeEmitting]="true" [value]="invoiceCustomerInfo?.CitySubdivisionName" (typeEvent)="inputChangeHandler($event, 'CitySubdivisionName')" ></app-text-input>
+              </div>
+            </div>
+          </div>
+          <div class="p-group__item">
+            <div class="p-formgroup">
+              <div class="p-form-group__label">
+                Adres*
+              </div>
+              <div class="p-form-group__input">
+                <app-text-input theme="underline" [isTypeEmitting]="true" [value]="invitationOptions?.Address" (typeEvent)="inputChangeHandler($event, 'Address')" ></app-text-input>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div #footer class="c-dialog-box__footer row">
+      <div class="c-dialog-box__footer-content">
+        <div class="col-xs-16">
+          <app-button (clickEvent)="submitClickHandler($event)" [isDisabled]="!isValid" theme="primary" label="TAMAM"></app-button>
+        </div>
+      </div>
+    </div>
+  </app-dialog-box>
+  

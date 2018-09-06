@@ -1,0 +1,124 @@
+<!-- /.o-header -->
+<app-split-container [fixedWidth]="260" *ngIf="stateData" [offsetHeight]="-70" [isLoading]="isLoading">
+    <div fluid>
+        <div class="or-boxoffice__header full-width clearfix" [class.or-boxoffice--campaign]="isToggleOpen[stateData.Id]" sticky sticky-main-scroller sticky-release-offset="30" sticky-height-property="55" sticky-width-property="100%" sticky-follow-menu-moves>
+            <app-button theme="primary" icon="keyboard_arrow_left" shape="rounded" type="icon" size="md" (clickEvent)="goBack()"></app-button>
+            <h1>{{stateData.Name}}</h1>
+
+            <app-pill-group *ngIf="!isToggleOpen[stateData.Id] && stateData.Campaigns != null  && stateData.Campaigns.length > 0" [theme]="'campaign'" (click)="toggle($event,stateData.Id)" [pills]="[{ text: 'KAMPANYALAR',isActive:false, count: stateData.Campaigns.length , icon: 'card_giftcard'}]"></app-pill-group>
+            <app-button *ngIf="isToggleOpen[stateData.Id] && stateData.Campaigns != null && stateData.Campaigns.length > 0" (click)="toggle(false,stateData.Id)" theme="secondary">
+                <i class="icon__n icon__n--md icon__n--close"></i>
+            </app-button>
+            <!--<p><span>{{stateData.SalesBeginDate | relativeDate}} - {{stateData.SalesEndDate | relativeDate}} </span> / {{stateData.Venue}}</p>-->
+            <div class="or-boxoffice__header-campaign-group" *ngIf="stateData.Campaigns?.length">
+                <span class="or-boxoffice__header-campaign" *ngFor="let eCampaign of stateData.Campaigns">
+                    <app-campaign-monitor [campaignData]="eCampaign" (resultEvent)="actionHandler($event)" *ngIf="isToggleOpen[stateData.Id]"></app-campaign-monitor>
+                </span>
+            </div>
+        </div>
+
+        <div class="or-boxoffice__row-wrapper">
+
+            <app-product-pill-group [performances]="filteredPerformances" (selectedPillsChanged)="filterProducts($event)"></app-product-pill-group>
+
+            <div class="or-boxoffice__product-holder" *ngFor="let performance of filteredPerformances">
+                <div class="or-boxoffice__product-holder-field" [class.or-boxoffice--campaign]="isToggleOpen[performance.Id]">
+                    <div class="or-boxoffice__product-holder-bar">
+                        <div class="or-boxoffice__product-holder-bar-left">
+                            <div class="or-boxoffice__product-holder-avatar">
+                                <app-avatar size="sm" [letters]="performance?.Name?.charAt(0)" source="{{performance.Images | image: 'Performance'}}"></app-avatar>
+                            </div>
+                            <div class="or-boxoffice__product-holder-info">
+                                <span class="or-boxoffice__product-holder-info-title">{{performance.Name}}</span>
+                                <span class="or-boxoffice__product-holder-info-sub">{{performance.DateTime | relativeDate}}, {{performance.Venue}}</span>
+                            </div>
+                        </div>
+                        <div class="or-boxoffice__product-holder-bar-right">
+                            <span><app-pill-group [isIcon]="true" *ngIf="!isToggleOpen[performance.Id] && performance.Campaigns != null && performance.Campaigns.length > 0" [theme]="'campaign'" (click)="toggle(true,performance.Id)" [pills]="[{ text: '',isActive:false, count: performance?.Campaigns?.length , icon: 'card_giftcard'}]"></app-pill-group></span>
+                            <!--<p><span>{{stateData.SalesBeginDate | relativeDate}} - {{stateData.SalesEndDate | relativeDate}} </span> / {{stateData.Venue}}</p>-->
+                            <span *ngFor="let pCampaign of performance.Campaigns">
+                                <app-campaign-monitor [campaignData]="pCampaign" (resultEvent)="actionHandler($event)" *ngIf="isToggleOpen[performance.Id]"></app-campaign-monitor>
+                            </span>
+                            <span><app-button type="icon" icon="close" *ngIf="isToggleOpen[performance.Id] && performance.Campaigns != null" (click)="toggle(false,performance.Id)" theme="secondary"></app-button></span>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="or-boxoffice__product-holder-content" *ngFor="let product of performance.Products">
+
+                    <div class="or-boxoffice__product-holder-sub_info" [class.or-boxoffice--campaign]="isToggleOpen[product.Id]">
+                        <div class="or-boxoffice__product-holder-bar">
+                            <div class="or-boxoffice__product-holder-bar-left">
+                                <span class="or-boxoffice__product-holder-type-dot" [style.background-color]="getColor(allocationType[product?.AllocationType])"></span>
+                                <span class="or-boxoffice__product-holder-info-title">{{product?.Name}}</span>
+                            </div>
+                            <div class="or-boxoffice__product-holder-bar-right">
+                                <span><app-pill-group [isIcon]="true" *ngIf="!isToggleOpen[product.Id] && product.Campaigns != null && product.Campaigns.length > 0" [theme]="'campaign'" (click)="toggle($event,product.Id)" [pills]="[{ text: '',isActive:false, count: product?.Campaigns?.length , icon: 'card_giftcard'}]"></app-pill-group></span>
+                                <!--<p><span>{{stateData.SalesBeginDate | relativeDate}} - {{stateData.SalesEndDate | relativeDate}} </span> / {{stateData.Venue}}</p>-->
+                                <span *ngFor="let prCampaign of product.Campaigns">
+                                    <app-campaign-monitor [campaignData]="prCampaign" (resultEvent)="actionHandler($event)" *ngIf="isToggleOpen[product.Id]"></app-campaign-monitor>
+                                </span>
+                                <span><app-button type="icon" icon="close" *ngIf="isToggleOpen[product.Id]" (click)="toggle(false,product.Id)" theme="secondary"></app-button></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" *ngFor="let variant of product.Variants; ">
+
+
+                        <app-product-item-line-boxoffice [class.c-product-item-line-boxoffice--border_bottom]="isToggleOpen[variant?.Id]" [isDisabled]="!variant?.IsAvailable" [name]="product.Name | concat : variant.Name:'-'" [isViewOnly]="!isAuthenticatedRole" [hasContent]="true"
+                            [price]="variant?.FaceAmount" [viewOptions]="{stepper:true,ticketing:false,seatview:false}" [currency]="variant?.Price?.Currency" [event]="event" [variant]="variant" [product]="product" [maxProductCount]="maxProductCount(product)"
+                            [minProductCount]="selectedVariants[variant?.Id] > 0 ? selectedVariants[variant?.Id] : countOfSelected[variant?.Id] " [currentValue]="currentValue[variant?.Id]" (actionEvent)="onSave($event,product.Id)">
+
+                            <div subtitle *ngIf="variant.Price?.EndDate != null">
+                                <time>{{variant.Price?.EndDate | relativeDate}}</time>’a kadar satışta
+                            </div>
+
+                            <div content>
+                                <ul>
+                                    <li *ngFor="let campaign of variant.Campaigns">{{campaign.Description}}</li>
+                                </ul>
+
+                            </div>
+                            <div campaign *ngIf="variant.Campaigns != null">
+                                <app-pill-group [isIcon]="true" *ngIf="!isToggleOpen[variant.Id]" [theme]="'campaign'" (click)="toggle($event,variant.Id)" [pills]="[{ text: 'KAMPANYALAR',isActive:false, count: variant?.Campaigns?.length , icon: 'card_giftcard'}]"></app-pill-group>
+                                <app-button *ngIf="isToggleOpen[variant.Id]" (click)="toggle(false,variant.Id)" theme="secondary">
+                                    <i class="icon__n icon__n--md icon__n--close"></i>
+                                </app-button>
+                            </div>
+                            <div campaign-monitor *ngIf="variant.Campaigns != null">
+                                <div class="padding-top-10 padding-left-20 padding-right-20 padding-bottom-20 full-width" *ngIf="isToggleOpen[variant.Id]">
+                                    <span *ngFor="let vCampaign of variant.Campaigns">
+                            <app-campaign-monitor [campaignData]="vCampaign" (resultEvent)="actionHandler($event)" *ngIf="isToggleOpen[variant.Id]"></app-campaign-monitor>
+                            </span>
+                                </div>
+                            </div>
+
+                        </app-product-item-line-boxoffice>
+
+                    </div>
+                </div>
+            </div>
+            <app-no-data *ngIf="filteredPerformances.length == 0" style="max-width: 60%;margin-top:30px" [hasContainer]="true" [icon]='{type: "icon", name: "event"}' title="Seçtiğiniz etkinlikte performans kaydı bulunamadı" description="Arama kriterini değiştirerek yeniden deneyebilirsiniz"></app-no-data>
+        </div>
+    </div>
+    <div fixed>
+        <div class="p-group">
+            <app-customer-search-select (actionEvent)="customerActionEvent($event)" (changeEvent)="customerChangeHandler($event)" [customer]="customer"></app-customer-search-select>
+        </div>
+        <div class="p-group" *ngIf="!cartItemsData || cartItemsData.length == 0">
+            <app-narrow-inline-feedback [isInSide]="true" [countValue]='0' [iconName]="'ticket'" [iconAngle]="45" [title]="'<strong>Sepete henüz ürün eklenmemiş.</strong>'" [description]="'Ürünler arasından seçerek yeni ürün ekleyin'"></app-narrow-inline-feedback>
+        </div>
+        <div class="p-group margin-top-0 margin-bottom-150 full-width">
+            <div class="or-boxoffice-products__basket-item" *ngFor="let cartItems of cartItemsData">
+                <app-narrow-col-basket-item [deleteIcon]="resetIcon" [data]="cartItems" (actionEvent)="handleBasketAction($event)"></app-narrow-col-basket-item>
+            </div>
+            <div class="p-group__item or-boxoffice-products--reservation">
+                <a href="javascript:void(0)" class="c-narrow-col-basket-item__add-code-button" (click)="openAddToBasketWithCodeModal()"><i class="icon__n icon__n--plus"> </i>REZERVASYON KODUYLA EKLE</a>
+            </div>
+        </div>
+
+    </div>
+</app-split-container>
+<app-basket-info-bar (actionEvent)="eventHandler($event)" [addDisabled]="isAddDisable" [isLoading]="isBasketLoading" [showMenu]="showMenu" [statusFlag]="isFurtherStepAllowed" [cartItem]="{state:currentState,data:{items:cartItemsData,currency:cartCurrency,total:cartTotal}}"></app-basket-info-bar>

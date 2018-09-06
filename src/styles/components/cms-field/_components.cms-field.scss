@@ -1,0 +1,55 @@
+$c-cms-field: (
+    space: 10px,
+    border-color: #dcdce5,
+
+    label: (
+        font-size: 11px,
+        color: #939393
+    ),
+
+    input: (
+
+    )
+);
+
+// Merge settings and defaults
+$c-cms-field: map-merge($c-cms-field, getSettingsMap("c-cms-field"));
+$c-map: $c-cms-field;
+
+// Basic Styling
+.c-cms-field {
+  display: block;
+  width: 100%;
+
+  &__label {
+    display: block;
+    text-transform: uppercase;
+    width: 100%;
+    @include ffamily('semi');
+    font-size: map-deep-get($c-map, label, font-size);
+    line-height: 1em;
+    color: map-deep-get($c-map, label, color);
+    margin-bottom: map-deep-get($c-map, space);
+  }
+
+  &__input {
+    display: block;
+
+    .c-file-upload-box {
+      border-top-left-radius: 0px;
+      border-bottom-left-radius: 0px;
+      border-style: solid;
+
+      .c-file-upload-box__drop-zone {
+          background-color: transparent;
+      }
+
+      &:not(.c-file-upload-box--empty) {
+        width: 70%;
+      }
+    }
+  }
+}
+
+// Reset
+$c-map: null;

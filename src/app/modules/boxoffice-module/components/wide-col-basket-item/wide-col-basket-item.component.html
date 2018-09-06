@@ -1,0 +1,105 @@
+<div class="c-widecol__performans-header">
+    <div class="c-widecol_performans-header__title">
+        <h4>Sipariş Özeti</h4>
+        <!--<app-button type="icon" theme="secondary" icon="print" size="md"></app-button>-->
+    </div>
+
+    <div>
+        <div class="c-widecol__content">
+            <div class="row">
+                <ul class="detail">
+                    <li class="clearfix">
+                        <span>ÜRÜN ADEDİ</span>
+                        <span>
+	                        {{selectedProductCount}}
+                        </span>
+                    </li>
+                    <li class="clearfix">
+                        <span>ÜRÜN BEDELİ</span>
+                        <span>{{state?.SubTotal?.Amount }}<sup>{{state?.SubTotal?.Currency}}</sup></span>
+                    </li>
+                    <li class="clearfix">
+                        <span>İNDİRİMLER</span>
+                        <span class="disc" *ngIf="totalDiscounts() > 0">- {{totalDiscounts() | number : '1.2-2'  }}<sup>{{state?.SubTotal?.Currency}}</sup></span>
+                        <span class="disc" *ngIf="totalDiscounts() == 0">---</span>
+
+                    </li>
+                    <li class="clearfix">
+                        <span>ÜCRETLER</span>
+                        <span>{{totalPriceDetailAmount(state.SubTotal) | number : '1.2-2'  }}<sup>{{state?.SubTotal?.Currency}}</sup></span>
+                    </li>
+                </ul>
+            </div>
+            <div class="c-widecol__event-main-total clearfix">
+                <h3>Genel Toplam </h3>
+                <span class="c-widecol__event-main-total-number">{{state?.SubTotal?.CalculatedTotalAmount}}<sup>{{state?.SubTotal?.Currency}}</sup></span>
+            </div>
+            <div class="c-widecol__event-tax-total clearfix">
+                <span class="c-widecol__event-tax-total-text">VERGİLER</span>
+                <span class="c-widecol__event-tax-total-number">{{state?.SubTotal?.Tax }}<sup>{{state?.SubTotal?.Currency}}</sup></span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<!--<div class="c-wide-col-basket-item">
+    <div class="c-wide-col-basket-item__title">
+        <h4 class="c-wide-col-basket-item__title-text">{{model.Name}} / {{model.Venue}}</h4>
+        <div class="c-wide-col-basket-item__title-action">
+            <a href="javascript:void(0)" class="c-wide-col-basket-item__title-action-delete" (click)="removeSelectedItems(model,model)"><i class="icon__n icon__n--delete"></i></a>
+        </div>
+    </div>
+    <div>
+        <div *ngFor="let performance of model.Performances">
+            <div class="c-wide-col-basket-item__info">
+                <h5 class="c-wide-col-basket-item__info-title">PERFORMANS</h5>
+                <p class="c-wide-col-basket-item__info-desc">{{performance.Name}} <span class="c-wide-col-basket-item__info-date">{{performance.DateTime | date : 'dd MMMMM, EEEE - hh:mm'}}</span></p>
+            </div>
+            <div class="c-wide-col-basket-item__table-container">
+                <table *ngFor="let product of performance.Products">
+                    <thead>
+                        <tr>
+                            <th>ÜRÜN</th>
+                            <th>ADET</th>
+                            <th colspan="2">FİYAT</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let variant of product.Variants">
+                            <td>{{product.Name}} / {{ variant.Name }}</td>
+                            <td>{{ variant.CountOfProductsSelected }}</td>
+                            <td>
+                                <div class="c-wide-col-basket-item__table-price">{{ variant.Price.Amount }}<sup>{{ variant.Price.Currency }}</sup></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4">
+                                <div>
+                                    <div *ngIf="performance?.SubTotal.TotalDiscountAmounts">
+                                        İndirim Toplamı: {{totalDiscountAmount(performance.SubTotal.TotalDiscountAmounts)}} <br/>
+                                    </div>
+                                    Toplam: {{performance?.SubTotal.TotalAmount | number : '2.2-2'}}<sup>{{performance?.SubTotal.Currency}}</sup> <br>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="total">
+        <h3>GENEL TOPLAM</h3>
+        <div>
+            <div *ngIf="model?.SubTotal.TotalDiscountAmounts">
+                İndirim Toplamı: {{totalDiscountAmount(model.SubTotal.TotalDiscountAmounts)}} <br/>
+            </div>
+            Toplam: {{model?.SubTotal.TotalAmount | number : '2.2-2'}}<sup>{{model?.SubTotal.Currency}}</sup> <br/>
+        </div>
+    </div>
+</div>-->
+<!-- /.c-wide-col-basket-item -->

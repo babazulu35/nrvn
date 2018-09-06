@@ -1,0 +1,85 @@
+<div class="or-reservation-create-index" *ngIf="role && performance">
+    <div class="p-header-bar" sticky sticky-main-scroller sticky-release-offset="30" sticky-height-property="55" sticky-width-property="100%" sticky-follow-menu-moves>
+        <div class="p-header-bar__left">
+            <app-button theme="primary" icon="keyboard_arrow_left" shape="rounded" type="icon" size="md" [isDisabled]="venueTemplateEditor?.isBatching || venueTemplateEditor?.isSelecting" (clickEvent)="backClickHandler($event)"></app-button>
+            <h1>{{role?.dictionary?.title?.main}}</h1>
+        </div>
+
+        <div class="p-header-bar__right">
+            <app-button (clickEvent)='submitClickHandler($event)' [isDisabled]="!isValid || isLoading || venueTemplateEditor?.isLoading || venueTemplateEditor?.isBatching || venueTemplateEditor?.isSelecting">DEVAM ET</app-button>
+            <!-- <app-button (clickEvent)='exit($event)' type="icon" icon="close" theme="secondary"></app-button> -->
+        </div>
+    </div>
+
+    <app-collapsible-container [isLoading]="isLoading || venueTemplateEditor?.isLoading || venueTemplateEditor?.isBatching || venueTemplateEditor?.isSelecting" [asideWidth]="300" [asideHasNoPadding]="true" [isAsideOpen]="true">
+        <div content>
+            <div class="p-full-content">
+                <app-venue-template-editor *ngIf="performance" 
+                  [role]="role?.editorRole" 
+                  (editorEvent)="venueEditorEventHandler($event)" 
+                  [performanceId]="performance?.Id"></app-venue-template-editor>
+            </div>
+        </div>
+
+        <div aside>
+          <div class="p-container">
+            <div class="p-group" *ngIf="performance?.Localization?.Name">
+                <div class="p-group__header">
+                    <div class="p-group__header-bar">
+                        <div class="p-group__header-title">
+                            PERFORMANS
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-group__item">
+                    <p><b>{{performance?.Localization?.Name | localization}}</b><br/>{{performance?.Date | relativeDate}}, {{performance?.VenueTemplate?.Venue?.Localization?.Name | localization}}</p>
+                </div>
+
+                <div class="p-group__list" *ngIf="venueTemplateEditor && role?.editorRole == 'customer_assignment'">
+                    <div class="p-group__list-item">
+                        <div class="p-group__list-item-bar">
+                            <div class="p-group__list-item-label">Koltukları Ürün Renginde Göster</div>
+                            <div class="p-group__list-item-action">
+                                <app-checkbox (changeEvent)="inputChangeHandler($event, 'colorModeIsProduct')" [isChecked]="colorModeIsProduct" type="lightswitch"></app-checkbox>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-group">
+                <div class="p-group__item" *ngIf="role?.path == 'rsvp-pool-invitation'">
+                <app-narrow-col-action-offer>
+                    <span><b>En az {{minSeatCount}}</b> ve <b>en fazla {{maxSeatCount}}</b> adet koltuk seçebilirsiniz. Ayrıca seçtiğiniz koltuklar <b>{{minSeatCount}} ve katları</b> şeklinde olmalıdır.</span>
+                </app-narrow-col-action-offer>
+                </div>
+            </div>
+
+            <div class="p-group">
+                <div class="p-group__item">
+                    <app-vertical-kv-list theme="clean"
+                        [sections]="statistics" ></app-vertical-kv-list>
+                </div>
+                <div class="p-group__item" *ngIf="role?.path == 'invitation' && !hasSelectedSeat && customerCapacities?.length == 1">
+                    <app-narrow-col-action-offer (actionOnClick)="addAvailableSeats()" [data]="{label: 'KALAN TÜM KOLTUKLARI EKLE'}">
+                        <span><b>Koltuk seçimi yapılmamış.</b> koltuk seçin ya da <b>satılmayan tüm koltukları tek seferde ekleyin.</b></span>
+                    </app-narrow-col-action-offer>
+                </div>
+            </div>
+
+            <div class="p-group" *ngIf="reservationProducts?.length">
+                <div class="p-group__item" *ngFor="let reservationProduct of reservationProductsHasBlock">
+                    <app-product-block-capacity-statistics *ngIf="reservationProduct?.blockSeats?.length" [productBlockCapacity]="reservationProduct"></app-product-block-capacity-statistics>
+                </div>
+            </div>
+            <div class="p-group" *ngIf="customerCapacities?.length">
+                <p>Aşağıda yer alan her müşteri için ayrı ayrı yer seçin, seçilen koltuk numaraları müşteriye SMS olarak iletilir.</p>
+                <div class="p-group__item">
+                    <app-customer-capacity-select-list (changeEvent)="customerCapacitySelectChangeHandler($event)" [items]="customerCapacities" [selectedItem]="selectedCustomerCapacity"></app-customer-capacity-select-list>
+                </div>
+            </div>
+          </div>
+        </div>
+    </app-collapsible-container>
+</div>

@@ -1,0 +1,188 @@
+<div *ngIf="customer" class="c-multiple-payment-block__customer">
+    <div class="c-multiple-payment-block__customer-avatar">
+        <app-avatar theme="danger" size="md" [source]="customer?.ProfilePicture" [letters]="userLetters"></app-avatar>
+
+        <span class="c-multiple-payment-block__customer-avatar-role">
+			<app-avatar
+          theme="secondary"
+          [source]="null"
+          [icon]="'person'"></app-avatar>
+		</span>
+    </div>
+    <div class="c-multiple-payment-block__customer-info">
+        <div class="c-multiple-payment-block__customer-info-name" [innerHTML]="customer?.fullName | sanitizeHtml"></div>
+        <div class="c-multiple-payment-block__customer-info-contact" [innerHTML]="customer?.contactInfo | sanitizeHtml"></div>
+    </div>
+    <div class="c-multiple-payment-block__customer-score">
+        <span class="c-multiple-payment-block__customer-score-box">
+			<span class="c-multiple-payment-block__customer-score-value">{{customerScore}}</span>
+        <span class="c-multiple-payment-block__customer-score-label">PUAN</span>
+        </span>
+    </div>
+</div>
+
+<div class="c-multiple-payment-block__wizard-header">
+    <app-wizard-header currentLevel={{currentLevelIndex+1}} totalLevel={{levels?.length}} (actionEvent)="wizardActionHandler($event)">
+        <span> <strong>{{wizardHeader.currentLevel}}. Adım:</strong>
+			{{currentLevel?.title}}
+		</span>
+    </app-wizard-header>
+</div>
+<app-narrow-col-timer *ngIf="expiresIn >
+	0" (timeEndEvent)="timeEventHandler($event)" [expiresIn]="expiresIn">
+</app-narrow-col-timer>
+<div class="margin-bottom-95 full-width">
+    <div *ngIf="currentLevel?.key == 'payment'">
+        <div *ngIf="state">
+            <div class="c-multiple-payment-block__type-area" *ngIf="paymentProcessType == 0">
+
+                <ul class="c-multiple-payment-block__type">
+                    <!--                    <li *ngFor="let paymentType of paymentTypes" (click)="selectPaymentType(paymentType, $event)" [class.c-multiple-payment-block__type-item--active]="paymentType.isSelected" class="c-multiple-payment-block__type-item">-->
+                    <li *ngIf="state.Installment" (click)="installmentOptions()" class="c-multiple-payment-block__type-item c-multiple-payment-block__type-installments">
+                        <app-promise-icon size="lg" color="#ffffff" [iconName]="'account_balance_wallet'"></app-promise-icon> <strong>Taksitli Öde</strong>
+                    </li>
+                    <li *ngFor="let paymentType of paymentTypes" (click)="makePayment_2(paymentType,remainingAmount)" class="c-multiple-payment-block__type-item">
+                        <div *ngIf="!paymentType.isSelected" class="c-multiple-payment-block__type-name">
+                            <app-promise-icon size="lg" [isPromising]="paymentType.isPromising" color="#ffffff" [iconName]="paymentType.icon"></app-promise-icon> <strong>{{paymentType.Type_Desc}}</strong>
+                        </div>
+
+                        <div *ngIf="paymentType.isSelected" class="c-multiple-payment-block__form">
+
+                            <div [class.c-multiple-payment-block__input-with-additionals--focus]="paymentType.isFocused" class="c-multiple-payment-block__input-with-additionals">
+                                <span class="c-multiple-payment-block__left-additional">
+									<span class="c-multiple-payment-block__form-icon"> <i class="icon__n icon__n--{{paymentType.icon}}"></i>
+									</span>
+                                </span>
+                                <!--Ver.1 17.8.2017-->
+                                <!--                                <span class="c-multiple-payment-block__form-element">
+                                    
+                                <input #paymentInput
+                                [(ngModel)]="paymentType.amount"
+                                (focus)="paymentInputFocusHandler(paymentType, $event)"
+                                (focusout)="paymentInputBlurHandler(paymentType, $event)"
+                                (blur)="paymentInputBlurHandler(paymentType, $event)"
+                                (keyup.enter)="makePayment(paymentType, $event)"
+                                [attr.data-payment-type]="paymentType.Type"
+                                type="text" placeholder="0.00">
+                            </span>-->
+                                <span class="c-multiple-payment-block__right-additional">
+									<span class="c-multiple-payment-block__form-label">{{currency}}</span>
+                                </span>
+                            </div>
+
+                        </div>
+
+                        <small *ngIf="paymentType.isSelected && paymentType.Type == 1" class="c-multiple-payment-block__overlay-link-btn">Para üstü hesaplayın</small>
+
+                    </li>
+                </ul>
+            </div>
+            <div class="c-multiple-payment-block__type-area text-xs-center" *ngIf="paymentProcessType == 1">
+                <app-button (click)="makePayment_2(lastInputPayment,remainingAmount,'onFiscalError')" theme="secondary">CİHAZI KONTROL EDİP İŞLEMİ TAMAMLAMAK İÇİN TIKLAYINIZ</app-button>
+            </div>
+            <!--Ver:1-->
+            <!--            <div class="c-multiple-payment-block__type-area text-xs-center" *ngIf="isPrintLastReceipt">
+                <app-button (click)="confirm()" theme="danger">SON İŞLEM KOPYASINI BAS</app-button>
+            </div>-->
+
+            <div *ngIf="paymentList?.length" class="c-multiple-payment-block__table">
+                <div *ngFor="let payment of paymentList" class="c-multiple-payment-block__table-item">
+                    <span class="c-multiple-payment-block__table-item-label">
+						{{payment.name}} <i *ngIf="payment.info">- {{payment.info}}</i>
+					</span>
+                    <span class="c-multiple-payment-block__table-item-value c-multiple-payment-block__table-item-value--added">
+						- {{payment.amount}} <sup>{{currency}}</sup>
+					</span>
+                    <span class="c-multiple-payment-block__table-item-action">
+						<app-button
+                (click)="removePayment(payment, $event)"
+                [isDisabled]="payment.isPromising"
+                [isPromising]="payment.isPromising"
+                type="icon" icon="delete" theme="secondary" *ngIf="remainingAmount >0 && paymentProcessType == 0"></app-button>
+					</span>
+                </div>
+            </div>
+
+            <div style="display: flex;
+                justify-content: space-between;
+                padding: 20px 30px;
+                align-items: center;
+                border-top: 1px solid #ccc;
+                border-bottom: 1px solid #ccc;">
+
+                <strong>E-Fatura</strong>
+                <app-checkbox type="lightswitch" (changeEvent)="invoiceModal($event)" [isChecked]="sendInvoiceTypeToService"></app-checkbox>
+
+            </div>
+
+
+            <div class="c-multiple-payment-block__total ">
+                <div class="c-multiple-payment-block__total-content">
+                    <!--Ver.2-->
+                    <span class="c-multiple-payment-block__total-label">TUTAR</span>
+                    <!--Ver.1-->
+                    <!--<span class="c-multiple-payment-block__total-label">KALAN</span>-->
+                    <span class="c-multiple-payment-block__total-price">{{remainingAmount}} <sup>{{total.Currency}}</sup></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="currentLevel?.key == 'summary'">
+        <div class="c-multiple-payment-block__table">
+
+            <div class="c-multiple-payment-block__table-head">
+                <span class="c-multiple-payment-block__table-head-title">İşlemler</span>
+            </div>
+
+            <div *ngIf="paymentList?.length" class="c-multiple-payment-block__table">
+                <div *ngFor="let payment of paymentList" class="c-multiple-payment-block__table-item">
+                    <span class="c-multiple-payment-block__table-item-label">
+						{{payment.name}} <i *ngIf="payment.info">- {{payment.info}}</i>
+					</span>
+                    <span class="c-multiple-payment-block__table-item-value c-multiple-payment-block__table-item-value--added">
+						- {{payment.amount}} <sup>{{currency}}</sup>
+					</span>
+                    <span class="c-multiple-payment-block__table-item-action">
+						<app-button
+                (click)="removePayment(payment, $event)"
+                [isDisabled]="payment.isPromising"
+                [isPromising]="payment.isPromising"
+                type="icon" icon="delete" theme="secondary" *ngIf="remainingAmount >0 && paymentProcessType == 0"></app-button>
+					</span>
+                </div>
+            </div>
+
+            <div class="c-multiple-payment-block__total">
+                <div class="c-multiple-payment-block__total-content">
+                    <span class="c-multiple-payment-block__total-label">KALAN</span>
+                    <span class="c-multiple-payment-block__total-price">
+						{{remainingAmount}} <sup>{{total.Currency}}</sup>
+					</span>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+<!-- <div class="c-multiple-payment-block__info-box padding-top-20 full-width">
+    <span>
+        <strong>Biletleri Yazıcıdan Bas</strong>           
+        <app-checkbox type="lightswitch" (changeEvent)="checkBoxEvent($event)" [isChecked]="true"></app-checkbox>  
+    </span>
+</div> -->
+<div class="c-multiple-payment-block__footer">
+    <div class="c-multiple-payment-block__footer-content">
+        <div class="row" style="position:relative;transform:translateY(-50%);top:50%">
+
+            <div class="col-xs-8">
+                <!-- <a href="javascript:void(0)" class="margin-left-30 margin-top-10" *ngIf="currentLevel?.key == 'invoice'" [routerLink]="['/boxoffice']">Alışverişe devam et</a> -->
+                <app-button *ngIf="currentLevel?.key == 'payment'" class="float-xs-left" [isPromising]="isTransactionCancelling" (clickEvent)="cancelTransaction()" [isDisabled]="isTransactionCancelling" style="margin-right:5px;">İPTAL ET</app-button>
+            </div>
+            <div class="col-xs-8 float-xs-right">
+                <app-button [isPromising]="isPostPaymentSending" (clickEvent)="submitClickHandler($event)" [isDisabled]="(currentLevel?.key == 'payment' && !isBalanced) || isPostPaymentSending" theme="primary" [label]="'DEVAM ET'"></app-button>
+            </div>
+
+        </div>
+    </div>
+</div>

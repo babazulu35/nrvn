@@ -1,0 +1,19 @@
+<div *ngIf="hasEntityModel" class="c-usercard-context__view-info" [ngClass]="{'main-loader': isLoading }">
+    <div class="c-usercard-context__view-avatar">
+        <app-avatar [letters]="avatarLetter(name,surname)" [source]="null"></app-avatar>
+    </div>
+    <div *ngIf="!isAnonymous" class="c-usercard-context__view-name">
+        <a [routerLink]="['/member',crmMemberId]">{{name}} {{surname}}</a>
+        <span>{{phone | phoneFormat:true}}</span>
+    </div>
+    <div *ngIf="isAnonymous" class="c-usercard-context__view-name">
+        {{phone | phoneFormat:true}}
+    </div>
+    <i class="c-context-menu__close-button icon__n icon__n--close" (click)="tetherService.dismiss()"></i>
+</div>
+<div *ngIf="!hasEntityModel" class="c-usercard-context__view-info" [ngClass]="{'main-loader': isLoading }">
+    <div class="c-usercard-context__view-name">
+        Üye Bilgisi Yoktur
+    </div>
+    <i class="c-context-menu__close-button icon__n icon__n--close" (click)="tetherService.dismiss()"></i>
+</div>

@@ -1,0 +1,85 @@
+<div class="p-search-container">  
+  <app-inline-search-input placeholder="Kullanıcı adına göre arama yapın"
+                           (onInputSave)="search($event)"
+                           (onInputChange)="search($event)"
+                           [isPromising]="isPromising"                                                    
+                           [delay]="500"
+                           [hasBorder]='true'></app-inline-search-input>
+</div>
+
+<app-no-data *ngIf="noDataInContent || startScreen"
+             [ngClass]="{'main-loader': isLoading }"
+             [icon]='{type: "icon", name: "person"}'
+             [hasContainer]="true"
+             style="max-width:50%; margin-top:30px"
+             [title]="noDataTitle"
+             [description]="noDataDescription"></app-no-data>
+
+<div class="o-list-view" *ngIf="!noDataInContent && !startScreen">
+  <div class="o-list-view__content">
+    <app-responsive-table [isLoading]="isLoading">
+    
+    <div class="c-responsive-table__caption row">
+      <div class="c-responsive-table__primary-column col-xs-15 col-xl-6">
+        <div class="hidden-md-down c-primary-column-title">
+          KULLANICI ADI
+        </div>
+      </div>
+      <div class="c-responsive-table__secondary-column hidden-lg-down col-xl-9">
+        <div class="col-xs-6">
+          <div class="hidden-md-down c-primary-column-title">
+            AD SOYAD
+          </div>
+        </div>
+        <div class="col-xs-10">
+          <div class="hidden-md-down c-primary-column-title">
+            ROL GRUPLARI
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="c-responsive-table__row row" *ngFor="let user of users">
+        <div class="c-responsive-table__primary-column col-xs-15 col-xl-6">
+          <div class="c-primary-column-line c-primary-column-line--with-avatar">
+              <div class="c-primary-column-line__primary-content">
+                <div class="c-primary-column-line__select">
+                    <i class="icon__n icon__n--md icon__n--person"></i>
+                </div>
+
+                <div class="c-primary-column-line__avatar">
+                  <app-avatar [letters]="getLetters(user.FirstName, user.LastName)" [source]="user.Images"></app-avatar>
+                </div>
+
+                <div class="c-primary-column-line__title">
+                  <!-- {{ user.FirstName }} {{ user.LastName }} -->
+                  {{ user.UserName }}
+                </div>
+              </div>     
+          </div> 
+        </div>
+        <div class="c-responsive-table__secondary-column hidden-lg-down col-xl-9">
+            <div class="col-xs-6">
+								<span class="text">{{ user.FirstName }} {{ user.LastName }}</span>
+            </div>
+            <div class="col-xs-10">
+								<span class="text">{{ (user.Groups && user.Groups.length) ? user.Groups.join(", ") : "-"}}</span>
+            </div>
+        </div>
+        <div class="c-responsive-table__action-btn col-xs-1">						
+          <app-button type="icon" icon="edit" theme="secondary" (clickEvent)="userSelected(user)"></app-button>
+      </div>	
+      </div>
+    </app-responsive-table>
+
+    <div class="o-list-view__footer">
+      <app-pagination size="xs"
+                      [options]="pageSizes"
+                      [totalItem]="count"
+                      [showItemPerPage]="pageSize"
+                      [currentPage]="currentPage"
+                      (changeEvent)="changePageSize($event)"
+                      (transistPage)="transistPage($event)"></app-pagination>
+    </div>
+  </div>
+</div>

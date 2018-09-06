@@ -1,0 +1,105 @@
+$c-product-pill-group: (
+
+);
+
+$c-product-pill-group: map-merge($c-product-pill-group, getSettingsMap("$c-product-pill-group"));
+
+$c-map: $c-product-pill-group;
+
+.c-product-pill-group {    
+    padding:0px 15px 10px 15px;
+    margin: 5px -20px;
+}
+
+.c-product-pill-group__title {
+    font-size:13px;
+    @include ffamily("bold");
+    color:#9d9d9d;    
+    margin:10px 5px;
+}
+
+.c-product-pill-group__pill-wrapper {
+    width: 100%;
+    padding: 0px 5px 0px 0px;
+}
+
+.c-product-pill-group__pill {
+    display: flex;
+    height:50px;
+    max-height: 50px;
+    margin:5px;
+    border-radius:25px;    
+    text-align:center;
+    cursor: pointer;     
+    width: 100%;
+    flex-grow: 1;
+    flex-shrink: 1; 
+    align-items: center;
+
+    &:hover {
+        background-color: #474A4C !important;      
+        .c-product-pill-group__pill-title {
+            color: #fff !important;
+        }
+        .c-product-pill-group__pill-right {
+            color: #474A4C;
+        }
+    }
+
+    &--active,
+    &:focus {
+        background-color: #000000 !important;  
+        .c-product-pill-group__pill-title {
+            color: #fff !important;
+        }
+        .c-product-pill-group__pill-right {
+            color: #000000;
+        }
+    }    
+}
+
+.c-product-pill-group__pill-left {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    flex-shrink: 1;
+    padding: 10px 3px 10px 16px;
+    text-align: left;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.c-product-pill-group__pill-right {
+    display: flex;
+    align-items: center;
+    justify-self: flex-end;
+    width: auto;
+    text-align: right;
+    padding-right: 10px;
+}
+
+.c-product-pill-group__pill-title {
+    // margin-left:10px;
+    display: block;
+    width: 100%;
+    font-size:13px;    
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    margin: 0px;
+    @include ffamily("bold");        
+}
+
+.c-product-pill-group__pill-badge {
+    background-color:white;
+    border-radius:20px;
+    padding:5px 15px;
+    max-width: 70px;
+    font-size: 14px;
+    white-space: nowrap;
+    @include ffamily("semi");
+    sup {
+        top: -0.6em;
+        font-size: 60%;
+    }
+}

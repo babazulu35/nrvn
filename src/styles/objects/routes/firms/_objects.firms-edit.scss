@@ -1,0 +1,49 @@
+$or-firms-edit: ();
+// Merge settings and defaults
+$or-firms-edit: map-merge($or-firms-list, getSettingsMap("or-firms-list"));
+// Set shortcuts
+$or-map: $or-firms-edit;
+.or-firms-edit {
+    .c-header-inline-edit__breadcrumb-item {
+        cursor: pointer;
+    }
+    .c-split-container {
+        &__fixed-container {
+            >div[right] {
+                .p-container {
+                    margin-bottom: 140px;
+                }
+                .c-firm-search-select {
+                    &__list-item {
+                        padding: 8px 10px;
+                        &-type {
+                            display: none;
+                        }
+                        &-title {
+                            text-align: left;
+                        }
+                    }
+                }
+            }
+        }
+        &__fluid {
+            >div[fluid] {
+                .p-form-group__label {
+                    sup {
+                        font-size: 11px;
+                    }
+                }
+                .p-form-group__content {
+                    font-family: "OpenSansRegular";
+                    font-size: 13px;
+                }
+            }
+        }
+    }
+    &__firm-add {
+        width: 319px !important;
+    }
+    &__firm-switch {
+        width: 90% !important;
+    }
+}

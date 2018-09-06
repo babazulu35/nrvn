@@ -1,0 +1,121 @@
+<div class="or-performance-products">
+    <app-collapsible-container theme="gray" [isAsideOpen]="true" [asideWidth]="240">
+        <div content>
+
+            <!--Header-->
+            <div class="p-header p-header--border">
+                <span class="margin-right-5">Ürünler</span>
+                <!--<app-button type="icon" icon="plus" shape="circle" theme="secondary" size="lg"></app-button>-->
+                <app-button [routerLink]="['/product/create']" [queryParams]="{ performanceId: pageID }" type="icon" icon="plus" shape="circle" theme="secondary" size="lg"></app-button>
+            </div>
+
+            <!--Container-->
+
+            <div class="p-container" [class.p-container--promising]="isLoading">
+                <!--Group-->
+                <div class="p-group">
+                    <ul class="or-performance-products__list">
+                        <li *ngFor="let product of products">
+                            <app-product-item-line [categoryColorSeat]="product.CategoryColorSeat"
+                                                   (actionEvent)="productActionHandler($event, product)"
+                                                   [product]="product"
+                                                   [name]="product?.Localization?.Name"
+                                                   [isViewOnly]="true"
+                                                   [price]="product.CurrentPrice"
+                                                   [currency]="product.Currency.Code"
+                                                   [id]="product.Id">
+                                <div subtitle *ngIf="product.SalesEndDate  && !product.isPast">
+                                    <strong>{{product.SalesEndDate | relativeDate}}</strong>'a kadar satışta 
+                                </div>
+                                <div subtitle *ngIf="product.SalesEndDate && product.isPast">
+                                    <strong>{{product.SalesEndDate | relativeDate}}</strong>'da satış bitti
+                                </div>
+                                <div subtitle *ngIf="!product.SalesEndDate && product.AllowedSalesTotal && product.ActualSalesTotal >= 0">
+                                    <strong>Kota ({{product.AllowedSalesTotal}} adet)</strong> bitene kadar satışta ({{product.ActualSalesTotal}} adet satıldı)
+                                </div>
+                            </app-product-item-line>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <app-no-data *ngIf="products.length == 0" style="max-width: 60%;margin-top:30px" [hasContainer]="true" [icon]='{type: "icon", name: "performance"}' title="Seçtiğiniz performansa ait ürün kaydı bulunamadı" description=""></app-no-data>
+        </div>
+
+        <div aside>
+            <div class="p-group">
+                <!--header-->
+                <div class="p-group__header">
+                    <div class="p-group__header-bar">
+                        <div class="p-group__header-title">
+                            AYARLAR
+                        </div>
+                    </div>
+                </div>
+
+                <!--item-->
+                <div class="p-group__item">
+                    <div class="p-group__list">
+                        <div class="p-group__list-item">
+                            <label for="" class="p-group__list-item-label">Yayınla</label>
+                            <div class="p-group__list-item-action">
+                                <app-checkbox (changeEvent)="checkHandler($event, 'PublishDateFieldOn', 'flags')" [isChecked]="flags.PublishDateFieldOn" type="lightswitch"></app-checkbox>
+                            </div>
+                        </div>
+                        <div class="p-group__list-item-content" *ngIf="flags.PublishDateFieldOn">
+                            <div class="p-form-group">
+                                <app-text-input (focusout)="savePublishDate()" type="datepicker" size="sm-text" placeholder="Bir Tarih Seçiniz" (changeEvent)="dateChangeHandler($event, 'PublishDate')" [date]="performance?.PublishDate"></app-text-input>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="p-group">
+                <!--header-->
+                <div class="p-group__header">
+                    <div class="p-group__header-bar">
+                        <div class="p-group__header-title">
+                            BİLET İSTATİSTİKLERİ
+                        </div>
+
+                        <!--<div class="p-group__header-action">
+                            <a>Tümü</a>
+                        </div>-->
+                    </div>
+                </div>
+
+                <!--item-->
+                <div class="p-group__item">
+                    <app-vertical-kv-list
+                        [sections]="[
+                            [
+                                {key: 'capacity', label: 'TOPLAM KAPASİTE', value: totalCapacity},
+                                {key: 'sold', label: 'SATILAN', value: soldTicketCount},
+                                {key: 'remain', label: 'KALAN', value: openCapacity}
+                            ]
+                        ]"></app-vertical-kv-list>
+                </div>
+
+                <div class="p-group__item" *ngIf="canSendAccessCode">
+                    <app-action-box 
+                        [title]="'Erişim kodu gönder'"
+                        [description]="'Bu performansa ait erişim kodunu geçiş kontrol sistemine göndermek ister misiniz?'"
+                        [buttons]="[
+                            {label: 'GÖNDER', action: 'sendAccessCode', theme: 'primary', isPromising: isPromising}
+                        ]"
+                        (actionEvent)="accessCodeActionHandler($event)"></app-action-box>
+                </div>
+
+                <div class="p-group__item">
+                    <div class="c-cta-box c-cta-box--dark">
+                        <i class="c-cta-box__icon icon__n icon__n--announcement"></i>
+                        <p class="c-cta-box__content"><i>Program bilgisi oluşturulmamış </i> <b>Program bilgisini oluşturmak ister misiniz?</b></p>
+                        <a href="javascript:void(0)" class="c-cta-box__action-link">İÇERİK YÖNETİMİNE GİT</a>
+                    </div>
+                    <!-- /.c-call-tor-action-box -->
+                </div>
+            </div>
+        </div>
+    </app-collapsible-container>
+</div>

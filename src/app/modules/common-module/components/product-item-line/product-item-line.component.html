@@ -1,0 +1,55 @@
+<div class="c-product-item-line__bar" [ngClass]="{ 'c-product-item-line__bar--expand' : !infoHidden, 'c-product-item-line__bar--disabled': isDisabled, 'c-product-item-line__bar--basket-added': isInCart}">
+
+    <div class="c-product-item-line__ticket-effect c-product-item-line__ticket-effect-left"></div>
+
+    <div class="c-product-item-line__ticket-content">
+        <div class="c-product-item-line__bar-summary">
+            <div class="c-product-item-line__title">
+                <div class="c-product-item-line__border" *ngIf="categoryColorSeat" [style.background-color]="'#'+categoryColorSeat">
+                </div>
+
+                <strong class="c-product-item-line__title-name" (click)="goToProduct($event)">{{name}}</strong>
+
+                <div class="c-product-item-line__title-subtitle">
+                    <ng-content select="[subtitle]"></ng-content>
+                </div>
+                <!--<i class="icon__n icon__n--close" (click)="toggleInfo()"></i>
+                <i *ngIf="hasContent" class="icon__n icon__n--info_outline" (click)="toggleInfo()"></i>-->
+            </div>
+
+            <div class="c-product-item-line__amount">
+                <span class="c-product-item-line__amount-value" *ngIf="price > 0">{{price | number : '1.2-2'}} <sup>{{currency}}</sup></span>
+                <span class="c-product-item-line__amount-value" *ngIf="!price">-</span>
+                <small *ngIf='isViewOnly && (piece > 0)' class="c-product-item-line_small"><strong>{{piece}} ADET</strong> Boş yer.</small>
+            </div>
+
+            <div *ngIf="!isViewOnly" class="c-product-item-line__action-area">
+                <div class="row c-product-item-line__action-area-elements">
+                    <div class="col-xs-8 c-product-item-line__action-area-item">
+                        <app-number-picker (stepHandler)="numberStepperEvent($event)" [min]="0" [currentQuantity]="minProductCount" [max]="maxProductCount"></app-number-picker>
+                        <!--<app-selectbox [isDisabled]="isDisabled" [numberRanges]="{max: maxProductCount, min: minProductCount}" (changeEvent)="selectBoxEvent($event)"></app-selectbox>-->
+                        <small class="c-product-item-line_small" *ngIf="piece > 0"><strong>{{piece}} ADET</strong> Boş yer.</small>
+                    </div>
+                    <div class="col-xs-8 c-product-item-line__action-area-item">
+                        <!--<app-button (click)="emitAction('addToCart')" [isDisabled]="isDisabled" style="display:block;" [isPromising]="isPromising">SEPETE EKLE</app-button>-->
+                        <button *ngIf="!seatSelectable" [disabled]="isDisabled" (click)="emitAction('addToCart')" class="btn btn-primary btn-block">SEPETE EKLE</button>
+                        <button *ngIf="seatSelectable" [disabled]="isDisabled" (click)="emitAction('selectSeat')" class="btn btn-secondary btn-block">YER SEÇ</button>
+                    </div>
+                </div>
+                <div class="c-product-item-line__action-area-results">
+                    <span>Ürün Sepete Eklendi</span> <i class="icon__n icon__n--check"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="c-product-item-line__bar-content">
+            <ng-content select="[content]"></ng-content>
+        </div>
+
+    </div>
+
+    <div class="c-product-item-line__ticket-effect c-product-item-line__ticket-effect-right" [class.c-product-item-line__ticket-effect--wide]="actions?.length">
+        <app-button *ngIf="actions?.length" (click)="openContextMenu($event)" type="icon" icon="more_vert" theme="secondary"></app-button>
+    </div>
+
+</div>

@@ -1,0 +1,13 @@
+<div class="c-breadcrumb__bar">
+    <div class="c-breadcrumb__element">
+        <span class="c-breadcrumb__element-item" *ngFor="let map of breadcrumbs">
+        <a *ngIf="map.link" [routerLink]="[map.link]">
+          {{map.title}}
+        </a>
+         <span *ngIf="!map.link">
+         {{map.title}}
+         </span>
+        </span>
+    </div>
+    <ng-content></ng-content>
+</div>

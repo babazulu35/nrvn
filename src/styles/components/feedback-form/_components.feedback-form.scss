@@ -1,0 +1,105 @@
+/* --------------------------------------------------------
+author: Can SİVRİ
+----------------------------------------------------------*/
+
+/***
+* Feedback Form Component:
+*/
+
+/**
+* Feedback Form:
+* `.c-feedback-form - Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque repellat autem deleniti odit repellendus temporibus placeat ipsa similique, neces
+*
+*     @example
+
+*/
+
+
+// Set defaults
+
+$c-feedback-form: (
+	padding: 28px,
+	background-color: #fff,
+	border: 1px solid #dcdce5
+);
+
+// Merge settings and defaults
+$c-feedback-form: map-merge($c-feedback-form, getSettingsMap("c-feedback-form"));
+
+// Set shortcuts
+$c-map: $c-feedback-form;
+
+
+.c-feedback-form {
+	box-sizing: border-box;
+	padding: map-get($c-map, padding);
+	background-color: map-get($c-map, background-color);
+	border: map-get($c-map, border); 
+	.c-modal-sub-heading {
+		border:none;
+		margin:0 0 30px 0;
+		&__text {
+			width: 85%;
+			font-size: 16px;
+			@include ffamily("semi");
+			line-height: 24px;
+		}
+		&__close {
+			position:relative;
+			top:2px;
+		}
+	}
+	&__warning {
+		margin: 0 0 25px 0;
+		font-size: 13px;
+		@include ffamily("regular");
+		color: #35383d;
+		strong {@include ffamily("bold")}
+	}
+	&__textarea {
+		margin:0 0 40px 0;
+		&--label {
+			display: block;
+			font-size: 11px;
+			@include ffamily("regular");
+			color: #9d9d9d;
+		}
+		textarea {
+			width: 100%;
+			min-height: 100px;
+			margin: 0;
+			resize: none;
+			border: 1px solid #dcdce5;
+			border-radius: 3px;
+			outline: none;
+		}
+	}
+	&__action-bar {
+		text-align:right;
+		a {
+			display: inline-block;
+			vertical-align: middle;
+			margin: 0 14px;
+			font-size: 12px;
+			@include ffamily("bold");
+			color: #392d38;
+			&:hover, &:focus {
+				text-decoration: none;
+				color: #392d38;
+			}
+		}
+		.btn {
+			min-width: 120px;
+			outline: none;
+			&.btn-flat {
+				@include t--create-button(#392d38, #fff, #dcdce5, 12px, 15px, 12px, 100px);
+				text-transform: uppercase;
+				@include ffamily('bold');
+				font-size: 12px;
+				-webkit-font-smoothing: antialiased;
+				-moz-osx-font-smoothing: grayscale;
+			}
+			&:hover, &:focus {outline:none;}
+		}
+	}
+}

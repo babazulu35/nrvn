@@ -1,0 +1,645 @@
+
+$c-split-container: (
+
+  fluid: (
+    padding: 30px,
+
+    placeholder: (
+      space: 20px,
+
+      header: (
+        font-size: 2rem,
+        padding: 20px 30px 15px,
+        border-color: #e0e0e0
+      ),
+
+      container: (
+        padding: 30px
+      ),
+
+      group: (
+        margin-bottom: 40px,
+
+        header: (
+          border-color: #dcdce5,
+
+          title: (
+            color: #35383d,
+            font-size: 16px
+          )
+        ),
+
+        item: (
+          margin-bottom: 20px,
+        ),
+
+        wings: (
+            border-color: #dcdce5,
+        )
+      ),
+
+      form-group: (
+        title: (
+            color: #939393,
+            font-size: 11px
+        )
+      )
+    )
+  ),
+
+  fixed: (
+    padding: 30px,
+    width: 400px,
+    border-color: #e0e0e0,
+
+    placeholder: (
+      space: 20px,
+      
+      group: (
+        margin-bottom: 20px,
+
+        header: (
+          border-color: #dcdce5,
+
+          title: (
+            color: #939393,
+            font-size: 11px
+          )
+        ),
+        item: (
+          margin-bottom: 10px,
+        ),
+        list: (
+          key: (
+            font-size: 11px,
+            color: #939393
+          ),
+          value: (
+            font-size: 13px,
+            color: #333333
+          ),
+          label: (
+            font-size: 13px,
+            color: #333333
+          )
+        )
+      ),
+      form-group: (
+        title: (
+            color: #939393,
+            font-size: 11px
+        )
+      ),
+
+      footer: (
+        background-color: #f7f7f7,
+        border-color: #dcdce5
+      )
+    ),
+    footer: (
+        width: 100%,
+        height: 70px,
+        padding: 0,
+        margin: 0,
+        background-color: #35383d,
+        border-color: #dcdce5,
+        button: (
+            background-color: #21242b,
+            color: #ffffff
+        )
+    )
+  )
+);
+
+// Merge settings and defaults
+$c-split-container: map-merge($c-split-container, getSettingsMap("c-split-container"));
+$o-map: $c-split-container;
+$fixed: map-get($o-map, fixed);
+$fluid: map-get($o-map, fluid);
+
+// Basic Styling
+.c-split-container {
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: relative;
+
+  
+  &__fluid {
+    display: block;
+    position: relative;
+    width: auto;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    &--padding {
+      padding: map-deep-get($o-map, fluid, padding);
+    }
+
+    &__header {
+      @include ffamily('light');
+      font-size: map-deep-get($fluid, placeholder, header, font-size);
+      padding: map-deep-get($fluid, placeholder, header, padding);
+
+      &--border {
+        border-bottom: solid 1px map-deep-get($fluid, placeholder, header, border-color);
+      }
+    }
+
+    //placeholder
+
+    //p-header iptal
+    .p-header {
+      @include ffamily('light');
+      font-size: map-deep-get($fluid, placeholder, header, font-size);
+      padding: map-deep-get($fluid, placeholder, header, padding);
+
+      &--border {
+        border-bottom: solid 1px map-deep-get($fluid, placeholder, header, border-color);
+      }
+    }
+
+    .p-container {
+      padding: map-deep-get($fluid, placeholder, container, padding);
+
+      &--no-padding {
+        padding: 0px;
+      }
+    }
+
+    .p-group {
+      
+      & + .p-group,
+      & + .p-form-group {
+        margin-top: map-deep-get($fluid, placeholder, space)*2;
+      }
+
+      &__header {
+        display: block;
+        padding-bottom: map-deep-get($fluid, placeholder, space)*0.75;
+
+        &--border {
+          border-bottom: 1px solid map-deep-get($fixed, placeholder, group, header, border-color);
+          margin-bottom: map-deep-get($fluid, placeholder, space);
+        }
+
+        &-bar {
+          display: table;
+          width: 100%;
+        }
+
+        &-title {
+          display: table-cell;
+          vertical-align: bottom;
+          width: 100%;
+          @include ffamily('semi');
+          font-size: map-deep-get($fluid, placeholder, group, header, title, font-size);
+          line-height: 1em;
+          color: map-deep-get($fluid, placeholder, group, header, title, color);
+        }
+
+        &-action {
+          display: table-cell;
+          vertical-align: bottom;
+          line-height: 1em;
+          white-space: nowrap;
+        }
+        
+      }
+
+      &__item {
+        & + .p-group__item,
+        & + .p-group__list {
+          margin-top: map-deep-get($fluid, placeholder, space);
+        }
+      }
+
+      &__wings {
+        display: flex;
+        width: 100%;
+        align-items: center;
+        justify-content: space-around;
+        align-content: center;
+        border-top: solid 1px map-deep-get($fluid, placeholder, group, wings, border-color);
+        &-left,
+        &-right {
+            width: 50%;
+            display: flex;
+            position: relative;
+        }
+        &-left {
+          &-title {
+            padding-top: map-deep-get($fluid, placeholder, group, margin-bottom);
+            padding-bottom: map-deep-get($fluid, placeholder, group, margin-bottom)/2;
+          }
+        }
+        &-right {
+            align-items: center;
+            justify-content: flex-end;
+            text-align: right;
+            border-left: solid 1px map-deep-get($fluid, placeholder, group, wings, border-color);
+        }
+      }
+    }
+
+    .p-form-group {
+        
+        & + .p-group {
+          margin-top: map-deep-get($fluid, placeholder, space)*2;
+        }
+        & + .p-form-group {
+          margin-top: map-deep-get($fluid, placeholder, space)/2;
+        }
+
+        &__label {
+            display: inline-block;
+            width: 100%;
+            margin-bottom: map-deep-get($o-map, fluid, placeholder, space)*0.35;
+            @include ffamily('semi');
+            font-size: map-deep-get($o-map, fluid, placeholder, form-group, title, font-size);
+            line-height: 1em;
+            color: map-deep-get($o-map, fluid, placeholder, form-group, title, color);
+        }
+
+        &__input {
+            display: inline-block;
+            width: 100%;
+        }
+    }
+  }
+  &__fixed {
+    display: block;
+    position: absolute;
+    width: map-deep-get($o-map, fixed, width);
+    height: 100%;
+    top: 0px;
+    
+    &-container {
+      display: flex;
+      position: fixed;
+      height: inherit;
+      width: inherit;
+      overflow-y: auto;
+      overflow-x: hidden;
+
+      > * {
+        width: inherit;
+      }
+    }
+
+    &--right {
+      right: 0px;
+      .c-split-container__fixed-container {
+        border-left: 1px solid map-deep-get($fixed, border-color);
+      }
+      .p-footer {
+        transform: translateX(1px);
+      }
+    }
+    
+    &--left {
+      left: 0px;
+      .c-split-container__fixed-container {
+        border-right: 1px solid map-deep-get($fixed, border-color);
+      }
+      .p-footer {
+        transform: translateX(-1px);
+      }
+    }
+
+    &--padding {
+      padding: map-deep-get($fixed, padding);
+    }
+
+    &--noborder {
+      
+      .c-split-container__fixed-container {
+        border-left: none;
+        border-right: none;  
+      }
+      
+      &.c-split-container__fixed--left {
+        .p-container {
+          padding-left: map-deep-get($fluid, placeholder, container, padding);
+        }
+      }
+
+      &.c-split-container__fixed--right {
+        .p-container {
+          padding-right: map-deep-get($fluid, placeholder, container, padding);
+        }
+      }
+
+      &.c-split-container__fixed--left {
+        .p-container {
+          padding-left: map-deep-get($fluid, placeholder, container, padding);
+        }
+      }
+    }
+
+    
+    &__footer {
+        display: inline-block;
+        position: relative;
+        width: map-deep-get($fixed, footer, width);
+        height: map-deep-get($fixed, footer, height);
+        margin: map-deep-get($fixed, footer, margin);
+        padding: map-deep-get($fixed, footer, padding);
+        background-color: map-deep-get($fixed, footer, background-color);
+        text-align: center;
+
+        &--border {
+            border-top:1px solid map-deep-get($fixed, footer, border-color);
+        }
+
+        >* {
+            display: inline-block;
+            vertical-align: middle;
+        }
+        
+        &:before {
+            content: "";
+            display: inline-block;
+            vertical-align: middle;
+            height: 100%;
+            margin-right: -4px;
+        }
+
+        button {
+            background-color: map-deep-get($fixed, footer, button, background-color);
+            color: map-deep-get($fixed, footer, button, color);
+            border-radius: 2em;
+            padding: 1em 30px;
+            outline: none;
+
+            &:focus, &:hover, &.active, &:active {
+                outline: none;
+                &:focus { outline: none; }
+            }
+            &:hover{
+                background-color: darken(map-deep-get($fixed, footer, button, background-color), 100);
+            }
+            &:active{
+                background-color: map-deep-get($fixed, footer, button, background-color);
+            }
+        }
+    }
+
+    .p-header {
+      @include ffamily('light');
+      font-size: map-deep-get($fluid, placeholder, header, font-size);
+      padding: map-deep-get($fluid, placeholder, header, padding);
+
+      &--border {
+        border-bottom: solid 1px map-deep-get($fluid, placeholder, header, border-color);
+      }
+    }
+
+    .p-container {
+      // padding-top: map-deep-get($fluid, placeholder, container, padding);
+      // padding-bottom: map-deep-get($fluid, placeholder, container, padding);
+      padding: map-deep-get($fluid, placeholder, container, padding);
+
+      &--no-padding {
+        padding: 0px;
+
+        &--has-footer {
+          padding-bottom: calc(#{map-deep-get($fixed, footer, height)});
+        }
+      }
+
+      &--aside-padding {
+        padding: 0px map-deep-get($fluid, placeholder, container, padding);
+
+        &--has-footer {
+          padding-bottom: calc(#{map-deep-get($fixed, footer, height)});
+        }
+      }
+
+      &--has-footer {
+        padding-bottom: calc(#{map-deep-get($fixed, footer, height)} + #{map-deep-get($fixed, padding)});
+      }
+    }
+
+    .p-footer {
+      position: fixed;
+      bottom: 0px;
+      display: flex;
+      align-self: flex-end;
+      align-items: center;
+      justify-content: center;
+      width: inherit;
+      height: map-deep-get($fixed, footer, height);
+      padding: map-deep-get($fixed, footer, padding);
+      background-color: map-deep-get($fixed, placeholder, footer, background-color);
+      border-top: solid 1px map-deep-get($fixed, placeholder, footer, border-color);
+
+      &--transparent {
+        background-color: transparent;
+      }
+
+      &--white {
+        background-color: white;
+      }
+
+      &__pagination {
+        display: flex;
+        width: 100%;
+        height: 100%;
+        align-self: flex-end;
+        align-items: center;
+        justify-content: center;
+        padding: map-deep-get($fixed, placeholder, space);
+
+        > app-pagination {
+          display: block;
+          width: 100%;
+        }
+      }
+
+      &__line-actions {
+        display: flex;
+        position: absolute;
+        top: 0px;
+        right: map-deep-get($fixed, placeholder, space);
+        transform: translateY(-50%);
+        align-self: flex-end;
+        align-items: center;
+        justify-content: flex-end;
+        justify-self: flex-end;
+        
+      }
+    }
+
+    .p-group {
+      
+      & + .p-group,
+      & + .p-form-group {
+        margin-top: map-deep-get($fixed, placeholder, space)*2.5;
+      }
+
+      &__header {
+        display: block;
+        padding-bottom: map-deep-get($fixed, placeholder, space)/2;
+
+        &--border {
+          border-bottom: 1px solid map-deep-get($fixed, placeholder, group, header, border-color);
+          margin-bottom: map-deep-get($fixed, placeholder, space)/2;
+        }
+
+        &-bar {
+          display: table;
+          width: 100%;
+        }
+
+        &-title {
+          display: table-cell;
+          vertical-align: bottom;
+          width: 100%;
+          @include ffamily('semi');
+          font-size: map-deep-get($fixed, placeholder, group, header, title, font-size);
+          line-height: 1em;
+          color: map-deep-get($fixed, placeholder, group, header, title, color);
+        }
+
+        &-action {
+          display: table-cell;
+          vertical-align: bottom;
+          line-height: 1em;
+
+          a {
+            font-size: 0.9em;
+            @include ffamily('semi');
+            text-decoration: underline;
+            color: map-deep-get($fixed, placeholder, group, list, label, color);
+          }
+        }
+        
+      }
+
+      &__item {
+
+        & + .p-group__item,
+        & + .p-group__list {
+          margin-top: map-deep-get($fixed, placeholder, space);
+        }
+
+      }
+      
+      &__list{
+        list-style: none;
+        width: 100%;
+
+        & + .p-group__item,
+        & + .p-group__list {
+          margin-top: map-deep-get($fixed, placeholder, space);
+        }
+
+        &-item {
+          display: table;
+          table-layout: fixed;
+          width: 100%;
+          padding-top: 10px;
+          padding-bottom: 10px;
+          border-top: 1px solid #dcdce5;
+          line-height: 1em;
+          min-height: map-deep-get($fixed, placeholder, space)*2.5;
+          
+          &:last-child {
+            border-bottom: 1px solid #dcdce5;
+          }
+
+          &-bar {
+            display: inline-table;
+            width: 100%;
+            table-layout: fixed;
+
+            &+.p-group__list-item-content {
+                margin-top: map-deep-get($aside, placeholder, space);
+            }
+        }
+
+          &-key {
+            display: table-cell;
+            vertical-align: middle;
+            width: auto;
+            @include ffamily('semi');
+            font-size: map-deep-get($fixed, placeholder, group, list, key, font-size);
+            color: map-deep-get($fixed, placeholder, group, list, key, color);
+          }
+
+          &-value {
+            display: table-cell;
+            vertical-align: middle;
+            width: auto;
+            text-align: right;
+            font-size: map-deep-get($fixed, placeholder, group, list, value, font-size);
+            color: map-deep-get($fixed, placeholder, group, list, value, color);
+
+            a {
+              color: inherit;
+              text-decoration: underline;
+            }
+          }
+
+          &-label {
+            display: table-cell;
+            vertical-align: middle;
+            width: 100%;
+            padding-right: 8px;
+            @include ffamily('semi');
+            font-size: map-deep-get($fixed, placeholder, group, list, label, font-size);
+            color: map-deep-get($fixed, placeholder, group, list, label, color);
+          }
+
+          &-action {
+            display: table-cell;
+            vertical-align: middle;
+            width: 60px;
+            text-align: right;
+          }
+        }
+      }
+
+    }
+
+    .p-form-group {
+
+        & + .p-group {
+          margin-top: map-deep-get($fixed, placeholder, space)*2;
+        }
+        & + .p-form-group {
+          margin-top: map-deep-get($fixed, placeholder, space)/2;
+        }
+
+        &__label {
+            display: inline-block;
+            width: 100%;
+            margin-bottom: map-deep-get($fixed, placeholder, space)*0.35;
+            @include ffamily('semi');
+            font-size: map-deep-get($fixed, placeholder, form-group, title, font-size);
+            line-height: 1em;
+            color: map-deep-get($fixed, placeholder, form-group, title, color);
+        }
+
+        &__input {
+            display: inline-block;
+            width: 100%;
+
+            &+.p-form-group__input {
+                margin-top: map-deep-get($fixed, placeholder, space)*0.35;
+            }
+
+            input {
+                width: 100%;
+                min-height: 36px;
+            }
+        }
+    }
+
+  }
+}
+
+// Reset
+$o-map: null;

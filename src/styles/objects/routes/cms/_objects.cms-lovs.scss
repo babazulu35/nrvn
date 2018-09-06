@@ -1,0 +1,19 @@
+/* --------------------------------------------------------
+author: Abdullah Karadeniz
+----------------------------------------------------------*/
+
+$or-cms-lovs: ( border-color: #dcdce5, switch-bar: ( label: ( color: #373a3c, font-size: 14px, )));
+$or-cms-lovs: map-merge($or-cms-lovs, getSettingsMap("or-cms-lovs"));
+$oc-map: $or-cms-lovs;
+.or-cms-lovs {
+    display: block;
+    position: relative;
+
+    .o-list-view__content {
+        padding: 20px;
+    }
+}
+
+$oc-map: null;/* --------------------------------------------------------
+author: Abdullah Karadeniz
+----------------------------------------------------------*/

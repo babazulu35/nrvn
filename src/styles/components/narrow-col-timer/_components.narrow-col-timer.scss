@@ -1,0 +1,53 @@
+/**
+* Tree View:
+* Author: Can Sivri
+* `.c-narrow-col-timer` sınıfı ile birlikte kullanılır.
+*
+* @example
+*/
+
+
+// Variables
+$c-narrow-col-timer: (
+  padding: 3px 5px 1px,
+  text-color: #bdbdbd,
+  border-type: 1px solid #dcdce5,
+  background-color: #fffef3,
+  icon-size: 24px,
+  icon-margin: 0 2px 0 0,
+  label-font-size: 13px,
+  align: center
+);
+
+// Merge settings and defaults
+$c-narrow-col-timer: map-merge($c-narrow-col-timer, getSettingsMap("c-narrow-col-timer"));
+
+// Set shortcuts
+$c-map: $c-narrow-col-timer;
+
+
+.c-narrow-col-timer {
+  position: relative;
+  display: block;
+  padding: map-get($c-map, padding);
+  background-color: map-get($c-map, background-color);
+  border-top: map-get($c-map, border-type);
+  border-bottom: map-get($c-map, border-type);
+  text-align: map-get($c-map, align);
+  &__icon {
+    display: inline-block;
+    vertical-align: middle;
+    margin: map-get($c-map, icon-margin);
+    height: map-get($c-map, icon-size);
+    font-size: map-get($c-map, icon-size);
+    line-height: map-get($c-map, icon-size);
+    color: map-get($c-map, text-color);
+  }
+  &__label {
+    display: inline-block;
+    vertical-align: middle;
+    font-size: map-get($c-map, label-font-size);
+    @include ffamily("semi", "i");
+    color: map-get($c-map, text-color);
+  }
+}

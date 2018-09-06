@@ -1,0 +1,62 @@
+<div class="or-multiple-performance-create-capacity">
+    <div class="p-header-bar" sticky sticky-main-scroller sticky-release-offset="30" sticky-height-property="55" sticky-width-property="100%" sticky-follow-menu-moves>
+        <div class="p-header-bar__left">
+            <app-button theme="primary" icon="keyboard_arrow_left" shape="rounded" type="icon" size="md" (clickEvent)="multiplePerformanceService.goBack()"></app-button>
+            <h2>Yeni Etkinlik<span *ngIf="event?.Localization?.Name"> / {{event?.Localization?.Name | localization}}</span></h2>
+        </div>
+
+        <div class="p-header-bar__right">
+            <app-button (clickEvent)='submitEvent($event)' [isPromising]="isLoading" [isDisabled]="!isValid">DEVAM ET</app-button>
+            <!-- <app-button (clickEvent)='exit($event)' type="icon" icon="close" theme="secondary"></app-button> -->
+        </div>
+    </div>
+
+    <app-collapsible-container [isLoading]="isLoading || venueTemplateEditor?.isLoading || venueTemplateEditor?.isBatching || venueTemplateEditor?.isSelecting" [asideWidth]="300" [asideHasNoPadding]="true" [isAsideOpen]="true">
+        <div content>
+            <div class="p-full-content">
+                <app-venue-template-editor *ngIf="selectedProductFactory && performance?.VenueTemplate?.Id" [role]="role" (editorEvent)="venueEditorEventHandler($event)" [templateId]="performance?.VenueTemplate?.Id"></app-venue-template-editor>
+            </div>
+        </div>
+
+        <div aside>
+            <div class="p-container">
+                <div class="p-group" *ngIf="performance?.Localization?.Name">
+
+                    <div class="p-group__header">
+                        <div class="p-group__header-bar">
+                            <div class="p-group__header-title">
+                                PERFORMANS
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-group__item">
+                        <p><b>{{performance?.Localization?.Name | localization}}</b><br/>{{ performance?.Date ?  'performance?.Date | relativeDate ,' : ''}} {{performance?.VenueTemplate?.Venue?.Localization?.Name | localization}}</p>
+                    </div>
+
+                </div>
+                <div class="p-group">
+                    <div class="p-group__item" *ngIf="statistics?.length">
+                        <div class="or-multiple-performance-create-capacity__statistics">
+                            <app-vertical-kv-list [sections]="statistics"></app-vertical-kv-list>
+                        </div>
+                    </div>
+                    <div class="p-group__item">
+                        <app-performance-product-select-list (changeEvent)="performanceProductSelectChangeHandler($event)" (actionEvent)="performanceProductSelectActionHandler($event)" [performanceProducts]="performance?.Products" [selectedPerformanceProduct]="selectedProductFactory?.model"></app-performance-product-select-list>
+                    </div>
+                </div>
+
+                <!-- <div class="p-group" *ngIf="standingBlocks?.length">
+              <h3>Numarasız Koltuklar</h3>
+              <p>Ayakta olan alanlara ait kapasite bilgileri aşağıda listelenmiştir. Maksimum kapasite performansa bağlı bütün ürünlerin toplam kapasitesidir.</p>
+              <div class="p-group__item">
+                  <app-block-capacity-list 
+                      (changeEvent)="standingBlockChangeHandler($event)"
+                      title="Ayakta Bloklar"
+                      [items]="standingBlocks"></app-block-capacity-list>
+              </div>
+          </div> -->
+            </div>
+        </div>
+    </app-collapsible-container>
+</div>

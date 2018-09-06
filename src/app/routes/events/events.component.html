@@ -1,0 +1,23 @@
+<app-tab-bar [data]="tabs">
+    <div right>
+        <app-button *ngIf="isAuthenticatedRole" [routerLink]="['/event/create']">YENİ ETKİNLİK OLUŞTUR</app-button>
+    </div>
+</app-tab-bar>
+
+<div class="row o-filter-bar">
+    <div class="col-sm-5">
+        <app-inline-search-input (onInputSave)="onInputChange($event)" (onInputChange)="onInputChange($event)" [isIconAlignLeft]='true' placeholder='Etkinlikler Arasında Arayın'></app-inline-search-input>
+    </div>
+    <div class="col-sm-6 text-sm-center">
+        <app-pill-group [pills]="pills" [selectedPill]="selectedPill" (selectPillFilterAction)="filterEvents($event)"> </app-pill-group>
+    </div>
+    <div class="col-sm-5 float-sm-right">
+        <div class="o-tab__button float-sm-right">
+            <app-selectbox [options]="sortParams" style="min-width:180px;" (changeEvent)="sortEvents($event)" class="margin-right-10" *ngIf="eventService.viewType.isCardViewActive"></app-selectbox>
+            <app-sort-view (changeView)="changeView($event)"></app-sort-view>
+        </div>
+    </div>
+    <!-- Selet Box Ends-->
+</div>
+
+<router-outlet></router-outlet>

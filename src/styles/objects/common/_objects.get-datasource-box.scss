@@ -1,0 +1,65 @@
+$oc-get-datasource-box: ( table: ( row: ( height: 40px)));
+$oc-get-datasource-box: map-merge($oc-get-datasource-box, getSettingsMap("oc-get-datasource-box"));
+$oc-map: $oc-get-datasource-box;
+.oc-get-datasource-box {
+    display: block;
+    &__table-container {
+        border: solid 1px #dedede; 
+        padding: 0px 15px 5px;
+    }
+    &__types-list {
+        display: block;
+        max-height: 275px;
+        overflow-x: hidden;
+        overflow-y: auto;
+        margin-right: -30px;
+        padding-right: 30px;
+        padding-bottom: 2px;
+    }
+    &__table-row {
+        display: table;
+        width: 100%;
+        height: map-deep-get($oc-map, table, row, height);
+        line-height: 0px;
+    }
+    &__table-column-left {
+        display: table-cell;
+        width: auto;
+        vertical-align: middle;
+        .c-checkbox {
+            display: block;
+        }
+    }
+    &__table-column-right {
+        display: table-cell;
+        width: 30%;
+        vertical-align: middle;
+        .c-selectbox {
+            height: map-deep-get($oc-map, table, row, height);
+            border-radius: map-deep-get($oc-map, table, row, height)/2;
+        }
+    }
+
+    .c-container-canvas {
+        display: flex;
+        align-items: center;
+
+        .c-helper-text {
+            display: flex;
+            align-items: center;
+            > * {
+                display: flex;
+                vertical-align: middle;
+            }
+        }
+    }
+    .c-typeahead__result-box--empty {
+        display: none !important;
+    }
+
+    .c-typeahead__search-box-left {
+        min-width: 200px;
+    }
+}
+
+$oc-map: null;

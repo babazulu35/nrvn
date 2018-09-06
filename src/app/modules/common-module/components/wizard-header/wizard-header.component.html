@@ -1,0 +1,18 @@
+<div class="c-wizard-header__left">
+  <app-button class="c-wizard-header__back-button"
+              *ngIf="currentLevel > 1 && totalLevel > 1"
+              [isDisabled]="!historyIsActive"
+              (clickEvent)="emitAction({action: 'goBack'})"
+              type="icon" icon="navigate_before"></app-button>
+</div>
+<div class="c-wizard-header__center">
+  <span class="c-wizard-header__title">
+    <ng-content></ng-content>
+  </span>
+</div>
+<div class="c-wizard-header__right">
+  <span *ngIf="totalLevel > 1"
+        class="c-wizard-header__level-pill tag-pill tag-default">
+    <strong>{{currentLevel}}</strong> / {{totalLevel}}
+  </span>
+</div>

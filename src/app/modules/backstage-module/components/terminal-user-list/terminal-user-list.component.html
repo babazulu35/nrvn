@@ -1,0 +1,31 @@
+<div class="c-terminal-user-list__container">
+  <div *ngIf="isEmpty">
+    <app-button
+      (click)="openAddTerminalUserBox()"
+      theme="secondary">TERMİNAL KULLANICISI EKLE</app-button>
+  </div>
+  <div *ngIf="!isEmpty" class="c-terminal-user-list__content">
+    <ul class="c-terminal-user-list__items">
+      <li class="c-terminal-user-list__item" *ngFor="let terminalUser of terminalUsers">
+        <app-user-card                     
+          (actionEvent)="userCardActionHandler($event)"
+          [user]="terminalUser?.User" 
+          [info]="'Başlangıç: ' + formatDate(terminalUser?.BeginDate) + ' / Bitiş: ' + formatDate(terminalUser?.EndDate)"
+          [isActive]="terminalUser?.IsActive"
+          [contextMenuData]="getContextMenuForUser(terminalUser)"></app-user-card>
+      </li>
+    </ul>
+
+    <div class="c-terminal-user-list__add-button">
+      <app-button (click)="openAddTerminalUserBox()" type="icon" icon="plus" shape="circle" theme="secondary" size="autosize"></app-button>
+    </div>
+
+  </div>
+</div>
+<div class="c-terminal-user-list__footer">  
+    <span><app-promise-icon iconName="history"></app-promise-icon></span>
+    <span><app-button type="link"
+                      label="GEÇMİŞ KULLANICILARI GÖR" 
+                      [isDisabled]="!hasPreviousTerminalUsers"
+                      (clickEvent)="gotoPreviousUsers()"></app-button></span>  
+</div>

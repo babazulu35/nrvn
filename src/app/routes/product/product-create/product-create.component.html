@@ -1,0 +1,183 @@
+<div class="or-product-create">
+    <div class="p-header-bar" sticky sticky-main-scroller sticky-release-offset="30" sticky-height-property="55" sticky-width-property="100%" sticky-follow-menu-moves>
+        <div class="p-header-bar__left">
+            <app-header-inline-edit [hasLocalization]="true" [value]="title" [placeholder]="'Ürün Adını Giriniz'" [breadcrumbs]="isEditMode ? [{label:'Ürün Düzenle', routerLink:'/product-create'}] : [{label:'Ürün Ekle', routerLink:'/product-create'}]" (changeEvent)="inputChangeHandler($event, 'Name')"></app-header-inline-edit>
+        </div>
+
+        <div class="p-header-bar__right">
+            <app-button (clickEvent)='submitProduct($event)' [isPromising]="isPromising" [isDisabled]="!isValid" [label]="isEditMode ? 'KAYDET' : 'KAYDET VE DEVAM ET'"></app-button>
+            <app-button (clickEvent)='exit($event)' type="icon" icon="close" theme="secondary"></app-button>
+        </div>
+    </div>
+
+    <app-collapsible-container [isAsideOpen]="true" theme="toggle-gray" [asideHasNoPadding]="true" [isLoading]="isLoading">
+        <div content class="p-container">
+
+            <div class="p-group text-lg-center">
+                <div class="p-form-group text-lg-left padding-right-0">
+                    <div class="p-form-group__label">
+                        Tipi
+                    </div>
+                    <div class="p-form-group__input d-block">
+                        <app-multi-select-group (changeEvent)="tabChangeHandler($event)" size="wide" actionType="radio" [selectedValues]="isBundle ? ['bundleProducts'] : ['product']" [data]="[
+                                {label: 'Ürün', value: 'product', icon: 'tag', disabled: isEditMode && isBundle},
+                                {label: 'Birleştirilmiş Ürün', value: 'bundleProducts', icon: 'tag-multiple', disabled: isEditMode && !isBundle}
+                            ]"></app-multi-select-group>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-group">
+
+                <div class="p-group__wings">
+                    <div class="p-group__wings-left">
+                        <div class="p-group__wings-left-title">
+                            <span *ngIf="!isBundle">Performans ve Kapasite Bilgileri<sup>*</sup></span>
+                            <span *ngIf="isBundle">Ürün Bilgileri</span>
+                        </div>
+                    </div>
+                    <div class="p-group__wings-right"></div>
+                </div>
+                <div class="p-form-group__item">
+
+                    <app-performance-capacity-search-select *ngIf="!isBundle" (actionEvent)="performanceCapacityActionHandler($event)" (changeEvent)="performanceCapacityChangeHandler($event)" [isPromising]="promises.venueSeats.promising" [isEditable]="!isEditMode" [isSeatSelectionAvailable]="!performance?.VenueTemplate?.IsStanding"
+                        [performance]="performance" [product]="product" [capacity]="performanceProduct?.Capacity"></app-performance-capacity-search-select>
+
+                    <app-product-search-select *ngIf="isBundle" (changeEvent)="productsChangeHandler($event)" (actionEvent)="productsActionHandler($event)" [products]="products"></app-product-search-select>
+
+                </div>
+            </div>
+
+            <div class="p-group" *ngIf="!isEditMode || product?.Id">
+                <div class="p-group__header">
+                    <div class="p-group__header-bar">
+                        <div class="p-group__header-title">
+                            Yerleşim Bilgileri
+                        </div>
+                        <div class="p-group__header-action">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="p-group__item">
+                    <app-product-selection-type-list (changeEvent)="selectionTypeListChangeHandler($event)" [productId]="product?.Id"></app-product-selection-type-list>
+                </div>
+            </div>
+
+            <div class="p-group">
+                <div class="p-group__header">
+                    <div class="p-group__header-bar">
+                        <div class="p-group__header-title">
+                            Fiyat Bilgileri
+                        </div>
+                        <div class="p-group__header-action" *ngIf="product?.PriceLists?.length">
+                            <span>
+                                <span><app-button (click)="toggleAllPriceBlocks()" type="link" [label]="allPriceCollapsed ? 'TÜMÜNÜ GENİŞLET' : 'TÜMÜNÜ DARALT'"></app-button></span>
+                            <span><app-button (click)="toggleAllPriceBlocks()" type="icon" [icon]="allPriceCollapsed ? 'unfold_more' : 'unfold_less'" theme="primary" size="md"></app-button></span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-form-group" *ngFor="let priceList of product?.PriceLists; let i = index">
+                    <app-product-price-block (actionEvent)="productPriceBlockActionHandler($event, i)" (changeEvent)="productPriceBlockChangeHandler($event, i)" (nextPriceChangedEvent)="nextPriceChangeHandler($event, i)" [variantTypeList]="variantTypeList" [priceList]="priceList"
+                        [product]="product" [performance]="performance" [firm]="firm" [contextMenuData]="priceListActions" [currency]="selectedCurrency"></app-product-price-block>
+                </div>
+                <div class="p-form-group">
+                    <app-container-canvas [isEmpty]="true">
+                        <app-button (clickEvent)="addNewPrice($event)" theme="secondary">FİYAT BLOĞU EKLE</app-button>
+                    </app-container-canvas>
+                </div>
+            </div>
+
+            <div class="p-group">
+                <div class="p-group__header">
+                    <div class="p-group__header-bar">
+                        <div class="p-group__header-title">
+                            Notlar
+                        </div>
+                    </div>
+                </div>
+                <div class="p-form-group">
+                    <div class="p-form-group__input">
+                        <app-md-editor [hasLocalization]="true" (changeEvent)="inputChangeHandler($event, 'Info')" [options]="{previewOn:true}" [localization]="product?.Localization?.Info"></app-md-editor>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div aside class="c-collapsible-container__aside--no-padding">
+            <div class="p-container">
+                <div class="p-group">
+                    <div class="p-group__header">
+                        <div class="p-group__header-bar">
+                            <div class="p-group__header-title">AYARLAR</div>
+                        </div>
+                    </div>
+                    <div class="p-group__item">
+                        <div class="p-group__list">
+                            <div class="p-group__list-item">
+                                <div class="p-group__list-item-bar">
+                                    <div class="p-group__list-item-label">İade Edilebilir</div>
+                                    <div class="p-group__list-item-action">
+                                        <app-checkbox type="lightswitch" (changeEvent)="checkHandler($event, 'IsRefundable')" [isChecked]="product?.IsRefundable"></app-checkbox>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="p-group__list-item" *ngIf="!isBundle && performanceProduct != null">
+                                <div class="p-group__list-item-bar">
+                                    <div class="p-group__list-item-label">Koltuk seçimi yapılabilir</div>
+                                    <div class="p-group__list-item-action">
+                                        <app-checkbox type="lightswitch" (changeEvent)="checkHandler($event, 'IsSeatSelectionAvailable')" [isChecked]="product?.IsSeatSelectionAvailable"></app-checkbox>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="p-group__list-item">
+                                <div class="p-group__list-item-bar">
+                                    <div class="p-group__list-item-label">Para Birimi</div>
+                                    <div class="p-group__list-item-action">
+                                        <app-selectbox (changeEvent)="inputChangeHandler($event, 'CurrencyId')" [value]="product?.CurrencyId" [options]="currencyList"></app-selectbox>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="p-group__list-item">
+                                <div class="p-group__list-item-bar">
+                                    <div class="p-group__list-item-label">KDV Oranı *</div>
+                                    <div class="p-group__list-item-action">
+                                        <app-selectbox (changeEvent)="inputChangeHandler($event, 'Vat')" [value]="product?.Vat" [options]="vatList"></app-selectbox>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="p-group__list-item">
+                                <div class="p-group__list-item-bar">
+                                    <div class="p-group__list-item-label">Bir seferde satılabilecek maksimum ürün</div>
+                                    <div class="p-group__list-item-action">
+                                        <app-selectbox (changeEvent)="inputChangeHandler($event, 'MaxProductsPerTrx')" [value]="product?.MaxProductsPerTrx" [numberRanges]="{min: 1, max: 10}"></app-selectbox>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-group" *ngIf="!isBundle && performanceProduct != null">
+                    <div class="p-group__header p-group__header--border">
+                        <div class="p-group__header-bar">
+                            <div class="p-group__header-title">SEÇİM RENGİ<sup>*</sup></div>
+                        </div>
+                    </div>
+                    <div class="p-group__item">
+                        <app-color-picker (selectEvent)="colorPickerSelectEvent($event)" [selectedColor]="performanceProduct?.CategoryColorSeat"></app-color-picker>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </app-collapsible-container>
+
+</div>

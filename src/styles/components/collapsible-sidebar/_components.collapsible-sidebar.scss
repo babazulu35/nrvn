@@ -1,0 +1,111 @@
+/***
+ * Collapsable Sidebar Component:
+ * Author : Halil Nuroğlu
+ */
+
+ /**
+ * Collapsable Sidebar:
+ * `.c-collapsible-sidebar` - Bu component'in düzgün çalışması için `body` ve `html` etiketlerinin `height:100%` olması gerekli
+ *
+ *     @example
+ *     <div class="c-collapsible-sidebar">
+ *       <a href="#" class="c-collapsible-sidebar__toggle-btn">
+ *         <i class="icon-close icon--m">last_page</i>
+ *         <i class="icon-open icon--m">first_page</i>
+ *       </a>
+ *       <div class="c-collapsible-sidebar__content">
+ *         içerik buraya gelecek
+ *       </div>
+ *     </div>
+ */
+
+// Set defaults
+$c-collapsible-sidebar: (
+  header-font-size: 11px,
+  item-base-font-size: 14px,
+  close-btn-size: 21px,
+  toggle-btn-height: 50px,
+  toggle-btn-width: 40px,
+  content-padding-y: 30px,
+  content-padding-x: 20px,
+  c-width:240px,
+  c-close-offset-size: 20px,
+
+  c-primary-color: #dcdce5,
+  c-background-color: #f7f7f7,
+  toggle-btn-color: #bdbdbd,
+  toggle-btn-hover-color: #333,
+);
+
+// Merge settings and defaults
+$c-light-switch: map-merge($c-light-switch, getSettingsMap("c-collapsible-sidebar"));
+
+// Set shortcuts
+$c-map: $c-collapsible-sidebar;
+
+// Component
+.c-collapsible-sidebar {
+  position: fixed;
+  top: 0;
+  right: #{calc(-#{map-get($c-map, c-width)} + #{map-get($c-map, c-close-offset-size)})};
+  height: 100%;
+  width: map-get($c-map, c-width);
+
+  background-color: map-get($c-map, c-background-color);
+  border-left: 1px solid map-get($c-map, c-primary-color);
+
+  @include transition(right 0.3s ease-in-out);
+}
+
+.c-collapsible-sidebar--open {
+  right: 0;
+}
+
+.c-collapsible-sidebar__toggle-btn {
+  border: 1px solid map-get($c-map, c-primary-color);
+  color: map-get($c-map, toggle-btn-color);
+  height: map-get($c-map, toggle-btn-height);
+  width: map-get($c-map, toggle-btn-width);
+  border-radius: map-get($c-map, toggle-btn-height);
+  background-color: map-get($c-map, c-background-color);
+
+  display: inline-block;
+  position: absolute;
+  top: 20px;
+  left: -#{map-get($c-map, toggle-btn-width)};
+  font-size: 21px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  text-align: center;
+
+  i { 
+    display: inline-block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    @include t--translate(#{calc(-50% + 3px)}, -50%);
+  }
+
+  &:hover {
+    color: map-get($c-map, toggle-btn-hover-color);
+  }
+
+  .icon-close { display: none; }
+}
+
+.c-collapsible-sidebar--open {
+  
+  .c-collapsible-sidebar__toggle-btn {
+    .icon-open { display: none; }
+    .icon-close { display: block; }
+  }
+
+}
+
+
+
+.c-collapsible-sidebar__content {
+  padding: map-get($c-map, content-padding-y) map-get($c-map, content-padding-x);
+}
+
+$c-map: null;

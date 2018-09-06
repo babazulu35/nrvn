@@ -1,0 +1,13 @@
+<div class="row o-filter-bar">
+	<div class="col-xs-5">
+		<app-inline-search-input (onInputSave)="onInputChange($event)" (onInputChange)="onInputChange($event)" [isIconAlignLeft]='true' placeholder='Sanatçılar Arasında Arayın'></app-inline-search-input>
+	</div>
+
+	<div class="col-xs-5 float-xs-right">
+		<div class="o-tab__button float-xs-right">
+			<app-button (click)="redirectToCreatePerformer($event)">YENİ SANATÇI OLUŞTUR</app-button>
+			<app-sort-view [activeView]="activeView" (changeView)="changeView($event)"></app-sort-view>
+		</div>
+	</div>
+</div>
+<router-outlet></router-outlet>

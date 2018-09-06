@@ -1,0 +1,62 @@
+$c-sort-title: (
+  hover-color: #2B98F0,
+  selected-color: #3a2e39,
+  icon-scale: 120%,
+  icon-selected-color: #2B98F0,
+);
+
+// Merge settings and defaults
+$c-sort-title: map-merge($c-sort-title, getSettingsMap("c-sort-title"));
+
+// Set shortcuts
+$c-map: $c-sort-title;
+
+.c-sort-title {
+  display: inline-block;
+  position: relative;
+  font-size: inherit;
+  cursor: pointer;
+
+  &:hover {
+    color: map-get($c-map, hover-color);
+  }
+
+  &:before {
+    @include icon("expand_less");
+    position: absolute;
+    left: calc(100% + 0.35em);
+    font-size: map-get($c-map, icon-scale);
+    top: calc(50% + 0.15em);
+    @include transform(translateY(-100%));
+    color: inherit;
+  }
+
+  &:after {
+    @include icon("expand_more");
+    position: absolute;
+    left: calc(100% + 0.35em);
+    font-size: map-get($c-map, icon-scale);
+    top: calc(50% - 0.15em);
+    color: inherit;
+  }
+
+  &--selected {
+    color: map-get($c-map, selected-color);
+  }
+
+  &--up {
+    &:before {
+      color: map-get($c-map, icon-selected-color);
+    }
+  }
+
+  &--down {
+    &:after {
+      color: map-get($c-map, icon-selected-color);
+    }
+  }
+
+}
+
+//Reset
+$c-map: null;

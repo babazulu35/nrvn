@@ -1,0 +1,23 @@
+<div class="or-firms-list">
+    <div class="p-header-bar">
+        <div class="p-header-bar__left">
+            <h2>Firma Listesi</h2>
+        </div>
+
+        <div class="p-header-bar__right">
+            <app-button [routerLink]="['/firm/create']">FİRMA EKLE</app-button>
+        </div>
+    </div>
+
+    <div class="row o-filter-bar">
+        <div class="col-sm-5">
+            <app-inline-search-input placeholder="Firmalar arasında arayın" [isIconAlignLeft]='true' (onInputSave)="onInputChange($event)" (onInputChange)="onInputChange($event)">
+            </app-inline-search-input>
+        </div>
+        <div class="col-sm-5 float-sm-right">
+            <div class="o-tab__button float-sm-right">
+            </div>
+        </div>
+    </div>
+    <router-outlet></router-outlet>
+</div>

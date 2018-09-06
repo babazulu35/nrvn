@@ -1,0 +1,141 @@
+/***
+ * Call to Action Box:
+ * Author: Fatih Turan
+ */
+
+ /**
+ * Call to Action Box:
+ * `.c-cta-box` sınıfı ile oluşturulur.
+ *
+ * @example
+* <div class="c-cta-box">
+*   <i class="c-cta-box__icon icon__n icon__n--announcement"></i>
+*   <p><i>Italic text.</i> <b>Bold text.</b></p>
+*   <a href="#" class="c-cta-box__cta-action">Call to Action Link</a>
+* </div><!-- /.c-call-to-action-box -->
+ */
+
+
+ // Set Defaults
+ $c-cta-box: (
+   box-padding: 20px,
+   box-border-radius: 2px,
+   box-font-size: 13px,
+   box-line-height: 2em,
+   box-centered-font-size: 12px,
+   box-icon-size: 24px,
+   box-large-icon-size: 44px,
+   box-title-color: #3a2e38,
+   box-title-size: 15px,
+   box-sub-title-color: #b1b1b1,
+   box-sub-title-size: 11px,
+   do_not_disturb-color: #ef494b,
+   themes: (
+     light: (
+       box-bg: #fff,
+       box-border-size: 1px,
+       box-border-color: #dcdce4,
+       box-text-color: #35383d,
+       box-icon-color: #bdbdbd,
+       box-action-link-color: #21242b,
+     ),
+     dark: (
+       box-bg: #35383d,
+       box-border-size: 0,
+       box-border-color: #dcdce4,
+       box-text-color: #fff,
+       box-icon-color: #fff,
+       box-action-link-color: #fff,
+     )
+   )
+ );
+
+ // Merge settings and defaults
+ $c-cta-box: map-merge($c-cta-box, getSettingsMap("c-cta-box"));
+
+ // Set shortcuts
+ $themes: map-get($c-cta-box, themes);
+ $selected-theme: map-get($themes, light);
+ $c-map: $c-cta-box;
+
+
+.c-cta-box {
+  padding: map-get($c-map, box-padding);
+  background-color: map-get($selected-theme, box-bg);
+  color: map-get($selected-theme, box-text-color);
+  border: map-get($selected-theme, box-border-size) solid map-get($selected-theme, box-border-color);
+  border-radius: map-get($c-map, box-border-radius);
+  @include ffamily("regular");
+  font-size: map-get($c-map, box-font-size);
+  .c-cta-box__content {
+    line-height: map-get($c-map, box-line-height);
+    i { @include ffamily("light", "i"); }
+    b { @include ffamily("bold"); }
+  }
+  .c-cta-box__icon {
+    margin-bottom: 15px;
+    font-size: map-get($c-map, box-icon-size);
+    color: map-get($selected-theme, box-icon-color);
+    &.icon__n--do_not_disturb {
+      color: map-get($c-map, do_not_disturb-color);
+      transform: scaleX(-1);
+      -moz-transform: scaleX(-1);
+      -webkit-transform: scaleX(-1);
+      -ms-transform: scaleX(-1);
+    }
+  }
+  .c-cta-box__title {
+    display: inline-block;
+    margin-bottom: 15px;
+    @include ffamily("semi");
+    font-size: map-get($c-map, box-title-size);
+    color: map-get($c-map, box-title-color);
+  }
+  .c-cta-box__sub-title {
+    display: inline-block;
+    margin: 12px 0 8px;
+    @include ffamily("semi");
+    font-size: map-get($c-map, box-sub-title-size);
+    color: map-get($c-map, box-sub-title-color);
+    text-transform: uppercase;
+  }
+  .c-cta-box__action-link {
+    display: inline-block;
+    margin-top: 30px;
+    @include ffamily("semi");
+    color: map-get($selected-theme, box-action-link-color) !important;
+    text-transform: uppercase;
+  }
+  .c-cta-box__action-button {
+    display: block;
+    margin-top: 20px;
+  }
+  &--centered {
+    font-size: map-get($c-map, box-centered-font-size);
+    text-align: center;
+    .c-cta-box__icon {
+      //display: block;
+      margin-bottom: 5px;
+      font-size: map-get($c-map, box-large-icon-size);
+      color: map-get($c-map, box-icon-color);
+    }
+  }
+  &--dark { // Dark Theme
+    $selected-theme: map-get($themes, dark);
+    background-color: map-get($selected-theme, box-bg);
+    color: map-get($selected-theme, box-text-color);
+    border: map-get($selected-theme, box-border-size) solid map-get($selected-theme, box-border-color);
+    .c-cta-box__icon {
+      color: map-get($selected-theme, box-icon-color);
+    }
+    .c-cta-box__action-link {
+      color: map-get($selected-theme, box-action-link-color) !important;
+    }
+  }
+}
+
+
+//Reset
+$themes: null;
+$selected-theme: null;
+$c-map: null;

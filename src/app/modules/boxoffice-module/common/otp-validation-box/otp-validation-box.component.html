@@ -1,0 +1,52 @@
+<app-dialog-box [isLoading]="isLoading">
+	<div #header class="c-dialog-box__header c-dialog-box__header--border c-dialog-box__header--padding">
+		<div class="c-dialog-box__header-bar">
+			<h1 class="c-dialog-box__header-title">Bilgi Doğrulama</h1>      
+
+			<div class="c-dialog-box__header-actions">
+				<app-button (click)="tetherDialog.dismiss($event)" type="icon" icon="close" theme="secondary"></app-button>
+			</div>
+		</div>
+	</div>
+
+	<div #body class="c-dialog-box__body c-dialog-box__body--no-padding">
+		<div class="p-container p-container--inherit">
+			<div class="p-group">
+				<div class="p-group__item">
+					<div class="p-toggle">
+						<span class="p-toggle__label">SMS ile gelen <b>4 haneli güvenlik kodunu</b> girin.</span>
+					</div>
+				</div>
+
+				<div class="p-group__item" style="height:50px">
+					<div *ngIf="error?.status" class="p-toggle" style="border:1px dashed red; background-color:lavender;text-align:center;padding:10px">
+						<h1 style="color:red;font-style:italic">{{error?.messageHeader}}</h1>						
+						<!-- <p>{{error?.messageDesc}} <a (click)="sendNewVerificationCode()" style="cursor:pointer;text-decoration:underline">{{error?.messageAction}}</a></p> -->
+						<p>{{error?.messageDesc}}</p>
+					</div>
+				</div>				
+				
+                <div class="p-group__item text-xs-center">
+					<app-text-input theme="underline" 
+									[icon]="error?.status ? 'warning' : 'schedule'"					
+									placeholder="XXXX"					
+									[maxlength]="4"																		
+									[dismissOnEscape]="true"
+									[isTypeEmitting]="true"
+									(typeEvent)="inputChangeHandler($event, 'otp')" 
+									[typeDebounceTime]="100"></app-text-input>					
+					<div class="p-toggle text-xs-right">Kalan Süre: <b>{{counter}}</b> sn</div>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+
+	<div #footer class="c-dialog-box__footer row">
+		<div class="c-dialog-box__footer-content">
+			<div class="col-xs-16">
+				<app-button (clickEvent)="submitClickHandler($event)" [isDisabled]="!isValid" theme="primary" label="DEVAM ET"></app-button>
+			</div>
+		</div>
+	</div>
+</app-dialog-box>

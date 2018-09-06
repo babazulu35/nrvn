@@ -1,0 +1,96 @@
+/* --------------------------------------------------------
+version: 1.0
+author: Abdullah Karadeniz
+----------------------------------------------------------*/
+
+/***
+* Seating Arrangement Create Section [route-path: venue/venue-layouts/sections]:
+*/
+
+/**
+* Modal Sub Heading:
+* `.oc-seating-arrangement-create - Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque repellat autem deleniti odit repellendus temporibus placeat ipsa similique, neces
+*
+*     @example
+*			
+*/
+
+
+// Set defaults
+
+$oc-seating-arrangement-create: (
+	width: 100%,
+    background-color: #fff,
+    padding: 30px,
+    font-size: 13px,
+    secondary-color: #9d9d9d,
+    color: #333333,
+
+    capacity: (
+        color: #35383d,
+        big-size: 3em,
+        small-size: 0.85em
+    )
+);
+
+// Merge settings and defaults
+$oc-seating-arrangement-create: map-merge($oc-seating-arrangement-create, getSettingsMap("oc-seating-arrangement-create"));
+
+// Set shortcuts
+$c-map: $oc-seating-arrangement-create;
+
+.oc-seating-arrangement-create {
+    display: block;
+    width: map-get($c-map, width);
+	background-color: map-get($c-map, background-color);
+    font-size: map-get($c-map, font-size);
+
+    section {
+        margin: 0px;
+        padding: 0px;
+    }
+
+    .c-dialog-header {
+        
+    }
+
+    .c-dialog-body {
+        
+    }
+
+    .c-dialog-footer {
+
+    }
+
+    small {
+        font-size: 0.85em;
+        margin-top: 0.5em;
+        color: map-get($c-map, secondary-color);
+        i.icon__n {
+            font-size: 1.5em;
+            vertical-align: middle;
+        }
+    }
+
+    &__capacity-value {
+        display: block;
+        text-align: center;
+        width: auto;
+        color: map-deep-get($c-map, capacity, color);
+        font-size: map-deep-get($c-map, capacity, big-size);
+        line-height: 1em;
+        @include ffamily('bold');
+    }
+
+    &__capacity-label {
+        display: block;
+        text-align: center;
+        color: map-deep-get($c-map, capacity,color);
+        font-size: map-deep-get($c-map, capacity, small-size);
+        @include ffamily('semi');
+       
+    }
+}
+
+//Reset
+$c-map: null;

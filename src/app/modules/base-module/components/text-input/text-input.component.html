@@ -1,0 +1,35 @@
+<span class="c-text-input__bar">
+  <span *ngIf='isIconAlignLeft && (icon?.length || isPromising)' class="c-text-input__icon c-text-input__icon--left">
+    <app-promise-icon *ngIf='(icon?.length || isPromising)' [iconName]='stateIcon' [isPromising]="isPromising" size="autosize" color="B1B1B1"></app-promise-icon>
+  </span>
+  <span class="c-text-input__text">
+    <input #input
+      [formControl]="formControl"
+      [type]="inputType"
+      [autocomplete]="autocomplete"
+      [name]="name"
+      [required]="required"
+      [min]="min"
+      [max]="max"
+      [maxlength]="maxlength"
+      [readonly]="readonly"
+      [tabindex]="isDisabled ? -1 : 0"
+      [(ngModel)]="value"
+      [placeholder]="placeholder"
+      (focus)="onFocus()"
+      (focusout)="onFocusOut()"
+      (keyup.enter)="enterHandler($event)"
+      (keyup.escape)="escapeHandler($event)">
+  </span>
+  <span *ngIf='!isIconAlignLeft && (icon?.length || isPromising)' class="c-text-input__icon">
+    <app-promise-icon *ngIf='((icon?.length && !iconAsButton)  || isPromising)' [iconName]='stateIcon' [isPromising]="isPromising"  size="autosize" color="B1B1B1"></app-promise-icon>
+    <app-promise-icon *ngIf='icon?.length && iconAsButton' (click)='iconClickHandler($event)' [iconName]='stateIcon' [isPromising]="isPromising"  size="autosize" color="B1B1B1"></app-promise-icon>
+  </span>
+  <span *ngIf="locales?.length" class="c-text-input__localization">
+    <span class="c-text-input__localization-btn">
+      <app-button (clickEvent)="openLocalizationBox()" type="icon" icon="public" theme="secondary"></app-button>
+    </span>
+    <span class="c-text-input__localization-badge">{{completedLocalizations?.length}} / {{locales?.length}}</span>
+  </span>
+  <ng-content *ngIf="!icon?.length && !locales?.length"></ng-content>
+</span>

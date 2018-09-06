@@ -1,0 +1,36 @@
+<app-dialog-box>
+    <div #header class="c-dialog-box__header c-dialog-box__header--border c-dialog-box__header--padding">
+        <div class="c-dialog-box__header-bar">
+            <h1 class="c-dialog-box__header-title">Tarih Seçin</h1>
+
+            <div class="c-dialog-box__header-actions">
+                <app-button (click)="cancel($event)" type="icon" icon="close" theme="secondary"></app-button>
+            </div>
+        </div>
+    </div>
+
+    <div #body class="c-dialog-box__body c-dialog-box__body--no-padding ">
+        <div class="p-container">
+            <div class="p-group">
+                <div class="p-group__item row">
+                    <div class="p-formgroup col-xs-16">
+                        <div class="p-form-group__label">
+                            RSVP TARİHİ
+                        </div>
+                        <div class="p-form-group__input">
+                            <app-text-input type="datepicker" includeTime="true" (changeEvent)="inputChangeHandler($event)" [date]="today" [minDate]="today" [maxDate]="performance?.Date"></app-text-input>
+                        </div>
+                    </div>
+                </div>
+			</div>
+		</div>
+	</div>
+
+	<div #footer class="c-dialog-box__footer row">
+		<div class="c-dialog-box__footer-content">
+			<div class="col-xs-16">
+				<app-button (clickEvent)="close($event)" [isDisabled]="!this.newExpirationDate" theme="primary" label="TAMAM"></app-button>
+			</div>
+		</div>
+	</div>
+</app-dialog-box>

@@ -1,0 +1,75 @@
+$c-cms-component-container: (
+    space: 20px,
+
+    header: (
+        border-color: #dcdce5,
+
+        title: (
+            color: #35383d,
+            font-size: 16px
+        )
+    ),
+
+    container: (
+        padding: 30px
+    )
+);
+
+// Merge settings and defaults
+$c-cms-component-container: map-merge($c-cms-component-container, getSettingsMap("c-cms-component-container"));
+$c-map: $c-cms-component-container;
+
+// Basic Styling
+.c-cms-component-container {
+  display: block;
+  width: 100%;
+
+  &__header {
+        display: block;
+        padding-bottom: map-deep-get($c-map, space)*0.75;
+
+        &--border {
+            border-bottom: 1px solid map-deep-get($c-map, header, border-color);
+            margin-bottom: map-deep-get($c-map, space);
+        }
+
+        &-bar {
+            display: table;
+            width: 100%;
+        }
+
+        &-title {
+            display: table-cell;
+            vertical-align: bottom;
+            width: 100%;
+            @include ffamily('semi');
+            font-size: map-deep-get($c-map, header, title, font-size);
+            line-height: 1em;
+            color: map-deep-get($c-map, header, title, color);
+        }
+
+        &-action {
+            display: table-cell;
+            vertical-align: bottom;
+            line-height: 1em;
+            white-space: nowrap;
+        }
+    }
+
+    &__list {
+        margin-bottom: map-deep-get($c-map, space);
+        
+        &-item {
+            & + .c-cms-component-container__list-item {
+                margin-top: map-deep-get($c-map, space);
+            }
+        }
+    }
+
+    &__buttons {
+        
+    }
+}
+
+// Reset
+$c-map: null;

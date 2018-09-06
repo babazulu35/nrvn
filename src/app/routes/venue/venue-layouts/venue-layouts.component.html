@@ -1,0 +1,37 @@
+<div class="p-header p-header--border">
+    <span class="margin-right-5">Oturma Düzenleri</span>
+    <!--<app-button (click)="openSeatingArrangementCreate()" type="icon" icon="plus" shape="circle" theme="secondary" size="lg"></app-button>-->
+    <app-button [routerLink]="['/venue',pageID ,'template','create' ]" type="icon" icon="plus" shape="circle" theme="secondary" size="lg"></app-button>
+</div>
+
+<div style="position:relative;">
+    <app-no-data [ngClass]="{'main-loader': isLoading }" *ngIf="noDataInContent" style="max-width: 50%;margin-top:30px" [hasContainer]="true" [icon]='{type: "icon", name: "event_seat"}' title="Bu Mekana ait bir oturma düzeni kaydı bulunamadı" description="Arama kriterini değiştirerek yeniden deneyebilirsiniz"></app-no-data>
+
+    <div class="p-container" *ngIf="!noDataInContent">
+        <!--o-card-view-->
+        <div class="o-card-view__content">
+            <app-grid-list [ngClass]="{'main-loader': isLoading }">
+                <li *ngFor="let template of templates">
+                    <app-card-item
+                        [actions]="[
+                            { action: 'editTemplate', parameters: { templateId: template.Id }, label: 'Düzenle', icon:'edit' },
+                            {
+                                label: template.IsActive == true ? 'Durdur' : 'Aktif Et',
+                                icon: template.IsActive == true ? 'visibility_off' : 'visibility',
+                                action: template.IsActive == true ? 'deActivate' : 'activate',
+                                parameters: { templateId: template.Id }
+                            }
+                        ]"
+                        (actionEvent)="cardActionHandler($event)"
+                        [isActive]="template.IsActive"
+                        [data]="{entryType: 'template', model: template}">
+                    </app-card-item>
+                </li>
+            </app-grid-list>
+        </div>
+
+        <div class="o-card-view__footer" *ngIf="templates?.length">
+            <app-pagination size="lg" (changeEvent)="changePageSize($event)" [options]="pageSizes" [totalItem]="count" [showItemPerPage]="pageSize" [currentPage]="currentPage" (transistPage)="transistPage($event)"></app-pagination>
+        </div>
+    </div>
+<div>

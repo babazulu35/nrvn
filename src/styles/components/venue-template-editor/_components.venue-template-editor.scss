@@ -1,0 +1,20 @@
+/* --------------------------------------------------------
+author: Abdullah Karadeniz
+----------------------------------------------------------*/
+$c-venue-template-editor: (
+	
+);
+
+$c-venue-template-editor: map-merge($c-venue-template-editor, getSettingsMap("c-venue-template-editor"));
+$c-map: $c-venue-template-editor;
+
+.c-venue-template-editor {
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
+}
+
+$c-map: null;

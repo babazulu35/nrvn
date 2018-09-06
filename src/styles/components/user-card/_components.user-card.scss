@@ -1,0 +1,98 @@
+$c-user-card: (
+    border-color: #dcdce5,
+    padding: 10px,
+    
+    bar: (
+        background-color: #fff
+    ),
+
+    avatar: (
+        background-color: #D41723,
+        color: #ffffff,
+    ),
+
+    title: (
+        font-size: 13px,
+        color: #35383d,
+    ),
+    info: (
+        font-size: 13px,
+        color: #35383d
+    ),
+    action: (
+
+    )
+
+);
+
+// Merge settings and defaults
+$c-user-card: map-merge($c-user-card, getSettingsMap("c-user-card"));
+
+// Set shortcuts
+$c-map: $c-user-card;
+
+.c-user-card {
+  display: block;
+  position: relative;
+  width: 100%;
+  border: solid 1px map-deep-get($c-map, border-color);
+
+    &__bar {
+        display: table;
+        width: 100%;
+        background-color: map-deep-get($c-map, bar, background-color);
+        padding: map-deep-get($c-map, padding);
+    }
+
+    &__avatar {
+        display: table-cell;
+        vertical-align: middle;
+        white-space: nowrap;
+        line-height: 0px;
+        padding: 0px map-deep-get($c-map, padding);
+
+        .c-avatar__letters {
+            @include ffamily('regular');
+        }
+        .c-avatar--has-letters.c-avatar--circle.c-avatar--circle {
+            background-color: map-deep-get($c-map, avatar, background-color);
+            color: map-deep-get($c-map, avatar, color);
+            border: none;
+        }
+    }
+
+    &__title {
+        display: table-cell;
+        width: 50%;
+        vertical-align: middle;
+        @include ffamily('semi');
+        font-size: map-deep-get($c-map, title, font-size);
+        color: map-deep-get($c-map, title, color);
+        padding-right: map-deep-get($c-map, padding);
+        text-align: left;
+        line-height: 1.2em;
+    }
+    
+    &__info {
+        display: table-cell;
+        width: 50%;
+        vertical-align: middle;
+        @include ffamily('regular');
+        font-size: map-deep-get($c-map, info, font-size);
+        color: map-deep-get($c-map, info, color);
+        padding-right: map-deep-get($c-map, padding);
+        text-align: right;
+        line-height: 1.2em;
+    }
+
+    &--inactive {
+        color: #bdbdbd !important; 
+    }
+
+    &__action {
+        display: table-cell;
+        vertical-align: middle;
+        white-space: nowrap;
+    }
+
+}

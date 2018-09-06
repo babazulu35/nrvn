@@ -1,0 +1,11 @@
+$or-event-reports: (); // Merge settings and defaults
+$or-event-reports: map-merge($or-event-reports, getSettingsMap("or-event-reports"));
+// Set shortcuts
+$o-map: $or-event-reports;
+.or-event-reports {
+    .icon__n--keyboard_arrow_down {
+        vertical-align: middle;
+        font-size: 40px;
+        cursor: pointer;
+    }
+}

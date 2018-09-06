@@ -1,0 +1,23 @@
+@-webkit-keyframes fadeIn {
+  from {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  to {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  to {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}

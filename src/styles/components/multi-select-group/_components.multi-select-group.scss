@@ -1,0 +1,532 @@
+/***
+ * Multi Select Group Component:
+ * Author: Halil Nuroğlu
+ */
+
+ /**
+ * Multi Select Group:
+ * `.c-multi-select-group` 3 farklı grupta çalışıyor. 4'den fazlası Diğer altında toplanıyor. Diğer menüsü `context-menu-selectable` componentini kullanarak listeleniyor.
+ *
+ *     @example
+ *     <div class="c-multi-select-group">
+ *     		
+ *     	<ul class="c-multi-select-group__container">
+ *     		<li class="c-multi-select-group__item">
+ *     			<a href="#">
+ *     				<div class="c-multi-select-group__item-icon">	
+ *     					<div class="c-promise-icon c-promise-icon--md">
+ *     						<div class="c-promise-icon__before">
+ *     							<i class="icon__n icon__n--audiotrack"></i>
+ *     						</div>
+ *     						<div class="c-promise-icon__spinner c-promise-icon__spinner--sm">
+ *     							<div class="c-promise-icon__spinner-blade"></div>
+ *     							<div class="c-promise-icon__spinner-blade"></div>
+ *     							<div class="c-promise-icon__spinner-blade"></div>
+ *     							<div class="c-promise-icon__spinner-blade"></div>
+ *     							<div class="c-promise-icon__spinner-blade"></div>
+ *     							<div class="c-promise-icon__spinner-blade"></div>
+ *     							<div class="c-promise-icon__spinner-blade"></div>
+ *     							<div class="c-promise-icon__spinner-blade"></div>
+ *     							<div class="c-promise-icon__spinner-blade"></div>
+ *     							<div class="c-promise-icon__spinner-blade"></div>
+ *     							<div class="c-promise-icon__spinner-blade"></div>
+ *     							<div class="c-promise-icon__spinner-blade"></div>
+ *     						</div>
+ *     					</div>
+ *     				</div>
+ *     				<span class="c-multi-select-group__item-name">Müzisyen</span>
+ *     			</a>
+ *				</li>
+ *				<li class="c-multi-select-group__item">
+ *					<a href="#">
+ *						<div class="c-multi-select-group__item-icon">	
+ *							<div class="c-promise-icon c-promise-icon--md">
+ *								<div class="c-promise-icon__before">
+ *									<i class="icon__n icon__n--movie"></i>
+ *								</div>
+ *								<div class="c-promise-icon__spinner c-promise-icon__spinner--sm">
+ *									<div class="c-promise-icon__spinner-blade"></div>
+ *									<div class="c-promise-icon__spinner-blade"></div>
+ *									<div class="c-promise-icon__spinner-blade"></div>
+ *									<div class="c-promise-icon__spinner-blade"></div>
+ *									<div class="c-promise-icon__spinner-blade"></div>
+ *									<div class="c-promise-icon__spinner-blade"></div>
+ *									<div class="c-promise-icon__spinner-blade"></div>
+ *									<div class="c-promise-icon__spinner-blade"></div>
+ *									<div class="c-promise-icon__spinner-blade"></div>
+ *									<div class="c-promise-icon__spinner-blade"></div>
+ *									<div class="c-promise-icon__spinner-blade"></div>
+ *									<div class="c-promise-icon__spinner-blade"></div>
+ *								</div>
+ *							</div>
+ *						</div>
+ *						<span class="c-multi-select-group__item-name">Oyuncu</span>
+ *					</a>
+ *				</li>
+ *				<li class="c-multi-select-group__item">
+ *					<a href="#">
+ *						<div class="c-multi-select-group__item-icon">	
+ *							<div class="c-promise-icon c-promise-icon--md">
+ *								<div class="c-promise-icon__before">
+ *									<i class="icon__n icon__n--directions_run"></i>
+ *								</div>
+ *								<div class="c-promise-icon__spinner c-promise-icon__spinner--sm">
+ *									<div class="c-promise-icon__spinner-blade"></div>
+ *									<div class="c-promise-icon__spinner-blade"></div>
+ *									<div class="c-promise-icon__spinner-blade"></div>
+ *									<div class="c-promise-icon__spinner-blade"></div>
+ *									<div class="c-promise-icon__spinner-blade"></div>
+ *									<div class="c-promise-icon__spinner-blade"></div>
+ *									<div class="c-promise-icon__spinner-blade"></div>
+ *									<div class="c-promise-icon__spinner-blade"></div>
+ *									<div class="c-promise-icon__spinner-blade"></div>
+ *									<div class="c-promise-icon__spinner-blade"></div>
+ *									<div class="c-promise-icon__spinner-blade"></div>
+ *									<div class="c-promise-icon__spinner-blade"></div>
+ *								</div>
+ *							</div>
+ *						</div>
+ *						<span class="c-multi-select-group__item-name">Sporcu</span>
+ *					</a>
+ *				</li>
+ * 				<li class="c-multi-select-group__item c-multi-select-group__item-other c-multi-select-group__item-other--selected-badge">
+ *					<a href="#">
+ *						<i class="c-multi-select-group__item-icon">2</i>
+ *						<span class="c-multi-select-group__item-name">Diğer (2)</span>
+ *					</a>
+ *
+ *					<div class="c-multi-select-group__other-list">
+ *
+ *						<div class="c-multi-select-group__other-list__header">
+ *							<div class="c-multi-select-group__other-list__header-title">
+ *								DİĞER İÇERİKLER
+ *							</div>
+ *							<i class="c-multi-select-group__other-list__close-button icon--m">close</i>
+ *						</div>
+ *
+ *						<div class="c-multi-select-group__other-list__content">
+ *
+ *							<ul class="c-multi-select-group__other-list__list">
+ *								<li class="c-multi-select-group__other-list__list-item">
+ *									<i class="c-multi-select-group__other-list__list-item-icon icon__n icon__n--insert_comment"></i>
+ *									<span class="c-multi-select-group__other-list__list-item-label">Konuşmacı</span>
+ *									<i class="c-multi-select-group__other-list__list-item-control">
+ *										<i class="icon__n icon__n--add"></i>
+ *										<i class="icon__n icon__n--check"></i>
+ *										<i class="icon__n icon__n--remove"></i>
+ *									</i>
+ *								</li>
+ *								<li class="c-multi-select-group__other-list__list-item c-multi-select-group__other-list__list-item--selected">
+ *									<i class="c-multi-select-group__other-list__list-item-icon icon__n icon__n--room_service"></i>
+ *									<span class="c-multi-select-group__other-list__list-item-label">Şef</span>
+ *									<i class="c-multi-select-group__other-list__list-item-control">
+ *										<i class="icon__n icon__n--add"></i>
+ *										<i class="icon__n icon__n--check"></i>
+ *										<i class="icon__n icon__n--remove"></i>
+ *									</i>
+ *								</li>
+ *							</ul>
+ *
+ *						</div>
+ *						
+ *					</div>
+ *					<!--end c-multi-select-group__other-list-->
+ *
+ *				</li>
+ *			</ul>
+ *		</div>
+ */
+
+// Set defaults
+$c-multi-select-group: (
+  width: 75px,
+  height: 65px,
+  border-radius: 3px,
+  item-icons-badge-width: 20px,
+  context-menu-selectable-max-width: 250px,
+
+  border-color: #dcdce5,
+  item-primary-color: #35383d,
+  item-bg-color: #ffffff,
+  item-bg-hover: #f7f7f7,
+  item-border: #dcdce5,
+  item-hover-border: #349cf1,
+
+  container-padding-top: 20px,
+  container-padding-right: 20px,
+  container-padding-bottom: 20px,
+  container-padding-left: 20px,
+  item-padding-top: 8px,
+  item-padding-bottom: 6px,
+  item-base-font-size: 13px,
+  header-font-size: 11px,
+  close-btn-size: 21px,
+  item-icon-size: 24px,
+  item-padding-right: 20px,
+  list-item-min-height: 38px,
+
+  other-box-border: #dcdce5,
+  container-background-color: #ffffff,
+  c-item-bg-hover: #f7f7f7,
+  header-color: #bdbdbd,
+  label-color: #3a2e39,
+  icon-color: #bdbdbd,
+  seperator-color: #bdbdbd,
+  hover-color: #2985ef,
+  badge-color: #ffffff,
+  item-control-color: #bdbdbd,
+  item-selected-icon-color: #35383d,
+
+);
+
+// Merge settings and defaults
+$c-multi-select-group: map-merge($c-multi-select-group, getSettingsMap("c-multi-select-group"));
+
+// Set shortcuts
+$c-map: $c-multi-select-group;
+
+// Component
+.c-multi-select-group {
+  position: relative;
+  display: inline-block;
+  border-radius: map-get($c-map, border-radius);
+}
+
+.c-multi-select-group__container {
+  display: table;
+  list-style: none;
+
+  @include t--clearfix();
+}
+
+.c-multi-select-group__item {
+  position: relative;
+  z-index: 0;
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+  border-width: 1px;
+  border-style: solid;
+
+  width: map-get($c-map, width);
+  min-height: map-get($c-map, height);
+  border-color: map-get($c-map, border-color);
+  border-left-color:transparent;
+  background-color: map-get($c-map, item-bg-color);
+  
+  a {
+    display: block;
+    width: 100%;
+    padding-top: 11px;
+    padding-bottom: 7px;
+    text-decoration: none;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  &:first-child {
+    border-top-left-radius: map-get($c-map, border-radius);
+    border-bottom-left-radius: map-get($c-map, border-radius);
+    border-left-color: map-get($c-map, border-color);
+  }
+
+  &:last-child {
+    border-top-right-radius: map-get($c-map, border-radius);
+    border-bottom-right-radius: map-get($c-map, border-radius);
+  }
+
+  &:not(.c-multi-select-group__item--disabled):hover {
+    cursor: pointer;
+    border-color: map-get($c-map, item-hover-border);
+    
+    .c-multi-select-group__item-icon {
+      color: map-get($c-map, item-hover-border);
+    }
+  }
+
+}
+
+.c-multi-select-group__item--disabled {
+  cursor: not-allowed;
+  > * { pointer-events: none; opacity: 0.7; };
+}
+
+.c-multi-select-group__item--selected {
+  &.c-multi-select-group__item--no-toggle {
+    pointer-events: none;
+    
+  }
+  &:first-child {
+    border-left-color: map-get($c-map, item-primary-color) !important;
+  }
+  z-index: 1;
+  background-color: map-get($c-map, item-bg-hover);
+  border-color: map-get($c-map, item-primary-color);
+  &:hover {
+    border-color: map-get($c-map, item-hover-border) !important;
+    .c-multi-select-group__item-icon {
+      color: map-get($c-map, item-hover-border) !important;
+    }
+  } 
+}
+
+.c-multi-select-group__item-other {
+  .c-multi-select-group__other-list {
+    display: none;
+  }
+}
+
+.c-multi-select-group__item-other--selected {
+  position: static;
+  .c-multi-select-group__other-list {
+    display: block;
+  }
+}
+
+
+.c-multi-select-group__item-other--selected-icon {
+  background-color: map-get($c-map, item-bg-hover);
+}
+
+.c-multi-select-group__item-other--selected-badge {
+  background-color: map-get($c-map, item-bg-hover);
+
+  .c-multi-select-group__item-icon {
+    font-size: 11px;
+    color:#fff;
+    padding-top: 2px;
+    margin-bottom: 7px;
+    margin-top: 2px;
+    text-align: center;
+    line-height: normal;
+
+    border-radius: map-get($c-map, item-icons-badge-width);
+    background-color: map-get($c-map, item-primary-color);
+
+    @include ffamily('bold');
+    @include t--size(map-get($c-map, item-icons-badge-width));
+  }
+
+  &:hover {
+    .c-multi-select-group__item-icon {
+      color:#fff;
+      background-color: map-get($c-map, item-hover-border);
+    }
+  }
+}
+
+.c-multi-select-group__item-name {
+  display: block;
+  @include ffamily('regular');
+  font-size: 11px;
+  text-align: center;
+  color: map-get($c-map, item-primary-color);
+}
+
+.c-multi-select-group__item-icon {
+  display: inline-block;
+  color: map-get($c-map, item-primary-color);
+}
+
+.c-multi-select-group--wide {
+  .c-multi-select-group__item {
+    width: 160px;
+  }
+}
+
+.c-multi-select-group--times {
+  .c-multi-select-group__item {
+    height: 30px;
+    
+    a {
+      padding-top: 6px;
+      padding-bottom: 0px;
+    }
+  }
+
+  .c-multi-select-group__item-name {
+    @include ffamily('semi');
+  }
+
+  .c-multi-select-group__item-other {
+    a {
+      padding-top: 3px;
+    }
+
+    .icon__n {
+      position: relative;
+      font-size: 24px;
+    }
+  }
+
+  .c-promise-icon, .c-promise-icon__before,
+  .c-promise-icon, .c-promise-icon__container {
+    width: 100%;
+  }
+
+  .c-promise-icon__spinner {
+    left:50%;
+    @include t--translateX(-50%);
+  }
+}
+
+// Other List
+.c-multi-select-group__other-list {
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 4;
+  max-width: map-get($c-map, context-menu-selectable-max-width);
+  width: 100%;
+  border:1px solid map-get($c-map, other-box-border);
+  text-align: left;
+  cursor: default;
+
+  background-color: map-get($c-map, container-background-color);
+
+  @include ffamily('regular');
+  @include t--font-size(map-get($c-map, item-base-font-size));
+  box-shadow: 0 5px 10px 0 rgba(0,0,0,0.1);
+
+  &:after {
+    content: "";
+    display: block;
+  }
+}
+
+.c-multi-select-group__other-list-header {
+  @include ffamily('semi');
+  @include t--font-size(map-get($c-map, header-font-size));
+  color: map-get($c-map, header-color);
+
+  padding-top: map-get($c-map, container-padding-top);
+  padding-right: map-get($c-map, container-padding-right);
+  padding-left: map-get($c-map, container-padding-left);
+
+  &-title {
+    display: inline-block;
+    width: calc(100% - #{map-get($c-map, close-btn-size)});
+  }
+}
+
+.c-multi-select-group__other-list-close-button {
+  display: inline-block;
+  @include t--font-size(map-get($c-map, close-btn-size));
+  float: right;
+  cursor: pointer;
+
+  &:hover {
+    color: map-get($c-map, hover-color);
+  }
+  &:active {
+    color: map-get($c-map, header-color);
+  }
+}
+
+.c-multi-select-group__other-list-content {
+  padding-bottom: map-get($c-map, container-padding-bottom);
+}
+
+.c-multi-select-group__other-list-wrapper {
+  list-style-type: none;
+  margin-top: 0.75em;
+}
+
+.c-multi-select-group__other-list-item {
+  display: table;
+  cursor: pointer;
+  width: 100%;
+  min-height: map-get($c-map, list-item-min-height);
+  padding-right: map-get($c-map, container-padding-right);
+  padding-left: map-get($c-map, container-padding-left);
+  padding-top: map-get($c-map, item-padding-top);
+  padding-bottom: map-get($c-map, item-padding-bottom);
+
+  &:hover {
+    background-color: map-get($c-map, c-item-bg-hover);
+    
+    .c-multi-select-group__other-list-item-label {
+      color: map-get($c-map, hover-color);
+    }
+
+    .c-multi-select-group__other-list-item-control {
+      .icon__n--add {
+        display: block;
+      }
+    }
+  }
+
+}
+
+.c-multi-select-group__other-list-item-icon {
+  display: table-cell;
+  vertical-align: middle;
+
+  padding-right: map-get($c-map, item-padding-right);
+  font-size: map-get($c-map, item-icon-size);
+  width: map-get($c-map, item-icon-size);
+  color: map-get($c-map, icon-color);
+}
+
+.c-multi-select-group__other-list-item-label {
+  display: table-cell;
+  font-size: map-get($c-map, item-base-font-size);
+  color: map-get($c-map, label-color);
+  padding-right: 1em;
+  vertical-align: middle;
+}
+
+.c-multi-select-group__other-list-item-control {
+  display: table-cell;
+  font-size: 24px;
+  vertical-align: top;
+  width: map-get($c-map, item-base-font-size);
+  color: map-get($c-map, icon-color);
+
+  i { 
+    display: none;
+    color: map-get($c-map, item-control-color);
+  }
+}
+
+.c-multi-select-group__other-list-item--selected {
+  
+  .c-multi-select-group__other-list-item-control {
+    .icon__n--check {
+      display: block;
+      color: map-get($c-map, item-selected-icon-color);
+      @include animation(zoomIn 0.25s map-get($c-map, ease));
+    }
+    .icon__n--add {
+      display: none;
+    }
+
+    &:hover {
+      .icon__n--check { display: none !important; }
+      .icon__n--remove { display: block; }
+    }
+  }
+ 
+  .c-multi-select-group__other-list-item-icon {
+    color: map-get($c-map, item-selected-icon-color);
+  }
+
+  &:hover {
+    .c-multi-select-group__other-list-item-control {
+      .icon__n--check {
+        display: block;
+        color: map-get($c-map, item-selected-icon-color);
+        @include animation(zoomIn 0.15s map-get($c-map, ease));
+      }
+      .icon__n--add {
+        display: none;
+      }
+    }
+  }
+
+}
+
+
+$c-map: null;
+$c-multi-select-group: null;

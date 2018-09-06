@@ -1,0 +1,176 @@
+<div class="or-reservation-create-index" *ngIf="role && performance">
+    <div class="p-header-bar" sticky sticky-main-scroller sticky-release-offset="30" sticky-height-property="55" sticky-width-property="100%" sticky-follow-menu-moves>
+        <div class="p-header-bar__left">
+            <app-button theme="primary" icon="keyboard_arrow_left" shape="rounded" type="icon" size="md" (clickEvent)="backClickHandler($event)"></app-button>
+            <h1>{{role?.dictionary?.title?.main}}</h1>
+        </div>
+
+        <div class="p-header-bar__right">
+            <app-button (clickEvent)='submitClickHandler($event)' [isPromising]="isLoading || isPromising" [isDisabled]="!isValid">DEVAM ET</app-button>
+            <!-- <app-button (clickEvent)='exit($event)' type="icon" icon="close" theme="secondary"></app-button> -->
+        </div>
+    </div>
+
+    <app-collapsible-container [asideWidth]="300" [asideHasNoPadding]="true" [isAsideOpen]="true">
+        <div content class="p-container">
+          <div class="p-group text-lg-center" *ngIf="rsvpOptions">
+              <div class="p-form-group d-inline-block">
+                  <div class="p-form-group__label text-lg-left">
+                      RSVP DURUMU
+                  </div>
+                  <div class="p-form-group__input d-block">
+                      <app-multi-select-group (changeEvent)="rsvpOptionChangeHandler($event)" [itemSize]="260" actionType="radio" [selectedValues]="role?.path" [data]="rsvpOptions"></app-multi-select-group>
+                  </div>
+              </div>
+          </div>
+
+          <div class="p-group">
+            <div class="p-group__wings" *ngIf="rsvpOptions">
+              <div class="p-group__wings-left">
+                <div class="p-group__wings-left-title">
+                  {{role?.dictionary?.title?.settings}}
+                </div>
+              </div>
+              <div class="p-group__wings-right"></div>
+            </div>
+
+            <div class="p-group__header" *ngIf="!rsvpOptions">
+              <div class="p-group__header-bar">
+                <div class="p-group__header-title">
+                  {{role?.dictionary?.title?.settings}}
+                </div>
+              </div>
+            </div>
+
+            <div class="p-group__item">
+                <app-container-canvas>
+                      <div class="c-container-canvas__content">
+                        <div class="p-group">
+
+                          <div class="p-group__item">
+                            <div class="p-form-group">
+                              <div class="p-form-group__label">
+                                {{role?.dictionary?.label?.Name}}<sup>*</sup>
+                              </div>
+                              <div class="p-form-group__input">
+                                  <app-text-input [maxlength] = "38" [value]="reservationCreate?.Name" (changeEvent)="inputChangeHandler($event, 'Name')" ></app-text-input>
+                              </div>
+                            </div>
+                          </div>
+
+                        </div>
+
+                        <div class="p-group" *ngIf="role?.seatCountPerCustomerOptions">
+                          <div class="p-group__header">
+                              <div class="p-group__header-bar">
+                                  <div class="p-group__header-title">
+                                      {{role?.dictionary?.label?.SeatCountPerCustomer}}<sup>*</sup>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="p-group__item row">
+                            <span class="col-xs-4">
+                                <app-selectbox placeholder="Seçiniz" [options]="role?.seatCountPerCustomerOptions" [value]="reservationCreate?.SeatCountPerCustomer" (changeEvent)="inputChangeHandler($event, 'SeatCountPerCustomer')"></app-selectbox>
+                            </span>
+                          </div>
+                        </div>
+
+                        <div class="p-group" *ngIf="role?.expirationTypes">
+                          <div class="p-group__header">
+                              <div class="p-group__header-bar">
+                                  <div class="p-group__header-title">
+                                      {{role?.dictionary?.label?.ExpirationType}}
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="p-group__item">
+                              <app-radio-group 
+                                  (changeEvent)="inputChangeHandler($event, 'ExpirationType')"
+                                  name="ExpirationType" 
+                                  [value]="reservationCreate?.ExpirationType">
+                                  <div class="p-toggle">
+                                      <span class="p-toggle__label"><app-checkbox [value]="role?.expirationTypes[0].value" [label]="role?.expirationTypes[0].label"></app-checkbox></span>
+                                      <span class="p-toggle__input"></span>
+                                  </div>
+                                  <div class="p-toggle">
+                                      <span class="p-toggle__label"><app-checkbox [value]="role?.expirationTypes[1].value" [label]="role?.expirationTypes[1].label"></app-checkbox></span>
+                                      <span class="p-toggle__input" *ngIf="reservationCreate?.ExpirationType == 1"><app-selectbox placeholder="Seçiniz" [options]="hoursRange" [value]="reservationCreate?.ExpirationTime" (changeEvent)="inputChangeHandler($event, 'ExpirationTime')"></app-selectbox></span>
+                                  </div>
+                                  <div class="p-toggle">
+                                      <span class="p-toggle__label"><app-checkbox [value]="role?.expirationTypes[2].value" [label]="role?.expirationTypes[2].label"></app-checkbox></span>
+                                      <span class="p-toggle__input" *ngIf="reservationCreate?.ExpirationType == 2"><app-selectbox placeholder="Seçiniz" [options]="hoursRange" [value]="reservationCreate?.ExpirationTime" (changeEvent)="inputChangeHandler($event, 'ExpirationTime')"></app-selectbox></span>
+                                  </div>
+                              </app-radio-group>
+                          </div>
+                        </div>
+
+                        <div class="p-group">
+                          <div class="p-group__item">
+                            <div class="p-form-group" *ngIf="reservationCreate?.Description == null">
+                                <app-button (clickEvent)="toggleDescription()" type="icon" icon="plus" size="lg" theme="primary"></app-button>
+                                <app-button (clickEvent)="toggleDescription()"  type="link" [label]="'AÇIKLAMA EKLE'"></app-button>
+                            </div>
+                            
+                            <div class="p-form-group" *ngIf="reservationCreate?.Description != null">
+                              <div class="p-form-group__label">
+                                AÇIKLAMALAR
+                              </div>
+                              <div class="p-form-group__input">
+                                  <app-md-editor [value]="reservationCreate?.Description" (changeEvent)="inputChangeHandler($event, 'Description')" ></app-md-editor>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>
+                </app-container-canvas>
+            </div>
+          </div>
+
+          <div class="p-group">
+            <div class="p-group__header">
+                <div class="p-group__header-bar">
+                    <div class="p-group__header-title">
+                        Müşteri Bilgileri<sup>*</sup>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-group__item">
+                <!-- <app-container-canvas [isEmpty]="true">
+                    
+                </app-container-canvas> -->
+                <app-customer-card-list 
+                    (changeEvent)="customersChangeHandler($event)"
+                    (csvChangeEvent)="csvChangeHandler($event)"
+                    [customers]="customers" 
+                    [csv]="customerCsv" [csvAvailable]="true" [csvValidateFile]="csvValidateFile"></app-customer-card-list>
+            </div>
+
+          </div>
+        </div>
+
+        <div aside>
+          <div class="p-container">
+              <div class="p-group">
+                  <app-card-item [actions]="null" [data]="{entryType: 'performance', model: performance }"></app-card-item>
+              </div>
+
+              <div class="p-group">
+                <div class="p-group__header p-group__header--border">
+                    <div class="p-group__header-bar">
+                        <div class="p-group__header-title">
+                            İSTATİSTİKLER & BİLDİRİMLER
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-group__item">
+                    <app-vertical-kv-list theme="clean"
+                        [sections]="statistics" ></app-vertical-kv-list>
+                </div>
+            </div>
+          </div>
+        </div>
+    </app-collapsible-container>
+</div>

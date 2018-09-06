@@ -1,0 +1,25 @@
+<div class="c-cms-component-container__header">
+    <div class="c-cms-component-container__header-bar">
+        <div class="c-cms-component-container__header-title">
+            {{data?.Name}}
+        </div>
+        <div class="c-cms-component-container__header-action" *ngIf="components?.length > 1">
+            <span>
+          <span><app-button (click)="toggleAllComponents()" type="link" [label]="allComponentCollapsed ? 'TÜMÜNÜ GENİŞLET' : 'TÜMÜNÜ DARALT'"></app-button></span>
+            <span><app-button (click)="toggleAllComponents()" type="icon" [icon]="allComponentCollapsed ? 'unfold_more' : 'unfold_less'" theme="primary" size="md"></app-button></span>
+            </span>
+        </div>
+    </div>
+</div>
+
+<div class="c-cms-component-container__list" *ngIf="components?.length">
+    <div class="c-cms-component-container__list-item" *ngFor="let component of components">
+        <app-cms-component (actionEvent)="componentActionHandler($event)" [data]="component"></app-cms-component>
+    </div>
+</div>
+
+<div class="c-cms-component-container__buttons" #buttons>
+    <app-container-canvas [isEmpty]="true" [textAlign]="'left'">
+        <app-basic-button-group (actionEvent)="buttonGroupHandler($event)" [iconName]="'plus'" [actions]="componentList"></app-basic-button-group>
+    </app-container-canvas>
+</div>

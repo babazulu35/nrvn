@@ -1,0 +1,468 @@
+/**
+* Narrow Reports Data Table:
+* Author: Can Sivri
+*
+*/
+
+// Variables
+$c-reports-data-table: ( padding: 12px 20px 0, border-style: 1px solid #dcdce4, border-dashed-style: 1px dashed #dcdce4, text-color: #35383d, hover-color: #2B98F0, gray-color: #bdbdbd, foot-bg: #f7f7f7, border-color: #dcdce4);
+// Merge settings and defaults
+$c-reports-data-table: map-merge($c-reports-data-table, getSettingsMap("c-reports-data-table"));
+// Set shortcuts
+$c-map: $c-reports-data-table;
+.c-reports-data-table {
+    overflow-y: hidden;
+    overflow-x: auto;
+    border: map-get($c-map, border-style);
+    border-radius: 3px;
+    width: 100%;
+    table {
+        width: 100%;
+    }
+    .c-reports-data-table-content {
+        min-width: 818px;
+        padding: map-get($c-map, padding);
+    }
+}
+
+.c-reports-data-table__capacity {
+    th {
+        width: 80px;
+        padding: 0 0 12px;
+        font-size: 11px;
+        line-height: 13px;
+        @include ffamily("semi");
+        color: map-get($c-map, gray-color);
+        text-align: center;
+        &:first-child {
+            width: 245px;
+            text-align: left;
+            .c-reports-data-table-title {
+                padding-left: 0;
+            }
+        }
+        &:last-child {
+            width: 55px;
+            text-align: right;
+            .c-reports-data-table-title {
+                padding-left: 10px;
+            }
+        }
+        .c-reports-data-table-title {
+            position: relative;
+            display: inline-block;
+            padding: 0 16px;
+            text-align: left;
+            cursor: pointer;
+            &:hover { color: map-get($c-map, hover-color);}
+        }
+        i {
+            position: absolute;
+            top: 50%;
+            right: -6px;
+            @include t--translateY(-50%);
+            font-size: 20px;
+            vertical-align: middle;
+        }
+    }
+    td {
+        padding: 15px 0;
+        border-top: map-get($c-map, border-style);
+        font-size: 12px;
+        @include ffamily("regular");
+        color: map-get($c-map, text-color);
+        text-align: center;
+        strong {
+            @include ffamily("bold");
+        }
+        &:first-child {
+            text-align: left;
+        }
+    }
+}
+
+.c-reports-data-table__price {
+    margin-bottom: 40px;
+    border-bottom: map-get($c-map, border-style);
+    tbody {
+      border-top: map-get($c-map, border-style);
+    }
+    th {
+        width: 120px;
+        padding: 7px 0 18px;
+        font-size: 11px;
+        line-height: 13px;
+        @include ffamily("semi");
+        color: map-get($c-map, gray-color);
+        text-align: center;
+        &:first-child {
+            text-align: left;
+            .c-reports-data-table-title {
+                padding-left: 0;
+            }
+        }
+        .c-reports-data-table-title {
+            position: relative;
+            display: inline-block;
+            padding: 0 16px;
+            text-align: left;
+            cursor: pointer;
+            &:hover { color: map-get($c-map, hover-color);}
+        }
+        i {
+            position: absolute;
+            top: 50%;
+            right: -6px;
+            @include t--translateY(-50%);
+            font-size: 20px;
+            vertical-align: middle;
+        }
+    }
+    td {
+        padding: 6px 0;
+        font-size: 12px;
+        @include ffamily("regular");
+        color: map-get($c-map, text-color);
+        text-align: center;
+        border-top: map-get($c-map, border-dashed-style);
+        strong {
+            @include ffamily("bold");
+        }
+        &.c-reports-data-table-name {
+            width: 220px;
+            text-align: left;
+            font-size: 14px;
+            @include ffamily("semi");
+            border-right: map-get($c-map, border-style);
+            border-bottom: map-get($c-map, border-style);
+        }
+        &.c-reports-data-table-category {
+            width: 140px;
+            @include ffamily("semi", "i");
+            border-right: map-get($c-map, border-dashed-style);
+            border-bottom: map-get($c-map, border-style);
+        }
+        &.c-reports-data-table-ticket {
+            width: 94px;
+            font-size: 11px;
+            @include ffamily("regular");
+            color: map-get($c-map, gray-color);
+            border-right: map-get($c-map, border-dashed-style);
+        }
+    }
+    .c-reports-data-table-line-border td { border-bottom: map-get($c-map, border-style); }
+}
+
+.c-reports-data-table__net-sales {
+    margin-top: 8px;
+    margin-bottom: 20px;
+    th {
+        width: 90px;
+        padding: 12px 0;
+        font-size: 11px;
+        line-height: 13px;
+        @include ffamily("semi");
+        color: map-get($c-map, gray-color);
+        text-align: center;
+        border-top: map-get($c-map, border-style);
+        &:first-child {
+            width: 210px;
+        }
+        &.c-reports-data-table__net-sales-narrow-caption {
+            width: 55px;
+        }
+    }
+    td {
+        padding: 6px 0;
+        font-size: 12px;
+        border-top: map-get($c-map, border-style);
+        @include ffamily("regular");
+        color: map-get($c-map, text-color);
+        text-align: center;
+        strong {
+            @include ffamily("bold");
+        }
+        &:last-child {
+            padding: 6px 15px;
+            white-space: nowrap;
+        }
+        &.c-reports-data-table-name {
+            padding: 15px 0;
+            text-align: left;
+            font-size: 14px;
+            @include ffamily("semi");
+        }
+        &.c-reports-data-table-category {
+            width: 120px;
+            text-align: left;
+            @include ffamily("regular", "i");
+            border-right: map-get($c-map, border-dashed-style);
+        }
+        &.c-reports-data-table-ticket {
+            width: 90px;
+            font-size: 11px;
+            @include ffamily("regular");
+            color: map-get($c-map, gray-color);
+            border-right: map-get($c-map, border-dashed-style);
+        }
+        &.c-reports-data-table-line-total {
+            font-size: 12px;
+            @include ffamily("bold");
+            border-left: map-get($c-map, border-dashed-style);
+        }
+        &.c-reports-data-table-line-border {
+            border-top: map-get($c-map, border-dashed-style);
+        }
+    }
+    tfoot {
+        border-bottom: map-get($c-map, border-style);
+        tr:nth-child(even) td,
+        .c-reports-data-table-line-border {
+            background-color: map-get($c-map, foot-bg);
+        }
+        tr:nth-child(even) td:last-child {
+            border-right: map-get($c-map, border-style);
+        }
+        .c-reports-data-table-category {
+            border-left: map-get($c-map, border-style);
+            text-align: center;
+        }
+    }
+}
+
+.c-reports-data-table__sales-channel {
+    margin: 13px 0 25px;
+    border-bottom: map-get($c-map, border-style);
+    border-top: map-get($c-map, border-style);
+    td {
+        padding: 6px 0;
+        font-size: 12px;
+        width: 120px;
+        @include ffamily("regular");
+        color: map-get($c-map, text-color);
+        text-align: center;
+        border-top: map-get($c-map, border-dashed-style);
+        &.c-reports-data-table-name {
+            width: 340px;
+            font-size: 14px;
+            @include ffamily("semi");
+            border-right: map-get($c-map, border-style);
+            border-bottom: map-get($c-map, border-style);
+        }
+        &.c-reports-data-table-category {
+            font-size: 14px;
+            @include ffamily("regular");
+            border-right: map-get($c-map, border-style);
+            border-bottom: map-get($c-map, border-style);
+        }
+        &.c-reports-data-table-sub-category {
+            font-size: 12px;
+            @include ffamily("semi", "i");
+            border-right: map-get($c-map, border-style);
+            border-bottom: map-get($c-map, border-style);
+        }
+        &.c-reports-data-table-ticket {
+            font-size: 11px;
+            @include ffamily("regular");
+            color: map-get($c-map, gray-color);
+            border-right: 1px solid map-get($c-map, border-color);
+        }
+    }
+    .c-reports-data-table-line-border td { border-bottom: map-get($c-map, border-style); }
+
+}
+
+.c-reports-data-table__sales-channel-navigation {
+  &-cell {vertical-align:bottom;}
+  .c-reports-data-table-line-border td { border-bottom: map-get($c-map, border-style); }
+  .c-reports-data-table-title-list {
+    margin-bottom: 47px;
+    border-top: map-get($c-map, border-style);
+    border-bottom: 1px solid map-get($c-map, border-color);
+    td {
+      font-size: 12px;
+      width: 100px;
+      height:32px;
+      vertical-align: middle;
+      @include ffamily("regular");
+      color: map-get($c-map, text-color);
+      text-align: center;
+      border-top: map-get($c-map, border-dashed-style);
+      &.c-reports-data-table-category {
+          font-size: 14px;
+          @include ffamily("regular");
+          border-right: map-get($c-map, border-style);
+          border-top: map-get($c-map, border-style);
+      }
+      &.c-reports-data-table-sub-category {
+          font-size: 12px;
+          @include ffamily("semi", "i");
+          border-right: map-get($c-map, border-style);
+          border-top: map-get($c-map, border-style);
+      }
+      &.c-reports-data-table-ticket {
+          font-size: 11px;
+          @include ffamily("regular");
+          color: map-get($c-map, gray-color);
+      }
+    }
+  }
+  .c-reports-data-table-list {
+    th {
+      width: 115px;
+      padding:0 12px 12px;
+      font-size: 12px;
+      line-height: 16px;
+      @include ffamily("bold");
+      color: map-get($c-map, text-color);
+      text-align: center;
+      vertical-align: middle;
+      border-bottom: map-get($c-map, border-style);
+    }
+    td {
+      height:32px;
+      font-size: 12px;
+      @include ffamily("regular");
+      color: map-get($c-map, text-color);
+      text-align: center;
+      vertical-align: middle;
+      border-top: map-get($c-map, border-dashed-style);
+      &:first-child {border-left: 2px solid map-get($c-map, border-color); }
+      &:last-child {border-right: 2px solid map-get($c-map, border-color);}
+    }
+  }
+  .c-reports-data-table-nav {
+    margin: 0 -1px;
+    height: 48px;
+    border-top: 1px solid map-get($c-map, border-color);
+    border-left: 2px solid map-get($c-map, border-color);
+    border-right: 2px solid map-get($c-map, border-color);
+    background-color: map-get($c-map, foot-bg);
+    text-align: center;
+    &-prev,
+    &-next {
+      display: inline-block;
+      vertical-align: middle;
+      width: 52px;
+      font-size: 32px;
+      line-height: 48px;
+      color: map-get($c-map, gray-color);
+      cursor: pointer;
+      i {
+          position: relative;
+          top: 4px;
+      }
+      &:hover { color: map-get($c-map, hover-color);}
+    }
+  }
+}
+
+.c-reports-data-table-date {
+  margin-top: -13px;
+  .c-reports-data-table-date-cell {
+    vertical-align:top;
+    &:first-child {border-right: 2px solid map-get($c-map, border-color); }
+    &:last-child {border-left: 2px solid map-get($c-map, border-color);}
+  }
+  th {
+    height: 52px;
+    font-size: 11px;
+    line-height: 13px;
+    @include ffamily("semi");
+    color: map-get($c-map, gray-color);
+    text-align: center;
+    .c-reports-data-table-title {
+      position: relative;
+      display: inline-block;
+      padding: 0 16px;
+      text-align: left;
+      cursor: pointer;
+      &:hover { color: map-get($c-map, hover-color);}
+      i {
+        position: absolute;
+        top: 50%;
+        right: -6px;
+        @include t--translateY(-50%);
+        font-size: 20px;
+        vertical-align: middle;
+      }
+    }
+  }
+  td {
+    height: 52px;
+    font-size: 12px;
+    @include ffamily("regular");
+    color: map-get($c-map, text-color);
+    text-align: center;
+    strong {@include ffamily("bold");}
+    border-top: map-get($c-map, border-style);
+    &.c-reports-data-table-name {
+      width: 195px;
+      text-align: left;
+      font-size: 12px;
+      @include ffamily("bold");
+    }
+  }
+  .c-reports-data-table-nav {
+    height: 48px;
+    background-color: map-get($c-map, foot-bg);
+    text-align: center;
+    &-prev,
+    &-next {
+      display: inline-block;
+      vertical-align: middle;
+      width: 52px;
+      font-size: 32px;
+      line-height: 48px;
+      color: map-get($c-map, gray-color);
+      cursor: pointer;
+      i {
+          position: relative;
+          top: 4px;
+      }
+      &:hover { color: map-get($c-map, hover-color);}
+    }
+  }
+  &-label {
+    border-bottom: map-get($c-map, border-style);
+    th {
+      &:first-child {text-align: left;}
+      &:last-child {
+        padding-right: 25px;
+        text-align: right;
+      }
+      .c-reports-data-table-title {padding-left:0;}
+    }
+    td:last-child {
+      padding-right: 25px;
+      text-align: right;
+      color: map-get($c-map, gray-color);
+    }
+  }
+  &-content {
+    border-bottom: map-get($c-map, border-style);
+    th {
+      padding: 0 10px;
+      i {
+        display: block;
+        line-height: 13px;
+        @include ffamily("semi");
+      }
+    }
+  }
+  &-result {
+    border-bottom: map-get($c-map, border-style);
+    th {
+      width: 50px;
+      padding: 0 5px;
+      &:last-child {
+        padding: 0;
+        text-align: right;
+      }
+    }
+    td:last-child {
+      text-align: right;
+      padding-right: 10px;
+    }
+  }
+}

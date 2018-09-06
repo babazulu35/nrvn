@@ -1,0 +1,24 @@
+<div class="c-product-search-select__container">
+  <app-no-data *ngIf="isEmpty" [hasContainer]="true" [icon]="{type: 'svg', name: 'performance'}" [iconSize]="'lg'" [action]='{label: "ÜRÜN EKLE", action:"addEvent", params:{} }' (actionEvent)="openSearchBox($product)"></app-no-data>
+  <app-container-canvas *ngIf="!isEmpty">
+    <div class="c-product-search-select__list-container">
+      <ul class="c-product-search-select__list">
+        <li *ngFor="let product of products" class="c-product-search-select__list-item">
+          <app-product-item-line 
+            [name]="product?.Localization?.Name" 
+            [isViewOnly]="true" 
+            [currency]="product?.Currency?.Code"  
+            [price]="product?.CurrentPrice?.toFixed(2)" 
+            [id]="product?.Id">
+              <div subtitle>
+                <time datetime="10-10-2016 22:00">{{product?.SalesEndDate | relativeDate}}</time>'a kadar satışta
+              </div>
+            </app-product-item-line>
+        </li>
+      </ul>
+      <div class="c-product-search-select__add-button">
+          <app-button (click)="openSearchBox($product)" type="icon" icon="plus" shape="circle" theme="secondary" size="lg"></app-button>
+      </div>
+    </div>
+  </app-container-canvas>
+</div>

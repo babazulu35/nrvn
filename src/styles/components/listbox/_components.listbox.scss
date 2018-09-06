@@ -1,0 +1,133 @@
+$c-listbox: (
+
+    container: (
+        border-color: #dcdce5,
+        border-radius: 3px
+    ),
+
+    empty-box: (
+        font-size: 15px,
+        color: #B1B1B1
+    ),
+
+    list: (
+        padding: 15px 0px,
+        background-color: #ffffff,
+    ),
+
+    item: (
+        color: #21242b,
+        padding: 5px 20px,
+        font-size: 11px,
+
+        selected: (
+            color: #ffffff,
+            background-color: #2096F3
+        ),
+
+        disabled: (
+            color: #dcdce5
+        )
+    ),
+
+    footer: (
+        height: 50px,
+        background-color: #f7f7f7
+    )
+);
+
+// Merge settings and defaults
+$c-listbox: map-merge($c-listbox, getSettingsMap("c-listbox"));
+
+// Set shortcuts
+$c-map: $c-listbox;
+
+.c-listbox {
+    display: block;
+    width: 100%;
+    float: left;
+    height: inherit;
+
+    & + .c-listbox {
+        margin-left: map-deep-get($c-map, container, border-radius)/-2;
+        .c-listbox__container {
+            border-top-left-radius: 0px;
+            border-bottom-left-radius: 0px;
+        }
+    }
+
+    &--has-footer {
+        .c-listbox__empty-box,
+        .c-listbox__list {
+            height: calc(100% - #{map-deep-get($c-map, footer, height)});
+        }
+    }
+    
+    &__container {
+        display: block;
+        position: relative;
+        height: inherit;
+        border: solid 1px map-deep-get($c-map, container, border-color);
+        border-radius: map-deep-get($c-map, container, border-radius);
+        overflow: hidden;
+    }
+
+    &__empty-box {
+        display: flex;
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+        height: inherit;
+        @include ffamily("semi", "i");
+        font-size: map-deep-get($c-map, empty-box, font-size);
+        color: map-deep-get($c-map, empty-box, color);
+    }
+
+    &__list {
+        list-style: none;
+        padding: map-deep-get($c-map, list, padding);
+        background-color: map-deep-get($c-map, list, background-color);
+        height: inherit;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    &__item {
+        @include ffamily('semi');
+        font-size: map-deep-get($c-map, item, font-size);
+        color: map-deep-get($c-map, item, color);
+        padding: map-deep-get($c-map, item, padding);
+
+        &:hover:not(.c-listbox__item--disabled):not(.c-listbox__item--selected) {
+            cursor: pointer;
+            color: map-deep-get($c-map, item, selected, color);
+            background-color: lighten(map-deep-get($c-map, item, selected, background-color), 10%);
+        }
+
+        &--selected {
+            color: map-deep-get($c-map, item, selected, color);
+            background-color: map-deep-get($c-map, item, selected, background-color);
+        }
+
+        &--disabled {
+            cursor: not-allowed;
+            color: map-deep-get($c-map, item, disabled, color);
+            > * {
+                pointer-events: none;
+            }
+        }
+    }
+
+    &__footer {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: map-deep-get($c-map, footer, height);
+        background-color: map-deep-get($c-map, footer, background-color);
+        border-top: solid 1px map-deep-get($c-map, container, border-color);
+    }
+}
+
+//Reset
+$c-map: null;

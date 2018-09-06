@@ -1,0 +1,12 @@
+// Html alanı
+
+// Genel Değişken Yerine Globalden Çekmesi Tavsiye Edilir
+
+
+html {
+    font-size: ($global-font-size / 16px) * 1em; /* [1] */
+    line-height: $global-line-height / $global-font-size; /* [1] */
+    padding-bottom: 0;
+    background-color: #fff;
+}
+

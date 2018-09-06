@@ -1,0 +1,55 @@
+<app-dialog-box>
+
+  <div #header class="c-dialog-box__header c-dialog-box__header--padding">
+    <div class="c-dialog-box__header-bar">
+      <h1 class="c-dialog-box__header-title">
+        {{title}}
+      </h1>
+      <div class="c-dialog-box__header-actions">
+        <app-button (click)="tether.dismiss()" type="icon" icon="close"></app-button>
+      </div>
+    </div>
+
+    <div class="c-dialog-box__header-sticky-contents">
+      <app-wizard-header currentLevel={{currentLevelIndex+1}} totalLevel={{levels?.length}} (actionEvent)="wizardActionHandler($event)">
+        <span><strong>{{wizardHeader.currentLevel}}. Adım: </strong>{{currentLevel?.title}}</span>
+      </app-wizard-header>
+    </div>
+
+  </div>
+
+  <div #body 
+    [ngSwitch]="currentLevel?.key"
+    class="c-dialog-box__body c-dialog-box__body--no-scroll c-dialog-box__body--no-footer c-dialog-box__body--no-padding ">
+	  
+    <div class="p-container p-container--inherit"
+      *ngSwitchCase="'venue'">
+		  <app-typeahead
+        (actionEvent)="venueActionHandler($event)"
+        (searchEvent)="venueSearchHandler($event)"
+        (resultEvent)="venueSelectHandler($event)"
+        (dismissEvent)="dismissHandler($event)"
+        [searchPlaceholder] = "settings.search.placeholder"
+        [feedback]="settings.search.feedback"
+        [presets] = "venuePresets"
+        [searchResults] = "venueSearchResults"
+        ></app-typeahead>
+	  </div>
+
+    <div class="p-container p-container--inherit p-container--scroll"
+      *ngSwitchCase="'template'">
+		  <app-icon-grid *ngIf="!isPromising"
+        (actionEvent)="templateActionHandler($event)"
+        [data]="templates"
+        [isNewButtonEnabled]="settings.template.canAddNewTemplate"
+        [newButtonLabel]="settings.template.addNewTemplateLabel"
+        ></app-icon-grid>
+	  </div>
+
+    <div *ngIf="isPromising" class="oc-venue-search-select__overlay">
+      <app-promise-icon [isPromising]="isPromising" size="lg"></app-promise-icon>
+    </div>
+
+  </div>
+
+</app-dialog-box>

@@ -1,0 +1,15 @@
+$c-guest-form: ();
+// Merge settings and defaults
+$c-guest-form: map-merge($c-guest-form, getSettingsMap("c-guest-form"));
+// Set shortcuts
+$c-map: $c-guest-form;
+.c-guest-form {
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+$c-map: null;

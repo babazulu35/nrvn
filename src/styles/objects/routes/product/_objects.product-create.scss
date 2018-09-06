@@ -1,0 +1,13 @@
+/* --------------------------------------------------------
+author: Abdullah Karadeniz
+----------------------------------------------------------*/
+
+$or-product-create: ( border-color: #dcdce5, switch-bar: ( label: ( color: #373a3c, font-size: 14px, )));
+$or-product-create: map-merge($or-product-create, getSettingsMap("or-product-create"));
+$oc-map: $or-product-create;
+.or-product-create {
+    display: block;
+    position: relative;
+}
+
+$oc-map: null;

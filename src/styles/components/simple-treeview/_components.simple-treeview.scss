@@ -1,0 +1,120 @@
+/* --------------------------------------------------------
+author: Can SİVRİ
+----------------------------------------------------------*/
+
+
+// Variables
+$c-simple-treeview: (
+	color: #35383d,
+	border-color: #dcdce5,
+	item-padding: 7px 0,
+	icon-padding: 0 4px 0 6px,
+	label-padding: 0 20px 0 0,
+	sub-padding: 10px 0 0 35px,
+	content-height: 30px
+);
+
+// Merge settings and defaults
+$c-simple-treeview: map-merge($c-simple-treeview, getSettingsMap("c-simple-treeview"));
+
+// Set shortcuts
+$c-map: $c-simple-treeview;
+
+.c-simple-treeview {
+	display: block;
+}
+
+.c-simple-treeview__list {
+	display: block;
+	list-style: none;
+	>.c-simple-treeview__node:after, >.c-simple-treeview__node:before {border:none;}
+}
+
+.c-simple-treeview__node {
+	display: block;
+	position: relative;
+	list-style: none;
+	margin: 0;
+	padding: map-get($c-map, item-padding);
+	&:after {
+		content:"";
+		position:absolute;
+		top:20px;
+		left:-20px;
+		width:20px;
+		height:1px;
+		border-top:1px solid map-get($c-map, border-color);
+	}
+	&:before {
+		content:"";
+		position:absolute;
+		top:0;
+		left:-21px;
+		width:1px;
+		height:100%;
+		border-left:1px solid map-get($c-map, border-color);
+	}
+	&:last-child:before {height:34px;}
+}
+
+.c-simple-treeview__node-content {
+	display: inline-block;
+	width: 100%;
+	height: map-get($c-map, content-height);
+	vertical-align: middle;
+	margin-left: -2px;
+	&:before {
+		content: "";
+		display: inline-block;
+		height: map-get($c-map, content-height);
+		vertical-align: middle;
+	}
+}
+
+.c-simple-treeview__node-check {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.c-simple-treeview__node-icon {
+	display: inline-block;
+	vertical-align: middle;
+	padding: map-get($c-map, icon-padding);
+	color: map-get($c-map, color);
+	height: map-get($c-map, content-height);
+	cursor: default;
+	i {
+		position:relative;
+		top:3px;
+		font-size: 24px;
+		height: 24px;
+		line-height: 22px;
+		&.icon__n--folder-remove {top:0;}
+	}
+}
+
+.c-simple-treeview__node-label {
+	display: inline-block;
+	vertical-align: middle;
+	padding: map-get($c-map, label-padding);
+	color: map-get($c-map, color);
+	font-size: 15px;
+	@include ffamily("regular");
+}
+
+.c-simple-treeview__node-input {
+	display: inline-block;
+	vertical-align:middle;
+	width: 60px;
+	text-align: center;
+}
+
+.c-simple-treeview__children {
+	display: block;
+	position:relative;
+	margin:0;
+	padding: map-get($c-map, sub-padding);
+	.c-simple-treeview__node:before {
+		top:-13px;
+	}
+}

@@ -1,0 +1,112 @@
+<div class="or-cms-datasources">
+    <div class="p-header-bar" sticky sticky-main-scroller sticky-release-offset="30" sticky-height-property="55" sticky-width-property="100%" sticky-follow-menu-moves>
+        <div class="p-header-bar__left">
+            <h2>Veri Kaynakları</h2>
+        </div>
+
+        <div class="p-header-bar__right">
+            <app-button (clickEvent)='addNewDatasource($event)' [isPromising]="isLoading">EKLE</app-button>
+        </div>
+    </div>
+
+    <app-split-container [fixedWidth]="0">
+        <div fixed>
+
+        </div>
+
+        <div fluid>
+          <div class="p-container">
+            <div class="o-list-view" *ngIf="datasources?.length">
+              <div class="o-list-view__content">
+                  <app-responsive-table [ngClass]="{'main-loader': isLoading }" [hasAction]="true">
+                      <div class="c-responsive-table__caption row">
+                          <div class="c-responsive-table__primary-column hidden-md-down col-lg-8 col-xl-6">
+                              <app-sort-title sortTitle='VERİ KAYNAĞI ADI' [activeTitle]="null" sortBy='Name' (toggleSortTitle)="toggleSortTitle($event)"></app-sort-title>
+                          </div>
+
+                          <div class="c-responsive-table__secondary-column hidden-sm-down col-lg-8 col-xl-10">
+                              <div class="hidden-lg-down col-xl-4">
+                                  <app-sort-title sortTitle='EKLEYEN' sortBy='CreatedBy' [activeTitle]="null" (toggleSortTitle)="toggleSortTitle($event)"></app-sort-title>
+                              </div>
+
+                              <div class="hidden-lg-down col-xl-4">
+                                  <app-sort-title sortTitle='E. TARİHİ' sortBy='Created' [activeTitle]="null" (toggleSortTitle)="toggleSortTitle($event)"></app-sort-title>
+                              </div>
+                              
+                              <div class="col-lg-8 col-xl-4">
+                                  <app-sort-title sortTitle='GÜNCELLEYEN' sortBy='ModifiedBy' [activeTitle]="null" (toggleSortTitle)="toggleSortTitle($event)"></app-sort-title>
+                              </div>
+
+                              <div class="col-lg-8 col-xl-4">
+                                  <app-sort-title sortTitle='G. TARİHİ' sortBy='Modified' [activeTitle]="null" (toggleSortTitle)="toggleSortTitle($event)"></app-sort-title>
+                              </div>
+                          </div>
+                      </div>
+
+                      <div class="c-responsive-table__row row" *ngFor="let datasource of datasources">
+                          <div class="c-responsive-table__primary-column col-md-16 col-lg-8 col-xl-6">
+                              <div class="c-primary-column-line c-primary-column-line--with-select">
+                                  <div class="c-primary-column-line__primary-content">
+                                      <!-- <div class="c-primary-column-line__select">
+                                          <app-checkbox [isDisabled]="true" heme="ligth" type="circle" [isChecked]="selectedItems?.indexOf(content) > -1" (checkedAction)="selectItem($event, content);"></app-checkbox>
+                                      </div> -->
+                                      <a class="c-primary-column-line__title" [routerLink]="['/cms', 'datasource', datasource?._id, 'edit']">
+                                          {{datasource?.Name || datasource?.name}}
+                                      </a>
+                                  </div>
+
+                                  <div class="c-primary-column-line__secondary-content">
+                                      <div class="c-responsive-table__secondary-item hidden-xl-up">
+                                          <span class="c-responsive-table__secondary-item-label">EKLEYEN</span>
+                                          <span class="c-responsive-table__secondary-item-value">{{datasource?.CreatedBy}}</span>
+                                      </div>
+
+                                      <div class="c-responsive-table__secondary-item hidden-xl-up">
+                                          <span class="c-responsive-table__secondary-item-label">E. TARİHİ</span>
+                                          <span class="c-responsive-table__secondary-item-value">{{datasource?.Created | relativeDate}}</span>
+                                      </div>
+
+                                      <div class="c-responsive-table__secondary-item hidden-lg-up">
+                                          <span class="c-responsive-table__secondary-item-label">GÜNCELLEYEN</span>
+                                          <span class="c-responsive-table__secondary-item-value">{{datasource?.ModifiedBy}}</span>
+                                      </div>
+
+                                      <div class="c-responsive-table__secondary-item hidden-lg-up">
+                                          <span class="c-responsive-table__secondary-item-label">G. TARİHİ</span>
+                                          <span class="c-responsive-table__secondary-item-value">{{datasource?.Modified | relativeDate}}</span>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+
+                          <div class="c-responsive-table__secondary-column hidden-md-down col-lg-8 col-xl-10">
+                              <div class="hidden-lg-down col-xl-4">
+                                  <span>{{datasource?.CreatedBy}}</span>
+                              </div>
+
+                              <div class="hidden-lg-down col-xl-4">
+                                  <span>{{datasource?.Created | relativeDate}}</span>
+                              </div>
+
+                              <div class="col-lg-8 col-xl-4">
+                                  <span>{{datasource?.ModifiedBy}}</span>
+                              </div>
+
+                              <div class="col-lg-8 col-xl-4">
+                                  <span>{{datasource?.Modified | relativeDate}}</span>
+                              </div>
+
+                          </div>
+
+                          <div class="c-responsive-table__action-btn">
+                              <span *ngIf="contextMenuData?.length == 1"><app-button (clickEvent)="doAction(contextMenuData[0].action, datasource)" type="icon" [icon]="contextMenuData[0]?.icon" theme="secondary"></app-button></span>
+                              <span *ngIf="contextMenuData?.length > 1"><app-button (clickEvent)="openContextMenu($event, datasource)" type="icon" [icon]="'more_vert'" theme="secondary"></app-button></span>
+                          </div>
+                      </div>
+                  </app-responsive-table>
+              </div>
+            </div>
+          </div>
+        </div>
+    </app-split-container>
+</div>

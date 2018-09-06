@@ -1,0 +1,294 @@
+/* --------------------------------------------------------
+author: Abdullah Karadeniz
+----------------------------------------------------------*/
+
+$c-card-item: ( width: 205px, min-height: 360px, height: auto, border-radius: 3px, padding: 20px, active-color: #3a2e39, color: #333, background-color: #fff, border-color: #dcdce5, modifiers: ( active: (), disabled: (), selected: ( border-color: #21242b, box-shadow: 0 5px 10px 0 rgba(0, 0, 0, .1), ), ghost: (), hover: ()), status: ( font-size: 24px, color: #bdbdbd, active-color: #7cb342), action: ( font-size: 24px, color: #bdbdbd, overlay-color: #fff), avatar: ( radius: 160px, color: #bdbdbd, ), kinds: ( min-width: 38px, height: 38px, font-size: 23px, ), title: ( font-size: 14px, color: #2e2e2f, ), description: ( font-size: 12px, color: #2e2e2f, ), services: ( icon-size: 40px, color: #bdbdbd, font-size: 22px), overlay: ( background-color: rgba(58, 46, 57, .8), ), select-btn: ( font-size: 24px, ));
+$c-card-item: map-merge($c-card-item, getSettingsMap("c-card-item"));
+$c-map: $c-card-item;
+$z-index: map-merge($z-index, getSettingsMap("z-index"));
+$map-zindex: $z-index;
+.c-card-item {
+    display: inline-block;
+    position: relative;
+    width: map-deep-get($c-map, width);
+    min-height: map-deep-get($c-map, min-height);
+    height: map-deep-get($c-map, height);
+    border-radius: map-deep-get($c-map, border-radius);
+    border: 1px solid map-deep-get($c-map, border-color);
+    background-color: map-deep-get($c-map, background-color);
+    
+    &--ghost {}
+    &--disabled {}
+    &--selected {
+        border-color: map-deep-get($c-map, modifiers, selected, border-color);
+        box-shadow: map-deep-get($c-map, modifiers, selected, box-shadow);
+        transition: all .2s getEase(in-out-sine);
+        .c-card-item__action {
+            display: none;
+        }
+    }
+    &--editable {
+        &:hover {
+            
+        }
+    }
+    
+    &--hover {
+        .c-card-item__overlay {
+            display: block;
+        }
+        .c-card-item__action {
+            color: map-deep-get($c-map, action, overlay-color);
+            .c-button {
+                color: map-deep-get($c-map, action, overlay-color);
+            }
+        }
+        .c-card-item__status {
+            display: none;
+        }
+    }
+
+    &--active {
+        .c-card-item__status {
+            color: map-deep-get($c-map, status, active-color);
+        }
+    }
+    &--hasServices {
+        .c-card-item__container {
+            padding-bottom: map-deep-get($c-map, width) / 5;
+        }
+    }
+
+    .c-avatar {
+        border-width: 2px;
+    }
+    &__container {
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        width: 100%;
+    }
+    &__status {
+        position: absolute;
+        display: block;
+        top: map-deep-get($c-map, padding)/2;
+        left: map-deep-get($c-map, padding)/2;
+        color: map-deep-get($c-map, status, color);
+        font-size: map-deep-get($c-map, status, font-size);
+    }
+    &__action {
+        position: absolute;
+        z-index: 3;
+        display: block;
+        top: map-deep-get($c-map, padding)/2;
+        right: map-deep-get($c-map, padding)/2;
+        color: map-deep-get($c-map, action, color);
+        font-size: map-deep-get($c-map, action, font-size);
+    }
+    &__avatar {
+        display: block;
+        position: relative;
+        font-size: map-deep-get($c-map, avatar, radius);
+        margin: map-deep-get($c-map, padding) auto map-deep-get($c-map, padding);
+        width: 1em;
+        height: 1em;
+        text-align: center;
+        color: map-deep-get($c-map, avatar, color);
+        line-height: 0px;
+        box-sizing: content-box;
+        &--border {
+            border: 2px solid map-get($c-map, border-color);
+            border-radius: map-deep-get($c-map, avatar, radius);
+            .c-avatar {
+                border: none !important;
+            }
+        }
+        &--ghost {
+            border: 2px solid map-get($c-map, border-color);
+            border-radius: map-deep-get($c-map, avatar, radius);
+            &:after {
+                display: block;
+                position: absolute;
+                font-size: 24px;
+                width: 1em;
+                height: 1em;
+                @include icon("image");
+                top: 50%;
+                left: 50%;
+                transform: translateX(-50%) translateY(-50%);
+            }
+        }
+    }
+    &__kinds {
+        display: inline-block;
+        position: absolute;
+        bottom: 0px;
+        right: 0px;
+        font-size: map-deep-get($c-map, kinds, font-size);
+        min-width: 1.3em;
+        min-height: 1.3em;
+        padding: 0.15em;
+        text-align: center;
+        border: solid 1px map-deep-get($c-map, border-color);
+        box-shadow: 0px 0px 0px 5px map-deep-get($c-map, background-color);
+        background-color: map-deep-get($c-map, background-color);
+        border-radius: 1em;
+        .icon__n {
+            padding: 0.15em 0.075em;
+        }
+        &--ghost {
+            pointer-events: none;
+            &:after {
+                @include icon('bubble_chart');
+                padding: 0.15em 0.075em;
+            }
+        }
+    }
+    &__title {
+        display: block;
+        font-size: map-deep-get($c-map, title, font-size);
+        color: map-deep-get($c-map, title, color);
+        @include ffamily('semi');
+        padding: 0px map-deep-get($c-map, padding) map-deep-get($c-map, padding);
+        max-height: 3em;
+        word-wrap: break-word;
+        line-height: 1.3em;
+        white-space: normal;
+        text-align: left;
+        z-index: map-get($map-zindex, over-figure);
+
+        > span {
+            cursor: pointer;
+        }
+        
+        &--ghost {
+            pointer-events: none;
+            
+            &:after {
+                content: "xxxxxx xxxxxx xxxxxx xxxxx xxxxxx";
+                display: inline;
+                color: transparent;
+                border-bottom: 4px solid map-deep-get($c-map, border-color);
+                text-decoration: none;
+            }
+        }
+    }
+    &__description {
+        display: flex;
+        align-self: flex-end;
+        margin-top: auto;
+        font-size: map-deep-get($c-map, description, font-size);
+        color: map-deep-get($c-map, description, color);
+        @include ffamily('regular');
+        padding: 0px map-deep-get($c-map, padding) map-deep-get($c-map, padding);
+        width: 100%;
+        word-wrap: break-word;
+        text-align: left;
+        
+        &--ghost {
+            pointer-events: none;
+            display: block;
+            &:after {
+                content: "xxxxxx xxxxxx xxxxxx xxxxx xxxxxx xxxxxxx";
+                display: inline;
+                color: transparent;
+                border-bottom: 2px solid map-deep-get($c-map, border-color);
+                text-decoration: none;
+            }
+        }
+
+        > * {
+            width: 100%;
+            position: relative;
+        }
+
+        ul {
+            list-style-type: none;
+            margin: 0px;
+            padding: 0px;
+            width: 100%;
+            position: relative;
+            li {
+                line-height: 1.45em;
+                margin-bottom: 0.5em;
+                &:last-child {
+                    margin-bottom: 0px;
+                }
+
+                a {
+                    display: block;
+                    width: 100%;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                }
+            }
+        }
+        strong,
+        b {
+            @include ffamily('bold');
+        }
+    }
+    &__services {
+        display: flex;
+        position: absolute;
+        bottom: 0px;
+        width: 100%;
+        height: map-deep-get($c-map, width) / 5;
+        border-top: solid 1px map-deep-get($c-map, border-color);
+        color: map-deep-get($c-map, services, color);
+        font-size: map-deep-get($c-map, services, font-size);
+        ul {
+            display: flex;
+            width: 100%;
+            list-style-type: none;
+        }
+        li {
+            display: flex;
+            flex: 0 0 20%;
+            align-items: center;
+            justify-content: center;
+            &:not(:last-child) {
+                border-right: solid 1px map-deep-get($c-map, border-color);
+            }
+        }
+    }
+    &__overlay {
+        display: none;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        z-index: 2;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 25%, rgba(0,0,0,0.35) 40%, rgba(0,0,0,0.55) 60%, rgba(0,0,0,0.85) 100%);
+        @include animation(getAnimation(fade-in, 0.2s getEase(in-out-sine)));
+    }
+    &__select-btn {
+        display: block;
+        position: absolute;
+        font-size: map-deep-get($c-map, select-btn, font-size);
+        top: map-deep-get($c-map, padding)/2;
+        left: map-deep-get($c-map, padding)/2;
+        width: 1em;
+        height: 1em;
+    }
+    &__edit-btn {
+        display: block;
+        position: absolute;
+        bottom: 0px;
+        left: 0px;
+        font-size: map-deep-get($c-map, select-btn, font-size);
+        bottom: map-deep-get($c-map, padding);
+        left: map-deep-get($c-map, padding);
+        width: calc(100% - #{map-deep-get($c-map, padding)*2});
+    }
+}
+
+$c-map: null;
+$map-zindex:null;
+
+/* --------------------------------------------------------
+author: Abdullah Karadeniz
+----------------------------------------------------------*/

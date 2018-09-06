@@ -1,0 +1,46 @@
+<div *ngIf="options && options.length > 1 && showSelectbox" ng-class="{'row': size === 'lg', 'container-fluid': size === 'xs'}" class="c-pagination--main">
+    <div class="col-{{size}}-1">
+        <app-selectbox
+            [options]="options"
+            [value]="showItemPerPage"
+            (changeEvent)="changePageSize($event)"
+        ></app-selectbox>
+    </div>
+
+    <div ng-class="{'col-lg-15': size === 'lg', 'col-xs-14': size === 'xs'}" class="text-{{size}}-center">
+        <div class="c-pagination">
+            <ul *ngIf="pages.length > 1" class="pagination" style="margin-bottom: 0px;">
+                <!--ISSUE margin-bottom silinmeli-->
+                <li class="page-item" [class.c-pagination--disabled]="!hasPrevious">
+                    <a class="page-link" aria-label="Previous" (click)="goToPage(currentPage-1)">
+                        <span aria-hidden="true"> <i class="icon__n icon__n--keyboard_arrow_left"></i></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                </li>
+
+                <li *ngFor="let page of pages;" class="page-item" [class.active]="page == currentPage" [hidden]="(page === maxPage) && isCollapsed ">
+                    <a class="page-link" (click)="goToPage(page)">{{page}}</a>
+                </li>
+
+                <li class="page-item dots" *ngIf="isCollapsed">
+                    <a class="page-link" (click)="expand()"> <i class="icon__n icon__n--more_horiz"></i>
+                    </a>
+                </li>
+
+                <li class="page-item" *ngIf="isCollapsed" [class.active]="!hasNext">
+                    <a class="page-link" (click)="goToPage(maxPage)">{{maxPage}}</a>
+                </li>
+
+                <li class="page-item" [class.c-pagination--disabled]="!hasNext">
+                    <a class="page-link" aria-label="Next" (click)="goToPage(currentPage*1 + 1)">
+                        <span aria-hidden="true">
+                            <i class="icon__n icon__n--keyboard_arrow_right"></i>
+                        </span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div *ngIf="size == 'xs'" class="col-xs-1"></div>
+</div>

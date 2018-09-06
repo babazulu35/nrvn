@@ -1,0 +1,40 @@
+$oc-add-reservation: ( table: ( row: ( height: 40px)));
+$oc-add-reservation: map-merge($oc-add-reservation, getSettingsMap("oc-add-reservation"));
+$oc-map: $oc-add-reservation;
+.oc-add-reservation {
+    display: block;
+    &__product-list {
+        display: block;
+        max-height: 240px;
+        overflow-x: hidden;
+        overflow-y: auto;
+        margin-right: -30px;
+        padding-right: 30px;
+        padding-bottom: 2px;
+    }
+    &__table-row {
+        display: table;
+        width: 100%;
+        height: map-deep-get($oc-map, table, row, height);
+        line-height: 0px;
+    }
+    &__table-column-left {
+        display: table-cell;
+        width: auto;
+        vertical-align: middle;
+        .c-checkbox {
+            display: block;
+        }
+    }
+    &__table-column-right {
+        display: table-cell;
+        width: 30%;
+        vertical-align: middle;
+        .c-selectbox {
+            height: map-deep-get($oc-map, table, row, height);
+            border-radius: map-deep-get($oc-map, table, row, height)/2;
+        }
+    }
+}
+
+$oc-map: null;

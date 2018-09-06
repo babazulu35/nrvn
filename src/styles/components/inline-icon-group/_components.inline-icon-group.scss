@@ -1,0 +1,38 @@
+/**
+ * Inline Icon Group:
+ * Kullanım için `.c-inline-icon-group` sınıfı kullanılır. `ul` elementi ile oluşturulur.
+ *
+ *     @example
+ *     <ul class="c-inline-icon-group">
+ *      <li><img src="../../../images/example.png" alt=""></li>
+ *      <li><img src="../../../images/example.png" alt=""></li>
+ *      <li><img src="../../../images/example.png" alt=""></li>
+ *      <li><i class="c-inline-icon-group__more icon--m">more_horiz</i></li>
+ *     </ul>
+ */
+
+ // Set defaults
+ $c-inline-icon-group: ( );
+
+ // Merge settings and defaults
+ $c-inline-icon-group: map-merge($c-inline-icon-group, getSettingsMap("c-inline-icon-group"));
+
+ // Set shortcuts
+ $c-map: $c-inline-icon-group;
+
+ ul.c-inline-icon-group {
+   list-style: none;
+   li {
+     display: inline-block;
+
+     * {
+       vertical-align: middle;
+       color:#bdbdbd;
+     }
+
+     .c-inline-icon-group__more {
+       margin-left: 4px;
+       font-size: 23px;
+     }
+   }
+ }

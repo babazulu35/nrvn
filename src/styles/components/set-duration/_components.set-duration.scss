@@ -1,0 +1,43 @@
+$c-set-duration: ();
+// Merge settings and defaults
+$c-set-duration: map-merge($c-set-duration, getSettingsMap("c-set-duration"));
+// Set shortcuts
+$c-map: $c-set-duration;
+.c-set-duration {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    .c-text-input {
+        flex: 0 140px;
+        text-align: left;
+        &__bar {
+            border-right: inherit;
+            border-top-right-radius: inherit;
+            border-bottom-right-radius: inherit;
+        }
+    }
+    &--required {
+        flex: 0;
+        align-self: center;
+        margin-right: 10px;
+        @include ffamily('semi');
+        color: #a5a5a5;
+    }
+    &--label {
+        flex: 0;
+        align-self: center;
+        margin-right: 5px;
+        @include ffamily('semi');
+        color: #a5a5a5;
+    }
+    &--duration-type {
+        background: #F7F7F7;
+        border: 1px solid #dcdce5;
+        color: #a5a5a5;
+        @include ffamily('semi', 'i');
+        flex: 0 30px;
+        text-align: center;
+        padding: 0.7em 1em;
+        /* align-self: center; */
+    }
+}

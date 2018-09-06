@@ -1,0 +1,96 @@
+/**
+* Tree View:
+* Author: Fatih Turan
+* `.c-tree-view` sınıfı ile birlikte kullanılır.
+*
+* @example
+* <div class="c-tree-view">
+*   <span class="c-tree-view__title">Title</span>
+*   <ul class="c-tree-view__items">
+*     <li><a href="#" class="c-tree-view__item">Item 1</a></li>
+*     <li><a href="#" class="c-tree-view__item c-tree-view__item--active">Item 2</a></li>
+*     <li><a href="#" class="c-tree-view__item">Item 3</a></li>
+*     <li><a href="#" class="c-tree-view__item">Item 4</a></li>
+*     <li><a href="#" class="c-tree-view__item">Item 5</a></li>
+*   </ul><!-- /.c-tree-view__items -->
+* </div><!-- /.c-tree-view -->
+*/
+
+
+// Variables
+$c-tree-view: (
+  title-color: #9d9d9d,
+  item-text-color: #35383d,
+  item-border-color: #dcdce4,
+  item-bg-hover: #f7f7f7,
+  item-bg-active: darken(#f7f7f7, 5%),
+  active-item-bg: #f7f7f7,
+);
+
+// Merge settings and defaults
+$c-tree-view: map-merge($c-tree-view, getSettingsMap("c-tree-view"));
+
+// Set shortcuts
+$c-map: $c-tree-view;
+
+
+.c-tree-view__title {
+  display: block;
+  margin: 0 0 12px 30px;
+  font-size: 11px;
+  @include ffamily("semi");
+  text-transform: uppercase;
+  color: map-get($c-map, title-color);
+}
+
+.c-tree-view__items {
+  list-style: none;
+  li:last-child a { // Last half vertical border
+    &:before {
+      height: 50%;
+    }
+  }
+}
+
+.c-tree-view__item {
+  position: relative;
+  display: block;
+  padding: 12px 60px;
+  font-size: 13px;
+  line-height: 1;
+  @include ffamily("regular");
+  color: map-get($c-map, item-text-color);
+  text-decoration: none;
+  cursor: pointer;
+  &:hover {
+    background-color: map-get($c-map, item-bg-hover);
+    color: map-get($c-map, item-text-color);
+    text-decoration: none;
+  }
+  &:active, &:focus {
+    background-color: map-get($c-map, item-bg-active);
+    outline: 0;
+    color: map-get($c-map, item-text-color);
+  }
+  &--active {
+    background-color: map-get($c-map, active-item-bg);
+  }
+  &:before, &:after {
+    content: "";
+    position: absolute;
+    border: 0px solid map-get($c-map, item-border-color);
+  }
+  &:before { // Vertical Border
+    left: 32px;
+    top: 0;
+    @include size(1px, 100%);
+    border-left-width: 1px;
+  }
+  &:after { // Horizontal Border
+    left: 32px;
+    top: 50%;
+    @include transform(translateY(-50%));
+    @include size(20px, 2px);
+    border-top-width: 1px;
+  }
+}

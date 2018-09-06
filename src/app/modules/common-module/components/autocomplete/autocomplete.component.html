@@ -1,0 +1,37 @@
+<div class="c-autocomplete__input">
+    <app-text-input
+      (typeEvent)="inputTypeEventHandler($event)"
+      (focusEvent)="inputFocusHandler($event)"
+      [dismissOnFocusOut]="true"
+      [dismissOnEscape]="true"
+      [isTypeEmitting]="true"
+      [typeDebounceTime]="typeDebounceTime"
+      type="search"
+      theme="underline"
+      [placeholder]="placeholder || ''"
+      [value]="searchText"
+      [icon]="icon"
+      ></app-text-input>
+</div>
+<div class="c-autocomplete__list-container" *ngIf="listIsOpen">
+  <ul #featuredListElement class="c-autocomplete__list c-autocomplete__list--featured">
+      <li class="c-autocomplete__list-item" [class.c-autocomplete__list-item--active]="item?.isActive" *ngFor="let item of featuredList" (click)="item.disabled ? null : itemClickHandler($event, item)">
+      <span class="c-autocomplete__list-item-primary">
+        {{item?.label}}
+      </span>
+      <span class="c-autocomplete__list-item-secondary" *ngIf="item?.secondaryLabel">
+        {{item?.secondaryLabel}}
+      </span>
+    </li>
+  </ul>
+  <ul #listElement class="c-autocomplete__list">
+      <li #listItemElement class="c-autocomplete__list-item" [class.c-autocomplete__list-item--active]="item?.isActive" *ngFor="let item of list" (click)="item.disabled ? null : itemClickHandler($event, item)">
+        <span class="c-autocomplete__list-item-primary">
+          {{item?.label}}
+        </span>
+        <span class="c-autocomplete__list-item-secondary" *ngIf="item?.secondaryLabel">
+          {{item?.secondaryLabel}}
+        </span>
+      </li>
+  </ul>
+</div>

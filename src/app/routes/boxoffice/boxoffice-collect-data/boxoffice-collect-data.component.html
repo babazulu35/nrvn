@@ -1,0 +1,19 @@
+<!--sticky olması için : sticky sticky-main-scroller sticky-release-offset="30" sticky-height-property="55" sticky-width-property="100%" sticky-follow-menu-moves -->
+<div class="p-header-bar">
+    <div class="p-header-bar__left">
+        <div class="boxoffice-bar">
+            <app-button theme="primary" icon="keyboard_arrow_left" type="icon" size="xlg" (clickEvent)="goBack($event)"></app-button>
+            <h3>Özel Bilgi Girişi</h3>
+        </div>
+    </div>
+    <div class="p-header-bar__right">
+        <app-button (clickEvent)="saveCollection()" [isDisabled]="!isValid">KAYDET</app-button>
+    </div>
+</div>
+
+<div *ngFor="let collection of collectData.State">
+    <app-collect-data (resultEvent)="actionHandler($event)" [collectionData]="collection"></app-collect-data>
+    <hr>
+
+
+</div>

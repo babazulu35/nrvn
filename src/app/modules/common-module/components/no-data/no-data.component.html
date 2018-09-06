@@ -1,0 +1,20 @@
+<div [ngSwitch]="icon?.type" class="c-no-data__icon c-no-data__icon--{{iconSize}}">
+    <span *ngSwitchCase="'icon'" class="c-no-data__icon-container">
+        <i class="icon__n icon__n--{{icon.name}}"></i>
+    </span>
+    <i *ngSwitchCase="'svg'" class="icon__svg icon__svg--{{icon.name}}"></i>
+    <img *ngSwitchCase="'image'" src="{{icon.name}}" />
+</div>
+
+<div class="c-no-data__title">
+    {{title}}
+</div>
+
+<div class="c-no-data__description">
+    {{description}}
+</div>
+
+
+<div *ngIf="action" class="c-no-data__button">
+    <app-button [theme]="action.theme || 'secondary'" [label]="action.label" (click)="emitAction($event)"></app-button>
+</div>

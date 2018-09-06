@@ -1,0 +1,31 @@
+$dev-mode: true;  // Development mode
+
+$global-images-path: "assets/images/";
+
+$global-spacing-unit: 24px;
+$global-font-size: 12px;
+$global-line-height: $global-spacing-unit;
+
+
+$global-site-padding: 40px;
+$global-aside-width: 90px;
+
+
+$global-card-gutter-size:25px;
+
+$global-scroll-width: 7px;
+
+$global-settings: (
+	'image-path': "assets/images/",
+	'global-font-size': 12px,
+	overlay : (
+		'color': (rgba(33,36,43,0.5)),
+		'z-index': 1025
+	)
+
+);
+
+
+@function getSettingsMap($component-name) {
+    @return ()
+}

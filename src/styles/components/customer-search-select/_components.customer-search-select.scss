@@ -1,0 +1,68 @@
+$c-customer-search-select: ( 
+    background-color: #F7F7F7,
+    padding: 14px 25px 13px,
+    color: #3A2E39,
+    border-color: #DCDCE5,
+    height: map-deep-get($l-vars, header, height)
+);
+// Merge settings and defaults
+$c-customer-search-select: map-merge($c-customer-search-select, getSettingsMap("c-customer-search-select"));
+// Set shortcuts
+$c-map: $c-customer-search-select;
+.c-customer-search-select {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: map-deep-get($c-map, background-color);
+    padding: map-deep-get($c-map, padding);
+    border-bottom: solid 1px map-deep-get($c-map, border-color);
+    min-height: map-deep-get($c-map, height);
+
+    &--empty {
+        background-color: transparent;
+    }
+
+    &__input {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    &__view {
+        display: flex;
+        align-items: center;
+        width: 100%;
+
+        &-info {
+            display: flex;
+            flex-grow: 1;
+            flex-shrink: 1;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        &-title {
+            @include ffamily(bold);
+            font-size: 16px;
+            color: map-deep-get($c-map, color);
+        }
+
+        &-sub-title {
+            @include ffamily(bold);
+            font-size: 11px;
+            color: map-deep-get($c-map, color);
+        }
+
+        &-action {
+            display: flex;
+            flex-shrink: 0;
+            flex-grow: 0;
+
+            span + span {
+                margin-left: 0.75em;
+            }
+        }
+    }
+}
+
+$c-map: null;

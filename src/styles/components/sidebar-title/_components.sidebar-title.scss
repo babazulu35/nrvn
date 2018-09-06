@@ -1,0 +1,60 @@
+/***
+* Sidebar Title Component:
+*/
+
+/**
+* Sidebar Title:
+* `.c-sidebar-title - Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque repellat autem deleniti odit repellendus temporibus placeat ipsa similique, neces
+*
+*     @example
+*     <div class="c-sidebar-title">
+*       <h3 class="c-sidebar-title__name">KAPASİTE 
+*         <i class="c-sidebar-title__count">1500</i>
+*       </h3>		
+*     </div>
+*
+*/
+
+
+
+// Set defaults
+
+$c-sidebar-title: (
+	width: 100%,
+	padding: 0 0 18px 0,
+	margin: 0,
+	text-color: #9d9d9d,
+	text-size: 11px,
+	text-line-height: 14px,
+	count-color: #35383d,
+	count-size: 15px,
+	border-bottom: 1px solid #dcdce5
+);
+
+// Merge settings and defaults
+$c-sidebar-title: map-merge($c-sidebar-title, getSettingsMap("c-sidebar-title"));
+
+// Set shortcuts
+$c-map: $c-sidebar-title;
+
+
+
+.c-sidebar-title {
+	box-sizing: border-box;
+	width: map-get($c-map, width);
+	padding: map-get($c-map, padding);
+	margin: map-get($c-map, margin);
+	border-bottom: map-get($c-map, border-bottom);
+	&__text {
+		@include ffamily("semi");
+		font-size: map-get($c-map, text-size);
+		color: map-get($c-map, text-color);
+		line-height: map-get($c-map, text-line-height);
+	}
+	&__count {
+		float: right;
+		@include ffamily("bold");
+		font-size: map-get($c-map, count-size);
+		color: map-get($c-map, count-color);
+	}
+}

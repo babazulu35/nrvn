@@ -1,0 +1,32 @@
+<div class="c-confirm-modal__header">
+    <div class="c-confirm-modal__header-bar">
+        <h1 class="c-confirm-modal__header-title">
+            {{title}}
+        </h1>
+        <div class="c-confirm-modal__header-actions">
+            <app-button *ngIf="buttonStatus" (click)="tether.dismiss($event)" type="icon" icon="close" theme="secondary"></app-button>
+        </div>
+    </div>
+</div>
+
+<div class="c-confirm-modal__body">
+    <div *ngIf="image" class="c-confirm-modal__image"><img [src]="image" /></div>
+    <div *ngIf="description" class="c-confirm-modal__description" [innerHTML]="description"></div>
+    <div *ngIf="feedback" class="c-confirm-modal__feedback">
+        <div *ngIf="feedback?.label?.length > 0" class="c-confirm-modal__feedback-label">{{feedback?.label}}<sup *ngIf="feedback?.required">*</sup></div>
+        <div class="c-confirm-modal__feedback-input">
+            <textarea class="form-control" [(ngModel)]="feedback.value"></textarea>
+        </div>
+    </div>
+</div>
+
+<div class="c-confirm-modal__footer">
+    <div class="c-confirm-modal__timer" *ngIf="intervalId">
+        <span>{{formattedRemainingTime}}</span>
+    </div>
+
+    <div class="c-confirm-modal__footer-action-bar">
+        <app-button *ngIf="dismissButton" (clickEvent)="tether.dismiss($event)" [type]="dismissButton.type || 'link'" [label]="dismissButton.label" [theme]="dismissButton.theme || 'primary'"></app-button>
+        <app-button (clickEvent)="confirm()" [isDisabled]="feedback && feedback?.required && !feedback?.value?.length" [type]="confirmButton?.type || 'button'" [label]="confirmButton?.label || 'TAMAM'" [theme]="confirmButton?.theme || 'danger'"></app-button>
+    </div>
+</div>

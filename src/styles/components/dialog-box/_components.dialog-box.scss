@@ -1,0 +1,631 @@
+/* --------------------------------------------------------
+version: 1.0
+author: Abdullah Karadeniz
+----------------------------------------------------------*/
+
+/***
+* Dialog Box Component:
+*/
+
+/**
+* Dailog Box:
+* `.c-dialog-box - Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque repellat autem deleniti odit repellendus temporibus placeat ipsa similique, neces
+*
+*     @example
+*			
+*/
+
+
+// Set defaults
+
+$c-dialog-box: (
+    header: (
+        width: 100%,
+        padding: 30px,
+        margin: 0,
+        border-color: #dcdce5,
+
+        title: (
+            color: #392d38,
+            size: 20px
+        ),
+
+        actions: (
+            color: #bdbdbd,
+            size: 24px,
+            active-color: #392d38
+        )
+    ),
+
+    body: (
+        width: 100%,
+        padding: 30px,
+        margin: 0,
+        border-color: #dcdce5,
+        header: (
+            title: (
+                font-size: 16px,
+                color: #333,
+            ),
+        ),
+        placeholder: (
+            space: 20px,
+            
+            container: (
+                padding: 30px,
+            ),
+
+            header: (
+                font-size: 2rem,
+                padding: 20px 30px 15px,
+                border-color: #e0e0e0
+            ),
+
+            group: (
+                margin-bottom: 40px,
+
+                header: (
+                    border-color: #dcdce5,
+
+                    title: (
+                        color: #35383d,
+                        font-size: 15px
+                    )
+                ),
+                item: (
+                    margin-bottom: 20px,
+                ),
+
+                list: (
+                    label: (
+                        font-size: 13px,
+                        color: #35383d
+                    ),
+                    item: (
+                        padding: 10px
+                    )
+                )
+            ),
+
+            form-group: (
+                title: (
+                    color: #939393,
+                    font-size: 11px
+                )
+            ),
+
+            toggle: (
+                label: (
+                    color: #3a2e39,
+                    font-size: 13px
+                )
+            )
+        )
+    ),
+    footer: (
+        width: 100%,
+        height: 70px,
+        padding: 0 30px,
+        margin: 0,
+        background-color: #35383d,
+        border-color: #dcdce5,
+        button: (
+            background-color: #21242b,
+            color: #ffffff
+        )
+    ),
+
+    themes: (
+        narrow: (
+            header: (
+                padding: 15px,
+                font-size: 11px,
+                color: #bdbdbd
+            ),
+            body: (
+                padding: 15px,
+
+                 placeholder: (
+                    space: 10px,
+                    
+                    container: (
+                        padding: 15px,
+                    )
+                 )
+            )
+        )
+    )
+);
+
+// Merge settings and defaults
+$c-dialog-box: map-merge($c-dialog-box, getSettingsMap("c-dialog-box"));
+
+// Set shortcuts
+$c-map: $c-dialog-box;
+
+.c-dialog-box {
+    display: block;
+    background-color: #fff;
+    @include ffamily('regular');
+
+    &--narrow {
+        .c-dialog-box__header {
+            &-title {
+                @include ffamily('semi');
+                font-size: map-deep-get($c-map, themes, narrow, header, font-size);
+                color: map-deep-get($c-map, themes, narrow, header, color);
+            }
+
+            &--padding {
+                padding-top: map-deep-get($c-map, themes, narrow, header, padding);
+                padding-left: map-deep-get($c-map, themes, narrow, header, padding);
+                padding-right: map-deep-get($c-map, themes, narrow, header, padding);
+
+                .c-dialog-box__header-bar {
+                    padding-top: 0px;
+                    padding-right: 0px;
+                    padding-left: 0px;
+                    padding-bottom: map-deep-get($c-map, themes, narrow, header, padding)*0.5;
+                }    
+            }
+        }
+
+        .c-dialog-box__body {
+            padding-left: map-deep-get($c-map, themes, narrow, body, padding);
+            padding-right: map-deep-get($c-map, themes, narrow, body, padding);
+
+            .p-container {
+                padding: map-deep-get($c-map, themes, narrow, body, placeholder, container, padding);
+            }
+        }
+    }
+
+    &__header {
+        display: block;
+        
+        &--border {
+            border-bottom:1px solid map-deep-get($c-map, header, border-color);
+
+            &.c-dialog-box__header--padding {
+                border-bottom: none;
+                .c-dialog-box__header-bar {
+                    border-bottom: 1px solid map-deep-get($c-map, header, border-color) !important;
+                }
+            }
+        }
+
+        &--underline {
+            border-bottom:1px solid map-deep-get($c-map, header, title, color);
+
+            &.c-dialog-box__header--padding {
+                border-bottom: none;
+                .c-dialog-box__header-bar {
+                    border-bottom: 1px solid map-deep-get($c-map, header, title, color) !important;
+                }
+            }
+        }
+
+        &--padding {
+            padding-top: map-deep-get($c-map, header, padding);
+            padding-left: map-deep-get($c-map, header, padding);
+            padding-right: map-deep-get($c-map, header, padding);
+
+            .c-dialog-box__header-bar {
+                padding-top: 0px;
+                padding-right: 0px;
+                padding-left: 0px;
+                padding-bottom: map-deep-get($c-map, header, padding)*0.5;
+            }
+        }
+
+        &-bar {
+            display: table;
+            position: relative;
+            width: map-deep-get($c-map, header, width);
+            margin: map-deep-get($c-map, header, margin);
+            padding-top: map-deep-get($c-map, header, padding);
+            padding-left: map-deep-get($c-map, header, padding);
+            padding-right: map-deep-get($c-map, header, padding);
+            padding-bottom: map-deep-get($c-map, header, padding)*0.45;
+        }
+        
+        
+        &-title {
+            display: table-cell;
+            vertical-align: middle;
+            width: 100%;
+            @include ffamily("regular");
+            font-size: map-deep-get($c-map, header, title, size);
+            color: map-deep-get($c-map, header, title, color);
+        }
+
+        &-actions {
+            display: table-cell;
+            vertical-align: middle;
+            >a {
+                font-size: map-deep-get($c-map, header, actions, size);
+                color: map-deep-get($c-map, header, actions, color);
+                &:hover, &:focus, &:active {color: map-deep-get($c-map, header, actions, active-color);}
+            }
+        }
+
+        &-sticky-contents {
+            display: block;
+        }
+    }
+
+    &__body {
+        display: block;
+        position: relative;
+        padding-left: map-deep-get($c-map, body, padding);
+        padding-right: map-deep-get($c-map, body, padding);
+        overflow-y: auto;
+        overflow-x: hidden;
+
+        &--no-scroll {
+            overflow: hidden;
+        }
+
+        &--no-padding {
+            padding: 0px !important;
+        }
+
+        .p-container {
+            position: relative;
+            padding: map-deep-get($c-map, body, placeholder, container, padding);
+
+            &--inherit {
+                height: inherit;
+                
+                &.p-container--scroll {
+                    padding: 0px;
+                    margin: map-deep-get($c-map, body, placeholder, container, padding) map-deep-get($c-map, body, placeholder, container, padding) 0px map-deep-get($c-map, body, placeholder, container, padding);
+                    height: calc(100% - #{map-deep-get($c-map, body, placeholder, container, padding)*2});
+                    overflow-y: auto;
+                    overflow-x: hidden;
+                }
+            }
+        }
+
+        .p-split-box {
+            display: table;
+            width: 100%;
+            position: relative;
+
+            > *:first-child + * {
+                padding-left: map-deep-get($c-map, body, padding);
+            }
+
+            &__fluid {
+                display: table-cell;
+                vertical-align: top;
+            }
+
+            &__fixed {
+                display: table-cell;
+                width: 300px;
+                vertical-align: top;
+            }
+        }
+
+        .p-group {
+            position: relative;
+
+            & + .p-group,
+            & + .p-form-group {
+                margin-top: map-deep-get($c-map, body, placeholder, space)*2;
+            }
+
+            &--inherit {
+                height: inherit;
+            }
+            
+            &__header {
+                display: block;
+                padding-bottom: map-deep-get($c-map, body, placeholder, space);
+
+                &--border {
+                    border-bottom: 1px solid map-deep-get($aside, placeholder, group, header, border-color);
+                    margin-bottom: map-deep-get($c-map, body, placeholder, space);
+                }
+
+                &-bar {
+                    display: table;
+                    width: 100%;
+                }
+
+                &-title {
+                    display: table-cell;
+                    vertical-align: bottom;
+                    width: 100%;
+                    @include ffamily('semi');
+                    font-size: map-deep-get($c-map, body, placeholder, group, header, title, font-size);
+                    line-height: 1em;
+                    color: map-deep-get($c-map, body, placeholder, group, header, title, color);
+                }
+
+                &-action {
+                    display: table-cell;
+                    vertical-align: bottom;
+                    line-height: 1em;
+                    white-space: nowrap;
+                }
+            }
+
+            &__item {
+                position: relative;
+
+                & + .p-group__item,
+                & + .p-group__list {
+                    margin-top: map-deep-get($c-map, body, placeholder, space)*1.25;
+                }
+
+                &--inherit {
+                    height: inherit;
+                }
+
+            }
+
+            &__list{
+                position: relative;
+                list-style: none;
+                width: 100%;
+
+                & + .p-group__item,
+                & + .p-group__list {
+                    margin-top: map-deep-get($c-map, body, placeholder, space)*1.25;
+                }
+
+                &-item {
+                    display: table;
+                    width: 100%;
+                    padding: map-deep-get($c-map, body, placeholder, group, list, item, padding);
+                    border-top: 1px solid #dcdce5;
+                    line-height: 1em;
+
+                    &:last-child {
+                        border-bottom: 1px solid #dcdce5;
+                    }
+
+                    &-label {
+                        display: table-cell;
+                        vertical-align: middle;
+                        width: 100%;
+                        @include ffamily('semi');
+                        font-size: map-deep-get($c-map, body, placeholder, group, list, label, font-size);
+                        color: map-deep-get($c-map, body, placeholder, group, list, label, color);
+                    }
+
+                    &-action {
+                        display: table-cell;
+                        vertical-align: middle;
+                        width: 60px;
+                        text-align: right;
+                    }
+                }
+            }
+
+            &--space {
+                height: 0px;
+                margin-bottom: map-deep-get($c-map, body, padding);
+            }
+
+            &--seperator {
+                height: 1px;
+                padding-bottom: 0px !important;
+                border-bottom:1px solid map-deep-get($c-map, body, border-color);
+                margin-bottom: map-deep-get($c-map, body, padding);   
+            }
+        }
+
+        .p-form-group {
+            position: relative;
+            
+            & + .p-group {
+                margin-top: map-deep-get($c-map, body, placeholder, space)*2;
+            }
+            & + .p-form-group {
+                margin-top: map-deep-get($c-map, body, placeholder, space);
+            }
+
+            &__label {
+                display: inline-block;
+                width: 100%;
+                margin-bottom: map-deep-get($c-map, body, placeholder, space)/2;
+                @include ffamily('semi');
+                font-size: map-deep-get($c-map, body, placeholder, form-group, title, font-size);
+                line-height: 1em;
+                color: map-deep-get($c-map, body, placeholder, form-group, title, color);
+            }
+
+            &__input {
+                display: inline-block;
+                width: 100%;
+
+                & + .p-form-group__input {
+                    margin-top: calc(#{map-deep-get($c-map, body, placeholder, space)/2} - 4px);
+                }
+
+                textarea {
+                    min-height: 72px !important;
+                }
+            }
+        }
+
+        .p-toggle {
+            display: table;
+            width: 100%;
+            
+            &__label {
+                display: table-cell;
+                @include ffamily('semi');
+                font-size: map-deep-get($c-map, body, placeholder, toggle, label, font-size);
+                color: map-deep-get($c-map, body, placeholder, toggle, label, color);
+                padding-right: 1em;
+                vertical-align: middle;
+                white-space: nowrap;
+            }
+
+            &__input {
+                display: table-cell;
+                vertical-align: middle;
+                width: 100%;
+            }
+        }
+
+        //iptal olacak p-group olarak tanımla
+        &-row {
+            display: block;
+            position: relative;
+            padding-bottom: map-deep-get($c-map, body, padding);
+
+            &:last-child {
+                padding-bottom: 0px;
+                margin-bottom: 0px;
+            }
+
+            &--seperator {
+                height: 1px;
+                padding-bottom: 0px !important;
+                border-bottom:1px solid map-deep-get($c-map, body, border-color);
+                margin-bottom: map-deep-get($c-map, body, padding);
+            }
+
+            &--space {
+                height: 0px;
+                margin-bottom: map-deep-get($c-map, body, padding);
+            }
+
+            &--space2x {
+                height: 0px;
+                margin-bottom: map-deep-get($c-map, body, padding)*2;
+            }
+        }
+
+        &-group-header {
+            display: table;
+            width: 100%;
+            margin-bottom: 1em;
+            
+            &--border {
+                padding-bottom: 0.5em;
+                border-bottom: 1px solid map-deep-get($c-map, body, border-color);
+            }
+
+            &-title {
+                display: table-cell;
+                vertical-align: middle;
+                text-align: left;
+                margin: 0;
+                padding: 0;
+                @include ffamily("bold");
+                font-size: map-deep-get($c-map, body, header, title, font-size);
+                color: map-deep-get($c-map, body, header, title, color);
+            }
+
+            &-action {
+                display: table-cell;
+                vertical-align: middle;
+                text-align: right;
+            }
+        }
+        
+    }
+
+    &__footer {
+        display: block;
+        position: relative;
+        margin: map-deep-get($c-map, footer, margin);
+        min-height: map-deep-get($c-map, footer, height);
+        
+        text-align: center;
+
+        &:before {
+            content: "";
+            display: inline-block;
+            position: absolute;
+            z-index: 0;
+            bottom: 0px;
+            left: 0px;
+            vertical-align: middle;
+            margin-right: -4px;
+            width: map-deep-get($c-map, footer, width);
+            height: map-deep-get($c-map, footer, height);
+            background-color: map-deep-get($c-map, footer, background-color);
+        }
+
+        &--border {
+            border-top:1px solid map-deep-get($c-map, footer, border-color);
+        }
+
+        &--auto-height {
+            min-height: auto;
+
+            &:before {
+                display: none
+            }
+
+            .c-dialog-box__footer {
+                &-sticky-contents {
+                    padding-bottom: 0px;
+                }
+            }
+        }
+
+        >* {
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        &-content {
+            display: block;
+            position: absolute;
+            align-items: center;
+            z-index: 1;
+            bottom: 0px;
+            left: 0px;
+            width: 100%;
+            height: map-deep-get($c-map, footer, height);
+            padding: map-deep-get($c-map, footer, padding);
+
+            [class^="col-"],
+            [class*=" col-"] {
+                height: 100%;
+                > * {
+                    display: inline-block;
+                    margin-right: -4px;
+                    vertical-align: middle;
+                }
+
+                &::before {
+                    content: "";
+                    display: inline-block;
+                    vertical-align: middle;
+                    height: 100%;
+                }
+            }
+
+            .c-button {
+                height: 36px;
+                overflow: hidden;
+
+                button {
+                    min-width: 150px;
+                }
+            }
+
+            a {
+                color: #dcdce5;
+                text-decoration: underline;
+            }
+        }
+
+        &-sticky-contents {
+            display: block;
+            padding-bottom: map-deep-get($c-map, footer, height);
+        }
+    }
+}
+
+//Reset
+$c-map: null;

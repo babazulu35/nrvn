@@ -1,0 +1,52 @@
+<div class="c-phone-input__bar">
+    <span class="c-phone-input__country-code">
+        <app-button (clickEvent)="openCountryBox(countryBox)" theme="secondary" [label]="selectedCountry?.callingCode ? '+'+selectedCountry?.callingCode : '--'" [isDisabled]="isDisabled"></app-button>
+    </span>
+    <span class="c-phone-input__field">
+        <app-text-input #phoneInput
+            (changeEvent)="inputChangeHandler($event)"
+            theme="no-border"
+            type="numeric"
+            [form]="form"
+            [name]="name"
+            [required]="required"
+            [value]="phoneNumber"
+            [isDisabled]="isDisabled"
+            [blurWhenEnter]="false"
+            [dismissOnFocusOut]="emitOnlyEnter"
+            [mask]="inputMask"
+            [maxlength] = "inputMask?.length"
+            [patternString] = "inputPattern"
+            [placeholder]="placeholder || ''"
+            ></app-text-input></span>
+    <span class="c-phone-input__icon">
+        <app-button (clickEvent)="inputChangeHandler(phoneInput.formattedValue)" [isDisabled]="!phoneInput.isDirty || phoneInput.hasError" theme="secondary" type="icon" [icon]="icon" [isPromising]="isPromising"></app-button>
+    </span>
+</div>
+  
+<ng-template #countryBox>
+    <div class="c-phone-input__country-box">
+      <div class="c-phone-input__country-box-header">
+          <span class="c-phone-input__country-box-header-title">
+              ÜLKE KODU SEÇİN
+          </span>
+          <span class="c-phone-input__country-box-header-action">
+              <app-button (clickEvent)="closeCountryBox($event)" type="icon" icon="close" theme="secondary"></app-button>
+          </span>
+      </div>
+      <div class="c-phone-input__country-box-content">
+          <app-autocomplete 
+            (selectEvent)="countrySelectHandler($event)"
+            [dataSource]="countries"
+            [value]="selectedCountry?.callingCode"
+            [typeDebounceTime]="typeDebounceTime"
+            [closeListWhenFocusOut]="false"
+            labelKey="name" 
+            valueKey="callingCode" 
+            [searchKeys]="['name', 'callingCode', 'nativeName']"
+            secondaryLabelKey="callingCode" 
+            secondaryLabelPrefix="+"
+            ></app-autocomplete>
+      </div>
+    </div>
+</ng-template>

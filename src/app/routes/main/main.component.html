@@ -1,0 +1,10 @@
+<div class="o-wrapper" [class.is-collapsed]="isSideMenuCollapsed">
+    <app-main-menu *ngIf="authenticationService?.getAuthenticatedUser()" (toggleSideMenu)="toggleSideMenu($event)"></app-main-menu>
+    <div #mainContainer class="o-main-container">
+        <app-header></app-header>
+        <div class="o-main-content">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>
+<app-notification-bar></app-notification-bar>

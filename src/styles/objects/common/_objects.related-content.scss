@@ -1,0 +1,115 @@
+/***
+ * Related Content:
+ * Author: Fatih Turan
+ */
+
+ /**
+ * Related Content:
+ * `.oc-related-content` sınıfı ile oluşturulur.
+ */
+
+
+// Set defaults
+
+$oc-related-content: (
+  button-edge-padding: 64px,
+  table-padding: 10px 20px,
+  table-row-top-bottom-padding: 18px,
+  table-border-color: #dcdce4,
+  table-border-radius: 3px,
+  primary-title-color: #333,
+  primary-bottom-margin: 5px,
+  secondary-title-color: #35383d,
+  secondary-title-size: 11px,
+  secondary-title-border-color: #cccdce,
+);
+
+// Merge settings and defaults
+$oc-related-content: map-merge($oc-related-content, getSettingsMap("oc-related-content"));
+
+// Set shortcuts
+$oc-map: $oc-related-content;
+
+.oc-related-content {
+  background-color: #fff;
+
+  // Mini Card Customization
+  .c-mini-card {
+    .c-mini-card__figure {
+      padding-right: 20px;
+    }
+
+    .c-mini-card__badges,
+    .c-mini-card__sub-caption,
+    .c-mini-card__icons {
+      display: table-cell;
+      vertical-align: middle;
+    }
+
+    .c-mini-card__icons {
+      font-size: 24px;
+      color: #bdbdbd;
+      text-align: right;
+    }
+
+    .c-mini-card__icons .icon__n {
+      position: relative;
+      top: 3px;
+    }
+
+    .c-mini-card__badges {
+      text-align: right;
+    }
+
+    .c-mini-card__sub-caption {
+      font-size: 12px;
+      font-family: "Open Sans";
+      color: #333;
+      text-align: center;
+    }
+
+    .c-mini-card__action-area {
+      min-width: auto;
+    }
+    .c-mini-card__action-area .icon__n--more_vert {
+      margin-right: 0;
+    }
+  }
+
+  .c-dialog-box__body-group-header-action {
+    .btn {
+      padding-right: map-get($oc-map, button-edge-padding);
+      padding-left: map-get($oc-map, button-edge-padding);
+    }
+  }
+}
+
+.oc-related-content__table {
+  padding: map-get($oc-map, table-padding);
+  border: 1px solid map-get($oc-map, table-border-color);
+  border-radius: map-get($oc-map, table-border-radius);
+  .c-responsive-table__row {
+    padding-top: map-get($oc-map, table-row-top-bottom-padding);
+    padding-bottom: map-get($oc-map, table-row-top-bottom-padding);
+  }
+  .c-primary-column-line__primary-title {
+    display: block;
+    margin-bottom: map-get($oc-map, primary-bottom-margin);
+    color: map-get($oc-map, primary-title-color);
+  }
+  .c-primary-column-line__secondary-title {
+    display: block;
+    font-size: map-get($oc-map, secondary-title-size);
+    @include ffamily("regular");
+    color: map-get($oc-map, secondary-title-color);
+    a {
+      color: map-get($oc-map, secondary-title-color);
+      border-bottom: 2px solid map-get($oc-map, secondary-title-border-color);
+      text-decoration: none;
+    }
+  }
+}
+
+
+//Reset
+$c-map: null;

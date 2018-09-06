@@ -1,0 +1,21 @@
+<div #fixed *ngIf="fixedFloat == 'left'" class="c-split-container__fixed c-split-container__fixed--{{fixedFloat}}" [class.c-split-container__fixed--noborder]="!hasBorder" [style.width]="fixedWidth+'px'">
+    <div #fixedContainer class="c-split-container__fixed-container">
+      <ng-content select="[fixed][left]"></ng-content>
+    </div>
+</div>
+
+<div #fluid class="c-split-container__fluid" [style.left]="fixedFloat == 'left' ? fixedWidth+'px' : '0px'" [style.width]="'calc(100% - '+fixedWidth+'px)'">
+  <ng-content select="[fluid]"></ng-content>
+</div>
+
+<div #fixed *ngIf="fixedFloat == 'right'" class="c-split-container__fixed c-split-container__fixed--{{fixedFloat}}" [class.c-split-container__fixed--noborder]="!hasBorder" [style.width]="fixedWidth+'px'">
+    <div #fixedContainer class="c-split-container__fixed-container">
+      <ng-content select="[fixed][right]"></ng-content>
+    </div>
+</div>
+
+<div #fixed *ngIf="!fixedFloat" class="c-split-container__fixed c-split-container__fixed--right" [class.c-split-container__fixed--noborder]="!hasBorder" [style.width]="fixedWidth+'px'">
+  <div #fixedContainer class="c-split-container__fixed-container">
+    <ng-content select="[fixed]"></ng-content>
+  </div>
+</div>

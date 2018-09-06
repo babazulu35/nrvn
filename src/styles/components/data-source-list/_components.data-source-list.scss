@@ -1,0 +1,171 @@
+/**
+* Data Source List:
+* `.c-data-source-list` sınıfı ile beraber kullanılır. Eğer liste düzenleme moduna girmişse `.c-data-source-list--edit-mode` sınıfı eklenir. Listedeki herhangi bir ögeyi tekil olarak düzenleme yapılırken (input alanı göstermek için) o ögeye `.is-editable` sınıfı eklenir (Örnek: `<li class="c-data-source-list__item is-editable"></li>`). Eğer herhangi bir satır için veri girilmişse o satıra `.is-filled` sınıfı eklenir. [Şuradaki örnek ekran görüntüsündeki gibi](http://jmp.sh/0Ce7TsO) tipe göre seçilen satırlar varsa her bir satır `.is-selected` olarak işaretlenir.
+*
+*     @example
+*/
+
+
+// Variables
+$c-data-source-list: (
+  item-height: 47px,
+  item-border: #dcdce5,
+  item-is-editable-bg: #f7f7f7,
+  item-is-selected-bg: #f7f7f7,
+  item-is-editable-icon: #2b98f0,
+  item-is-filled-icon: #21242b,
+  item-name-text: #21242b,
+  item-icon: #bdbdbd,
+  source-text: #9d9d9d,
+  source-input-border: #dcdce5,
+  connect-text: #000,
+  connect-icon: #bdbdbd,
+  connect-icon-hover: #2b98f0,
+  source__edit-text: #35383d,
+  more-bg: #f7f7f7,
+  more-icon: #000,
+  reorder-icon-hover: #3a99ed,
+  action-icons: #bdbdbd
+);
+
+// Merge settings and defaults
+$c-data-source-list: map-merge($c-data-source-list, getSettingsMap("c-data-source-list"));
+
+// Set shortcuts
+$c-map: $c-data-source-list;
+
+
+.c-data-source-list {
+  list-style: none;
+  @include ffamily('regular');
+}
+
+.c-data-source-list--edit-mode {
+  .c-data-source-list__connect span { display: none !important }
+}
+
+.c-data-source-list__item {
+  position: relative;
+  overflow: hidden;
+  padding: 0 10px;
+  height: map-get($c-map, item-height);
+  line-height: map-get($c-map, item-height);
+  border-bottom: 1px solid map-get($c-map, item-border);
+  &:first-child {
+    border-top: 1px solid map-get($c-map, item-border);
+  }
+  &--editable {
+    background-color: map-get($c-map, item-is-editable-bg);
+  }
+  &--filled {
+    .c-data-source-list__connect .icon__n { color: map-get($c-map, item-is-filled-icon) }
+  }
+  &--selected {
+    background-color: map-get($c-map, item-is-selected-bg);
+    box-shadow: 0 5px 10px 0 rgba(0,0,0, .10);
+  }
+}
+
+.c-data-source-list__name {
+  float: left;
+  min-width: 200px;
+  color: map-get($c-map, item-name-text);
+  font-size: 13px;
+  @include ffamily('semi');
+}
+
+.c-data-source-list__icon {
+  margin: -5px 16px 0 0;
+  color: map-get($c-map, item-icon);
+  font-size: 24px;
+  vertical-align: middle;
+}
+
+.c-data-source-list__source {
+  float: left;
+  color: map-get($c-map, source-text);
+  font-size: 11px;
+  @include ffamily('semi', 'i');
+}
+
+.c-data-source-list__connect {
+  position: absolute;
+  right: 10px;
+  top: 0px;
+  color: map-get($c-map, connect-text);
+  font-size: 13px;
+  @include ffamily('semi');
+  text-transform: uppercase;
+  &:hover {
+    color: #000;
+    text-decoration: none;
+    span { display: inline }
+    .icon__n {
+      margin-left: 20px;
+      color: map-get($c-map, connect-icon-hover);
+    }
+  }
+  span { display: none }
+  .icon__n {
+    margin-top: -2px;
+    color: map-get($c-map, connect-icon);
+    font-size: 24px;
+    vertical-align: middle;
+  }
+}
+
+.c-data-source__edit {
+  margin-left: -20px;
+  padding: 0 10px;
+  @include size(320px, 36px);
+  font-size: 13px;
+  @include ffamily('regular');
+  color: map-get($c-map, edit-text);
+  border: 1px solid map-get($c-map, source-input-border);
+  border-radius: 1px;
+}
+
+.c-data-source-list__more {
+  @include size(100%, 40px);
+  background-color: map-get($c-map, more-bg);
+  color: map-get($c-map, more-icon) !important;
+  text-align: center;
+  a {
+    display: block;
+    @include size(100%, 40px);
+    &:hover {
+      background-color: darken(map-get($c-map, more-bg), 3%);
+    }
+  }
+  .c-promise-icon {
+    position: relative;
+    top: -30px;
+  }
+  .icon__n {
+    font-size: 24px;
+  }
+}
+
+.c-data-source-list__item-reorder {
+  margin-top: -1px;
+  font-size: 23px;
+  cursor: ns-resize;
+  user-select: none;
+  &:hover, &:active {
+    color: map-get($c-map, reorder-icon-hover);
+  }
+}
+
+.c-data-source-list__actions {
+  position: absolute;
+  top: 0;
+  right: 42px;
+  color: map-get($c-map, action-icons);
+  &:hover {
+    color: darken(map-get($c-map, action-icons), 25%);
+  }
+  .icon__n {
+    margin-top: 12px;
+    font-size: 24px;
+  }
+}

@@ -1,0 +1,265 @@
+<app-collapsible-container theme="gray" [isAsideOpen]="true" [asideWidth]="240">
+    <div content>
+
+        <div class="p-header p-header--border">
+            Etkinlik Sayfası Ziyaret Bilgileri
+            <app-button type="icon" theme="primary" size="lg" icon="keyboard_arrow_down" (click)="openReportsMenu($event)"></app-button>
+        </div>
+
+        <div class="p-container">
+            <div class="p-group" *ngIf="false">
+                <div class="p-group__header p-group__header--border">
+                    <div class="p-group__header-bar">
+                        <div class="p-group__header-title">
+                            Ziyaretçi Sayısı
+                        </div>
+                    </div>
+                </div>
+                <div class="p-group__item">
+
+                </div>
+                <!--
+                <div class="p-group padding-top-10 full-width">
+                    <app-line-chart></app-line-chart>
+                </div>
+                -->
+                <app-line-chart (resultEvent)="resultEventHandler($event.currentState)" [dataSets]="dataSets"></app-line-chart>
+            </div>
+
+            <div class="p-group" *ngIf="(clickDetailSMChannelData && clickDetailSMChannelData.length) || (clickDetailReferrerData && clickDetailReferrerData.length)">
+                <div class="p-group__header">
+                    <div class="p-group__header-bar">
+                        <div class="p-group__header-title">
+                            Ziyaretçi Kaynaklarının Dağılımı
+                        </div>
+                    </div>
+                </div>
+                <div class="c-search-result-statistic" style="width:860px;margin-bottom:50px;">
+
+                    <div class="c-search-result-statistic__title">
+                        <div class="c-search-result-statistic__title-value">%52,07</div>
+                        <div class="c-search-result-statistic__title-text">Arama Sonuçları</div>
+                    </div>
+                    <!-- end c-search-result-statistic__title -->
+
+                    <div class="c-search-result-statistic__left">
+
+                        <div class="c-search-result-statistic__sub-title">
+                            <div class="c-search-result-statistic__sub-title-label">Organik</div>
+                            <div class="c-search-result-statistic__sub-title-value">%93,07</div>
+                        </div>
+
+                        <ul class="c-search-result-statistic__list">
+                            <li class="c-search-result-statistic__list-item">
+                                <div class="c-search-result-statistic__list-item-label">tr.indeed.com</div>
+                                <div class="c-search-result-statistic__list-item-value">%22,58 <span>%17,44</span></div>
+                            </li>
+                            <li class="c-search-result-statistic__list-item">
+                                <div class="c-search-result-statistic__list-item-label">biuniversileliariyoru...</div>
+                                <div class="c-search-result-statistic__list-item-value">%17,56 <span>%12,54</span></div>
+                            </li>
+                            <li class="c-search-result-statistic__list-item">
+                                <div class="c-search-result-statistic__list-item-label">biuniversileliariyoru...</div>
+                                <div class="c-search-result-statistic__list-item-value">%17,56 <span>%2,05</span></div>
+                            </li>
+                            <li class="c-search-result-statistic__list-item">
+                                <div class="c-search-result-statistic__list-item-label">biuniversileliariyoru...</div>
+                                <div class="c-search-result-statistic__list-item-value">%17,56</div>
+                            </li>
+                            <li class="c-search-result-statistic__list-item">
+                                <div class="c-search-result-statistic__list-item-label">eksisozluk.com</div>
+                                <div class="c-search-result-statistic__list-item-value">%74,54</div>
+                            </li>
+                            <li class="c-search-result-statistic__list-item">
+                                <div class="c-search-result-statistic__more">
+                                    <a href="#"><i class="icon__n icon__n--more_horiz"></i> <span class="c-search-result-statistic__more-text"><strong>07</strong> SONUÇ DAHA</span></a>
+                                </div>
+                                <!-- end c-search-result-statistic__more -->
+                            </li>
+                        </ul>
+                        <!-- end c-search-result-statistic__list -->
+
+                    </div>
+
+                    <div class="c-search-result-statistic__chart">
+
+                        <span style="border: 6px solid #2b98f0">
+                        <svg viewBox="0 0 32 32">
+                            <circle class='first' [attr.stroke-dasharray]="pieChartPercent"></circle>
+                        </svg>              
+                        </span>
+                    </div>
+
+                    <div class="c-search-result-statistic__right">
+
+                        <div class="c-search-result-statistic__sub-title">
+                            <div class="c-search-result-statistic__sub-title-label">Sponsorlu</div>
+                            <div class="c-search-result-statistic__sub-title-value">%06,93</div>
+                        </div>
+
+                        <ul class="c-search-result-statistic__list">
+                            <li class="c-search-result-statistic__list-item">
+                                <div class="c-search-result-statistic__list-item-label">tr.indeed.com</div>
+                                <div class="c-search-result-statistic__list-item-value">%22,58 <span>%17,44</span></div>
+                            </li>
+                            <li class="c-search-result-statistic__list-item">
+                                <div class="c-search-result-statistic__list-item-label">biuniversileliariyoru...</div>
+                                <div class="c-search-result-statistic__list-item-value">%17,56 <span>%12,54</span></div>
+                            </li>
+                            <li class="c-search-result-statistic__list-item">
+                                <div class="c-search-result-statistic__list-item-label">biuniversileliariyoru...</div>
+                                <div class="c-search-result-statistic__list-item-value">%17,56 <span>%2,05</span></div>
+                            </li>
+                            <li class="c-search-result-statistic__list-item">
+                                <div class="c-search-result-statistic__list-item-label">biuniversileliariyoru...</div>
+                                <div class="c-search-result-statistic__list-item-value">%17,56</div>
+                            </li>
+                            <li class="c-search-result-statistic__list-item">
+                                <div class="c-search-result-statistic__list-item-label">biuniversileliariyoru...</div>
+                                <div class="c-search-result-statistic__list-item-value">%17,56</div>
+                            </li>
+                            <li class="c-search-result-statistic__list-item">
+                                <div class="c-search-result-statistic__more">
+                                    <a href="#"><i class="icon__n icon__n--more_horiz"></i> <span class="c-search-result-statistic__more-text"><strong>07</strong> SONUÇ DAHA</span></a>
+                                </div>
+                                <!-- end c-search-result-statistic__more -->
+                            </li>
+                        </ul>
+                        <!-- end c-search-result-statistic__list -->
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- *ngIf="clickDetailSMChannelData.length"-->
+                <div class="c-box-report-statistic" style="width:49%;float:left;margin-bottom:50px;">
+                    <div class="c-box-report-statistic__title">
+                        <!-- <div class="c-box-report-statistic__title-value">%23,48</div> -->
+                        <div class="c-box-report-statistic__title-text">Sosyal Medya</div>
+                    </div>
+                    <!-- end c-box-report-statistic__title -->
+
+                    <ul class="c-box-report-statistic__list">
+                        <li class="c-box-report-statistic__list-item" *ngFor="let item of clickDetailSMChannelData">
+                            <div class="c-box-report-statistic__list-item-label">
+                                {{item.SMChannelName}}
+                            </div>
+                            <div class="c-box-report-statistic__list-item-progress-bar-wrap">
+                                <div class="c-box-report-statistic__list-item-progress-bar">
+                                    <span class="c-box-report-statistic__list-item-progress-bar-fill" style="background-color:#2b98f0" [style.width.%]="item.Percentage">
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="c-box-report-statistic__list-item-value">
+                                %{{item.Percentage |number:'1.2-2'}}
+                            </div>
+                        </li>
+                    </ul>
+                    <!-- end c-box-report-statistic__list -->
+
+                    <div class="c-box-report-statistic__more c-box-report-statistic__more--button">
+                        <a href="#"><i class="icon__n icon__n--more_horiz"></i></a>
+                    </div>
+                    <!-- end c-box-report-statistic__more -->
+                </div>
+                <!---->
+                <div *ngIf="clickDetailReferrerData.length" class="c-box-report-statistic" style="width:49%;margin-right:0px;float:right;margin-bottom:50px;">
+                    <div class="c-box-report-statistic__title">
+                        <!-- <div class="c-box-report-statistic__title-value">%12,68</div> -->
+                        <div class="c-box-report-statistic__title-text">Referans Siteler</div>
+                    </div>
+                    <!-- end c-box-report-statistic__title -->
+
+                    <ul class="c-box-report-statistic__list">
+                        <li class="c-box-report-statistic__list-item" *ngFor="let item of clickDetailReferrerData">
+                            <div class="c-box-report-statistic__list-item-label">
+                                {{item.ReferrerName}}
+                            </div>
+                            <div class="c-box-report-statistic__list-item-progress-bar-wrap">
+                                <div class="c-box-report-statistic__list-item-progress-bar">
+                                    <span class="c-box-report-statistic__list-item-progress-bar-fill" style="background-color:#2b98f0" [style.width.%]="item.Percentage">
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="c-box-report-statistic__list-item-value">
+                                %{{item.Percentage |number:'1.2-2'}}
+                            </div>
+                        </li>
+                    </ul>
+                    <!-- end c-box-report-statistic__list -->
+
+                    <div class="c-box-report-statistic__more">
+                        <a href="#"><i class="icon__n icon__n--more_horiz"></i> <span class="c-box-report-statistic__more-text"><strong>22</strong> SONUÇ DAHA</span></a>
+                    </div>
+                    <!-- end c-box-report-statistic__more -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- <app-no-data *ngIf="productPerformances.length == 0" style="max-width: 60%;margin-top:30px" [hasContainer]="true" [icon]='{type: "icon", name: "event"}' title="Seçtiğiniz etkinliğe ait ürün kaydı bulunamadı" description=""></app-no-data> -->
+    <!-- /.o-collapsible-container__content -->
+    <div aside>
+        <div class="p-group" *ngIf="transactionsByVistorsData && transactionsByVistorsData.length">
+            <div class="p-group__header">
+                <div class="p-group__header-bar">
+                    <div class="p-group__header-title">
+                        İLK BAKIŞ
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-group__item">
+                <div class="c-narrow-report-statistic" style="width:220px;margin-bottom:30px;">
+                    <div class="c-narrow-report-statistic__visitor">
+                        <div class="c-narrow-report-statistic__visitor-count">
+                            {{transactionsByVistorsData[0].Count}}
+                        </div>
+                        <span class="c-narrow-report-statistic__visitor-label"> {{transactionsByVistorsData[0].Name}}</span>
+                    </div>
+
+                    <ul class="c-narrow-report-statistic__list c-narrow-report-statistic__list--border" *ngIf="transactionsByVistorsData.length > 1">
+                        <li class="c-narrow-report-statistic__list-item" *ngFor="let item of transactionsByVistorsData | slice:1">
+                            <span class="c-narrow-report-statistic__list-item-label"> {{item.Name}}</span>
+                            <span class="c-narrow-report-statistic__list-item-value">{{item.Count}}</span>
+                        </li>
+                        <!-- end c-narrow-report-statistic__list -->
+                    </ul>
+                    <!-- end c-narrow-report-statistic__list-item -->
+                </div>
+            </div>
+        </div>
+
+        <!--*ngIf="clickDetailSourceData && clickDetailSourceData.length"-->
+        <div class="p-group">
+            <div class="p-group__header">
+                <div class="p-group__header-bar">
+                    <div class="p-group__header-title">
+                        ZİYARETÇİ KAYNAKLARI
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-group__item">
+                <!-- Circle Chart Burada Başlıyor -->
+                <div class="c-narrow-report-statistic">
+                    <div class="c-narrow-report-statistic__chart-item">
+                        <app-narrow-report-chart [viewType]="'circle'" [percent]="item.Percentage" [label]="item.SourceName" *ngFor="let item of clickDetailSourceData | slice:0:4"></app-narrow-report-chart>
+                    </div>
+
+                    <ul class="c-narrow-report-statistic__list c-narrow-report-statistic__list--border" *ngIf="clickDetailSourceData.length > 4">
+                        <li class="c-narrow-report-statistic__list-item" *ngFor="let item of clickDetailSourceData | slice:4">
+                            <span class="c-narrow-report-statistic__list-item-label">{{item.SourceName}}</span>
+                            <span class="c-narrow-report-statistic__list-item-value">%{{item.Percentage}}</span>
+                        </li>
+                        <!-- end c-narrow-report-statistic__list -->
+                    </ul>
+                </div>
+                <!-- Circle Chart Burada Bitiyor -->
+            </div>
+        </div>
+    </div>
+</app-collapsible-container>
+<!-- /.o-collapsible-container -->

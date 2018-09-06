@@ -1,0 +1,47 @@
+<div class="or-multiple-performance-create" [ngClass]="{'main-loader':isLoading}">
+    <div class="p-header-bar" sticky sticky-main-scroller sticky-release-offset="30" sticky-height-property="55" sticky-width-property="100%" sticky-follow-menu-moves>
+        <div class="p-header-bar__left">
+            <app-button theme="primary" icon="keyboard_arrow_left" shape="rounded" type="icon" size="md" (clickEvent)="legalMessageModal($event,'BackBtn')"></app-button>
+            <h2>Yeni Etkinlik<span *ngIf="event?.Localization?.Name"> / {{event?.Localization?.Name | localization}}</span></h2>
+        </div>
+
+        <div class="p-header-bar__right">
+            <app-button (clickEvent)="createPayloadConfirmationModal()" [isDisabled]="!isValid">KAYDET</app-button>
+            <!-- <app-button type="icon" icon="close" theme="secondary"></app-button> -->
+        </div>
+    </div>
+    <div class="p-container">
+        <div class="p-group text-lg-center">
+            <div class="p-form-group d-inline-block">
+                <div class="p-form-group__label text-lg-left">
+                    ADIMLAR
+                </div>
+                <div class="p-form-group__input d-block">
+                    <app-page-wizard-header (changeEvent)="legalMessageModal($event,'Wizard')" [levels]='levels' [currentLevel]="currentLevel?.key"></app-page-wizard-header>
+                </div>
+            </div>
+        </div>
+        <div class="p-group">
+            <div class="p-group__wings">
+                <div class="p-group__wings-left">
+                    <div class="p-group__wings-left-title">
+                        Performanslar <sup>*</sup>
+                    </div>
+                </div>
+                <div class="p-group__wings-right">
+                    <app-set-duration [required]="true" [placeholder]="'00'" [durationValue]="performanceFactory?.baseDuration" (changeEvent)="durationEventHandler($event.duration)"></app-set-duration>
+                </div>
+            </div>
+            <div class="p-group__item row">
+                <app-container-canvas>
+                    <div class="p-form-group--center-performances">
+                        <app-add-multiple-performance (countEvent)="countEventHandler($event.count)" (changeEvent)="changeEventHandler($event.isValid)"></app-add-multiple-performance>
+                    </div>
+                </app-container-canvas>
+
+
+            </div>
+        </div>
+    </div>
+
+</div>

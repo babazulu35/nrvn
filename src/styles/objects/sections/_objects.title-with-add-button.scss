@@ -1,0 +1,21 @@
+// Set defaults
+$o-title-with-add-button: (
+  button-right-offset: 70px,
+);
+
+// Merge settings and defaults
+$o-title-with-add-button: map-merge($o-title-with-add-button, getSettingsMap("o-title-with-add-button"));
+$o-map: $o-title-with-add-button;
+
+.o-title-with-add-button {
+  position: relative;
+  display: inline-block;
+  padding-right: map-get($o-map, button-right-offset);
+  .c-add-button {
+    position: absolute;
+    top: -12px;
+    right: 0px;
+  }
+}
+
+$o-map: null;

@@ -1,0 +1,22 @@
+<div *ngIf='isIconAlignLeft' class="c-inline-search-input__icon">
+    <app-promise-icon *ngIf="isDate" [iconName]="'today'" [isPromising]="isPromising" size='autosize'></app-promise-icon>
+    <app-promise-icon *ngIf="!isDate" [iconName]="'search'" [isPromising]="isPromising" size='lg'></app-promise-icon>
+</div>
+<div class="c-inline-search-input__container">
+    <input
+    #timepicker
+    type="text"
+    [value]="data"
+    (focus)="onFocus()"
+    (focusout)="onFocusOut()"
+    (change)="onChange($event.target.value)"
+    [(ngModel)]="inputValue"
+    (keyup.enter)="onSave($event.target.value)"
+    [placeholder]="placeholder"
+    [readonly]="isDate"
+    aria-describedby="basic-addon1">
+</div>
+<div *ngIf='!isIconAlignLeft' class="c-inline-search-input__icon">
+    <app-promise-icon *ngIf="isDate" [iconName]="'today'" [isPromising]="isPromising" size='autosize'></app-promise-icon>
+    <app-promise-icon *ngIf="!isDate" [iconName]="'search'" [isPromising]="isPromising" size='autosize'></app-promise-icon>
+</div>

@@ -1,0 +1,51 @@
+<div class="c-file-upload-box__preview" *ngIf="hasPreview && !isEmpty && !isPromising">
+  <svg>
+    <image [attr.xlink:href]="sourcePath + value" x="0" y="0" width="100%" height="100%" preserveAspectRatio="xMidYMid slice"/>
+  </svg>
+</div>
+<div class="c-file-upload-box__drop-zone" [ngSwitch]="theme"
+  (dragover)="dragOverHandler($event)"
+  (dragleave)="dragLeaveHandler($event)"
+  (drop)="dropHandler($event)">
+  <input type="file" #fileInput (change)="inputChangeHandler($event)" [accept]="fileTypes?.length ? fileTypes.join(',') : null"/>
+  <!-- <div *ngSwitchCase="'button'">
+    <app-button (clickEvent)="fileInput.click()" type="link" [label]="inputLabel"><span left><app-promise-icon theme="secondary" iconName="attachment"></app-promise-icon> </span></app-button>
+  </div> -->
+  <div class="c-file-upload-box__drop-zone-bar" *ngSwitchCase="'button'">
+    <span class="c-file-upload-box__drop-zone-icon" *ngIf="(hasPreview && isEmpty || isPromising) || !hasPreview">
+      <app-promise-icon [iconName]="'attachment'" [isPromising]="isPromising"></app-promise-icon>
+    </span>
+    <span class="c-file-upload-box__drop-zone-info" *ngIf="isEmpty && !isPromising">
+      <app-button type="link" size="autosize" [label]="inputLabel" (clickEvent)="fileInput.click()"></app-button>
+    </span>
+    <span class="c-file-upload-box__drop-zone-info" *ngIf="!isEmpty || isPromising">
+      <strong>{{value}}</strong>
+    </span>
+    <span class="c-file-upload-box__drop-zone-action" *ngIf="!isEmpty && !isPromising">
+      <app-button type="icon" icon="replay" theme="secondary" (clickEvent)="fileInput.click()"></app-button>
+      <app-button type="icon" icon="delete" theme="secondary" (clickEvent)="removeFile($event)"></app-button>
+    </span>
+  </div>
+  <div class="c-file-upload-box__drop-zone-bar" *ngSwitchDefault>
+    <span class="c-file-upload-box__drop-zone-icon" *ngIf="(hasPreview && isEmpty || isPromising) || !hasPreview">
+      <app-promise-icon [iconName]="'attachment'" [isPromising]="isPromising"></app-promise-icon>
+    </span>
+    <span class="c-file-upload-box__drop-zone-info" *ngIf="isEmpty && !isPromising">
+      <span><i>Eklemek istediğiniz dosyayı</i> <strong>sürükleyip bırakın</strong> ya da </span>
+      <app-button type="link" size="autosize" label="bilgisayarınızdan seçin" (clickEvent)="fileInput.click()"></app-button>
+    </span>
+    <span class="c-file-upload-box__drop-zone-info" *ngIf="!isEmpty || isPromising">
+      <strong>{{value}}</strong> <span class="c-file-upload-box__drop-zone-record-info" *ngIf="recordInfo" [innerHTML]="recordInfo"></span>
+    </span>
+    <span class="c-file-upload-box__drop-zone-action" *ngIf="!isEmpty && !isPromising">
+      <app-button type="icon" icon="replay" theme="secondary" (clickEvent)="fileInput.click()"></app-button>
+      <app-button type="icon" icon="delete" theme="secondary" (clickEvent)="removeFile($event)"></app-button>
+    </span>
+    <span *ngIf="locales?.length" class="c-file-upload-box__localization">
+      <span class="c-file-upload-box__localization-btn">
+        <app-button (clickEvent)="openLocalizationBox()" type="icon" icon="public" theme="secondary"></app-button>
+      </span>
+      <span class="c-file-upload-box__localization-badge">{{completedLocalizations?.length}} / {{locales?.length}}</span>
+    </span>
+  </div>
+</div>

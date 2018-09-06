@@ -1,0 +1,3 @@
+$o-events-master: ();
+$o-events-master: map-merge($o-events-master, getSettingsMap("o-events-master"));
+$o-map: $o-events-master;

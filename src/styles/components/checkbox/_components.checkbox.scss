@@ -1,0 +1,44 @@
+/* --------------------------------------------------------
+author: Abdullah Karadeniz
+----------------------------------------------------------*/
+
+/**
+ * Checkbox:
+ * `.c-checkbox` -
+
+ *     @example
+ *     
+ */
+
+$c-checkbox: (
+  modifiers: (
+    disabled: (
+
+    )
+  )
+);
+
+$c-checkbox: map-merge($c-checkbox, getSettingsMap("c-checkbox"));
+
+$c-map: $c-checkbox;
+
+.c-checkbox {
+  display: inline-block;
+  position: relative;
+  white-space: normal;
+
+  &--disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+
+    > * {
+      pointer-events: none;
+      user-select: none;  
+    }
+  }
+}
+
+$c-map: null;
+/* --------------------------------------------------------
+author: Abdullah Karadeniz
+----------------------------------------------------------*/

@@ -1,0 +1,35 @@
+<div class="c-performer-search-select__container">
+    <app-no-data *ngIf="isEmpty" [hasContainer]="true" [icon]="{type: 'svg', name: 'performance'}" [iconSize]="'lg'" [action]='{label: "PROGRAM OLUŞTUR", action:"addPerformer", params:{} }' (actionEvent)="openPerformerSearchBox($event)"></app-no-data>
+    <app-container-canvas *ngIf="!isEmpty">
+        <div class="c-firm-search-select__list-container">
+            <ul class="c-performer-search-select__list">
+                <li *ngFor="let performer of performers" class="c-performer-search-select__list-item">
+                    <app-mini-card>
+                        <div class="c-mini-card">
+                            <div class="c-mini-card__kind-icon">
+                                <i class="icon__n icon__n--menu"></i>
+                            </div>
+                            <div class="c-mini-card__figure">
+                                <app-avatar size="md" [letters]="performer?.Name?.charAt(0)" source="{{performer.Images | image: 'Performer'}}"></app-avatar>
+                            </div>
+
+                            <div class="c-mini-card__info">
+                                {{performer.Name}}
+                            </div>
+                            <div class="c-mini-card__date">
+
+                            </div>
+                            <div class="c-mini-card__action-area">
+                                <app-button type="icon" icon="delete" theme="secondary" (click)="removePerformer(performer.Id)"></app-button>
+                                <app-button type="icon" *ngIf="showContext" icon="more_vert" theme="secondary" (click)="openPerformerAction(performer, $event)"></app-button>
+                            </div>
+                        </div>
+                    </app-mini-card>
+                </li>
+            </ul>
+            <div class="c-performer-search-select__add-button">
+                <app-button (click)="openPerformerSearchBox($event)" type="icon" icon="plus" shape="circle" theme="secondary" size="lg"></app-button>
+            </div>
+        </div>
+    </app-container-canvas>
+</div>

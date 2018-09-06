@@ -1,0 +1,86 @@
+<div [ngSwitch]="cartItem.state.description" class="c-basket-info-bar">
+    <ng-template [ngSwitchCase]="'Basket'">
+        <div class="c-basket-info-bar__container">
+            <div class="c-basket-info-bar c-basket-info-bar__select">
+                <ul>
+                    <li>
+                        <span class="c-basket-info-bar-title">ÜRÜNLER</span>
+                        <span class="c-basket-info-bar-value">{{ cartItem.data.SubTotal?.Amount}} <sup>{{ cartItem.data.SubTotal?.Currency}}</sup></span>
+                    </li>
+                    <li>
+                        <span class="c-basket-info-bar-title">İNDİRİMLER</span>
+                        <span class="c-basket-info-bar-value c-basket-info-bar-discount">
+                <div *ngIf="totalDiscount() > 0; else elseBlock">- {{ totalDiscount() | number : '1.2-2' }} <sup>{{ cartItem.data.SubTotal?.Currency}}</sup></div>
+                 <ng-template #elseBlock>---</ng-template>
+                </span>
+                    </li>
+                    <li>
+                        <span class="c-basket-info-bar-title">ÜCRETLER</span>
+
+                        <span class="c-basket-info-bar-value">{{totalPriceDetailAmount(cartItem.data.SubTotal)  | number : '1.2-2'  }} <sup>{{ cartItem.data.SubTotal?.Currency}}</sup></span>
+                    </li>
+                    <li>
+                        <span class="c-basket-info-bar-title">VERGİLER</span>
+                        <span class="c-basket-info-bar-value">{{ cartItem.data.SubTotal?.Tax }} <sup>{{ cartItem.data.SubTotal?.Currency}}</sup></span>
+                    </li>
+                    <li>
+                        <span class="c-basket-info-bar-title">TOPLAM</span>
+                        <span class="c-basket-info-bar-value c-basket-info-bar-value--total ">{{ cartItem.data.SubTotal?.CalculatedTotalAmount }} <sup>{{ cartItem.data.SubTotal?.Currency}}</sup></span>
+                    </li>
+                </ul>
+            </div>
+            <div class="c-basket-info-bar__btnfield">
+                <div class="c-basket-info-bar__corner">
+                    <span>SATIN AL</span>
+                </div>
+                <div class="c-basket-info-bar__buttons c-basket-info-bar__buttons  c-basket-info-bar__buttons--manuelsize ">
+                    <span class="c-basket-info-bar__buttons--linktext" [routerLink]="['/boxoffice/events']">ALIŞVERİŞE DEVAM ET</span>
+                    <app-button (click)="actionEvent.emit({state:'PAYMENT',data:$event})" theme="secondary">ÖDEME AL</app-button>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+    <ng-template [ngSwitchCase]="'SelectProduct'">
+        <div class="c-basket-info-bar__container">
+            <div class="c-basket-info-bar c-basket-info-bar__select">
+                <ul>
+                    <li>
+                        <span class="c-basket-info-bar-title">ÜRÜNLER</span>
+                        <span class="c-basket-info-bar-value">{{cartItem.data.total ? cartItem.data.total : '0' }} <sup>{{cartItem.data.currency ? cartItem.data.currency : 'TL'}}</sup></span>
+                    </li>
+                    <li>
+                        <span class="c-basket-info-bar-title">İNDİRİMLER</span>
+                        <span class="c-basket-info-bar-value c-basket-info-bar-discount">
+                                 0 <sup>TL</sup>
+                              
+                                </span>
+                    </li>
+                    <li>
+                        <span class="c-basket-info-bar-title">ÜCRETLER</span>
+                        <span class="c-basket-info-bar-value">0 <sup>TL</sup></span>
+                    </li>
+                    <li>
+                        <span class="c-basket-info-bar-title">VERGİLER</span>
+                        <span class="c-basket-info-bar-value">0 <sup>TL</sup></span>
+                    </li>
+                    <li>
+                        <span class="c-basket-info-bar-title">TOPLAM</span>
+                        <span class="c-basket-info-bar-value c-basket-info-bar-value--total ">0 <sup>TL</sup></span>
+                    </li>
+                </ul>
+            </div>
+            <div class="c-basket-info-bar__btnfield">
+                <div class="c-basket-info-bar__corner">
+                    <span>EKLE</span>
+                </div>
+                <div class="c-basket-info-bar__buttons">
+                    <app-button (clickEvent)="actionHandler('ADD',$event)" [isDisabled]="addDisabled" [isPromising]="addButtonStatus" theme="secondary">EKLE</app-button>
+                    <app-button [isDisabled]="isDisabled" [isPromising]="isLoading" *ngIf="statusFlag" (clickEvent)="actionHandler('ADD_GO_BASKET',$event)" theme="secondary">EKLE VE DEVAM ET</app-button>
+                    <app-button [isDisabled]="isDisabled" [isPromising]="isLoading" *ngIf="!statusFlag" (clickEvent)="actionHandler('BASKET',$event)" theme="secondary"> DEVAM ET</app-button>
+                    <app-button type="icon" *ngIf="showMenu" (clickEvent)="openBasketContextMenu($event)" theme="secondary" icon="more_vert"></app-button>
+                </div>
+            </div>
+        </div>
+
+    </ng-template>
+</div>

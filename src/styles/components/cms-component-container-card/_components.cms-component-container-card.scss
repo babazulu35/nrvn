@@ -1,0 +1,235 @@
+/* --------------------------------------------------------
+author: Abdullah Karadeniz
+----------------------------------------------------------*/
+
+$c-cms-component-container-card: ( 
+    width: 205px, 
+    height: 125px, 
+    border-radius: 3px, 
+    padding: 20px, 
+    active-color: #3a2e39, 
+    color: #333, 
+    background-color: #fff, 
+    border-color: #dcdce5, 
+    modifiers: ( 
+        bar: (
+            padding: 10px,
+        ),
+        tag: (
+            padding: 10px,
+        ),
+        active: (), 
+        disabled: (), 
+        selected: ( border-color: #21242b, box-shadow: 0 5px 10px 0 rgba(0, 0, 0, .1), ), 
+        ghost: (), 
+        hover: ()
+    ), 
+    icon: (color: #bdbdbd, font-size: 22px),
+    title: ( font-size: 14px, color: #2e2e2f, ), description: ( font-size: 12px, color: #2e2e2f, ), 
+    fields: ( icon-size: 40px, color: #bdbdbd, font-size: 22px), overlay: ( background-color: rgba(58, 46, 57, .8), ), select-btn: ( font-size: 24px, ));
+
+$c-cms-component-container-card: map-merge($c-cms-component-container-card, getSettingsMap("c-cms-component-container-card"));
+$c-map: $c-cms-component-container-card;
+
+.c-cms-component-container-card {
+    display: inline-block;
+    position: relative;
+    width: map-deep-get($c-map, width);
+    height: map-deep-get($c-map, height);
+    border-radius: map-deep-get($c-map, border-radius);
+    border: 1px solid map-deep-get($c-map, border-color);
+    background-color: map-deep-get($c-map, background-color);
+
+    &--tag {
+        width: 100%;
+        height: auto;
+        border: 1px dashed map-deep-get($c-map, border-color);
+
+        .c-cms-component-container-card__container {
+            position: relative;
+            height: auto;
+            width: auto;
+        }
+        .c-cms-component-container-card__content {
+            display: table;
+            position: relative;
+            height: auto;
+            width: auto;
+            padding: map-deep-get($c-map, modifiers, tag, padding);
+        }
+
+        .c-cms-component-container-card__icon {
+            display: table-cell;
+            text-align: center;
+            vertical-align: middle;
+            color: map-deep-get($c-map, icon, color);
+            font-size: map-deep-get($c-map, icon, font-size);
+            line-height: 0px;
+            padding-right: map-deep-get($c-map, modifiers, tag, padding);
+        }
+
+        .c-cms-component-container-card__title {
+            display: table-cell;
+            text-align: left;
+            vertical-align: middle;
+        }
+    }  
+
+    &--bar {
+        width: 100%;
+        height: auto;
+
+        .c-cms-component-container-card__container {
+            position: relative;
+            height: auto;
+            width: 100%;
+        }
+        .c-cms-component-container-card__content {
+            display: table;
+            position: relative;
+            height: auto;
+            width: 100%;
+            padding: map-deep-get($c-map, modifiers, tag, padding);
+        }
+
+        .c-cms-component-container-card__left {
+            display: table-cell;
+            vertical-align: middle;
+            width: 25%;
+            text-align: left;
+            line-height: 0px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: clip;
+            > span {
+                color: map-deep-get($c-map, icon, color);
+                font-size: map-deep-get($c-map, icon, font-size);
+                line-height: 0px;
+                margin-right: 0px;
+            }
+        }
+
+        .c-cms-component-container-card__center {
+            display: table-cell;
+            vertical-align: middle;
+            text-align: center;
+            width: 50%;
+            line-height: 0px;
+        }
+
+        .c-cms-component-container-card__right {
+            display: table-cell;
+            vertical-align: middle;
+            text-align: right;
+            width: 25%;
+            line-height: 0px;
+        }
+    }
+    
+    &--selected {
+        border-color: map-deep-get($c-map, modifiers, selected, border-color);
+        box-shadow: map-deep-get($c-map, modifiers, selected, box-shadow);
+        transition: all .2s getEase(in-out-sine);
+    }
+
+    &--disabled {
+        cursor: not-allowed;
+        > * {
+            pointer-events: none;
+        }
+
+        .c-cms-component-container-card__title {
+            color: map-deep-get($c-map, border-color);
+        }
+
+        .c-cms-component-container-card__icon { 
+            color: map-deep-get($c-map, border-color);
+        }
+    }
+    
+    &--hover {
+        
+    }
+
+    &--active {
+        
+    }
+
+    &--hasFields {
+        .c-cms-component-container-card__container {
+            padding-bottom: map-deep-get($c-map, width) / 5;
+        }
+    }
+    &__container {
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        width: 100%;
+    }
+
+    &__content {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: calc(100% - #{map-deep-get($c-map, width) / 5});
+        width: 100%;
+        padding: map-deep-get($c-map, padding);
+    }
+
+    &__title {
+        display: block;
+        font-size: map-deep-get($c-map, title, font-size);
+        color: map-deep-get($c-map, title, color);
+        @include ffamily('semi');
+        max-height: 3em;
+        word-wrap: break-word;
+        line-height: 1.35em;
+        white-space: normal;
+        text-align: center;
+
+        > span {
+            cursor: pointer;
+        }
+    }
+    &__action {
+        display: inline-block;
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        padding: map-deep-get($c-map, padding)/4 0px;
+    }
+
+    &__fields {
+        display: flex;
+        position: absolute;
+        bottom: 0px;
+        width: 100%;
+        height: map-deep-get($c-map, width) / 5;
+        border-top: solid 1px map-deep-get($c-map, border-color);
+        color: map-deep-get($c-map, fields, color);
+        font-size: map-deep-get($c-map, fields, font-size);
+        top: calc(100% - #{map-deep-get($c-map, width) / 5});
+        ul {
+            display: flex;
+            width: 100%;
+            list-style-type: none;
+        }
+        li {
+            display: flex;
+            flex: 0 0 20%;
+            align-items: center;
+            justify-content: center;
+            &:not(:last-child) {
+                border-right: solid 1px map-deep-get($c-map, border-color);
+            }
+        }
+    }
+}
+
+$c-map: null;
+
+/* --------------------------------------------------------
+author: Abdullah Karadeniz
+----------------------------------------------------------*/

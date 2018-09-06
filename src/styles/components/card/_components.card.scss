@@ -1,0 +1,578 @@
+/**
+ * Card:
+ * Kart `.c-card` sınıfı ile oluşturulur.
+ *
+ * 1) Kart seçilebilir olacaksa `c-card-selectable` class'ı verilmeli.
+ * 2) Kart seçili olunca ise `c-card-selectable-on` class'ı verilmeli.
+ *
+ * Kart içi iconlar için;
+ * 1) iconlar varsayılan gri görünür. Aktif göstermek için `c-card__top-icons-on` class'ını kullanmalısınız.
+ *
+ *     @example
+ *     <div class="c-card">
+ *
+ *       <i class="c-card__top-icons icon--m">visibility_off</i>
+ *       <i class="c-card__top-icons c-card__top-icons-right icon--m">more_vert</i>
+ *
+ *       <figure class="c-card__figure">
+ *         <img src="http://placehold.it/160x160" alt="" class="u-image--round">
+ *         <span class="c-card__kind-icon">
+ *           <i class="icon--m">audiotrack</i>
+ *           <i class="icon--m">movie</i>
+ *         </span>
+ *       </figure>
+ *
+ *       <strong class="c-card__name">12. Uluslararası D-Marin Klasik Müzik Festivali</strong>
+ *
+ *       <ul class="c-card__metas">
+ *         <li><strong>16 - 18</strong> Mayıs 2015</li>
+ *         <li>Uçhisar, Kapadokya</li>
+ *       </ul>
+ *     </div>
+ */
+
+// Set defaults
+$c-card: (
+  min-width: 200px,
+  height: 350px,
+  card-photo-size:160px,
+  border-radius: 3px,
+  kind-icon-height: 38px,
+  c-padding: 20px,
+  name-min-height: 65px,
+  name-font-size: 15px,
+  top-icon-size: 24px,
+  kind-icon-size: 23px,
+  kind-min-width: 38px,
+  meta-margin-left: 20px,
+  meta-margin-bottom: 20px,
+  meta-width: 100%,
+  meta-font-size: 13px,
+  footer-icon-height: 40px,
+  footer-icon-width: 40px,
+  card-horizontal-info-font-size: 13px,
+  card-horizontal-photo-size: 40px,
+  card-horizontal-padding: 10px,
+  card-horizontal-border-radius: 2px,
+  card-horizontal-icon-size: 24px,
+  card-horizontal-gutter: 10px,
+
+  c-primary-color: #3a2e39,
+  meta-color: #2e2e2f,
+  black: #333,
+  icon-color: #bdbdbd,
+  icon-color-on: #7cb342,
+  card-border-color: #dcdce5,
+  card-hover-border-color: #21242b,
+  c-selectable-box-shadow: 0 5px 10px 0 rgba(0,0,0,.1),
+  c-selectable-bg-content: rgba(53,56,61,.75),
+  card-horizontal-info-color: #35383d,
+);
+
+// Merge settings and defaults
+$c-card: map-merge($c-card, getSettingsMap("c-card"));
+
+// Set shortcuts
+$c-map: $c-card;
+
+// Component
+.c-card {
+  position: relative;
+  z-index: 0;
+  display: inline-block;
+  text-align: left;
+  vertical-align: top;
+  background-color: $color-text-white;
+
+  min-width: map-get($c-map, min-width);
+  color: map-get($c-map, black);
+  border: 1px solid map-get($c-map, card-border-color);
+
+  @include t--size(100%, map-get($c-map, height));
+  @include ffamily;
+  @include border-radius(map-get($c-map, border-radius));
+
+  *[class$="__ghost-content"] {
+    display: none;
+  }
+
+  *[class$="__normal-content"] {
+    display: block;
+  }
+
+  *[class$="--ghost"] {
+    user-select: none;
+    pointer-events: none;
+
+    &>*[class$="__ghost-content"] {
+      display: block;
+    }
+    &>*[class$="__normal-content"] {
+      display: none;
+    }
+  }
+  
+}
+
+.c-card__body {
+  padding: map-get($c-map, c-padding);
+}
+
+.c-card__ghost-avatar {
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 23px;
+  color: map-get($c-map, icon-color);
+
+  border:2px solid map-get($c-map, card-border-color);
+  border-radius: map-get($c-map, card-photo-size);
+
+  @include t--size(map-get($c-map, card-photo-size));
+}
+
+.c-card-selectable-content {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+
+  @include t--size(100%);  
+  background: -moz-linear-gradient(top, rgba(53,56,61,1) 0%, rgba(53,56,61,0.75) 100%); 
+  background: -webkit-linear-gradient(top, rgba(53,56,61,1) 0%,rgba(53,56,61,0.75) 100%); 
+  background: linear-gradient(to bottom, rgba(53,56,61,1) 0%,rgba(53,56,61,0.75) 100%); 
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#35383d', endColorstr='#bf35383d',GradientType=0 );
+}
+
+.c-card__figure {
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 20px;
+
+  width: map-get($c-map, card-photo-size);
+
+  .c-avatar {
+    display: block;
+    font-size: map-get($c-map, card-photo-size) !important;
+  }
+}
+
+.c-card__name {
+  display: block;
+
+  font-size: map-get($c-map, name-font-size);
+  height: map-get($c-map, name-min-height);
+  color: map-get($c-map, c-primary-color);
+
+  @include ffamily('semi');
+
+  &:hover {
+    color: map-get($c-map, c-primary-color);
+  }
+}
+
+.c-card__top-icons {
+  position: absolute;
+  top: 12px;
+  left: 14px;
+
+  color: map-get($c-map, icon-color);
+  font-size: map-get($c-map, top-icon-size);
+
+  &.c-card__top-icons--right {
+    left: auto;
+    right: 8px;
+  }
+
+  &.c-card__top-icons--on {
+    color: map-get($c-map, icon-color-on);
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.c-card__kind-icon {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  z-index: 0;
+  padding-left: 7px;
+  padding-right: 7px;
+  text-align: center;
+  box-shadow: 0 0 0 5px $color-text-white;
+  background-color: $color-text-white;
+
+  min-width: map-get($c-map, kind-min-width);
+  color: map-get($c-map, icon-color);
+  border:1px solid map-get($c-map, card-border-color);
+  border-radius: map-get($c-map, kind-icon-height);
+  height: map-get($c-map, kind-icon-height);
+
+  i {
+    display: inline-block;
+    margin-top: 7px;
+
+    font-size: map-get($c-map, kind-icon-size);
+  }
+}
+
+.c-card__metas {
+  position: absolute;
+  z-index:1;
+
+  left: map-get($c-map, meta-margin-left);
+  bottom: map-get($c-map, meta-margin-bottom);
+  width: calc(100% - (#{map-get($c-map, meta-margin-left)} * 2));
+
+  li {
+    display: block;
+    margin-top: 2px;
+
+    font-size: map-get($c-map, meta-font-size);
+    color: map-get($c-map, meta-color);
+
+    & > ul {
+      margin-left: 0;
+    }
+
+    a.link {
+      color: map-get($c-map, c-primary-color);
+      text-decoration: underline;
+    }
+  }
+
+  strong {
+    @include ffamily('bold');
+  }
+
+}
+
+.c-card__footer-icons {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  display:table;
+  list-style:none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  height: map-get($c-map, footer-icon-height);
+  li {
+    display:table-cell;
+    width: 20%;
+    min-width: map-get($c-map, footer-icon-width);
+    text-align: center;
+    vertical-align: middle;
+    border-right: 1px solid map-get($c-map, card-border-color);
+    border-top: 1px solid map-get($c-map, card-border-color);
+    &:last-child {border-right:0;}
+  }
+
+  .icon__n {
+		vertical-align: middle;
+		font-size: 24px;
+		color: map-get($c-map, icon-color);
+	}
+}
+
+// Card Modifier
+.c-card--selectable {
+  border-color: map-get($c-map, c-primary-color);
+  box-shadow: map-get($c-map, c-selectable-box-shadow);
+
+  &:hover {
+    .c-card-selectable-content {
+      display: block;
+    }
+    .o-placeholder--card {
+      display: block;
+    }
+  }
+}
+
+.c-card--selectable--selected {
+  .o-placeholder--checkbox {
+    display:block;
+  }
+  .c-card-selectable-content {
+    display: block;
+  }
+}
+
+.c-card--selectable:hover, .c-card--selectable--selected {
+  .c-card__top-icons--right {
+    z-index: 2;
+    color: $color-text-white;
+  }
+}
+
+.c-card--with-footer-icons {
+  height: auto;
+  min-height: map-get($c-map, height) + 10;
+  padding-bottom: map-get($c-map, footer-icon-height);
+
+  .c-card__figure {
+    display: table;
+    text-align: center;
+
+    border-radius: map-get($c-map, card-photo-size);
+    border:2px solid map-get($c-map, card-border-color);
+
+    @include t--size(map-get($c-map, card-photo-size));
+  }
+
+  .c-icon-grid {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+
+    .c-icon-grid__figure {
+      display: inline-block;
+      margin: 0;
+    }
+  }
+
+  
+}
+
+.c-card--with-footer-link {
+
+  .c-card__name {
+    height: auto;
+  }
+
+}
+
+.c-card--ghost {
+  user-select: none;
+  pointer-events: none;
+
+  .c-card__figure {
+    display: table;
+  }
+
+  a:hover { text-decoration: none; }
+
+  .c-card__name {
+    display: inline;
+    color: transparent;
+    border-bottom:4px solid map-get($c-map, card-border-color);
+    text-decoration: none;
+    &:hover {
+      text-decoration: none;
+      color: transparent;
+    }
+  }
+
+  .c-card__metas {
+    width: auto;
+
+    * {
+      color: transparent;
+    }
+
+    &:after {
+      content:'';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 100%;
+      margin-top: -2px;
+      border-bottom:4px solid map-get($c-map, card-border-color);
+    }
+  }
+}
+
+.c-card__name--ghost {
+  .c-card__name__ghost-content span {
+    display: inline;
+    color: transparent;
+    border-bottom:4px solid map-get($c-map, card-border-color);
+    text-decoration: none;
+  }
+}
+
+.c-card__metas--ghost {
+  width: auto !important;
+  display: inline;
+
+  * {
+    color: transparent !important;
+    opacity: 0;
+  }
+
+  &:after {
+    content:'';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    margin-top: -2px;
+    border-bottom:4px solid map-get($c-map, card-border-color);
+  }
+}
+
+.c-card__metas--relative {
+  position: relative;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  margin-top: 15px;
+}
+// End Card Modifier
+
+// Horizontal Card
+.c-card-horizontal {
+  display: table;
+  width: 100%;
+  background-color: $color-text-white;
+
+  padding: map-get($c-map, card-horizontal-padding);
+  border: 1px solid map-get($c-map, card-border-color);
+  border-radius: map-get($c-map, card-horizontal-border-radius);
+
+  *[class$="__ghost-content"] {
+    display: none;
+  }
+
+  *[class$="__normal-content"] {
+    display: block;
+  }
+
+  *[class$="--ghost"] {
+    user-select: none;
+    pointer-events: none;
+
+    *[class$="__ghost-content"] {
+      display: block;
+    }
+    *[class$="__normal-content"] {
+      display: none;
+    }
+  }
+}
+
+.c-card-horizontal__kind-icon {
+  display: table-cell;
+  vertical-align: middle;
+  width: map-get($c-map, card-horizontal-icon-size );
+  padding-right: map-get($c-map, card-horizontal-gutter );
+
+  .icon__n {
+    margin-top: 5px;
+    font-size: map-get($c-map, card-horizontal-icon-size );
+    color: map-get($c-map, icon-color);
+  }
+}
+
+.c-card-horizontal__info {
+  display: table-cell;
+  vertical-align: middle;
+  font-size: map-get($c-map, card-horizontal-info-font-size);
+}
+
+.c-card-horizontal__info--ghost {
+  .c-card-horizontal__ghost-content {
+    color: transparent;
+    
+    * {
+      display: inline-block;
+      position: relative;
+      color: transparent;
+      margin-right: map-get($c-map, card-horizontal-gutter );
+
+      &:after {
+        content:'';
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 100%;
+        margin-top: -2px;
+        border-bottom:4px solid map-get($c-map, card-border-color);
+      }
+    }
+  }
+}
+
+.c-card-horizontal__figure {
+  display: table-cell;
+  vertical-align: middle;
+  width: map-get($c-map, card-horizontal-photo-size);
+  padding-right: map-get($c-map, card-horizontal-gutter );
+  .c-avatar {
+    display: block;
+    font-size: map-get($c-map, card-horizontal-photo-size);
+  }
+}
+
+.c-card-horizontal__ghost-avatar {
+  display: inline-block;
+  border:1px solid map-get($c-map, card-border-color);
+  border-radius: map-get($c-map, card-horizontal-photo-size);
+  background-color: #f7f7f7;
+  text-align: center;
+
+  @include t--size( map-get($c-map, card-horizontal-photo-size) );
+
+  .icon__n {
+    margin-top: 8px;
+    font-size: map-get($c-map, card-horizontal-icon-size );
+    color: map-get($c-map, icon-color);
+  }
+}
+
+.c-card-horizontal__action-area {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: right;
+  min-width: map-get($c-map, card-horizontal-icon-size ) * 3;
+
+  .icon__n {
+    margin-top: 5px;
+    font-size: map-get($c-map, card-horizontal-icon-size );
+    color: map-get($c-map, icon-color);
+    &:hover {
+      cursor: pointer;
+      color: map-get($c-map, c-primary-color);
+    }
+  }
+
+  .icon__n--more_vert {
+    margin-left: -6px;
+    margin-right: -8px;
+  }
+  
+}
+
+// Horizontal Card Modifier
+.c-card-horizontal--ghost {
+ 
+  .c-card-horizontal__info {
+    color: transparent;
+    
+    * {
+      display: inline-block;
+      position: relative;
+      color: transparent;
+      margin-right: map-get($c-map, card-horizontal-gutter );
+
+      &:after {
+        content:'';
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 100%;
+        margin-top: -2px;
+        border-bottom:4px solid map-get($c-map, card-border-color);
+      }
+    }
+  }
+  
+}
+
+//Reset
+$c-map: null;

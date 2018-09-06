@@ -1,0 +1,154 @@
+<div class="or-performance-cancel-block">
+	<app-collapsible-container theme="gray" [isAsideOpen]="true" [asideWidth]="240" [isLoading]="isLoading">
+		<div content>
+			<!--Header-->
+			<div class="p-header p-header--border">
+				<span class="margin-right-5">İptal Bloke İşlemleri</span>
+			</div>
+
+			<div class="p-full-content">
+				<app-venue-template-editor *ngIf="performance && !performance?.VenueTemplate?.IsStanding"
+					[role]="editorRole"
+					(editorEvent)="venueEditorEventHandler($event)"
+					[performanceId]="performance?.Id" >
+				</app-venue-template-editor>
+				<div class="p-container" *ngIf="performance && performance?.VenueTemplate?.IsStanding" >
+					<app-no-data
+						title="Oturma düzeni olmayan bir performanstasınız"
+						description="Ayakta gerçekleşen ya da koltuk numaraları bulunmayan performanslarda, iptal ya da bloke işlemleri ancak adet belirterek yapılabilmektedir."
+						[hasContainer]="true" 
+						[icon]="{type: 'svg', name: 'performance-cancel'}" 
+						[iconSize]="'lg'" ></app-no-data>	
+				</div>
+				
+			</div>
+		</div>
+
+		<div aside>
+			<div class="p-group">
+				<!--header-->
+				<div class="p-group__header">
+					<div class="p-group__header-bar">
+						<div class="p-group__header-title">
+							İSTATİSTİKLER & BİLDİRİMLER
+						</div>
+					</div>
+				</div>
+
+				<!--item-->
+				<div class="p-group__item">
+					<app-vertical-kv-list
+						[sections]="statistics"
+					></app-vertical-kv-list>
+				</div>
+			</div>
+
+			<div class="p-group" *ngIf="!standingBlockCapacity && !selectedSeats?.length">
+				<!--item-->
+				<div class="p-group__item">
+					<app-cta-box>
+						<div class="c-cta-box c-cta-box--dark">
+							<i class="c-cta-box__icon icon__n icon__n--announcement"></i>
+							<p class="c-cta-box__content">
+								<i>Koltuk seçimi Yapılmamış.</i> <br/>
+								<b>İptal</b> etmek ya da <b>bloke</b> etmek istediğiniz koltukları seçin
+							</p>
+						</div>
+					</app-cta-box>
+				</div>
+			</div>
+
+			<div class="p-group">
+				<!--item-->
+				<div class="p-group__item" *ngIf="!isStandingLayout && selectedAvailableSeats?.length">
+					<app-action-box
+						[title]="selectedAvailableSeats?.length + ' Adet Koltuk Seçtiniz'"
+						[description]="'Bu koltukları iptal veya bloke edebilirsiniz.'"
+						[buttons]="[
+							{label: 'BLOKE ET', action: 'blockSeats', theme: 'warning', params:{target: selectedAvailableSeats}},
+              				{label: 'İPTAL ET', action: 'cancelSeats', theme: 'danger', params:{target: selectedAvailableSeats}}
+						]"
+						(actionEvent)="selectedSeatsActionHandler($event)"
+					>
+					</app-action-box>
+				</div>
+
+				<!--item-->
+				<div class="p-group__item" *ngIf="!isStandingLayout && selectedHoldSeats?.length">
+					<app-action-box
+						[title]="'Bloke edilmiş ' + selectedHoldSeats?.length + ' Adet Koltuk Seçtiniz'"
+						[description]="'Bu koltukları satışa açabilir veya iptal edebilirsiniz.'"
+						[buttons]="[
+							{label: 'SATIŞA AÇ', action: 'openToAvailable', theme: 'secondary', params:{target: selectedHoldSeats}},
+							{label: 'İPTAL ET', action: 'cancelSeats', theme: 'danger', params:{target: selectedHoldSeats}}
+						]"
+						(actionEvent)="selectedSeatsActionHandler($event)"
+					>
+					</app-action-box>
+				</div>
+
+				<!--item-->
+				<div class="p-group__item" *ngIf="!isStandingLayout && selectedKilledSeats?.length">
+					<app-action-box
+						[title]="'İptal edilmiş ' + selectedKilledSeats?.length + ' Adet Koltuk Seçtiniz'"
+						[description]="'Bu koltukları satışa açabilir veya bloke edebilirsiniz.'"
+						[buttons]="[
+							{label: 'SATIŞA AÇ', action: 'openToAvailable', theme: 'secondary', params:{target: selectedKilledSeats}},
+              				{label: 'BLOKE ET', action: 'blockSeats', theme: 'danger', params:{target: selectedKilledSeats}}
+						]"
+						(actionEvent)="selectedSeatsActionHandler($event)"
+					>
+					</app-action-box>
+				</div>
+
+			</div>
+
+      		<div class="p-group" *ngIf="standingBlockCapacity">
+				<div class="p-group__item" *ngIf="standingBlockCapacity?.availableCount">
+					<app-action-box
+						[title]="'<b>'+selectedBlock?.Name+' Bloğunda</b><br/>'+standingBlockCapacity?.availableCount + ' Adet Uygun Koltuk!'"
+						[description]="'<b>İptal</b> etmek ya da <b>bloke</b> etmek istediğiniz koltuk adedini giriniz.'"
+						[input]="{type: 'number', placeholder: 'Koltuk Adedi', min: 1, max: standingBlockCapacity?.availableCount}"
+						[buttons]="[
+							{label: 'BLOKE ET', action: 'blockSeats', theme: 'warning'},
+              				{label: 'İPTAL ET', action: 'cancelSeats', theme: 'danger'}
+						]"
+						(actionEvent)="standingBlocksActionHandler($event, [SeatStatus.OnSale, SeatStatus.Pending])"
+					>
+					</app-action-box>
+				</div>
+
+				<!--item-->
+				<div class="p-group__item" *ngIf="standingBlockCapacity?.blockedCount">
+					<app-action-box
+						[title]="'<b>'+selectedBlock?.Name+' Bloğunda</b><br/>'+standingBlockCapacity?.blockedCount + ' adet koltuk bloke edilmiş'"
+						[description]="'<b>İptal</b> etmek ya da <b>satışa açmak</b> istediğiniz koltuk adedini giriniz.'"
+						[input]="{type: 'number', placeholder: 'Koltuk Adedi', min: 1, max: standingBlockCapacity?.blockedCount}"
+						[buttons]="[
+							{label: 'SATIŞA AÇ', action: 'openToAvailable', theme: 'secondary'},
+              				{label: 'İPTAL ET', action: 'cancelSeats', theme: 'danger'}
+						]"
+						(actionEvent)="standingBlocksActionHandler($event, [SeatStatus.Hold])"
+					>
+					</app-action-box>
+				</div>
+
+				<!--item-->
+				<div class="p-group__item" *ngIf="standingBlockCapacity?.canceledCount">
+					<app-action-box
+						[title]="'<b>'+selectedBlock?.Name+' Bloğunda</b><br/>'+standingBlockCapacity?.canceledCount + ' adet koltuk iptal edilmiş'"
+						[description]="'<b>Satışa açmak</b> ya da <b>bloke</b> etmek istediğiniz koltuk adedini giriniz.'"
+						[input]="{type: 'number', placeholder: 'Koltuk Adedi', min: 1, max: standingBlockCapacity?.canceledCount}"
+						[buttons]="[
+							{label: 'SATIŞA AÇ', action: 'openToAvailable', theme: 'secondary'},
+              				{label: 'BLOKE ET', action: 'blockSeats', theme: 'warning'}
+						]"
+						(actionEvent)="standingBlocksActionHandler($event, [SeatStatus.Killed])"
+					>
+					</app-action-box>
+				</div>
+			</div>
+
+		</div>
+	</app-collapsible-container>
+</div>

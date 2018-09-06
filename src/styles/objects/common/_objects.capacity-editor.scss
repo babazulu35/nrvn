@@ -1,0 +1,28 @@
+$oc-capacity-editor: (
+	info-list: (
+        border-color: #dcdce5,
+        color: #373a3c,
+        item: (
+            padding: 15px,
+            height: 62px,
+            icon: (
+                color: #B1B1B1,
+                font-size: 24px
+            ),
+            content: (
+
+            )
+        )
+    )
+);
+
+$oc-capacity-editor: map-merge($oc-capacity-editor, getSettingsMap("oc-capacity-editor"));
+$oc-map: $oc-capacity-editor;
+
+.oc-capacity-editor {
+    display: block;
+    background-color: #fff;
+    height: 100%;
+}
+
+$oc-map: null;

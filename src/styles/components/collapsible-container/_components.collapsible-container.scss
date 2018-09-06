@@ -1,0 +1,540 @@
+// Set defaults
+$c-collapsible-container: ( 
+    toggle-btn: ( height: 50px, width: 40px, color: #bdbdbd, hover-color: #333, top: 10px, theme: ( gray: ( background-color: #F7F7F7))), 
+    content: ( 
+        placeholder: ( 
+            space: 20px, 
+            header: ( font-size: 2rem, padding: 20px 30px 15px, border-color: #e0e0e0, height: 70px), 
+            container: ( padding: 30px), 
+            group: ( margin-bottom: 40px, 
+                header: ( border-color: #dcdce5, title: ( color: #35383d, font-size: 15px)), 
+                item: ( margin-bottom: 20px, ), 
+                wings: ( border-color: #dcdce5 )
+            ), 
+            form-group: ( 
+                title: ( color: #939393, font-size: 11px)
+            )
+        )
+    ), 
+    aside: ( padding: 48px 10px 10px, border-color: #dcdce5, background-color: #ffffff, min-width: 20px, max-width: 240px, theme: ( gray: ( background-color: #F7F7F7)), footer: ( width: 100%, height: 70px, padding: 0 30px, margin: 0, background-color: #35383d, border-color: #dcdce5, button: ( background-color: #21242b, color: #ffffff)), placeholder: ( space: 10px, color: #35383d, font-size: 1rem, container: ( padding: 20px), group: ( margin-bottom: 20px, header: ( border-color: #dcdce5, title: ( color: #939393, font-size: 11px)), item: ( margin-bottom: 10px, ), list: ( label: ( font-size: 13px, color: #333333))), form-group: ( title: ( color: #939393, font-size: 11px)))));
+// Merge settings and defaults
+$c-collapsible-container: map-merge($c-collapsible-container, getSettingsMap("c-collapsible-container"));
+$c-map: $c-collapsible-container;
+$content: map-get($c-map, content);
+$aside: map-get($c-map, aside);
+.c-collapsible-container {
+    position: relative;
+    display: flex;
+    width: 100%;
+    &--gray {
+        .c-collapsible-container__aside {
+            background-color: map-deep-get($aside, theme, gray, background-color);
+            .c-text-input {
+                background-color: #fff;
+            }
+        }
+        .c-collapsible-container__toggle-btn {
+            background-color: map-deep-get($aside, theme, gray, background-color);
+        }
+    }
+    &--toggle-gray {
+        .c-collapsible-container__toggle-btn {
+            background-color: map-deep-get($aside, theme, gray, background-color);
+        }
+    }
+    .p-overlay {
+        display: block;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        left: 0px;
+        top: 0px;
+        z-index: map-deep-get($z-index, p-overlay);
+        background-color: rgba(255, 255, 255, 0.7);
+    }
+    &__content {
+        display: block;
+        min-height: inherit;
+        z-index: 0;
+        h1,
+        h2,
+        h3 {
+            margin-bottom: 0px;
+        }
+        >div {
+            display: block;
+            width: 100%;
+            min-height: 100%;
+        }
+        &__header,
+        .p-header {
+            @include ffamily('light');
+            font-size: map-deep-get($content, placeholder, header, font-size);
+            padding: map-deep-get($content, placeholder, header, padding);
+            max-height: map-deep-get($content, placeholder, header, height);
+            &+.p-full-content {
+                height: calc(100% - #{map-deep-get($content, placeholder, header, height)});
+            }
+            &--border {
+                border-bottom: solid 1px map-deep-get($content, placeholder, header, border-color);
+            }
+            .c-button--circle.c-button--lg {
+                vertical-align: middle;
+                transform: translateY(-0.2em);
+            }
+        }
+        //placeholder
+        .p-container {
+            padding: map-deep-get($content, placeholder, container, padding);
+            &--no-padding {
+                padding: 0px;
+            }
+            &--fixed-height {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                top: 0px;
+                left: 0px;
+            }
+        }
+        .p-group {
+            &+.p-group,
+            &+.p-form-group {
+                margin-top: map-deep-get($content, placeholder, space)*2;
+            }
+            &__header {
+                display: block;
+                padding-bottom: map-deep-get($content, placeholder, space);
+                &--border {
+                    display: block;
+                    padding-bottom: map-deep-get($content, placeholder, space);
+                    border-bottom: 1px solid map-deep-get($aside, placeholder, group, header, border-color);
+                    margin-bottom: map-deep-get($content, placeholder, space);
+                }
+                &-bar {
+                    display: table;
+                    width: 100%;
+                }
+                &-title {
+                    display: table-cell;
+                    vertical-align: bottom;
+                    width: 100%;
+                    @include ffamily('semi');
+                    font-size: map-deep-get($content, placeholder, group, header, title, font-size);
+                    line-height: 1em;
+                    color: map-deep-get($content, placeholder, group, header, title, color);
+                }
+                &-action {
+                    display: table-cell;
+                    vertical-align: bottom;
+                    line-height: 1em;
+                    white-space: nowrap;
+                }
+            }
+            &__item {
+                &+.p-group__item,
+                &+.p-group__list {
+                    margin-top: map-deep-get($content, placeholder, space)*1.25;
+                }
+            }
+            &__wings {
+                display: table;
+                width: 100%;
+                border-top: solid 1px map-deep-get($content, placeholder, group, wings, border-color);
+                &-left,
+                &-right {
+                    width: 50%;
+                    display: table-cell;
+                    position: relative;
+
+                    &:empty {
+                        height: map-deep-get($content, placeholder, container, padding)*2;
+                    }
+                }
+                &-left {
+                    &-title {
+                        @include ffamily('semi');
+                        font-size: map-deep-get($content, placeholder, group, header, title, font-size);
+                        line-height: 1em;
+                        padding-top: map-deep-get($content, placeholder, group, margin-bottom);
+                        padding-bottom: map-deep-get($content, placeholder, group, margin-bottom)/2;
+                    }
+                }
+                &-right {
+                    vertical-align: middle;
+                    text-align: right;
+                    border-left: solid 1px map-deep-get($content, placeholder, group, wings, border-color);
+                }
+            }
+        }
+        .p-form-group {
+            &+.p-group {
+                margin-top: map-deep-get($c-map, content, placeholder, space)*2;
+            }
+            &+.p-form-group {
+                margin-top: map-deep-get($c-map, content, placeholder, space);
+            }
+            &__label {
+                display: inline-block;
+                width: 100%;
+                margin-bottom: map-deep-get($c-map, content, placeholder, space)*0.25;
+                @include ffamily('semi');
+                font-size: map-deep-get($c-map, content, placeholder, form-group, title, font-size);
+                line-height: 1em;
+                color: map-deep-get($c-map, content, placeholder, form-group, title, color);
+                min-height: 1em;
+            }
+            &__input {
+                display: inline-block;
+                width: 100%;
+                &+.c-helper-text {
+                    margin-top: map-deep-get($content, placeholder, space)*0.25;
+                }
+                >input {
+                    width: 100%;
+                    min-height: 36px;
+                }
+                >textarea {
+                    width: 100%;
+                }
+            }
+        }
+    }
+    &__aside {
+        display: block;
+        position: absolute;
+        width: map-deep-get($c-map, aside, min-width);
+        height: 100%;
+        top: 0px;
+        right: 0px;
+        z-index: 1;
+        background-color: map-deep-get($c-map, aside, background-color);
+        border-left: 1px solid map-deep-get($c-map, aside, border-color);
+        box-shadow: 0px 0.30em 10px rgba(0, 0, 0, 0.1);
+        @include transition(width getTransition(main-menu));
+        &--no-padding {
+            .c-collapsible-container__aside-inner {
+                padding: 0px;
+            }
+        }
+        &--expanded {
+            width: map-deep-get($aside, max-width);
+            @include transition(width getTransition(main-menu));
+            .c-collapsible-container__aside-footer {
+                display: block !important;
+                animation: getAnimation(fade-in, 0.5s getEase(in-out-sine));
+            }
+            .c-collapsible-container__aside-inner {
+                display: block !important;
+                animation: getAnimation(fade-in, 0.5s getEase(in-out-sine));
+                .c-card-item {
+                    display: block;
+                    margin: auto;
+                    &__title {
+                        span {
+                            cursor: auto;
+                        }
+                    }
+                }
+            }
+            .c-collapsible-container__toggle-btn {
+                .icon-open {
+                    display: none;
+                }
+                .icon-close {
+                    display: block;
+                }
+            }
+        }
+        &--has-footer {
+            .c-collapsible-container__aside-inner {
+                padding-bottom: map-deep-get($aside, footer, height) + map-deep-get($aside, placeholder, container, padding);
+            }
+        }
+        &-inner {
+            display: none;
+            height: inherit;
+            overflow-x: hidden;
+            overflow-y: auto;
+            padding: map-deep-get($c-map, aside, padding);
+            >div {
+                height: auto;
+            }
+        }
+        &-footer {
+            display: none;
+            position: absolute;
+            width: 100%;
+            // bottom: map-deep-get($aside, footer, height);
+            bottom: 0px;
+            left: 0px;
+            margin: map-deep-get($aside, footer, margin);
+            min-height: map-deep-get($aside, footer, height);
+            text-align: center;
+            &:before {
+                content: "";
+                display: inline-block;
+                position: absolute;
+                z-index: 0;
+                bottom: 0px;
+                left: 0px;
+                vertical-align: middle;
+                margin-right: -4px;
+                width: map-deep-get($aside, footer, width);
+                height: map-deep-get($aside, footer, height);
+                background-color: map-deep-get($aside, footer, background-color);
+            }
+            &--border {
+                border-top: 1px solid map-deep-get($aside, footer, border-color);
+            }
+            >* {
+                display: inline-block;
+                vertical-align: middle;
+            }
+            &-content {
+                display: block;
+                position: absolute;
+                align-items: center;
+                z-index: 1;
+                bottom: 0px;
+                left: 0px;
+                width: 100%;
+                height: map-deep-get($aside, footer, height);
+                padding: map-deep-get($aside, footer, padding);
+                >div {
+                    display: block;
+                    height: map-deep-get($aside, footer, height);
+                }
+                [class^="col-"],
+                [class*=" col-"] {
+                    height: 100%;
+                    >* {
+                        display: inline-block;
+                        margin-right: -4px;
+                        vertical-align: middle;
+                    }
+                    &::before {
+                        content: "";
+                        display: inline-block;
+                        vertical-align: middle;
+                        height: 100%;
+                    }
+                }
+                .c-button {}
+                a {
+                    color: #dcdce5;
+                    text-decoration: underline;
+                }
+            }
+            &-sticky-contents {
+                display: block;
+                padding-bottom: map-deep-get($aside, footer, height);
+            }
+        }
+        .p-container {
+            padding: map-deep-get($aside, placeholder, container, padding);
+            &--no-padding {
+                padding: 0px;
+            }
+            h3 {
+                @include ffamily('semi');
+                color: map-deep-get($aside, placeholder, color);
+                font-size: map-deep-get($aside, placeholder, font-size)*1.2;
+                margin-bottom: map-deep-get($aside, placeholder, space);
+            }
+            p {
+                @include ffamily('regular');
+                color: map-deep-get($aside, placeholder, color);
+                font-size: map-deep-get($aside, placeholder, font-size);
+                margin-bottom: map-deep-get($aside, placeholder, space);
+            }
+        }
+        .p-group {
+            &+.p-group,
+            &+.p-form-group {
+                margin-top: map-deep-get($aside, placeholder, space)*3;
+            }
+            &__header {
+                display: block;
+                //padding-bottom: map-deep-get($aside, placeholder, space);
+                &--border {
+                    display: block;
+                    padding-bottom: map-deep-get($aside, placeholder, space)/2;
+                    border-bottom: 1px solid map-deep-get($aside, placeholder, group, header, border-color);
+                    margin-bottom: map-deep-get($aside, placeholder, space)*0.75;
+                }
+                &-bar {
+                    display: table;
+                    width: 100%;
+                }
+                &-title {
+                    display: table-cell;
+                    vertical-align: bottom;
+                    width: 100%;
+                    @include ffamily('semi');
+                    font-size: map-deep-get($aside, placeholder, group, header, title, font-size);
+                    line-height: 1.5em;
+                    padding-bottom: 0.35em;
+                    color: map-deep-get($aside, placeholder, group, header, title, color);
+                }
+                &-action {
+                    display: table-cell;
+                    vertical-align: bottom;
+                    line-height: 1em;
+                    >i {
+                        font-size: 2em;
+                        color: map-deep-get($aside, placeholder, group, header, title, color);
+                    }
+                    >a {
+                        font-size: 0.9em;
+                        @include ffamily('semi');
+                        text-decoration: underline;
+                        color: map-deep-get($aside, placeholder, group, list, label, color);
+                    }
+                }
+            }
+            &__item {
+                &+.p-group__item,
+                &+.p-group__list {
+                    margin-top: map-deep-get($aside, placeholder, space);
+                }
+            }
+            &__list {
+                list-style: none;
+                width: 100%;
+                &+.p-group__item,
+                &+.p-group__list {
+                    margin-top: map-deep-get($aside, placeholder, space);
+                }
+                &-item {
+                    &+.p-group__item,
+                    &+.p-group__list {
+                        margin-top: map-deep-get($aside, placeholder, space/2);
+                    }
+                    display: table;
+                    width: 100%;
+                    padding-top: map-deep-get($aside, placeholder, space);
+                    padding-bottom: map-deep-get($aside, placeholder, space);
+                    border-top: 1px solid #dcdce5;
+                    line-height: 1em;
+                    &:last-child {
+                        border-bottom: 1px solid #dcdce5;
+                    }
+                    &-bar {
+                        display: inline-table;
+                        width: 100%;
+                        table-layout: fixed;
+                        &+.p-group__list-item-content {
+                            margin-top: map-deep-get($aside, placeholder, space);
+                        }
+                    }
+                    &-content {
+                        display: inline-table;
+                        width: 100%;
+                        animation: getAnimation(fade-in, 0.3s getEase(in-out-sine));
+                    }
+                    &-label {
+                        display: table-cell;
+                        vertical-align: middle;
+                        width: auto;
+                        //width: 100%;
+                        padding-right: 8px;
+                        @include ffamily('semi');
+                        font-size: map-deep-get($aside, placeholder, group, list, label, font-size);
+                        color: map-deep-get($aside, placeholder, group, list, label, color);
+                        line-height: 18px;
+                    }
+                    &-action {
+                        display: table-cell;
+                        vertical-align: middle;
+                        min-width: 60px;
+                        //width: 60px;
+                        text-align: right;
+                    }
+                }
+            }
+            &__seperator {
+                display: block;
+                height: 1px;
+                font-size: 0px;
+                line-height: 0px;
+                margin: map-deep-get($aside, placeholder, space)/2 0px;
+                border-bottom: 1px solid map-deep-get($aside, placeholder, group, header, border-color);
+            }
+        }
+        .p-form-group {
+            &+.p-group {
+                margin-top: map-deep-get($aside, placeholder, space)*2;
+            }
+            &+.p-form-group {
+                margin-top: map-deep-get($aside, placeholder, space)/2;
+            }
+            &__label {
+                display: inline-block;
+                width: 100%;
+                margin-bottom: map-deep-get($aside, placeholder, space)*0.35;
+                @include ffamily('semi');
+                font-size: map-deep-get($aside, placeholder, form-group, title, font-size);
+                line-height: 1em;
+                color: map-deep-get($aside, placeholder, form-group, title, color);
+                min-height: 1em;
+            }
+            &__input {
+                display: inline-block;
+                width: 100%;
+                &+.p-form-group__input {
+                    margin-top: map-deep-get($aside, placeholder, space)*0.35;
+                }
+                &+.c-helper-text {
+                    margin-top: map-deep-get($aside, placeholder, space)*0.35;
+                }
+                >input {
+                    width: 100%;
+                    min-height: 36px;
+                }
+                >textarea {
+                    width: 100% !important;
+                }
+            }
+        }
+        h3,
+        h4,
+        .group-title {
+            margin-bottom: map-deep-get($aside, placeholder, space);
+            font-size: map-deep-get($c-map, aside, placeholder, group, header, title, font-size);
+            @include ffamily("semi");
+            color: map-get($c-map, aside-title-color);
+            text-transform: uppercase;
+        }
+        p+* {
+            margin-top: map-deep-get($aside, placeholder, space);
+        }
+    }
+    &__toggle-btn {
+        border: 1px solid map-deep-get($c-map, aside, border-color);
+        color: map-deep-get($c-map, toggle-btn, color);
+        height: map-deep-get($c-map, toggle-btn, height);
+        width: map-deep-get($c-map, toggle-btn, width);
+        border-radius: map-deep-get($c-map, toggle-btn, height);
+        background-color: map-deep-get($c-map, aside, background-color);
+        display: flex;
+        position: absolute;
+        align-items: center;
+        justify-content: center;
+        top: map-deep-get($c-map, toggle-btn, top);
+        left: -#{map-deep-get($c-map, toggle-btn, width)};
+        font-size: 21px;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        cursor: pointer;
+        .icon__n {
+            margin-left: 3px;
+        }
+        &:hover {
+            color: map-deep-get($c-map, toggle-btn, hover-color);
+        }
+        .icon-close {
+            display: none;
+        }
+    }
+}

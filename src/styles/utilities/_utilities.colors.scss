@@ -1,0 +1,9 @@
+@each $key, $color in $ui-colors {
+    .bg-color--#{$key} {
+        background-color: $color;
+    }
+
+    .text-color--#{$key} {
+        color: $color;
+    }
+}

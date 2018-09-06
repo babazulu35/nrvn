@@ -1,0 +1,8 @@
+<div class="c-attributes-select-add-bar__container">
+    <div class="c-attributes-select-add-bar__attributes" *ngIf="attributes?.length > 0">
+        <app-tag-group [canBeDeleted]="canBeDeleted" [tags]="attributes" (actionEvent)="tagActionEvent($event)"></app-tag-group>
+    </div>
+    <div class="c-attributes-select-add-bar__types" *ngIf="canBeDeleted">
+        <app-basic-button-group (actionEvent)="typeActionHandler($event)" iconName="plus" [actions]="types" theme="primary"></app-basic-button-group>
+    </div>
+</div>

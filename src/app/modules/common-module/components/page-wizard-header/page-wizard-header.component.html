@@ -1,0 +1,13 @@
+<div class="c-page-wizard-header__container">
+  <div (click)="itemClickHandler(level)"
+    class="c-page-wizard-header__item c-page-wizard-header__item--{{getLevelStatus(level)}}" 
+    [ngClass]="{'c-page-wizard-header__item--error': level?.hasError, 'c-page-wizard-header__item--has-action': hasAction || level?.hasAction }"
+    [style.z-index]="levels?.length - i" *ngFor="let level of levels; let i=index">
+    <div class="c-page-wizard-header__item-box">
+      <span *ngIf="level?.icon" class="c-page-wizard-header__item-icon"><i class="icon__n icon__n--{{level?.icon}}"></i></span>
+      <span class="c-page-wizard-header__item-label">{{level?.label}}</span>
+      <span class="c-page-wizard-header__item-indicator"></span>
+      <span class="c-page-wizard-header__item-arrow"></span>
+    </div>
+  </div>
+</div>

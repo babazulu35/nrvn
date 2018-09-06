@@ -1,0 +1,98 @@
+<div class="or-cms-component-container-create">
+    
+    <div class="p-header-bar" sticky sticky-main-scroller sticky-release-offset="30" sticky-height-property="55" sticky-width-property="100%" sticky-follow-menu-moves>
+        <div class="p-header-bar__left">
+            <app-breadcrumb [breadcrumbs]="[{title: 'Bileşen Grupları'}, {title: componentContainerData?.Name || 'Yeni Bileşen Grubu'}]"></app-breadcrumb>
+        </div>
+
+        <div class="p-header-bar__right">
+            <app-button (clickEvent)='saveComponentContainer()' [isPromising]="isLoading || isPromising" [isDisabled]="!isValid" [label]="'KAYDET'"></app-button>
+            <app-button (clickEvent)='exit($event)' type="icon" icon="close" theme="secondary"></app-button>
+        </div>
+    </div>
+
+    <app-split-container [fixedWidth]="firmList?.length ? 420 : 0" [fixedFloat]="'right'">
+
+        <div fluid>
+            <div class="p-container">
+                
+                <div class="p-group">
+                    <div class="p-group__item">
+                        <div class="p-form-group">
+                            <div class="p-form-group__label">
+                                BİLEŞEN GRUBU ADI<sup>*</sup>
+                            </div>
+                            <div class="p-form-group__input">
+                                <app-text-input 
+                                    (typeEvent)="inputChangeHandler($event, 'Name')"
+                                    [isTypeEmitting]="true"
+                                    [typeDebounceTime]="100"
+                                    [value]="componentContainerData?.Name"></app-text-input>
+                                <app-helper-text type="info"><span>Bileşeniniz görüntülenirken kullanılan metindir.</span></app-helper-text>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-group__item">
+                        <div class="p-form-group">
+                            <div class="p-form-group__label">
+                                TEKİL İSİM<sup>*</sup>
+                            </div>
+                            <div class="p-form-group__input">
+                                <app-text-input 
+                                    (changeEvent)="inputChangeHandler($event, '_id')"
+                                    [value]="componentContainerData?._id"></app-text-input>
+                                <app-helper-text type="info"><span>Bileşeninizi tanımlamak için kullanılan tekil isimdir.</span></app-helper-text>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="p-group">
+                    <div class="p-group__header">
+                        <div class="p-group__header-bar">
+                            <div class="p-group__header-title">
+                                Bileşen Grubu Ayarları
+                            </div>
+                            <div class="p-group__header-action" *ngIf="components?.length > 1">
+                                <span>
+                                    <span><app-button (click)="toggleAllComponentSettingsBlock()" type="link" [label]="allBlockCollapsed ? 'TÜMÜNÜ GENİŞLET' : 'TÜMÜNÜ DARALT'"></app-button></span>
+                                    <span><app-button (click)="toggleAllComponentSettingsBlock()" type="icon" [icon]="allBlockCollapsed ? 'unfold_more' : 'unfold_less'" theme="primary" size="md"></app-button></span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-group__item" *ngFor="let component of components">
+                        <app-cms-component-settings-block
+                            (actionEvent)="componentSettingsBlockActionHandler($event, component)"
+                            [data]="component"></app-cms-component-settings-block>
+                    </div>
+                    
+                    <div class="p-group__item">
+                        <app-container-canvas [isEmpty]="true">
+                            <app-button (clickEvent)="addNewComponent()" theme="secondary">BİLEŞEN EKLE</app-button>
+                        </app-container-canvas>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div fixed right *ngIf="firmList?.length">
+            <div class="p-container">
+            <div class="p-group" *ngIf="firmList?.length">
+                <div class="p-group__header">
+                    <div class="p-group__header-bar">
+                        <span class="p-group__header-title">
+                            Organizatör<!--<sup>*</sup>-->
+                        </span>
+                    </div>
+                </div>
+                <div class="p-group__item">
+                    <app-selectbox [options]="firmList" [value]="componentContainerData?.PromoterCode" (changeEvent)="inputChangeHandler($event, 'PromoterCode')"></app-selectbox>
+                </div>
+            </div>
+            </div>
+        </div>
+    </app-split-container>
+
+</div>

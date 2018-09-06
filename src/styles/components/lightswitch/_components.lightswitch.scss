@@ -1,0 +1,273 @@
+/* --------------------------------------------------------
+version: 1.0
+last modified: 19.11.2016
+author: Abdullah Karadeniz
+----------------------------------------------------------*/
+
+
+/**
+ * Lightswitch:
+ * `.c-lightswitch` -
+
+ *     @example
+ *     
+ */
+
+$c-lightswitch: ( 
+    width: 60px, height: 30px, inner-scale: 0.6em, label-scale: 0.5em, border-radius: 0.5em, animation-time: 250ms, 
+    sizes: ( sm: 0.85, lg: 1.25), 
+    themes: ( 
+        light: ( color: #9d9d9d, handle-background-color: #21242b, off-background-color: #eaeaea, on-background-color: #2985ef), 
+        dark: ( color: #9d9d9d, handle-background-color: #21242b, off-background-color: #414347, on-background-color: #2985ef))
+    );
+// Merge settings and defaults
+$c-lightswitch: map-merge($c-lightswitch, getSettingsMap("c-lightswitch"));
+// Set shortcuts
+$themes: map-get($c-lightswitch, themes);
+$selected-theme: map-get($themes, light);
+$c-map: $c-lightswitch;
+.c-lightswitch {
+    position: relative;
+    z-index: 0;
+    display: inline-block;
+    overflow: hidden;
+    direction: ltr;
+    cursor: pointer;
+    text-align: left;
+    vertical-align: middle;
+    width: map-get($c-map, width);
+    @include t--user-select(none);
+    margin-bottom: 0px;
+    line-height: 0px;
+    max-width: inherit;
+    min-width: inherit;
+
+    &:before {
+        content: "";
+        background-color: map-get($selected-theme, off-background-color);
+    }
+    font-size: map-get($c-map, height);
+    &--sm {
+        font-size: map-get($c-map, height) * map-deep-get($c-map, sizes, sm);
+        input[type="checkbox"]:checked ~ .c-lightswitch__toggle .c-lightswitch__toggle-wrap, .c-lightswitch input[type="radio"]:checked ~ .c-lightswitch__toggle .c-lightswitch__toggle-wrap {
+            transform: translateX(100%) translateX(-#{map-get($c-map, height) * map-deep-get($c-map, sizes, sm)}) !important;
+        }
+    }
+    &--lg {
+        font-size: map-get($c-map, height) * map-deep-get($c-map, sizes, lg);
+        input[type="checkbox"]:checked ~ .c-lightswitch__toggle .c-lightswitch__toggle-wrap, .c-lightswitch input[type="radio"]:checked ~ .c-lightswitch__toggle .c-lightswitch__toggle-wrap {
+            transform: translateX(100%) translateX(-#{map-get($c-map, height) * map-deep-get($c-map, sizes, lg)}) !important;
+        }
+    }
+    &--autosize {
+        font-size: inherit;
+    }
+    &--align-left {
+        .c-lightswitch__label {
+            text-align: left;
+        }
+    }
+    &--align-right {
+        .c-lightswitch__label {
+            text-align: right;
+        }
+    }
+    input[type="checkbox"],
+    input[type="radio"] {
+        position: absolute;
+        z-index: 2;
+        font-size: inherit;
+        line-height: 0px;
+        width: 100%;
+        height: 1em;
+        left: 0px;
+        bottom: 0px;
+        opacity: 0;
+        cursor: pointer;
+    }
+    &__toggle {
+        display: inline-block;
+        position: relative;
+        font-size: inherit;
+        width: 100%;
+        height: 1em;
+        overflow: hidden;
+        opacity: 0.99;
+        @include border-radius(map-get($c-map, "border-radius"));
+        &-wrap {
+            display: block;
+            position: relative;
+            font-size: inherit;
+            height: 1em;
+            @include transform(translateX(0));
+            transition: transform map-get($c-map, "animation-time") ease-out;
+        }
+        &-on {
+            display: inline-block;
+            position: absolute;
+            z-index: 1;
+            font-size: inherit;
+            width: calc(100% - 0.5em);
+            height: 1em;
+            top: 0px;
+            right: calc(100% - 0.5em);
+            background-color: map-get($selected-theme, on-background-color);
+            opacity: 0.5;
+            transition: opacity map-get($c-map, "animation-time") ease-out;
+            -ms-transition: opacity map-get($c-map, "animation-time") ease-out;
+        }
+        &-off {
+            display: inline-block;
+            position: absolute;
+            z-index: 0;
+            font-size: inherit;
+            width: calc(100% - 0.5em);
+            height: 1em;
+            top: 0px;
+            left: 0.5em;
+            background-color: map-get($selected-theme, off-background-color);
+            opacity: 1;
+            transition: opacity map-get($c-map, "animation-time") ease-out;
+            -ms-transition: opacity map-get($c-map, "animation-time") ease-out;
+        }
+        &-handle {
+            display: inline-block;
+            position: absolute;
+            z-index: 2;
+            top: 0px;
+            left: 0px;
+            font-size: inherit;
+            width: 1em;
+            height: 1em;
+            @include border-radius(map-get($c-map, "border-radius"));
+            background-color: map-get($selected-theme, handle-background-color);
+        }
+    }
+    &__label {
+        display: block;
+        @include ffamily('regular');
+        font-size: map-get($c-map, label-scale);
+        margin-top: map-get($c-map, label-scale)/5;
+        padding: 0px map-get($c-map, border-radius) map-get($c-map, border-radius);
+        text-align: center;
+        color: map-get($selected-theme, color);
+    }
+    input[type="checkbox"]:not(:disabled),
+    input[type="radio"]:not(:disabled) {
+        &~span,
+        &~div {
+            cursor: pointer;
+        }
+    }
+    input[type="checkbox"]:focus,
+    input[type="radio"]:focus {
+        &~.c-lightswitch__toggle {
+            //todo focus
+            //@include transition(border 0.2s ease-in-out);
+        }
+    }
+    input[type="checkbox"]:not(:checked):not(:disabled),
+    input[type="radio"]:not(:checked):not(:disabled) {
+        &:hover {
+            &~.c-lightswitch__toggle {
+                //todo hover
+                //@include transition(border 0.2s ease-in-out);
+            }
+        }
+        &:active {
+            &~.c-lightswitch__toggle {
+                //todo active
+                //@include transition(border 0.1s ease-in-out);
+            }
+        }
+    }
+    input[type="checkbox"]:checked,
+    input[type="radio"]:checked {
+        &~.c-lightswitch__toggle .c-lightswitch__toggle-wrap {
+            transform: translateX(100%) translateX(-#{map-get($c-map, height)});
+            transition: transform map-get($c-map, "animation-time") ease-out;
+        }
+        &~.c-lightswitch__toggle .c-lightswitch__toggle-on {
+            opacity: 1;
+            transition: opacity map-get($c-map, "animation-time") ease-out;
+            -ms-transition: opacity map-get($c-map, "animation-time") ease-out;
+        }
+        &~.c-lightswitch__toggle .c-lightswitch__toggle-off {
+            opacity: 0.25;
+            transition: opacity map-get($c-map, "animation-time") ease-out;
+            -ms-transition: opacity map-get($c-map, "animation-time") ease-out;
+        }
+    }
+    input[type="checkbox"]:disabled,
+    input[type="radio"]:disabled {
+        display: none;
+        &~span,
+        &~div {
+            cursor: not-allowed;
+        }
+        &~.c-lightswitch__toggle .c-lightswitch__toggle-on {
+            background-color: lighten(desaturate(map-get($selected-theme, on-background-color), 90), 30);
+        }
+        &~.c-lightswitch__toggle .c-lightswitch__toggle-off {
+            background-color: lighten(map-get($selected-theme, handle-background-color), 70);
+        }
+        &~.c-lightswitch__toggle .c-lightswitch__toggle-handle {
+            background-color: lighten(map-get($selected-theme, handle-background-color), 80);
+        }
+    }
+    //SET THEMES
+    &--dark {
+        $selected-theme: map-get($themes, dark);
+        .c-lightswitch__label {
+            color: map-get($selected-theme, color) !important;
+        }
+        input[type="checkbox"]:not(:disabled),
+        input[type="radio"]:not(:disabled) {
+            &~span,
+            &~div {
+                cursor: pointer;
+            }
+        }
+        input[type="checkbox"]:focus,
+        input[type="radio"]:focus {
+            &~.c-lightswitch__toggle {
+                //todo focus
+                //@include transition(border 0.2s ease-in-out);
+            }
+        }
+        input[type="checkbox"]:not(:checked):not(:disabled),
+        input[type="radio"]:not(:checked):not(:disabled) {
+            &:hover {
+                &~.c-lightswitch__toggle {
+                    //todo hover
+                    //@include transition(border 0.2s ease-in-out);
+                }
+            }
+            &:active {
+                &~.c-lightswitch__toggle {
+                    //todo active
+                    //@include transition(border 0.1s ease-in-out);
+                }
+            }
+        }
+        //input[type="checkbox"]:checked {}
+        input[type="checkbox"]:disabled,
+        input[type="radio"]:disabled {
+            display: none;
+            &~.c-lightswitch__toggle .c-lightswitch__toggle-on {
+                background-color: darken(desaturate(map-get($selected-theme, on-background-color), 90), 30);
+            }
+            &~.c-lightswitch__toggle .c-lightswitch__toggle-off {
+                background-color: lighten(map-get($selected-theme, handle-background-color), 20);
+            }
+            &~.c-lightswitch__toggle .c-lightswitch__toggle-handle {
+                background-color: lighten(map-get($selected-theme, handle-background-color), 50);
+            }
+        }
+    }
+}
+
+//Reset
+$themes: null;
+$selected-theme: null;
+$c-map: null;

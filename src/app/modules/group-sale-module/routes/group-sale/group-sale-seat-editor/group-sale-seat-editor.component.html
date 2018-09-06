@@ -1,0 +1,84 @@
+<div class="or-group-sale-seat-editor" *ngIf="performance">
+  <div class="p-header-bar" sticky sticky-main-scroller sticky-release-offset="30" sticky-height-property="55" sticky-width-property="100%" sticky-follow-menu-moves>
+      <div class="p-header-bar__left">
+          <!-- <app-button theme="primary" icon="keyboard_arrow_left" shape="rounded" type="icon" size="md" [isDisabled]="venueTemplateEditor?.isBatching || venueTemplateEditor?.isSelecting" (clickEvent)="backClickHandler($event)"></app-button> -->
+          <h1>Grup Satış İçin Koltuk Seç</h1>
+      </div>
+
+      <div class="p-header-bar__right">
+          <app-button (clickEvent)='submitClickHandler($event)' [isDisabled]="!isValid || isLoading || venueTemplateEditor?.isLoading || venueTemplateEditor?.isBatching || venueTemplateEditor?.isSelecting">DEVAM ET</app-button>
+          <!-- <app-button (clickEvent)='exit($event)' type="icon" icon="close" theme="secondary"></app-button> -->
+      </div>
+  </div>
+
+  <app-collapsible-container [isLoading]="isLoading || venueTemplateEditor?.isLoading || venueTemplateEditor?.isBatching || venueTemplateEditor?.isSelecting" [asideWidth]="240" [asideHasNoPadding]="true" [isAsideOpen]="true" theme="gray">
+      <div content>
+          <div class="p-full-content">
+              <app-venue-template-editor *ngIf="performance" 
+                [role]="editorRole" 
+                (editorEvent)="venueEditorEventHandler($event)" 
+                [performanceId]="performance?.Id"></app-venue-template-editor>
+          </div>
+      </div>
+
+      <div aside>
+        <div class="p-container">
+          <!-- <div class="p-group">
+              <div class="p-group__list" *ngIf="venueTemplateEditor">
+                  <div class="p-group__list-item">
+                      <div class="p-group__list-item-bar">
+                          <div class="p-group__list-item-label">Koltukları Ürün Renginde Göster</div>
+                          <div class="p-group__list-item-action">
+                              <app-checkbox (changeEvent)="inputChangeHandler($event, 'colorModeIsProduct')" [isChecked]="colorModeIsProduct" type="lightswitch"></app-checkbox>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div> -->
+
+          <div class="p-group">
+              <div class="p-group__header">
+                  <div class="p-group__header-bar">
+                      <div class="p-group__header-title">
+                          İSTATİSTİKLER & BİLDİRİMLER
+                      </div>
+                  </div>
+              </div>
+              <div class="p-group__item">
+                  <app-vertical-kv-list
+                      [sections]="statistics" ></app-vertical-kv-list>
+              </div>
+          </div>
+
+          <div class="p-group" *ngIf="productBlockCapacities?.length">
+              <div class="p-group__item" *ngFor="let productBlockCapacity of productBlockCapacitiesHasBlock">
+                  <app-product-block-capacity-statistics *ngIf="productBlockCapacity?.blockSeats?.length" [productBlockCapacity]="productBlockCapacity"></app-product-block-capacity-statistics>
+              </div>
+          </div>
+
+          <div class="p-group" *ngIf="!hasSelectedSeat || groupSaleCreate?.ReservationCode">
+            <div class="p-group__item" *ngIf="!groupSaleCreate?.ReservationCode && !hasSelectedSeat && !reservationCodeBoxIsActive">
+                <app-narrow-col-action-offer (actionOnClick)="enterRezervationCode($event)" [data]="{label: 'REZERVASYON KODU GİR'}">
+                    <span><b>Koltuk seçimi yapılmamış.</b> Grup satış yapmak istediğiniz <b>koltukları seçin</b> ya da <b>rezervasyon koduyla ekleyin</b></span>
+                </app-narrow-col-action-offer>
+            </div>
+            <div class="p-group__item" *ngIf="groupSaleCreate?.ReservationCode || (!hasSelectedSeat && reservationCodeBoxIsActive)">
+                  <app-action-box
+                      [readonly]="groupSaleCreate?.ReservationCode != null"
+                      [value]="groupSaleCreate?.ReservationCode"
+                      [title]="'Rezervasyon kodu ile grup satış'"
+                      [input]="{placeholder: 'Rezervasyon Kodu'}"
+                      [buttons]="[
+                          {
+                              label: groupSaleCreate?.ReservationCode ? 'İPTAL' : 'KAYDET', 
+                              action: groupSaleCreate?.ReservationCode ? 'ReserReservationCode' : 'GetSeatsForGroupSale',
+                              theme: groupSaleCreate?.ReservationCode ? 'danger' : 'secondary'}
+                      ]"
+                      (actionEvent)="reservationCodeActionHandler($event)"></app-action-box>
+            </div>
+          </div>
+
+        </div>
+      </div>
+  </app-collapsible-container>
+</div>

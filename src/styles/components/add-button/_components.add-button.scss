@@ -1,0 +1,84 @@
+/***
+* Add Button Component:
+*/
+
+/**
+* Add Button:
+* `.c-add-button - Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque repellat autem deleniti odit repellendus temporibus placeat ipsa similique, neces
+*
+*     @example
+*     <a href="#" class="c-add-button">
+*       <i class="icon__n icon__n--add"></i>
+*     </a>
+*
+*
+*
+*/
+
+// Set defaults
+$c-add-button: (
+	button-size: 50px,  /*  Width - Height Value */
+	button-sm-size: 32px,  /*  Width - Height Value */
+	button-lg-size: 60px,  /*  Width - Height Value */
+	margin: 0,
+	padding:0,
+	background-color: #fff,
+	border: 1px solid #dfdfe7,
+	color: #21242b,
+	disabled-color: #eee,
+	active-color: #a1a1ab
+);
+
+
+// Merge settings and defaults
+$c-add-button: map-merge($c-add-button, getSettingsMap("c-add-button"));
+
+// Set shortcuts
+$c-map: $c-add-button;
+
+.c-add-button {
+	position: relative;
+	display: inline-block;
+	vertical-align: middle;
+	border-radius: 50%;
+	border: map-get($c-map, border);
+	background-color: map-get($c-map, background-color);
+	text-align: center;
+	color: map-get($c-map, color);
+	padding: map-get($c-map, padding);
+	margin: map-get($c-map, margin);
+	outline:none;
+	font-size: map-get($c-map, button-size);
+	width: 1em;
+	height: 1em;
+	cursor: pointer;
+
+	>* {
+		font-size: 0.85em;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translateX(-48.5%) translateY(-47.5%);
+	}
+
+	.icon__n--add {
+		@include icon("add");
+	}
+
+	&:hover, &:active, &:focus {
+		border-color: map-get($c-map, active-color);
+		color: map-get($c-map, color);
+		outline:none;
+	}
+	&--disabled, &--disabled:hover, &--disabled:active, &--disabled:focus {
+		color: map-get($c-map, disabled-color);
+		border-color: map-get($c-map, disabled-color);
+		cursor: not-allowed;
+	}
+	&--sm {
+		font-size: map-get($c-map, button-sm-size);
+	}
+	&--lg {
+		font-size: map-get($c-map, button-lg-size);
+	}
+}

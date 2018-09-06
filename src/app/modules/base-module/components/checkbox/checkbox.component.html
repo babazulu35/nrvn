@@ -1,0 +1,30 @@
+<label *ngIf="type!=='lightswitch'" class="c-{{type}}-checkbox c-{{type}}-checkbox--{{theme}} c-{{type}}-checkbox--{{size}}">
+  
+  <input #input
+    [type]="inputType" 
+    [formControl]="formControl"
+    [name]="name"
+    [value]="value"
+    [checked]="isChecked"
+    [tabindex]="isDisabled ? -1 : 0"
+    (change)="emitCheckEvent($event.target.checked)" >
+
+  <span class="c-{{type}}-checkbox__indicator"></span>
+  <span class="c-{{type}}-checkbox__label" *ngIf="label">{{label}}</span>
+</label>
+
+<label *ngIf="type=='lightswitch'" class="c-lightswitch c-lightswitch--{{theme}} c-lightswitch--{{size}}">
+  
+  <input #input
+    [type]="inputType" 
+    [formControl]="formControl"
+    [name]="name"
+    [value]="value"    
+    [checked]="isChecked"
+    (change)="emitCheckEvent($event.target.checked)" >
+
+  <span class="c-lightswitch__label" *ngIf="label">{{label}}</span>
+  <div class="c-lightswitch__toggle">
+    <span class="c-lightswitch__toggle-wrap"><span class="c-lightswitch__toggle-on"></span><span class="c-lightswitch__toggle-handle"></span><span class="c-lightswitch__toggle-off"></span></span>
+  </div>
+</label>

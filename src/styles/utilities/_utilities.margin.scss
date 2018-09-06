@@ -1,0 +1,25 @@
+$margin-properties:( display: inline-block, inline-space-fix: -4px, );
+$i: 0;
+@while $i < 151 {
+    .margin-left-#{$i} {
+        display: map-get($margin-properties, display);
+        margin-left: unquote('#{$i}px') !important;
+    }
+    .margin-top-#{$i} {
+        display: map-get($margin-properties, display);
+        margin-top: unquote('#{$i}px') !important;
+    }
+    .margin-right-#{$i} {
+        display: map-get($margin-properties, display);
+        margin-right: unquote('#{$i}px') !important;
+    }
+    .margin-bottom-#{$i} {
+        display: map-get($margin-properties, display);
+        margin-bottom: unquote('#{$i}px') !important;
+    }
+    $i: $i+5;
+}
+
+.margin-center {
+    margin: auto;
+}

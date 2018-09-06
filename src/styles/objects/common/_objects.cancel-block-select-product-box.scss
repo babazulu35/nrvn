@@ -1,0 +1,12 @@
+$oc-cancel-block-select-product-box: (
+	
+);
+
+$oc-cancel-block-select-product-box: map-merge($oc-cancel-block-select-product-box, getSettingsMap("oc-cancel-block-select-product-box"));
+$oc-map: $oc-cancel-block-select-product-box;
+
+.oc-cancel-block-select-product-box {
+    
+}
+
+$oc-map: null;

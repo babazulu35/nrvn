@@ -1,0 +1,50 @@
+<div *ngIf="feedback">
+    <div *ngFor="let item of items">
+        <div class="c-feedback-form">
+
+            <div class="c-modal-sub-heading">
+                <h1 class="c-modal-sub-heading__text">{{item.headingText}}</h1>
+                <a href="javascript:void(0)" class="c-modal-sub-heading__close icon__n icon__n--close" (click)="tetherService.dismiss()"></a>
+            </div>
+
+            <div class="c-feedback-form__warning">
+                <p>{{item.warningMessage}}</p>
+            </div>
+
+            <div class="c-feedback-form__textarea">
+                <label class="c-feedback-form__textarea--label">{{item.textAreaTitle}}</label>
+
+                <textarea #feedbackform [(ngModel)]="textareaValue"></textarea>
+                <span class="text-danger" *ngIf="!isvalid">* Bu Alan Gereklidir</span>
+            </div>
+
+            <div class="c-feedback-form__action-bar">
+                <app-button *ngFor="let button of item.buttons" theme="{{button.theme}}" (clickEvent)="sendFeed($event,{action:button.action,textarea:feedbackform.value})" label="{{button.text}}"></app-button>
+                <!--<app-button theme="secondary" label="ERTELE" (clickEvent)="buttonClick($event)"></app-button>-->
+            </div>
+
+        </div>
+    </div>
+</div>
+<div *ngIf="confirm">
+    <div *ngFor="let item of items">
+        <div class="c-confirm-modal">
+            <div class="c-modal-sub-heading">
+                <!-- Ürün kategorisini değiştirmek istediğinizden emin misiniz? -->
+                <h1 class="c-modal-sub-heading__text">{{item.headingText}}</h1>
+                <a href="javascript:void(0)" class="c-modal-sub-heading__close icon__n icon__n--close" (click)="tetherService.dismiss()"></a>
+            </div>
+
+            <div class="c-confirm-modal__warning">
+                <p>{{item.warningMessage}}</p>
+            </div>
+
+            <div class="c-confirm-modal__action-bar">
+                <app-button *ngFor="let button of item.buttons" theme="{{button.theme}}" (clickEvent)="sendFeed($event,{action:button.action})" label="{{button.text}}"></app-button>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

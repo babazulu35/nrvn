@@ -1,0 +1,119 @@
+// -------------------------------------- //
+// Notification Bar — Author: Fatih Turan //
+// -------------------------------------- //
+// Variables
+$c-notification-bar: ( bar-height: 62px, bar-icon-size: 24px, bar-text-size: 18px, bar-close-timer-text-size: 11px, bar-close-icon-size: 24px, padding:0 48px 0 28px, bar-default-text-color: #fff, themes: ( success: ( bg: #6bba18, ), info: ( bg: #2b98f0, ), warning: ( bg: #c6c81a, ), danger: ( bg: #ec4e48, ), ));
+// Merge settings and defaults
+$c-notification-bar: map-merge($c-notification-bar, getSettingsMap("c-notification-bar"));
+// Set shortcuts
+$themes: map-get($c-notification-bar, themes);
+$selected-theme: map-get($themes, success);
+$c-map: $c-notification-bar;
+// Basic Styles
+.c-notification-bar {
+    position: fixed;
+    left: 10px;
+    bottom: 10px;
+    width: 40vw;
+    max-width: calc(100% - 240px); // 240 aside width
+    height: auto;
+    @include clearfix;
+    color: map-get($c-map, bar-default-text-color);
+    z-index: map-get($z-index, notification-bar);
+    &-item {
+        display: block;
+        position: relative;
+        width: 100%;
+        //padding: 20px 20px 10px 20px;
+        padding: 30px;
+        // transform: translateY(500%);
+        &+.c-notification-bar-item {
+            border-top: solid 1px #fff;
+        }
+        &--in {
+            opacity: 1;
+            transform: translateY(0px);
+            transition: all 1s getEase(out-sine);
+        }
+        &--out {
+            transform: translateY(100%);
+            height: 0px;
+            transition: all 0.5s getEase(out-sine);
+            z-index: -1;
+        }
+        &__inner {
+            display: table;
+            width: 100%;
+            table-layout: fixed;
+        }
+        &__icon,
+        &__text,
+        &__close-timer,
+        &__close {
+            position: relative;
+        }
+        &__icon {
+            display: table-cell;
+            padding-top: 3px;
+            //width: map-get($c-map, bar-icon-size)*1.5;
+            //font-size: map-get($c-map, bar-icon-size);
+            font-size: 33px;
+            width: 56px;
+            vertical-align: top;
+        }
+        &__text {
+            display: table-cell;
+            vertical-align: top;
+            width: auto;
+            font-size: map-get($c-map, bar-text-size);
+            @include ffamily("regular");
+        }
+        &__close {
+            display: table-cell;
+            vertical-align: top;
+            text-align: right;
+            padding-top: 3px;
+            width: map-get($c-map, bar-close-icon-size)*1.5;
+            font-size: map-get($c-map, bar-close-icon-size);
+            color: map-get($c-map, bar-default-text-color);
+            line-height: 0;
+        }
+        &__close-timer {
+            display: block;
+            white-space: nowrap;
+            text-align: right;
+            //padding-top: 10px;
+            padding-top: 20px;
+            font-size: map-get($c-map, bar-close-timer-text-size);
+            @include ffamily("regular", "i");
+            strong {
+                @include ffamily("bold", "i");
+            }
+        }
+        // Success (Green)
+        &--success {
+            $selected-theme: map-get($themes, success);
+            background-color: map-get($selected-theme, bg);
+        }
+        // Info (Blue)
+        &--info {
+            $selected-theme: map-get($themes, info);
+            background-color: map-get($selected-theme, bg);
+        }
+        // Warning (Yellow)
+        &--warning {
+            $selected-theme: map-get($themes, warning);
+            background-color: map-get($selected-theme, bg);
+        }
+        // Danger (Red)
+        &--danger {
+            $selected-theme: map-get($themes, danger);
+            background-color: map-get($selected-theme, bg);
+        }
+    }
+}
+
+//Reset
+$themes: null;
+$selected-theme: null;
+$c-map: null;

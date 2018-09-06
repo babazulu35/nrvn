@@ -1,0 +1,44 @@
+.c-role-group-role-list {
+    height: 500px;
+    overflow: auto;
+    display: block;
+    .p-container {
+        .p-group {
+            &__item {
+                display: flex;
+                margin-top: 0px;
+                align-items: center;
+                justify-content: space-between;
+                flex-direction: row;
+                flex-wrap: wrap;
+                margin-top: 0px;
+                &-element {
+                    display: flex;
+                    justify-content: flex-start;
+                    flex-direction: row;
+                    flex-wrap: wrap;
+                    align-items: center;
+                    width: 50%;
+                    margin-bottom: 10px;
+                    //
+                }
+                @media screen and (max-width: 1244px){
+                    &-element{
+                        flex: 1 100%;
+                    }
+                }
+                &.disabled {
+                    color: #d5d5d5;
+                }
+                &-label {
+                    @include ffamily('regular');
+                    font-size: 13px;
+                    margin-left: 20px;
+                }
+            }
+        }
+    }
+    .c-checkbox {
+        background: #ffffff;
+    }
+}

@@ -1,0 +1,94 @@
+$c-attributes-select-add-bar: (
+  border-radius: 3px,
+
+  container: (
+    padding: 10px,
+    border-color: #dcdce5,
+    background-color: #f7f7f7,
+  ),
+
+  list: (
+    
+    item: (
+      color: #21242b, 
+      background-color: #ffffff, 
+      border-color: #dcdce5,
+
+      margin: 10px,
+      padding: 20px,
+
+      title: (
+        font-size: 14px
+      ),
+      type: (
+        font-size: 12px,
+        min-width: 150px
+      ),
+      remove: (
+        font-size: 24px,
+        margin: 0px 0px 2px 10px,
+        color: #B1B1B1
+      )
+    )
+  ),
+
+  add-button: (
+    font-size: 33.275px,
+    margin: 20px
+  )
+);
+
+// Merge settings and defaults
+$c-attributes-select-add-bar: map-merge($c-attributes-select-add-bar, getSettingsMap("c-attributes-select-add-bar"));
+
+// Set shortcuts
+$c-map: $c-attributes-select-add-bar;
+
+.c-attributes-select-add-bar {
+  display: inline-block;
+  position: relative;
+  line-height: 0px;
+  font-size: 0px;
+  min-width: map-deep-get($c-map, width);
+  width: 100%;
+
+  &--empty {
+    .c-attributes-select-add-bar__types {
+        border-top: none;
+    }
+  }
+
+  &:hover {
+    
+  }
+
+  &__container {
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border-radius: map-deep-get($c-map, border-radius);
+    border: 1px solid map-deep-get($c-map, container, border-color);
+  }
+
+  &__types {
+    display: block;
+    width: 100%;
+    text-align: center;
+    background-color: map-deep-get($c-map, container, background-color);
+    border-radius: map-deep-get($c-map, border-radius);
+    padding: map-deep-get($c-map, container, padding);
+    border-top: 1px solid map-deep-get($c-map, container, border-color);
+  }
+
+  &__attributes {
+    display: block;
+    width: 100%;
+
+    .c-tag-group {
+      border: none;
+    }
+  }
+
+}

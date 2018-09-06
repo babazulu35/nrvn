@@ -1,0 +1,30 @@
+<app-dialog-box [class.c-dialog-box--narrow]="isNarrow">
+
+  <div #header class="c-dialog-box__header c-dialog-box__header--padding" [class.c-dialog-box__header--border]="!isNarrow">
+    <div class="c-dialog-box__header-bar">
+      <h1 class="c-dialog-box__header-title">
+        {{titleCase}}
+      </h1>
+      <div class="c-dialog-box__header-actions">
+        <app-button (click)="tetherService.dismiss()" type="icon" icon="close" theme="secondary"></app-button>
+      </div>
+    </div>
+  </div>
+
+  <div #body class="c-dialog-box__body c-dialog-box__body--no-scroll c-dialog-box__body--no-footer c-dialog-box__body--no-padding ">
+	  <div class="p-container p-container--inherit">
+      <app-typeahead
+          (actionEvent)="actionEvent.emit($event)"
+          (searchEvent)="searchEvent.emit($event)"
+          (resultEvent)="resultHandler($event)"
+          (dismissEvent)="dismissHandler($event)"
+          [searchPlaceholder] = "settings.search.placeholder"
+          [feedback]="settings.search.feedback"
+          [presets] = "presets"
+          [searchResults] = "searchResults"
+          [isPromising]="isPromising"
+          ></app-typeahead>
+	  </div>
+  </div>
+
+</app-dialog-box>

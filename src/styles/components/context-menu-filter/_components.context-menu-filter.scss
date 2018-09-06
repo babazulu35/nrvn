@@ -1,0 +1,135 @@
+/**
+ * Context Menu:
+**/
+
+
+/**
+ @attributes
+
+**/
+
+// Set defaults
+$c-context-menu-filter: ( label-color: #3a2e39, icon-color: #bdbdbd, seperator-color: #bdbdbd, hover-color: #2985ef, badge-color: #ffffff, container: ( border-color: #dcdce5, background-color: #ffffff, padding-top: 20px, padding-right: 15px, padding-bottom: 20px, padding-left: 15px, width: 200px, ), header: ( font-size: 11px, color: #bdbdbd, ), item-base-font-size: 13px, close-btn-size: 21px);
+// Merge settings and defaults
+$c-light-switch: map-merge($c-light-switch, getSettingsMap("c-context-menu-filter"));
+// Set shortcuts
+$c-map: $c-context-menu-filter;
+.c-context-menu-filter {
+    display: block;
+    background-color: map-deep-get($c-map, container, background-color);
+    min-width: map-deep-get($c-map, container, width);
+    padding-top: map-deep-get($c-map, container, padding-top);
+    padding-right: map-deep-get($c-map, container, padding-right);
+    padding-bottom: map-deep-get($c-map, container, padding-bottom);
+    padding-left: map-deep-get($c-map, container, padding-left);
+    border: solid 1px map-deep-get($c-map, container, border-color);
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
+    @include ffamily('regular');
+    @include t--font-size(map-get($c-map, item-base-font-size));
+    &__header {
+        @include ffamily('semi');
+        @include t--font-size(map-deep-get($c-map, header, font-size));
+        color: map-deep-get($c-map, header, color);
+        &-title {
+            display: inline-block;
+            width: calc(100% - #{map-get($c-map, close-btn-size)});
+            text-transform: uppercase;
+        }
+    }
+    &__close-button {
+        display: inline-block;
+        @include t--font-size(map-get($c-map, close-btn-size));
+        float: right;
+        cursor: pointer;
+        &:hover {
+            color: map-get($c-map, hover-color);
+        }
+        &:active {
+            color: map-deep-get($c-map, header, color);
+        }
+    }
+    &__content {}
+    &__list {
+        list-style-type: none;
+        margin-top: 1.5em;
+        &--aside {
+            .c-context-menu-filter__list-item {
+                &-label {
+                    font-size: map-get($c-map, item-base-font-size) - 1px;
+                    line-height: 1em;
+                    color: map-get($c-map, label-color);
+                }
+            }
+        }
+        &-point {
+            display: table-cell;
+            vertical-align: middle;
+            width: 20px;
+            height: 20px;
+        }
+        &-item {
+            margin-bottom: 1em;
+            display: table;
+            cursor: pointer;
+            width: 100%;
+            padding: 6px 0px;
+            &:last-child {
+                margin-bottom: 0px;
+            }
+            &:hover {
+                background: #f7f7f7;
+                .c-context-menu-filter__list-item-label {
+                    color: map-get($c-map, hover-color);
+                }
+            }
+            &:active {
+                .c-context-menu-filter__list-item-label {
+                    color: map-get($c-map, label-color);
+                }
+            }
+            &-icon {
+                display: table-cell;
+                font-size: map-get($c-map, item-base-font-size)*1.5;
+                vertical-align: top;
+                width: map-get($c-map, item-base-font-size)*1.5 + map-get($c-map, item-base-font-size);
+                color: map-get($c-map, icon-color);
+            }
+            &-label {
+                display: table-cell;
+                font-size: map-get($c-map, item-base-font-size);
+                line-height: map-get($c-map, item-base-font-size)*1.5;
+                color: map-get($c-map, label-color);
+                padding-right: 1em;
+                //width: calc(100% - #{(map-get($c-map, item-base-font-size)*4 + map-get($c-map, item-base-font-size)*1.5)});
+            }
+            &-tag {
+                display: table-cell;
+                width: map-get($c-map, item-base-font-size)*3;
+                text-align: right;
+                padding: 0px;
+                line-height: map-get($c-map, item-base-font-size);
+                vertical-align: top;
+                .tag-pill {
+                    width: 100%;
+                    font-size: map-get($c-map, item-base-font-size)*0.75;
+                    line-height: map-get($c-map, item-base-font-size)*1.5;
+                    padding: 0px 1em;
+                    border-radius: map-get($c-map, item-base-font-size);
+                }
+            }
+        }
+    }
+    &__seperator {
+        width: 100%;
+        height: 1px;
+        border-bottom: solid 1px map-get($c-map, seperator-color);
+        margin-top: 1.5em;
+    }
+}
+
+.point {
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    vertical-align: middle;
+}

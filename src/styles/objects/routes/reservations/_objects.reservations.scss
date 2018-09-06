@@ -1,0 +1,102 @@
+$or-reservations: (
+    
+);
+
+$or-reservations: map-merge($or-reservations, getSettingsMap("or-reservations"));
+
+$c-map: $or-reservations;
+
+.or-reservations {
+    .p-header {
+        @include ffamily('light');
+        font-size: 2rem;
+        padding: 20px 30px 15px;
+        &--border {
+            border-bottom: solid 1px map-deep-get($content, placeholder, header, border-color);
+        }
+    }
+
+    .p-title-container__left-item {
+        width:480px;
+        padding:0 65px 0 2px;
+    }
+
+    &--reservation-list {
+        margin-top: -20px;
+        
+        .o-list-view {
+            border:none;
+            box-shadow:none;
+        }
+    
+        .c-responsive-table__row {
+            margin: 20px 0;
+            border:solid 1px #dcdce5;
+            &:last-child {
+                border-bottom: solid 1px #dcdce5;
+            }
+            &__selected {
+                background-color: #f7f7f7 !important;
+                border: solid 1px black;
+                &:last-child {
+                    border-bottom: solid 1px black;
+                }
+            }
+        }
+    }
+
+    .icon__n--access_time {
+        vertical-align:text-bottom;
+    }
+
+    hr {
+        height:1px;
+        width:100%;
+        color:#DCDCE5;
+        border-color:#DCDCE5;
+        margin:10px 0px;
+    }
+
+    &-add {
+        text-align: center;
+        padding-bottom: 30px;
+    }
+
+    &--reservation-item {
+        margin: 0 10px;
+        &__header {
+            padding: 5px 0;
+            cursor: pointer;
+        }
+        &--name {
+            vertical-align:top;
+            @include ffamily('semi');
+            font-size:16px;
+        }
+        &--description {
+            color: #35383D;
+            font-size:13px;
+            margin:2px 2px 5px;
+            @include ffamily('regular');
+        }
+        &__info {
+            padding: 2px;
+            &--content {
+                display:flex;
+                justify-content:space-between;
+                &-title {
+                    font-size: 11px;
+                    font-weight: 600;
+                    color: #9D9D9D;
+                }
+                &-text {
+                    @include ffamily('regular');
+                    text-align: right;
+                    font-size: 13px;
+                    color: #35383D;
+                }
+            }
+        }
+
+    }
+}

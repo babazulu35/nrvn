@@ -1,0 +1,61 @@
+/**
+* Tree View:
+* Author: Color Picker
+* `.c-color-picker` sınıfı ile birlikte kullanılır.
+*
+* @example
+*/
+
+
+// Variables
+$c-color-picker: (
+  default-color: #fff,
+  default-bg-color: #222,
+  disabled-bg-color: #eee,
+  item-width: 30px,
+  item-height: 30px
+);
+
+// Merge settings and defaults
+$c-color-picker: map-merge($c-color-picker, getSettingsMap("c-color-picker"));
+
+// Set shortcuts
+$c-map: $c-color-picker;
+
+
+.c-color-picker {
+  @include t--clearfix();
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.c-color-picker__item {
+  position:relative;
+  overflow:hidden;
+  float: left;
+  margin: 5px;
+  width: map-get($c-map, item-width);
+  height: map-get($c-map, item-height);
+  background-color:  map-get($c-map, default-bg-color);
+  color:  map-get($c-map, default-color);
+  border-radius: 50%;
+  cursor:pointer;
+  text-align:center;
+  font-size:24px;
+  &--disabled {
+    background-color:map-get($c-map, disabled-bg-color) !important;
+    cursor: not-allowed;
+    pointer-events:none;
+  }
+  &--dark {
+    color: #333;
+  }
+  .icon__n {
+    position:absolute;
+    top:calc(50% + 1px);
+    left:50%;
+    @include t--translate(-50%, -50%);
+  }
+}

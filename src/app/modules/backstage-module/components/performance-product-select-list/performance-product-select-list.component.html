@@ -1,0 +1,27 @@
+<div class="c-performance-product-select-list__container">
+  <span class="c-performance-product-select-list__item" *ngFor="let item of items"
+    [ngClass]="{
+      'c-performance-product-select-list__item--selected': item?.isSelected, 
+      'c-performance-product-select-list__item--disabled': item?.isDisabled,
+      'c-performance-product-select-list__item--empty': item?.performanceProduct?.Capacity
+    }"
+    (click)="itemClickHandler($event, item)">
+    <span class="c-performance-product-select-list__item-box">
+      <span class="c-performance-product-select-list__item-box-left">
+        <span class="c-performance-product-select-list__item-title">
+          {{item?.performanceProduct?.Product?.Localization?.Name | localization}}
+          <span class="c-performance-product-select-list__item-secondary-text" *ngIf="item?.defaultPriceList?.NominalPrice">
+              - {{item?.defaultPriceList?.NominalPrice | number: '1.2-2'}} <sup>TL</sup>
+          </span>
+        </span>
+      </span>
+      <span class="c-performance-product-select-list__item-box-right">
+          <span class="c-performance-product-select-list__item-capacity">{{item?.performanceProduct?.Capacity}}</span>
+          <span class="c-performance-product-select-list__item-indicator" *ngIf="item?.performanceProduct?.CategoryColorSeat" [style.background-color]="'#'+item?.performanceProduct?.CategoryColorSeat"></span>
+          <span *ngIf="actions?.length" class="c-performance-product-select-list__item-action">
+            <app-button (clickEvent)="openActionsMenu($event)" type="icon" icon="more_vert" theme="secondary"></app-button>
+          </span>
+      </span>
+    </span>
+  </span>
+</div>

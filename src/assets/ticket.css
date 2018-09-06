@@ -1,0 +1,200 @@
+@page {
+    margin: 0
+}
+
+body {
+    margin: 0;
+    -webkit-print-color-adjust: exact !important;
+    font-family: monospace;
+}
+
+.sheet {
+    margin: 0;
+    overflow: hidden;
+    position: relative;
+    box-sizing: border-box;
+    page-break-after: always;
+    display: inline-block;
+}
+
+
+/** Paper sizes **/
+
+body.ticket .sheet {
+    width: 160mm;
+    height: 65mm;
+}
+
+body.ticket article {
+    display: table;
+    width: 110mm;
+    position: relative;
+    top: -3mm;
+}
+
+body.ticket .event-name {
+    display: table-cell;
+    width: 60mm;
+    height: auto;
+}
+
+body.ticket .event-name>.namses {
+    display: block;
+    position: relative;
+    top: 3mm;
+    width: 61mm;
+}
+
+body.ticket .event-name>.event-id {
+    display: block;
+    position: relative;
+    top: 13mm;
+    left: 22mm;
+}
+
+body.ticket .sheet--side {
+    display: table-cell;
+    width: 40mm;
+    height: auto;
+}
+
+body.ticket .sheet--side>.venue-name {
+    display: block;
+    position: relative;
+    top: 3mm;
+}
+
+body.ticket .sheet--side>.event-date {
+    display: block;
+    position: relative;
+    top: 7mm;
+}
+
+body.ticket .sheet--side>.ref-code {
+    display: block;
+    position: relative;
+    top: 9mm;
+    left: 7mm;
+}
+
+body.ticket .full-bottom {
+    display: block;
+    position: relative;
+    bottom: -7mm;
+}
+
+body.ticket .event-name-size-low {
+    float: right;
+    /* display: block; */
+    position: relative;
+    right: -10mm;
+    top: 8mm;
+    width: 30mm;
+    text-align: left;
+    font-size: 11px;
+}
+
+
+/** Padding area **/
+
+.sheet.padding-10mm {
+    padding: 10mm
+}
+
+.sheet.padding-40mm {
+    padding: 30mm 0 0 5mm
+}
+
+.sheet.padding-5mm {
+    padding: 5mm
+}
+
+.sheet.padding-15mm {
+    padding: 15mm
+}
+
+.sheet.padding-20mm {
+    padding: 20mm
+}
+
+.sheet.padding-25mm {
+    padding: 25mm
+}
+
+
+/** For screen preview **/
+
+@media screen {
+    body {
+        background: #e0e0e0
+    }
+    #prints {
+        display: none;
+    }
+    .sheet {
+        background: white;
+        box-shadow: 0 .5mm 2mm rgba(0, 0, 0, .3);
+        margin: 5mm;
+    }
+    .sheet--header {
+        width: 100%;
+        height: 10mm;
+        background: #333;
+        display: block
+    }
+    body.ticket .hide-print {
+        display: none;
+        visibility: hidden;
+    }
+    body.ticket .event-name-size-low {
+        float: right;
+        /* display: block; */
+        position: relative;
+        /*right: 12mm;*/
+        top: 8mm;
+        text-align: center;
+        font-size: 11px;
+    }
+    .sheet-qr {
+        float: right;
+        top: -23mm;
+        right: 12mm;
+        position: relative;
+    }
+}
+
+
+/** Fix for Chrome issue #273306 **/
+
+@media print {
+    body.ticket {
+        width: 105mm;
+        height: 65mm;
+    }
+    body.ticket .sheet {}
+    body.ticket .sheet-qr {
+        float: right;
+        top: -23mm;
+        right: 15mm;
+        position: relative;
+    }
+    body.ticket .hide-print {
+        display: none;
+        visibility: hidden;
+    }
+    body.ticket .full-bottom {
+        display: block;
+        position: relative;
+        bottom: -9mm;
+    }
+    body.ticket .event-name-size-low {
+        float: right;
+        /* display: block; */
+        position: relative;
+        right: -10mm;
+        top: 6.5mm;
+        width: 30mm;
+        text-align: left;
+        font-size: 11px;
+    }
+}

@@ -1,0 +1,21 @@
+$ui-colors:(
+	
+	'main-hover': #2B98F0,
+	'nirvana': #ec4e48,
+	'cohen': #21242B,
+	'katatonia': #2D2F35,
+	'metallica':  #35383D,	
+	'just-black': #000000,
+	'just-white': #ffffff,
+	'danger': #ec4e48
+
+);
+
+@function getColor($ui-colors, $alpha:100)
+{
+	@if map-has-key($ui-colors, $color){
+		@return rgba(map-get($ui-colors, $color), $alpha);
+	}
+	@warn "Unkown '#{$key}' in $ui-colors at _settings.colors.scss";
+	@return null;
+};

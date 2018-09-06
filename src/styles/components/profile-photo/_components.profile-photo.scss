@@ -1,0 +1,340 @@
+$c-profile-photo: (
+  border-radius: 3px,
+  width: 240px,
+  ratio-43: calc(100% * 3 / 4),
+  ratio-169: calc(100% * 9 / 16 ),
+  container: (
+    padding: 10px,
+    border-color: #dcdce5,
+    background-color: #f7f7f7,
+  ),
+  action: (
+    color: #fff,
+  ),
+  svgBox: (
+    max-width: 240px
+  ),
+  promiseBox: (
+    font-size: 50px,
+    color: #fff,
+  ),
+  emptyBox: (
+    icon-size: 50px,
+    font-size: 11px,
+    color: #bdbdbd,
+    label: (
+      color: #35383d
+    )
+  ),
+  border-color: #dcdce5,
+  background-color: #f7f7f7,
+  c-primary-color: #35383d,
+  empty-icon-color: #bdbdbd,
+  mask-color: #35383d,
+  action-icon-text-color: #ffffff,
+  action-icon-text-hover: #35383d,
+  action-icon-bg-hover: darken(#35383d, 50%),
+  helper-text: #939393,
+
+  container-padding: 10px,
+  container-margin-bottom: 15px,
+
+  wrap-width: 240px,
+  min-width: 260px,
+  min-height: 195px,
+
+);
+
+// Merge settings and defaults
+$c-profile-photo: map-merge($c-profile-photo, getSettingsMap("c-profile-photo"));
+
+// Set shortcuts
+$c-map: $c-profile-photo;
+
+.c-profile-photo {
+  display: inline-block;
+  position: relative;
+  line-height: 0px;
+  font-size: 0px;
+  min-width: map-deep-get($c-map, width);
+  width: 100%;
+  padding-top: map-deep-get($c-map, ratio-43);
+
+  &--has-container {
+    min-width: map-deep-get($c-map, width) + map-deep-get($c-map, container, padding)*2;
+    .c-profile-photo__container {
+      padding: map-deep-get($c-map, container, padding);
+      border: 1px solid map-deep-get($c-map, container, border-color);
+    }
+
+    .c-profile-photo__action-box {
+      top: map-deep-get($c-map, container, padding)*2; right: map-deep-get($c-map, container, padding)*2;
+    }
+
+    .c-profile-photo__image-box {
+      width: calc(100% - #{map-deep-get($c-map, container, padding)*2});
+      height: calc(100% - #{map-deep-get($c-map, container, padding)*2});
+      top: map-deep-get($c-map, container, padding); 
+      left: map-deep-get($c-map, container, padding);
+    }
+  }
+
+  &--empty {
+    cursor: pointer;
+    .c-profile-photo__container {
+      border: 1px dashed map-deep-get($c-map, container, border-color);
+    }
+  }
+
+  &--circle {
+    .c-profile-photo__image-holder {
+      display: block;
+      position: absolute;
+      width: calc(75% - #{map-deep-get($c-map, container, padding)*2});
+      height: calc(100% - #{map-deep-get($c-map, container, padding)*2});
+      left: calc(12.5% + #{map-deep-get($c-map, container, padding)});
+      top: map-deep-get($c-map, container, padding);
+      border-radius: 50%;
+      -webkit-mask-image: -webkit-radial-gradient(circle, white, black);
+    }
+  }
+
+  &:hover {
+    .c-profile-photo__image-box {
+      >figure {
+        opacity: 0.99 !important;
+      }
+    }
+  }
+
+  input[type=file] {
+    position: absolute;
+    opacity: 0;
+    top: 0px; left: 0px;
+    pointer-events: none;
+  }
+
+  &__container {
+    display: block;
+    position: absolute;
+    top: 0px; bottom: 0px; left: 0px; right: 0px;
+    align-items: center;
+    justify-content: center;
+    background-color: map-deep-get($c-map, container, background-color);
+    border-radius: map-deep-get($c-map, border-radius);
+  }
+
+  &__action-box {
+    display: inline-block;
+    position: absolute;
+    top: map-deep-get($c-map, container, padding); right: map-deep-get($c-map, container, padding);
+    color: map-deep-get($c-map, action, color);
+  }
+
+  &__image-box {
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0px; left: 0px;
+    overflow: hidden;
+    background-color: #000;
+    border-radius: inherit;
+
+    >svg {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0px;
+      left: 0px;
+    }
+  }
+
+  &__promise-box {
+    display: inline-block;
+    position: absolute;
+    font-size: map-deep-get($c-map, promiseBox, font-size);
+    color: map-deep-get($c-map, promiseBox, color);
+    top: 50%; left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+  }
+
+  &__empty-box {
+    display: inline-block;
+    position: absolute;
+    text-align: center;
+    width: map-deep-get($c-map, width)/2;
+    margin: auto;
+    color: map-deep-get($c-map, emptyBox, color);
+    cursor: pointer;
+    top: 50%; left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+
+    i {
+      font-size: map-deep-get($c-map, emptyBox, icon-size);
+    }
+
+    &-label {
+      display: block;
+      @include ffamily('semi');
+      font-size: map-deep-get($c-map, emptyBox, font-size);
+      color: map-deep-get($c-map, emptyBox, label, color);
+      margin-top: 0.25em;
+      line-height: 1.5em;
+    }
+  }
+  
+  // &__container {
+  //   position: relative;
+    
+  //   background-color: map-get($c-map, background-color);
+  //   border: 1px solid map-get($c-map, border-color);
+  //   border-radius: map-get($c-map, border-radius);
+  //   padding: map-get($c-map, container-padding);
+  //   min-height: map-get($c-map, min-height);
+  //   margin-bottom: map-get($c-map, container-margin-bottom);
+
+  //   @include ffamily('regular');
+
+    
+  // }
+
+  // &--empty {
+  //   .c-profile-photo__container {
+  //     cursor: pointer;
+  //     border-style: dashed;
+  //     &:hover {
+  //       border-color: darken(map-get($c-map, border-color), 20%);
+  //     }
+  //   }
+  // }
+
+  // &__mask-img {
+  //   position: absolute;
+  //   top: 0;
+  //   left: 0;
+  //   opacity: .1;
+    
+  //   @include t--size(100%);
+  // }
+
+  // &__wrap {
+  //   position: relative;
+  //   margin-left: auto;
+  //   margin-right: auto;
+  //   text-align: center;
+
+  //   max-width: map-get($c-map, wrap-width);
+  //   border-radius: map-get($c-map, border-radius);
+  //   background-color: map-get($c-map, mask-color);
+  // }
+
+  // &__action-content {
+  //   position: absolute;
+  //   top: 0;
+  //   left: 0;
+  //   z-index: 4;
+
+  //   border-radius: map-get($c-map, border-radius);
+    
+  //   @include t--size(100%);
+  // }
+
+  // &__empty-photo {
+  //   position: absolute;
+  //   top: 50%;
+  //   left: 50%;
+  //   transform: translateX(-50%) translateY(-50%);
+  //   width: 110px;
+  //   text-align: center;
+  //   margin-left: auto;
+  //   margin-right: auto;
+
+  //   .c-profile-photo__empty-icon {
+  //     font-size: 51px;
+  //     color: map-get($c-map, empty-icon-color);
+  //   }
+
+  //   small {
+  //     display: block;
+  //     font-size: 11px;
+  //     text-transform: uppercase;
+
+  //     color: map-get($c-map, c-primary-color);
+
+  //     @include ffamily('semi');
+  //   }
+  // }
+
+  // &__helper-text {
+  //   display: block;
+  //   font-size: 11px;
+
+  //   color: map-get($c-map, helper-text);
+
+  //   span {
+  //     display: inline-block;
+  //     vertical-align: top;
+  //   }
+  // }
+
+  // &__helper-icon {
+  //   display: inline;
+  //   margin-right: 5px;
+  //   vertical-align: middle;
+  //   font-size: 17px;
+
+  //   color: map-get($c-map, helper-text);
+  // }
+
+  // .c-avatar {
+  //   display: inline-block;
+  //   position: relative;
+  //   z-index: 2;
+  //   overflow: hidden;
+  //   margin-left: auto;
+  //   margin-right: auto;
+  //   margin-top: 8px;
+  //   margin-bottom: 2px;
+  //   border-radius: 160px;
+    
+  //   @include t--size(160px);
+
+  //   img {
+  //     max-width: inherit;
+  //     max-height: 100%;
+  //     position: absolute;
+  //     top: 0;
+  //     left: 50%;
+  //     transform: translateX(-50%);
+
+  //     border-radius: map-get($c-map, border-radius);
+  //   }
+  // }
+
+
+  // .action-icons {
+  //   float: left;
+  //   font-size: 21px;
+  //   margin-top: 8px;
+  //   margin-left: 8px;
+  //   background-color: transparent;
+  //   text-decoration: none;
+    
+  //   color: map-get($c-map, action-icon-text-color);
+  //   border-radius: map-get($c-map, border-radius);
+
+  //   i { display: block; margin: 4px 4px 3px; }
+
+  //   &.action-icons-right {
+  //     float: right;
+  //     margin-left: 0;
+  //     margin-right: 8px;
+  //   }
+
+  //   &:hover {
+  //     background-color: map-get($c-map, action-icon-bg-hover);
+  //   }
+  // }
+
+}

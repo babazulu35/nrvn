@@ -1,0 +1,45 @@
+// Set Defaults
+$or-performance-relocation: ( new-locations: ( columns: ( arrow: ( width: 40px, color: #939393))));
+// Merge settings and defaults
+$or-performance-relocation: map-merge($or-performance-relocation, getSettingsMap("or-performance-relocation"));
+// Set shortcuts
+$o-map: $or-performance-relocation;
+.or-performance-relocation {
+    display: block;
+    .c-collapsible-container {
+        min-height: 1600px !important;
+    }
+    &__current-locations {
+        display: block;
+        &-item {
+            display: inline-block;
+            margin-right: 5px;
+        }
+    }
+    &__new-locations {
+        display: block;
+        &-row {
+            display: table;
+        }
+        &-current-col {
+            display: table-cell;
+            vertical-align: middle;
+            text-align: center;
+        }
+        &-arrow-col {
+            display: table-cell;
+            vertical-align: middle;
+            text-align: center;
+            width: map-deep-get($o-map, new-locations, columns, arrow, width);
+            color: map-deep-get($o-map, new-locations, columns, arrow, color);
+            font-size: 24px;
+        }
+        &-new-col {
+            display: table-cell;
+            vertical-align: middle;
+            text-align: center;
+        }
+    }
+}
+
+$o-map: null;

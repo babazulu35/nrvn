@@ -1,0 +1,159 @@
+<app-fullscreen-cover backgroundColor="#3e3e3e" backgroundImage="assets/images/backgrounds/login-back.jpg">
+
+    <ng-template [ngIf]='!isAuthenticatedUser'>
+
+      <app-auth-dialog-box #self
+        headerLogo = "assets/images/logo/nirvana-login.png"
+        headerBackgroundColor = "#362F66"
+        (submitEvent)='authSubmitEventHandler($event)'>
+
+            <h1 class="padding-bottom-20">Giriş Yapın</h1>
+
+            <div *ngIf="authAlert" class="alert alert-{{ authAlert.type }}">
+              <h1 [innerHTML]='authAlert.title'></h1>
+              <p [innerHTML]='authAlert.description'></p>
+            </div>
+
+            <form
+              [formGroup]="self.authForm">
+              <div class="row">
+                <app-text-input
+                  theme="underline"
+                  class="margin-bottom-20"
+                  [form]="self.authForm"
+                  name="username"
+                  [required]='true'
+                  placeholder="Kullanıcı Adı"
+                  icon="person" ></app-text-input>
+              </div>
+              <div class="row">
+                  <div class="col-xs-8 padding-right-15">
+                    <app-text-input
+                      theme="underline"
+                      type="password"
+                      class="margin-bottom-10"
+                      [form]="self.authForm"
+                      name="password"
+                      placeholder="Parola"
+                      icon="lock" ></app-text-input>
+                      <div class="row">
+                        <a routerLink="/login/password-recovery">Parolamı Unuttum</a>
+                      </div>
+                  </div>
+                  <div class="col-xs-8 padding-left-15">
+                    <app-text-input
+                      theme="underline"
+                      class="margin-bottom-20"
+                      [form]="self.authForm"
+                      name="promoterCode"
+                      [required]='true'
+                      placeholder="Promoter Code"
+                      icon="edit" ></app-text-input>
+                  </div>
+              </div>
+
+              <!--Ligth Switch Special Options -->
+              <div class="p-group" *ngIf="showSettings">
+                <div class="p-group__item row full-width margin-top-20 margin-bottom-10">
+                  <div class="p-group__list">
+                    <div class="p-group__list-item">
+                      <div class="p-group__list-item-bar">
+                        <div class="p-group__list-item-label">Gelişmiş Ayarlar</div>
+                        <div class="p-group__list-item-action">
+                          <app-checkbox type="lightswitch" [isChecked]="isEkstraField" (changeEvent)="toggleHandler($event)"></app-checkbox>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row" *ngIf="isEkstraField">
+                    <div class="col-xs-8 padding-right-15">
+                      <div class="p-form-group">
+                        <span class="p-form-group__label">
+                          API KEY
+                        </span>
+                        <span class="p-form-group__input">
+                          <app-text-input [form]="self.authForm"  type="text" name="apiKey" [required]='true' placeholder="" icon="edit"></app-text-input>
+                        </span>
+                      </div>
+                    </div>
+                    <div class="col-xs-8 padding-left-15">
+                      <div class="p-form-group">
+                        <span class="p-form-group__label">
+                          TERMINAL ID
+                        </span>
+                        <span class="p-form-group__input">
+                          <app-text-input [form]="self.authForm"  type="text" name="terminalId" [required]='true' placeholder="" icon="edit"></app-text-input>
+                        </span>
+                      </div>
+                    </div>
+                </div>
+                <div class="row" *ngIf="isEkstraField">
+                  <div class="col-xs-8 padding-right-15">
+                    <div class="p-form-group">
+                        <span class="p-form-group__label">
+                          CHANNEL CODE
+                        </span>
+                        <span class="p-form-group__input">
+                          <app-text-input [form]="self.authForm"  type="text" name="channelCode" [required]='true' placeholder="" icon="edit"></app-text-input>
+                        </span>
+                    </div>
+                  </div>
+                  <div class="col-xs-8 padding-left-15">
+                    <div class="p-form-group">
+                        <span class="p-form-group__label">
+                          FIRM CODE
+                        </span>
+                        <span class="p-form-group__input">
+                          <app-text-input [form]="self.authForm"  type="text" name="firmCode" [required]='true' placeholder="" icon="edit"></app-text-input>
+                        </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+            </form>
+            
+            <button footer
+              (click)="self.submit()"
+              [disabled]="self.authForm.disabled"
+              class="btn">DEVAM ET</button> <!-- footer directive is a container -->
+
+      </app-auth-dialog-box>
+
+  </ng-template>
+
+  <ng-template [ngIf]='isAuthenticatedUser'>
+
+    <app-auth-dialog-box #self
+      headerLogo = "assets/images/logo/nirvana.png"
+      headerBackgroundColor = "#EE4C42"
+      *ngIf='advanceMessage != null'
+      (submitEvent)='advanceAuthSubmitEventHandler($event)'>
+
+          <h1 class="padding-bottom-20">Kasa Avansı</h1>
+
+          <p [innerHTML]='advanceMessage'
+            class="margin-bottom-20"></p>
+
+          <form
+            [formGroup]="self.authForm">
+            <app-text-input
+              class="margin-bottom-20"
+              [form]="self.authForm"
+              name="advanceAmount"
+              [required]='true'
+              placeholder="Kasa avans miktarını girin (>1000)"
+              icon="cash-multiple" ></app-text-input>
+          </form>
+
+          <button footer
+            (click)="self.submit()"
+            [disabled]="self.authForm.disabled"
+            class="btn">DEVAM ET</button> <!-- footer directive is a container -->
+
+    </app-auth-dialog-box>
+
+  </ng-template>
+
+</app-fullscreen-cover>

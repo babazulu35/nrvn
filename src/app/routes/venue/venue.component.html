@@ -1,0 +1,80 @@
+<div class="container theme-venues">
+    <app-cover-image [backgroundImage]="(venue.Images | image) || 'assets/images/cover-image/default.jpg'" *ngIf="venue">
+        <div class="c-cover-image__header">
+            <app-title-switcher
+                (searchEvent)='onContentTitleSearchHandler($event)'
+                (changeEvent)='onContentTitleChangedHandler($event)'
+                [title]="venue.Name"
+                [finderTitle]="'MEKAN ARA'"
+                [finderSettings]='{
+                    search: {
+                        placeholder: "Görüntülemek istediğiniz mekanın adını girin",
+                        feedback: {
+                            title: "Aramanız ile eşleşen performans bulunamadı",
+                            description: "Arama kriterini değiştirerek yeniden deneyebilir ya da yeni mekan oluşturabilirsiniz.",
+                            icon: {type: "icon", name: "location_add"},
+                            action: {action: "gotoLink", label: "YENİ MEKAN OLUŞTUR", params: {link: "venue/create"}}
+                        }
+                    }
+                }' >
+            </app-title-switcher>
+
+            <div class="c-cover-image__button">
+                <button class="btn btn-danger btn-md" [routerLink]="['/venue',param,'edit']"> MEKAN BİLGİLERİNİ DÜZENLE</button>
+            </div>
+        </div>
+
+        <div class="c-cover-image__body">
+            <div class="row">
+                <div class="col-sm-5 padding-right-30 o-venue-description">
+                    <p>{{venue.Address}}</p>
+                    <p *ngIf="venue?.Phone">T. {{venue.Phone}}</p>
+                    <p><a target="_blank" [attr.href]='venue.WebUrl'>{{venue.WebUrl}}</a></p>
+
+                    <div class="o-social-links">
+                        <a target="_blank" *ngIf="venue.Twitter" [attr.href]='venue.Twitter'><i class="icon__n icon__n--ss-twitter"></i></a>
+                        <a target="_blank" *ngIf="venue.Facebook" [attr.href]='venue.Facebook'><i class="icon__n icon__n--ss-facebook"></i></a>
+                    </div>
+
+                </div>
+                <div *ngIf="venue.Description && venue.Description.length > 55" class="col-xs-5 padding-right-15 padding-left-15 o-venue-description">
+                    <p [innerHtml]="venue.Description | mdParser"><i class="icon__n icon__n--more_horiz"></i></p>
+                </div>
+                <div *ngIf="venue.Description && venue.Description.length <= 55" class="col-xs-5 padding-right-15 padding-left-15 o-venue-description">
+                    <p [innerHtml]="venue.Description | mdParser">
+                </div>
+                <div class="col-sm-6 text-sm-right">
+                    <app-over-image-stats [data]="venueStatistics"></app-over-image-stats>
+                </div>
+            </div>
+        </div>
+
+        <div class="c-cover-image__footer">
+            <app-tab-bar *ngIf="'Venue_List' | authRole" [data]="tabs" theme='light'></app-tab-bar>
+        </div>
+    </app-cover-image>
+
+    <app-collapsible-container theme="gray" [isAsideOpen]="true" [asideWidth]="240">
+        <div content>
+            <router-outlet></router-outlet>
+        </div>
+        <!-- /.o-collapsible-container__content -->
+        <div aside>
+            <div class="p-container">
+                <div class="p-group">
+                    <app-narrow-col-event-calendar
+                        [title]="narrowIndexTitle"
+                        [data]="sidebarEvents"
+                        [isLoading]="sidebarIsLoading"
+                        [isNoDataContent]="sidebarIsNoDataContent"
+                        (onPrevious)="fetchWeekly(false)"
+                        (onNext)="fetchWeekly(true)">
+
+                    </app-narrow-col-event-calendar>
+                </div>
+            </div>
+        </div>
+        <!-- /.o-collapsible-container__aside -->
+    </app-collapsible-container>
+    <!-- /.o-collapsible-container -->
+</div>

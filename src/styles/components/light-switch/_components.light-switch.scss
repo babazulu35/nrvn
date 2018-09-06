@@ -1,0 +1,212 @@
+/**
+ * Light Switch:
+**/
+
+
+/**
+ @attributes
+ theme: "light",
+ height: 30px,
+ border-radius: 15px,
+
+ themes: (
+   light: (
+     handle-background-color: #21242b,
+     off-background-color: #eaeaea,
+     on-background-color: #2985ef
+   ),
+
+   dark: (
+     handle-background-color: #21242b,
+     off-background-color: #414347,
+     on-background-color: #414347
+   )
+ )
+**/
+
+// Set defaults
+$c-light-switch: ( theme: "light", height: 30px, border-radius: 15px, animation-time: 0.25s, themes: ( light: ( handle-background-color: #21242b, off-background-color: #eaeaea, on-background-color: #2985ef), dark: ( handle-background-color: #21242b, off-background-color: #414347, on-background-color: #2985ef)), );
+// Merge settings and defaults
+$c-light-switch: map-merge($c-light-switch, getSettingsMap("c-light-switch"));
+// Set shortcuts
+$c-map: $c-light-switch;
+$themes: map-get($c-map, themes);
+$selected-theme: map-get($themes, map-get($c-map, theme)); // Default theme
+// Component
+.c-light-switch {
+    position: relative;
+    z-index: 0;
+    display: table-cell;
+    overflow: hidden;
+    direction: ltr;
+    cursor: pointer;
+    @include border-radius(map-get($c-map, "border-radius"));
+    text-align: left;
+    vertical-align: middle;
+    width: 100%;
+    height: map-get($c-map, height);
+    @include t--user-select(none);
+    &:before {
+        content: "";
+        background-color: map-get($selected-theme, off-background-color);
+    }
+}
+
+// Type unordered-list
+.c-light-switch-field {
+    &.c-light-switch-field--labeltop {
+        ul {
+            li {
+                label {
+                    display:table-row;
+                }
+            }
+        }
+    }
+}
+.c-light-switch-field {
+    &__title {
+        color:#939393;
+        @include ffamily('semi');
+        @include t--font-size(11px);
+        padding:10px 0px;
+    }
+    ul {
+        list-style: none;
+        width: 100%;
+        @include ffamily('semi');
+        @include t--font-size(13px);
+        color:#333333;
+        li {
+            display: table;
+            width: 100%;
+            padding: 20px 0px;
+            border-top:1px solid #dcdce5;
+            &:last-child:not(:first-child){
+                border-bottom:1px solid #dcdce5;
+            }
+            label {
+                display: table-cell;
+                vertical-align: middle;
+                width: calc(100% - 100px);
+            }
+            .c-light-switch {
+                display: table-cell;
+                width: 90px;
+                .c-light-switch__toggle-on {
+                    border-top-left-radius: map-get($c-map, "border-radius");
+                    border-bottom-left-radius: map-get($c-map, "border-radius");
+                }
+                .c-light-switch__toggle-off {
+                    width:100%;
+                    left:0px;
+                    border-radius:map-get($c-map, "border-radius");
+                }
+                &.c-light-switch--on {
+                    .c-light-switch__toggle-off {
+                        width:100%;
+                        left:map-get($c-map, "border-radius");
+                        margin-left:map-get($c-map, "border-radius");
+                        border-radius:map-get($c-map, "border-radius");
+                    }                    
+
+                }
+            }
+        }
+    }
+}
+
+.c-light-switch__toggle {
+    position: relative;
+    width: 100%;
+    height: map-get($c-map, height);
+    @include transform(translateX(0));
+    @include transition(transform map-get($c-map, "animation-time") ease-out);
+}
+
+.c-light-switch__toggle-on {
+    //display: inline-block;
+    position: absolute;
+    z-index: 1;
+    width: calc(100% - #{map-get($c-map, height)}/2);
+    height: 100%;
+    top: 0px;
+    right: calc(100% - #{map-get($c-map, height)}/2);
+    background-color: map-get($selected-theme, on-background-color);
+    opacity: 0;
+    @include transition(opacity map-get($c-map, "animation-time") ease-out);
+}
+
+.c-light-switch__toggle-off {
+    display: inline-block;
+    position: absolute;
+    z-index: 0;
+    width: calc(100% - #{map-get($c-map, height)}/2);
+    height: 100%;
+    top: 0px;
+    left: map-get($c-map, height)/2;
+    background-color: map-get($selected-theme, off-background-color);
+}
+
+.c-light-switch__toggle-handle {
+    display: inline-block;
+    position: absolute;
+    z-index: 2;
+    top: 0px;
+    left: 0px;
+    width: map-get($c-map, height);
+    height: map-get($c-map, height);
+    @include border-radius(map-get($c-map, "border-radius"));
+    background-color: map-get($selected-theme, handle-background-color);
+}
+
+//Checked Status
+.c-light-switch--on {
+    .c-light-switch__toggle {
+        //left: calc(100% - #{map-get($c-map, height)});
+        @include transform(translateX(calc(100% - #{map-get($c-map, height)})));
+        @include transition(transform map-get($c-map, "animation-time") ease-out);
+    }
+    .c-light-switch__toggle-on {
+        opacity: 1;
+    }
+}
+
+.c-light-switch--off {
+    .c-light-switch__toggle {
+        @include transform(translateX(0));
+        @include transition(transform map-get($c-map, "animation-time") ease-out);
+    }
+}
+
+//Set Themes
+.c-light-switch--theme-light {
+    $selected-theme: map-get($themes, light);
+    .c-light-switch__toggle-on {
+        background-color: map-get($selected-theme, on-background-color);
+    }
+    .c-light-switch__toggle-off {
+        background-color: map-get($selected-theme, off-background-color);
+    }
+    .c-light-switch__toggle-handle {
+        background-color: map-get($selected-theme, handle-background-color);
+    }
+}
+
+.c-light-switch--theme-dark {
+    $selected-theme: map-get($themes, dark);
+    .c-light-switch__toggle-on {
+        background-color: map-get($selected-theme, on-background-color);
+    }
+    .c-light-switch__toggle-off {
+        background-color: map-get($selected-theme, off-background-color);
+    }
+    .c-light-switch__toggle-handle {
+        background-color: map-get($selected-theme, handle-background-color);
+    }
+}
+
+// Reset shortcuts
+$c-map: null;
+$themes: null;
+$selected-theme: null;

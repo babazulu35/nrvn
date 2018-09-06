@@ -1,0 +1,147 @@
+$c-time-input: ( 
+    height: 36px,
+    font-size: 15px, 
+    color: #C2C2C2, 
+    active-color: #21242b, 
+    border-color: #dcdce5, 
+    active-border-color: #2096F3, 
+    error-border-color: #ec4e48, 
+    border-radius: 2px, 
+    padding: 0.4em,
+    
+    seperator: (
+        font-size: 17px,
+        color: #C2C2C2
+    ),
+
+    icon: (
+        font-size: 24px,
+        color: #C2C2C2
+    ),
+
+    underline: ( 
+        padding: 0.4em 0px, 
+        border-radius: 0px, 
+        border-color: #3a2e39, 
+    ), 
+);
+// Merge settings and defaults
+$c-time-input: map-merge($c-time-input, getSettingsMap("c-time-input"));
+// Set shortcuts
+$c-map: $c-time-input;
+
+.c-time-input {
+    display: inline-block;
+    width: auto;
+    line-height: 0px;
+
+    &--disabled {
+        cursor: not-allowed;
+        opacity: 0.8;
+        * {
+            pointer-events: none;
+            user-select: none;
+        }
+    }
+    &--dirty {
+        .c-time-input__text {
+            input {
+                color: map-get($c-map, "active-color");
+            }
+        }
+    }
+    &--focused {
+        .c-time-input__text {
+            input {
+                color: map-get($c-map, "active-color");
+            }
+        }
+        .c-time-input__bar {
+            border-color: map-get($c-map, active-border-color);
+        }
+        &.c-time-input--underline {
+            .c-time-input__bar {
+                border-color: map-get($c-map, active-border-color);
+            }
+        }
+    }
+    &--error:not(.c-time-input--disabled) {
+        .c-time-input__bar {
+            border-color: map-get($c-map, error-border-color);
+        }
+        &.c-time-input--underline {
+            .c-time-input__bar {
+                border-color: map-get($c-map, error-border-color);
+            }
+        }
+    }
+    &--underline {
+        .c-time-input__bar {
+            border: none;
+            border-bottom: 1px solid map-deep-get($c-map, underline, border-color);
+            padding: 0px;
+            border-radius: map-deep-get($c-map, underline, border-radius);
+        }
+    }
+    &--no-border {
+        .c-time-input__bar {
+            border: none;
+        }
+    }
+    
+    &__bar {
+        display: table;
+        position: relative;
+        padding: map-deep-get($c-map, padding);
+        width: 100%;
+        border: 1px solid map-get($c-map, border-color);
+        border-radius: map-deep-get($c-map, border-radius);
+        transition: border-color 0.3s getEase('out-sine');
+        white-space: nowrap;
+        line-height: 0px;
+    }
+
+    &__icon {
+        display: table-cell;
+        vertical-align: middle;
+        text-align: center;
+        width: map-deep-get($c-map, height);
+        font-size: map-deep-get($c-map, icon, font-size);
+        color: map-deep-get($c-map, icon, color);
+        padding-top: 2px;
+    }
+
+    &__hour {
+        display: table-cell;
+        vertical-align: middle;
+        text-align: center;
+        width: map-deep-get($c-map, height);
+    }
+
+    &__minute {
+        display: table-cell;
+        vertical-align: middle;
+        text-align: center;
+        width: map-deep-get($c-map, height);
+
+        .c-time-input {
+            &__bar {
+                
+            }
+        }
+    }
+
+    &__seperator {
+        display: table-cell;
+        vertical-align: middle;
+        text-align: center;
+        font-size: map-deep-get($c-map, seperator, font-size);
+        @include ffamily('bold');
+        color: map-deep-get($c-map, seperator, color);
+    }
+    
+   
+}
+
+$c-time-input: null;
+$c-map:null;

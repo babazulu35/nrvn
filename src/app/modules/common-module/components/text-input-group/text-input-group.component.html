@@ -1,0 +1,27 @@
+<div class="c-text-input-group__list">
+  <span class="c-text-input-group__list-item" *ngFor="let input of inputList" 
+    [style.width]="input?.width || (100 / inputList.length) + '%'"
+    [style.textAlign]="input?.textAlign || textAlign">
+    <span class="c-text-input-group__list-item-input">
+      <app-text-input #textInput
+        [emitWhenInit]="true"
+        (changeEvent)="changeEventHandler($event, input, textInput)"
+        (typeEvent)="typeEventHandler($event, input, textInput)"
+        (dismissEvent)="dismissEventHandler($event, input, textInput)"
+        (focusEvent)="focusEventHandler($event, input, textInput)"
+        [isTypeEmitting]="input?.settings?.isTypeEmitting"
+        [type]="input.type"
+        [value]="input.value"
+        [placeholder]="input?.settings?.placeholder || ''"
+        [min]="input?.settings?.min"
+        [max]="input?.settings?.max"
+        [maxlength]="input?.settings.maxlength"
+        [required]="input?.settings?.required || required"
+        [mask]="input?.settings?.mask"
+        ></app-text-input>
+    </span>
+    <span *ngIf="displaySeperatorChar" class="c-text-input-group__list-item-seperator">
+      {{displaySeperatorChar}}
+    </span>
+  </span>
+</div>

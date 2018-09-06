@@ -1,0 +1,189 @@
+/* --------------------------------------------------------
+version: 1.0
+author: Can SİVRİ
+----------------------------------------------------------*/
+
+/***
+* Tree View Component Component:
+*/
+
+
+
+// Set defaults
+
+$c-tree-view-container: (
+	width: 100%,
+	background-color: #f7f7f7,
+	color: #35383d,
+	border-color: #dcdce5,
+	item-padding: 7px 0,
+	icon-padding: 0 5px 0 1px,
+	icon-color: #bdbdbd,
+	label-padding: 3px 20px 0 0,
+);
+
+// Merge settings and defaults
+$c-tree-view-container: map-merge($c-tree-view-container, getSettingsMap("c-tree-view-container"));
+
+// Set shortcuts
+$c-map: $c-tree-view-container;
+
+
+.c-tree-view-container {
+	width: map-get($c-map, width);
+	border-radius:2px;
+	min-width:390px;
+}
+
+.c-tree-view-container__list {
+	list-style:none;
+	padding:21px;
+	margin:0;
+}
+
+.c-tree-view-container__list-item {
+	position:relative;
+	background-color: map-get($c-map, background-color);
+	margin:0 0 10px 0;
+	border-radius:2px;
+	border:1px solid map-get($c-map, border-color);
+	&:last-child {margin:0;}
+	// .c-tree-view-container__list {display:none;}
+	.c-tree-view-container__list-item {border:none;}
+	// &--opened {
+	// 	.icon__n.icon__n--unfold_more:before {content:"";}
+	// 	.c-tree-view-container__list {display:block;}
+	// }
+	.c-tree-view-container__list-new-item {
+		border:none;
+		padding:8px 0 0 0;
+	}
+	
+	.c-tree-view-container__list {
+		padding:10px 0 0 50px;
+		.c-tree-view-container__list-item:after {
+		  content:"";
+		  position:absolute;
+		  top:32px;
+		  left:-29px;
+		  width:29px;
+		  height:1px;
+		  border-top:1px solid map-get($c-map, border-color);
+		}
+		.c-tree-view-container__list-item:before {
+		  content:"";
+		  position:absolute;
+		  top:-9px;
+		  left:-29px;
+		  width:1px;
+		  height:calc(100% + 9px);
+		  border-left:1px solid map-get($c-map, border-color);
+		}
+		.c-tree-view-container__list-item:last-child {
+			&:before {height:43px;}
+		}
+		.c-tree-view-container__list-new-item:last-child {
+			&:after {
+				border-top-style:dashed;
+			}
+			&:before {
+				left:-30px;
+				height:43px;
+				border-left-style:dashed;
+			}
+		}
+	}
+	.c-tree-view-container__list-new-item {
+		padding:0;
+		border:1px dashed map-get($c-map, border-color);
+		text-align:left;
+		i {
+			position:relative;
+			top:-2px;
+			display: table-cell;
+			vertical-align: middle;
+			font-size: 35px;
+		}
+		span {
+			display:table-cell;
+			vertical-align:middle;
+			padding-left: 5px;
+		}
+		a {
+			display:block;
+			padding:14px 16px 12px;
+			color:#35383d;
+			@include ffamily("bold");
+			font-size:11px;
+		}
+	}
+}
+
+.c-tree-view-container__list-new-item {
+	padding:10px 0;
+	text-align:center;
+	border:1px dashed map-get($c-map, border-color);
+	.btn {min-width:200px;}
+	.c-add-button > * {
+		font-size: 0.69em;
+		@include t--translate(-48.5%, -55.5%);
+	}
+}
+
+.c-tree-view-container__list-item-title {
+	position:relative;
+	margin:-1px;
+	padding:18px 20px;
+	background-color:#fff;
+	border:1px solid map-get($c-map, border-color);
+	border-radius:2px 2px 0 0;
+}
+
+.c-tree-view-container__list-item-icon {
+	display: table-cell;
+	vertical-align: middle;
+	color: map-get($c-map, color);
+	i {
+		padding: map-get($c-map, icon-padding);
+		font-size: 24px;
+		height: 24px;
+		line-height: 22px;
+		color: map-get($c-map, color);
+		cursor:pointer;
+		&:before {vertical-align: middle;}
+	}
+}
+
+.c-tree-view-container__list-item-icon {
+	i.icon__n--dehaze {
+		position:relative;
+		top:1px;
+		cursor:move;
+		color: map-get($c-map, icon-color);
+	}
+}
+
+.c-tree-view-container__list-item-label {
+	display: table-cell;
+	vertical-align: middle;
+	padding: map-get($c-map, label-padding);
+	color: map-get($c-map, color);
+	font-size: 15px;
+	@include ffamily("regular");
+	cursor:pointer;
+}
+
+.c-tree-view-container__list-item-action-btn {
+  position: absolute;
+  top: 50%;
+  right: 16px;
+  @include transform(translateY(-50%));
+  height: 24px;
+  .icon__n {
+  	overflow:hidden;
+  	color: map-get($c-map, icon-color);
+  	font-size: 24px;
+  	height:22px;
+  	cursor:pointer;
+  }
+}

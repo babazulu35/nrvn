@@ -1,0 +1,19 @@
+/* --------------------------------------------------------
+author: Abdullah Karadeniz
+----------------------------------------------------------*/
+
+$or-cms-datasources: ( border-color: #dcdce5, switch-bar: ( label: ( color: #373a3c, font-size: 14px, )));
+$or-cms-datasources: map-merge($or-cms-datasources, getSettingsMap("or-cms-datasources"));
+$oc-map: $or-cms-datasources;
+.or-cms-datasources {
+    display: block;
+    position: relative;
+
+    .o-list-view__content {
+        padding: 20px;
+    }
+}
+
+$oc-map: null;/* --------------------------------------------------------
+author: Abdullah Karadeniz
+----------------------------------------------------------*/

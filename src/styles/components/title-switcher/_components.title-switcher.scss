@@ -1,0 +1,233 @@
+/* --------------------------------------------------------
+version: 1.0
+last modified: 19.11.2016
+author: Abdullah Karadeniz
+----------------------------------------------------------*/
+
+/**
+ * title-switcher:
+ * `.c-title-switcher` -
+
+ *     @example
+ *     
+ */
+
+$c-title-switcher: (
+  font-size: 26px,
+  icon-size: 1.275em,
+
+  icon-margin: 0,
+
+  sizes: (
+    sm: 0.85,
+    lg: 1.25
+  ),
+
+  themes: (
+    light: (
+      color: #ffffff,
+      hover-color: #f2f2f2
+    ),
+
+    dark: (
+      color: #3a2e39,
+      hover-color: #9d9d9d
+    )
+  ),
+
+  finder: (
+    border-color: #dcdce5,
+    background-color: #ffffff,
+    padding-top: 20px,
+    padding-right: 15px,
+    padding-bottom: 20px,
+    padding-left: 15px,
+
+    header: (
+        font-size: 11px,
+        color: #bdbdbd
+    ),
+
+    title: (
+        color: #3a2e39,
+    ),
+
+    close: (
+        font-size: 21px,
+        color: #bdbdbd,
+        hover-color: #2985ef
+    )
+  )
+);
+
+// Merge settings and defaults
+$c-title-switcher: map-merge($c-title-switcher, getSettingsMap("c-title-switcher"));
+
+// Set shortcuts
+$c-map: $c-title-switcher;
+
+.c-title-switcher {
+    display: inline-block;
+    position: relative;
+
+    font-size: map-get($c-map, font-size);
+    line-height: 1em;
+
+    &--is-finder {
+        width: 100%;
+        height: 100%;
+    }
+  
+    &--sm {
+        font-size: map-get($c-map, font-size) * map-deep-get($c-map, sizes, sm);
+    }
+
+    &--lg {
+        font-size: map-get($c-map, font-size) * map-deep-get($c-map, sizes, lg);
+    }
+
+    &--autosize {
+        font-size: inherit;
+    }
+
+    &__button {
+        display: inline-block;
+        z-index: 0;
+        position: relative;
+        cursor: pointer;
+        font-size: inherit;
+        line-height: 1em;
+        transform: scale3d(1, 1, 1);
+        @include transition(transform 0.2s getEase(out-back));
+        
+        &:hover {
+            .c-title-switcher__button-label {
+                color: map-deep-get($c-map, themes, light, hover-color);
+                @include transition(color 0.3s ease-out);
+            }
+
+            .c-title-switcher__button-icon {
+                //animation: getAnimation('pulse', 0.4s getEase(sine-out));
+                transform: scale3d(1.15, 1.15, 1.15);
+                @include transition(transform 0.4s getEase(out-back));
+            }
+        }
+
+        &:active {
+            transform: scale3d(0.95, 0.95, 0.95);
+            @include transition(transform 0.2s getEase(out-back));
+        }
+    
+
+        &-label {
+            font-size: inherit;
+            display: inline-block;
+            @include ffamily('bold');
+            white-space: nowrap;
+            padding-right: map-get($c-map, icon-margin);
+            color: map-deep-get($c-map, themes, light, color);
+            @include transition(color 0.3s ease-out);
+            vertical-align: top;
+            margin-top: (map-get($c-map, icon-size) - 1em) / 4;
+        }
+
+        &-icon {
+            position:relative;
+            left:-5px; 
+            display: inline-block;
+            font-size: map-get($c-map, icon-size);
+            color: map-deep-get($c-map, themes, light, hover-color);
+            width: 1em;
+            height: 1em;
+            transform: scale3d(1, 1, 1);
+            @include transition(transform 0.3s getEase(out-back));
+            vertical-align: top;
+
+            &:before { 
+                @include icon('expand_more'); 
+                font-size: inherit;
+            }
+        }
+    }
+
+    &__finder {
+        display: block;
+        position: absolute;
+        z-index: 1;
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        height: 100%;
+
+        background-color: map-deep-get($c-map, finder, background-color);
+
+        padding-top: map-deep-get($c-map, finder, padding-top);
+        padding-right: map-deep-get($c-map, finder, padding-right);
+        padding-bottom: map-deep-get($c-map, finder, padding-bottom);
+        padding-left: map-deep-get($c-map, finder, padding-left);
+
+        border: solid 1px map-deep-get($c-map, finder, border-color);
+        box-shadow: 0px 5px 10px rgba(0,0,0,0.1);
+
+        @include ffamily('regular');
+
+        &-content {
+            display: block;
+            height: calc(100% - #{map-deep-get($c-map, finder, padding-bottom)});
+        }
+
+        &-header {
+            @include ffamily('semi');
+            color: map-deep-get($c-map, finder, header, color);
+            font-size: map-deep-get($c-map, finder, header, font-size);
+            padding-right: $global-scroll-width;
+        }
+
+        &-title {
+            display: inline-block;
+            width: calc(100% - #{map-deep-get($c-map, finder, close, font-size)});
+        }
+
+        &-close {
+            display: inline-block;
+            font-size: map-deep-get($c-map, finder, close, font-size);
+            color: map-deep-get($c-map, finder, close, color);
+            cursor: pointer;
+            width: 1em;
+            height: 1em;
+
+            &:before {
+                @include icon('close');
+            }
+
+            &:hover {
+                color: map-deep-get($c-map, finder, close, hover-color);
+            }
+            &:active {
+                color: map-deep-get($c-map, finder, close, color);
+            }
+        }
+    }
+
+  &--dark {
+    .c-title-switcher__button-label {
+        color: map-deep-get($c-map, themes, dark, color);
+    }
+
+    .c-title-switcher__button-icon {
+        color: map-deep-get($c-map, themes, dark, hover-color);
+    }
+
+    &:hover {
+        .c-title-switcher__button-label {
+            color: map-deep-get($c-map, themes, dark, hover-color);
+        }
+    }
+  }
+
+}
+
+//Reset
+$themes: null;
+$selected-theme: null;
+$c-map: null;

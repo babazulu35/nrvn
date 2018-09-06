@@ -1,0 +1,35 @@
+// clear paddings
+.u-clearpadding {
+  &-both {
+    padding-left:0;
+    padding-right:0;
+  }
+  &-left {
+    padding-left:0;
+  }
+  &-right {
+    padding-right: 0;
+  }
+  &-all {
+    padding:0;
+  }
+}
+.u-clearmargin {
+  &-both {
+    margin-left:0;
+    margin-right:0;
+  }
+  &-left {
+    margin-left:0;
+  }
+  &-right {
+    margin-right: 0;
+  }
+  &-all {
+    margin:0;
+  }
+}
+.u-clearall {
+  margin:0;
+  padding:0;
+}

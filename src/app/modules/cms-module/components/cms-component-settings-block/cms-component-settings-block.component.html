@@ -1,0 +1,18 @@
+<app-expandable-block 
+  (actionEvent)="emitAction($event)"
+  [contextMenuData]="contextMenuData"
+  [title]="componentData?.Title || componentData?.Name"
+  [subTitle]="componentData?.UniqueName"
+  [isExpanded]="true" >
+
+   <div class="c-cms-component-settings-block__fields">
+    <div class="c-cms-component-settings-block__field" *ngFor="let field of fields">
+        <app-cms-field-card
+          (actionEvent)="emitAction($event)"
+          [data]="field"></app-cms-field-card>
+    </div>
+  </div> 
+  <div class="c-cms-component-settings-block__add-button">
+    <app-button (clickEvent)="addNewField()" type="icon" icon="plus" shape="circle" theme="secondary" size="lg"></app-button>
+  </div>
+</app-expandable-block>

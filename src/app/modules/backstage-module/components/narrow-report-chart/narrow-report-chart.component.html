@@ -1,0 +1,32 @@
+<div [ngSwitch]="viewType">
+    <div *ngSwitchCase="'progress'" class="c-narrow-report-statistic__item">
+        <div class="c-narrow-report-statistic__item-label">{{label}}</div>
+        <div class="c-narrow-report-statistic__item-progress-bar"><span class="c-narrow-report-statistic__item-progress-bar-fill" [ngStyle]="{'width': percent + '%','background-color': '#' + color }"></span></div>
+        <div class="c-narrow-report-statistic__item-key">{{data}}</div>
+        <div class="c-narrow-report-statistic__item-value">{{percent}}</div>
+
+
+    </div>
+    <!-- end c-narrow-report-statistic__item -->
+    <div *ngSwitchCase="'circle'" class="c-narrow-report-statistic__chart-item">
+        <div class="c-narrow-report-statistic__chart-item-wrap">
+            <!--
+            Here the stroke fills 80% (calculated using 251.2 - 251.2*80/100, 251.2 is the perimeter of the circle calculated using 2 * 3.14 * 40). ie stroke-dashoffset = perimeter - perimeter * amount / 100 also set stroke-dasharray to perimeter. perimeter = 2 * 3.14 * radius
+        -->
+            <svg width="50px" height="50px" viewbox="0 0 100 100">
+                <circle  cx="25" cy="25" [attr.r]="radius" fill="transparent" stroke-width="10" stroke="#DDDDE6"/>
+                <circle  cx="25" cy="25" [attr.r]="radius" fill="transparent"  style="transform: rotate(-90deg);
+    transform-origin: 50% 50%;"stroke-width="10" stroke="#2799f1" [attr.stroke-dasharray]="dashArray | number: '2.2-2'"  [attr.stroke-dashoffset]="dashOffset | number: '2.2-2'" />
+            </svg>
+        </div>
+        <!-- end c-narrow-report-statistic__chart-circle -->
+        <div class="c-narrow-report-statistic__chart-item-text">
+            <span class="c-narrow-report-statistic__chart-item-text-label">{{label}}</span>
+            <span class="c-narrow-report-statistic__chart-item-text-value">% {{ percent }}</span>
+        </div>
+        <!-- end c-narrow-report-statistic__chart-item-text -->
+    </div>
+    <!-- end c-narrow-report-statistic__chart -->
+    <!-- end c-narrow-report-statistic -->
+
+</div>

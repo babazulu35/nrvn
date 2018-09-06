@@ -1,0 +1,131 @@
+/**
+* Action Box:
+* Author: Can Sivri
+*
+*/
+
+
+// Variables
+$c-action-box: (
+  bg: #fff,
+  padding: 18px 20px,
+  border: 1px solid #dcdce5,
+  border-radius-value: 3px, 
+  general-color: #35383d,
+  text-line-height: 22px,
+  text-margin: 0 0 22px 0,
+  text-font-size: 13px,
+  title-margin: 0 0 15px 0,
+  title-font-size: 15px,
+  input-margin: 0 0 35px 0,
+  input-padding: 5px 0,
+  input-font-size: 16px,
+  input-active-border-color: #2096F3
+);
+
+// Merge settings and defaults
+$c-action-box: map-merge($c-action-box, getSettingsMap("c-action-box"));
+
+// Set shortcuts
+$c-map: $c-action-box;
+
+
+.c-action-box {
+  display: block;
+  box-sizing:border-box;
+  padding: map-get($c-map, padding);
+  border: map-get($c-map, border);
+  border-radius: map-get($c-map, border-radius-value);
+  background-color: map-get($c-map, bg);
+  list-style: none;
+  word-wrap: normal;
+  white-space: normal;
+  text-align: left;
+
+  &--readonly {
+    .c-action-box {
+      &__title,
+      &__text,
+      &__input {
+        cursor: not-allowed;
+        opacity: 0.8;
+        pointer-events: none;
+      }
+    }
+  }
+  
+  &__title {
+    margin: map-get($c-map, title-margin);
+    @include ffamily("semi");
+    font-size: map-get($c-map, title-font-size);
+    line-height: map-get($c-map, text-line-height);
+    color: map-get($c-map, general-color);
+  }
+  &__text {
+    margin: map-get($c-map, text-margin);
+    @include ffamily("regular");
+    font-size: map-get($c-map, text-font-size);
+    line-height: map-get($c-map, text-line-height);
+    color: map-get($c-map, general-color);
+    strong, b {
+      @include ffamily("bold");
+    }
+  }
+  &__input {
+    margin: map-get($c-map, input-margin);
+    input {
+      width:100%;
+      text-align:center;
+      border:none;
+      padding: map-get($c-map, input-padding);
+      border-bottom:1px solid  map-get($c-map, general-color);
+      @include ffamily("regular","i");
+      font-size: map-get($c-map, input-font-size);
+      outline:none;
+      &::-ms-reveal,
+            &::-ms-clear {
+                display: none;
+            }
+            &:required {
+                box-shadow: none !important;
+            }
+            &:invalid {
+                box-shadow: none !important;
+            }
+            &:-webkit-autofill {
+                -webkit-box-shadow: 0 0 0px 1000px white inset !important;
+            }
+            &::-webkit-contacts-auto-fill-button {
+                visibility: hidden;
+                display: none !important;
+                pointer-events: none;
+                position: absolute;
+                right: 0;
+            }
+            &::-webkit-outer-spin-button,
+            &::-webkit-inner-spin-button {
+                -webkit-appearance: none;
+                margin: 0;
+            }
+            &:focus {
+                border-bottom-color:map-get($c-map, input-active-border-color);
+                outline: none;
+                -webkit-border-radius: 0px;
+                -moz-border-radius: 0px;
+                border-radius: 0px;
+                &::-webkit-contacts-auto-fill-button {
+                    display: none !important;
+                    opacity: 0 !important;
+                }
+            }
+    }
+  }
+  &__button {
+    margin:5px 0;
+    .c-button {
+      width:100%;
+      line-height: 2.3;
+      height: 40px;
+    }
+  }
+}

@@ -1,0 +1,25 @@
+<div class="c-multi-selection-bar__wrapper">
+
+    <div class="c-multi-selection-bar__selections"> 
+        <i class="icon__n icon__n--radio_button_checked"></i>
+        <span>
+            <strong class="hidden-lg-down"> {{this.selectedItems?.length}}</strong> <span class="hidden-lg-down"> kayıt seçildi.</span> <a href="javascript:void(0)" (click)="selectAll(true)">Tümünü Seç</a> <span class="c-multi-selection-bar__rows hidden-hd-down"> ({{numberOfTotalItem}} Kayıt)</span>
+        </span>
+    </div>
+    
+    <div class="c-multi-selection-bar__actions">
+        <div *ngFor="let button of authorizedActionButtons; let i = index" [ngStyle]="{ 'order': i}" class="c-multi-selection-bar__actions--item">
+            <a href="javascript:void(0)" title="{{button.label}}" (click)="transist(button.action)">
+                <i class="icon__n icon__n--{{button.icon}}"></i>
+            </a>
+        </div>
+    </div>
+
+    <div class="c-multi-selection-bar__cancel">
+        <span class="hidden-lg-down">Seçimleri <a href="javascript:void(0)" (click)="selectAll(false)">iptal et</a></span>
+        <a class= "c-multi-selection-bar__cancel--icon" href="javascript:void(0)" (click)="selectAll(false)">
+            <i class="icon__n icon__n--close"></i>
+        </a>
+    </div>
+
+</div>

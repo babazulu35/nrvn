@@ -1,0 +1,19 @@
+<div *ngIf="icon" class="c-mini-card__kind-icon">
+    <i class="icon__n icon__n--{{icon}}"></i>
+</div>
+<div *ngIf="avatar" class="c-mini-card__figure">
+    <app-avatar size="lg" [letters]="avatar?.letters" [title]="avatar?.title" [source]="avatar?.source"></app-avatar>
+</div>
+<div *ngIf="title" class="c-mini-card__info">
+    <strong>{{title}}</strong><span *ngIf="subTitle">{{subTitle}}</span>
+</div>
+<div *ngIf="date" class="c-mini-card__date">
+    {{date}}
+</div>
+<div *ngIf="actions && actions.length <= 2" class="c-mini-card__action-area">
+    <app-button *ngFor="let action of actions" type="icon" [icon]="action?.icon" theme="secondary" (click)="emitAction(action)"></app-button>
+</div>
+<div *ngIf="actions && actions.length > 2" class="c-mini-card__action-area">
+    <app-button type="icon" icon="more_vert" theme="secondary" (click)="openActionsMenu($event)"></app-button>
+</div>
+<ng-content></ng-content>

@@ -1,0 +1,18 @@
+// Set Spesific Sizes
+@for $i from 40 through 320 {
+    .size-#{$i} {
+        width:unquote('#{$i}px');
+    }
+}
+
+.full-width {
+    width: 100%;
+}
+
+.auto-height {
+    height: auto;
+}
+
+.full-height {
+    height: 100%;
+}

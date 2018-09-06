@@ -1,0 +1,17 @@
+<div class="c-expandable-block__bar">
+  <div *ngIf="leftIcon" class="c-expandable-block__bar-left">
+    <span><app-button type="icon" [icon]="leftIcon" [isDisabled]="!isDraggable" theme="secondary"></app-button></span>
+  </div>
+  <div class="c-expandable-block__bar-center">
+    <span class="c-expandable-block__bar-title">{{title}}</span>
+    <span *ngIf="subTitle" class="c-expandable-block__bar-sub-title">{{subTitle}}</span>
+  </div>
+  <div class="c-expandable-block__bar-right">
+    <span><app-button (click)="toggleExpand($event)" type="icon" [icon]="isExpanded ? 'unfold_less' : 'unfold_more'" theme="secondary"></app-button></span>
+    <span><app-button *ngIf="contextMenuData?.length" (click)="openContextMenu($event)" type="icon" [icon]="'more_vert'" theme="secondary"></app-button></span>
+  </div>
+</div>
+
+<div class="c-expandable-block__content">
+  <ng-content></ng-content>
+</div>

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<link rel="stylesheet" href="../../../css/main.css">
+  <script src="../../../bower_components/jquery/dist/jquery.min.js"></script>
+
+
+  <style>
+    .theme-section {
+      padding: 10px 30px
+    }
+
+    .theme-section--dark {
+      background-color: #35383d;
+      color: #aeaeae;
+    }
+
+    .theme-section--dark .preview-card {
+      border: solid 1px #878787;
+    }
+
+    .preview-card {
+      display: inline-block;
+      position: relative;
+      margin: 20px 20px 0px 0px;
+      //border: solid 1px #ececea;
+			background-color: rgba(0,0,0,0.5);
+      width: 580px;
+      height: 600px;
+      padding: 30px 60px;
+      overflow: hidden;
+    }
+
+    .preview-card__header {
+
+    }
+
+    .preview-card__content {
+      position: absolute;
+      top: 70px;
+      left: 30px;
+      width: calc(100% - 60px);
+      height: calc(100% - 100px);
+    }
+
+    .preview-card__content >* {
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    .c-typeahead .c-inline-search-input .c-promise-icon {
+      display: table-cell;
+    }
+
+  </style>
+
+</head>
+<body>
+
+  <div class="theme-section">
+
+    <div class="preview-card">
+      <div class="preview-card__header">
+        <h3>Field Search Bar</h3>
+      </div>
+
+      <div class="preview-card__content">
+
+        <div class="c-field-search-bar">
+
+          <div class="c-field-search-bar__header">
+            <div class="c-field-search-bar__header-title">
+              ARAYIN
+            </div>
+            <div class="c-field-search-bar__close-btn">
+              <i class="icon__n icon__n--close"></i>
+            </div>
+          </div>
+
+          <div class="c-field-search-bar__content">
+            <div class="c-typeahead">
+              <div class="c-typeahead__search-box">
+                <!-- Inline Search Input -->
+								<div class="c-inline-search-input c-inline-search-input--border">
+									<div class="input-group">
+
+										<input type="text" class="form-control" placeholder="Etkinlikler Arasında Arayın" aria-describedby="basic-addon1">
+										<div class="c-inline-search-input__icon">
+											<div class="c-promise-icon ">
+												<div class="c-promise-icon__before">
+													<i class="icon__n icon__n--search"></i>
+												</div>
+												<div class="c-promise-icon__spinner c-promise-icon__spinner--sm">
+													<div class="c-promise-icon__spinner-blade"></div>
+													<div class="c-promise-icon__spinner-blade"></div>
+													<div class="c-promise-icon__spinner-blade"></div>
+													<div class="c-promise-icon__spinner-blade"></div>
+													<div class="c-promise-icon__spinner-blade"></div>
+													<div class="c-promise-icon__spinner-blade"></div>
+													<div class="c-promise-icon__spinner-blade"></div>
+													<div class="c-promise-icon__spinner-blade"></div>
+													<div class="c-promise-icon__spinner-blade"></div>
+													<div class="c-promise-icon__spinner-blade"></div>
+													<div class="c-promise-icon__spinner-blade"></div>
+													<div class="c-promise-icon__spinner-blade"></div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+              </div>
+              <div class="c-typeahead__result-box">
+                  <div class="c-typeahead__result-group">
+                    <div class="c-typeahead__result-group-title">ÖNCEKİ ARAMALAR</div>
+                    <ul class="c-typeahead__result-list">
+                      <li class="c-typeahead__result-list-item">
+                        <span class="c-typeahead__result-list-item-icon">
+                          <i class="icon__n icon__n--history"></i>
+                        </span>
+                        <span class="c-typeahead__result-list-item-content">
+                          Anathema
+                        </span>
+                      </li>
+
+                      <li class="c-typeahead__result-list-item">
+                        <span class="c-typeahead__result-list-item-icon">
+                          <i class="icon__n icon__n--history"></i>
+                        </span>
+                        <span class="c-typeahead__result-list-item-content">
+                          Ane Brun
+                        </span>
+                      </li>
+
+                      <li class="c-typeahead__result-list-item">
+                        <span class="c-typeahead__result-list-item-icon">
+                          <i class="icon__n icon__n--history"></i>
+                        </span>
+                        <span class="c-typeahead__result-list-item-content">
+                          Anneke Van Giersbergen
+                        </span>
+                      </li>
+
+                      <li class="c-typeahead__result-list-item">
+                        <span class="c-typeahead__result-list-item-icon">
+                          <i class="icon__n icon__n--history"></i>
+                        </span>
+                        <span class="c-typeahead__result-list-item-content">
+                          Antimatter
+                        </span>
+                      </li>
+
+                    </ul>
+                  </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+    </div>
+
+  </div>
+
+  <script>
+
+  </script>
+
+</body>
+</html>

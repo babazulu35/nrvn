@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html class="no-js" lang="tr">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<link rel="stylesheet" href="../../../bower_components/pikaday/css/pikaday.css">
+	<link rel="stylesheet" href="../../../css/main.css">
+</head>
+<body style="padding:20px;">
+	<!-- Your Component Goes Here -->
+
+	<div class="c-datepicker">
+		<label class="c-datepicker__label">TARİHİ</label>
+		<div class="c-datepicker__input-wrap">
+			<input type="text" id="datepicker">
+			<i class="icon__n icon__n--date_range c-datepicker__icon"></i>	
+		</div>
+	</div>
+
+
+	<script src="../../../bower_components/pikaday/pikaday.js"></script>
+	<script>
+	    var picker = new Pikaday({ field: document.getElementById('datepicker') });
+	</script>
+
+</body>
+</html>
+<!-- End Of Html -->

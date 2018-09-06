@@ -1,0 +1,45 @@
+/***
+ * Call to Action Link:
+ * Author: Fatih Turan
+ */
+
+ /**
+ * Call to Action Link:
+ *
+ * @example
+ * <a href="#" class="c-cta-link">
+ *   <i class="icon__n icon__n--place"></i>Call to Action Link Text
+ * </a>
+ */
+
+
+ // Set Defaults
+ $c-cta-link: (
+  color: #35383d,
+  color-hover: lighten(#35383d, 25%),
+  font-size: 11px,
+  icon-size: 17px,
+ );
+
+ // Merge settings and defaults
+ $c-cta-link: map-merge($c-cta-link, getSettingsMap("c-cta-link"));
+
+ // Set shortcuts
+ $c-map: $c-cta-link;
+
+ .c-cta-link {
+   display: inline-block;
+   margin-left: -4px;
+   @include ffamily("semi");
+   font-size: map-get($c-map, font-size);
+   color: map-get($c-map, color);
+   text-transform: uppercase;
+   &:hover {
+     color: map-get($c-map, color-hover);
+   }
+   .icon__n {
+     margin-right: 6px;
+     vertical-align: middle;
+     font-size: map-get($c-map, icon-size);
+   }
+ }

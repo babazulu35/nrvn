@@ -1,0 +1,34 @@
+<h1 class="c-header__title"><span [routerLink]="link">{{title}}</span></h1>
+
+<!--<ul class="c-header__tools">
+    <li class="c-header__tools-item">
+		<app-button type="icon" icon="search" theme="secondary"></app-button>
+	</li>
+	<li class="c-header__tools-item">
+		 <app-button type="icon" icon="help_outline" theme="secondary"></app-button>
+	</li>
+	<li class="c-header__tools-item c-header__tools-item--active">
+		<app-button type="icon" icon="notifications"></app-button>
+		<span class="tag-pill tag-danger">3</span>
+	</li>
+</ul>-->
+
+<ul class="c-header__tools" *ngIf="showTimer">
+	<li><span>{{timer}}</span></li>
+</ul>
+<span class="c-header__user" (click)="showUserDetail($event)">
+	<span *ngIf="firstname || username" class="c-header__user-name">
+		Merhaba <b>{{(fullname && fullname != "null") ? fullname: username }}</b>
+	</span>
+<span *ngIf="firstname || username" class="c-header__user-avatar">
+		<app-avatar [letters]="letters" [source]="images | image" [icon]="'account_circle'"></app-avatar>
+	</span>
+<span class="c-header__user-action-button">
+		<app-button
+			(click)="openUserActions($event)"
+			type="icon" icon="more_vert"></app-button>
+	</span>
+</span>
+<span class="c-header__logo" *ngIf="logo">
+	<img src="{{logo}}"/>
+</span>

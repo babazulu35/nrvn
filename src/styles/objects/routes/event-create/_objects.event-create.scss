@@ -1,0 +1,32 @@
+/* --------------------------------------------------------
+author: Abdullah Karadeniz
+----------------------------------------------------------*/
+
+$or-event-create: ( border-color: #dcdce5, switch-bar: ( label: ( color: #373a3c, font-size: 14px, )));
+$or-event-create: map-merge($or-event-create, getSettingsMap("or-event-create"));
+$oc-map: $or-event-create;
+.or-event-create {
+    display: block;
+    
+    &__switch-bar {
+        color: map-deep-get($oc-map, switch-bar, label, color);
+        font-size: map-deep-get($oc-map, switch-bar, label, font-size);
+        @include ffamily('semi');
+        &-label {
+            padding-right: 0.5em;
+        }
+    }
+    &__info {
+        position: relative;
+        border: solid 1px map-get($oc-map, border-color);
+        padding: 30px 10px;
+    }
+    &__info-content {
+        position: relative;
+        width: 100%;
+        max-width: 560px;
+        margin: auto;
+    }
+}
+
+$oc-map: null;

@@ -1,0 +1,97 @@
+<app-dialog-box>
+
+  <div #header class="c-dialog-box__header c-dialog-box__header--underline c-dialog-box__header--padding" *ngIf="!showWithoutBox">
+    <div class="c-dialog-box__header-bar">
+      <h1 class="c-dialog-box__header-title">
+        {{title}}
+      </h1>
+      <div class="c-dialog-box__header-actions">
+        <app-button (click)="dismiss()" type="icon" icon="close" theme="secondary"></app-button>
+      </div>
+    </div>
+  </div>
+
+  <div #body class="c-dialog-box__body c-dialog-box__body--no-footer c-dialog-box__body--no-padding">
+	  <div class="p-container p-container--inherit">
+      <div class="p-group" *ngIf="target?.label">
+        <span><b>"{{target?.label}}"</b> alanının içeriğini tüm diller için güncelleyin.</span>
+      </div>
+      
+      <div class="p-group">
+        <div class="p-form-group">
+          <span class="p-form-group__label">
+            VARSAYILAN DİL
+          </span>
+          <span class="p-form-group__input">
+            <span class="c-localization-box__locale-input-bar">
+              <span class="c-localization-box__locale-code c-localization-box__locale-code--active">{{defaultLocale?.code}}</span>
+
+              <span class="c-localization-box__locale-input" [ngSwitch]="target?.input">  
+                <app-text-area *ngSwitchCase="'textarea'" #defaultLocaleInput
+                  [name]="defaultLocale?.id"
+                  (changeEvent)="inputChangeHandler($event, defaultLocale)"
+                  [isTypeEmitting]="true"
+                  (typeEvent)="inputChangeHandler($event, defaultLocale)"
+                  [value]="defaultLocale?.value"></app-text-area>
+                <app-file-upload-box *ngSwitchCase="'file-upload'"
+                  [name]="defaultLocale?.id"
+                  (changeEvent)="inputChangeHandler($event, defaultLocale)"
+                  [value]="defaultLocale?.value"
+                  [type]="target?.type"></app-file-upload-box>
+                <app-text-input *ngSwitchDefault #defaultLocaleInput
+                  [name]="defaultLocale?.id"
+                  (changeEvent)="inputChangeHandler($event, defaultLocale)"
+                  [isTypeEmitting]="true"
+                  (typeEvent)="inputChangeHandler($event, defaultLocale)"
+                  [value]="defaultLocale?.value"
+                  ></app-text-input>
+              </span>
+            </span>
+          </span>
+        </div>
+
+        <div class="p-form-group">
+          <span class="p-form-group__label">
+            DİĞER DİLLER
+          </span>
+          <span class="p-form-group__input" *ngFor="let locale of otherLocales">
+            <span class="c-localization-box__locale-input-bar">
+              <span class="c-localization-box__locale-code">{{locale?.code}}</span>
+              
+              <span class="c-localization-box__locale-input" [ngSwitch]="target?.input">  
+                <app-text-area *ngSwitchCase="'textarea'"
+                  [name]="locale?.id"
+                  (changeEvent)="inputChangeHandler($event, locale)"
+                  (typeEvent)="inputChangeHandler($event, locale)"
+                  [isTypeEmitting]="true"
+                  [value]="locale?.value"></app-text-area>
+                <app-file-upload-box *ngSwitchCase="'file-upload'"
+                  [name]="locale?.id"
+                  (changeEvent)="inputChangeHandler($event, locale)"
+                  [value]="locale?.value"
+                  [type]="target?.type"></app-file-upload-box>
+                <app-text-input *ngSwitchDefault
+                  [name]="locale?.id"
+                  (changeEvent)="inputChangeHandler($event, locale)"
+                  (typeEvent)="inputChangeHandler($event, locale)"
+                  [isTypeEmitting]="true"
+                  [value]="locale?.value"
+                  ></app-text-input>
+              </span>
+            </span>
+          </span>
+        </div>
+      </div>
+
+	  </div>
+  </div>
+
+  <div #footer class="c-dialog-box__footer" *ngIf="!showWithoutBox">
+    <div class="c-dialog-box__footer-content">
+      <div class="col-xs-16">
+        <app-button [isDisabled]="!isValid" (click)="submit($event)">DEVAM ET</app-button>
+      </div>
+    </div>
+  </div>
+
+</app-dialog-box>

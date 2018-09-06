@@ -1,0 +1,80 @@
+/***
+ * Helper Text:
+ * Author: Fatih Turan
+ */
+
+
+/**
+ * Helper Text:
+ * `.c-helper-text` sınıfı ile oluşturulur.
+ *
+ * @example
+ * <span class="c-helper-text">
+ *   <i class="icon__n icon__n--info_outline c-helper-text__icon"></i>
+ *   <span class="c-helper-text__value">Lorem ipsum dolor sit amet</span>
+ * </span>
+*/
+
+// Set Defaults
+$c-helper-text: ( icon-size: 17px, font-size: 11px, color: #939393, theme: ( light: ( info: ( color: #939393), warning: ( color: #e10f21, ), danger: ( color: #e10f21, ), success: ( color: #2985ef, )), dark: ( info: ( color: #ffffff), warning: ( color: #e10f21, ), danger: ( color: #e10f21, ), success: ( color: #2985ef, ))));
+// Merge settings and defaults
+$c-helper-text: map-merge($c-helper-text, getSettingsMap("c-helper-text"));
+// Set shortcuts
+$c-map: $c-helper-text;
+.c-helper-text {
+    display: inline-block;
+    width: 100%;
+    color: map-get($c-map, color);
+    &--info {
+        color: map-deep-get($c-map, theme, light, info, color)
+    }
+    ;
+    &--warning {
+        color: map-deep-get($c-map, theme, light, warning, color)
+    }
+    ;
+    &--danger {
+        color: map-deep-get($c-map, theme, light, danger, color)
+    }
+    ;
+    &--success {
+        color: map-deep-get($c-map, theme, light, success, color)
+    }
+    ;
+    &--dark {
+        &--info {
+            color: map-deep-get($c-map, theme, dark, info, color)
+        }
+        ;
+        &--warning {
+            color: map-deep-get($c-map, theme, dark, warning, color)
+        }
+        ;
+        &--danger {
+            color: map-deep-get($c-map, theme, dark, danger, color)
+        }
+        ;
+        &--success {
+            color: map-deep-get($c-map, theme, dark, success, color)
+        }
+        ;
+    }
+    &__icon {
+        float: left;
+        margin-right: 6px;
+        font-size: map-get($c-map, icon-size);
+        vertical-align: middle;
+    }
+    &__value {
+        display: block;
+        overflow: hidden;
+        @include ffamily("regular");
+        font-size: map-get($c-map, font-size);
+        b {
+            @include ffamily('semi');
+        }
+        strong {
+            @include ffamily('bold');
+        }
+    }
+}

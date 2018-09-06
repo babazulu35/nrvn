@@ -1,0 +1,9 @@
+<div class="c-seat-viewer" *ngFor="let field of setDat">
+    <div class="c-seat-viewer__block">
+        {{ field.section}} | {{ field.block}} | {{ field.row}}
+    </div>
+    <div class="c-seat-viewer__seats" *ngFor="let seats of field.seats.seatData ">{{ seats.seats }}</div>
+</div>
+<app-button type="icon" class="float-xs-right" theme="secondary" icon="more_vert" (click)="openSeatListModal()" size="lg"></app-button>
+
+<!-- {{seats.Section}} | {{ seats.Block}} | {{ seats.Row}} {{ seats.Seat}}-->

@@ -1,0 +1,217 @@
+/* --------------------------------------------------------
+version: 1.0
+last modified: 19.11.2016
+author: Abdullah Karadeniz
+----------------------------------------------------------*/
+
+
+/**
+ * Responsive Table:
+ * `.c-responsive-table` -
+
+ *     @example
+ *     .c-responsive-table
+ */
+
+$c-responsive-table: ( 
+    caption: ( color: #bdbdbd, font-family: "semi", font-size: 13px, padding-top: 0.75em, padding-bottom: 0.85em, ), 
+    footer: ( color: #3a2e39, font-family: "regular", font-size: 13px, padding-top: 0.75em, padding-bottom: 0.85em, ), 
+    primary: ( color: #3a2e39, font-family: "semi", font-size: 13px), 
+    secondary: ( color: #333333, font-family: "regular", font-size: 12px, label-min-width: 100px), 
+    row: ( background-color: #ffffff, border-color: #dcdce5, hover-color: #f7f7f7, padding-left: 10px, padding-right: 5px, padding-top: 0.9em, padding-bottom: 0.9em, margin-right: 0px, margin-left: 0px), 
+    action-btn: ( width: 27px, color: #bdbdbd),
+    sub-title: (
+        color: #928787,
+        font-family: "regular",
+        font-size: 12px,
+        label-min-width: 100px
+      ),
+);
+// Merge settings and defaults
+$c-responsive-table: map-merge($c-responsive-table, getSettingsMap("c-responsive-table"));
+// Set shortcuts
+$c-map: $c-responsive-table;
+$caption: map-get($c-map, caption);
+$primary: map-get($c-map, primary);
+$secondary: map-get($c-map, secondary);
+$action-btn: map-get($c-map, action-btn);
+$row: map-get($c-map, row);
+.c-responsive-table {
+    //clear space and vertical alignment for rows and columns
+    padding: 0px;
+    .row {
+        margin-left: 0px;
+        margin-right: 0px;
+        position: relative;
+    }
+    [class^="col-"],
+    [class*=" col-"] {
+        display: inline-block;
+        vertical-align: middle;
+        float: inherit;
+        margin-right: -0.35em;
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+        
+
+        .icon__n {
+            vertical-align: middle;
+        }
+    }
+    &--with-action-btn {
+        .c-responsive-table__row,
+        .c-responsive-table__caption {
+            padding-right: map-get($action-btn, width)!important;
+            //padding-right: 0px;
+        }
+    }
+    &__caption {
+        position: relative;
+        //border-bottom: solid 1px map-get($row, border-color);
+        padding-top: map-get($caption, padding-top);
+        padding-bottom: map-get($caption, padding-bottom);
+        padding-left: map-get($row, padding-left);
+        padding-right: map-get($row, padding-right);
+        @include ffamily(map-get($caption, font-family));
+        font-size: map-get($caption, font-size);
+        color: map-get($caption, color);
+        text-transform: uppercase;
+        //text-align: center;
+        &+.c-responsive-table__row {
+            border-top: solid 1px map-get($row, border-color);
+        }
+
+        .c-responsive-table__primary-column {
+            @include ffamily(map-deep-get($c-map, font-family));
+            font-size: map-get($caption, font-size);
+            color: map-get($caption, color);
+        }
+    }
+    &__footer {
+        position: relative;
+        padding-top: map-get($caption, padding-top);
+        padding-bottom: map-get($caption, padding-bottom);
+        padding-left: map-get($row, padding-left);
+        padding-right: map-get($row, padding-right);
+        @include ffamily(map-deep-get($c-map, footer, font-family));
+        font-size: map-deep-get($c-map, footer, font-size);
+        color: map-deep-get($c-map, footer, color);
+        text-transform: uppercase;
+        border-top: solid 1px map-get($row, border-color);
+        border-bottom: solid 1px map-get($row, border-color);
+        margin-top: 5em;
+    }
+    &__row {
+        position: relative;
+        border-bottom: solid 1px map-get($row, border-color);
+        padding-top: map-get($row, padding-top);
+        padding-bottom: map-get($row, padding-bottom);
+        padding-left: map-get($row, padding-left);
+        padding-right: map-get($row, padding-right);
+        @include transition(background-color 0.2s ease-in-out);
+        &:last-child {
+            border-bottom: none;
+        }
+        &--selected {}
+        &:hover {
+            background-color: map-get($row, hover-color);
+            @include transition(background-color 0.15s ease-out);
+        }
+        .c-responsive-table__primary-column {
+            @include ffamily(map-get($primary, font-family));
+            font-size: map-get($primary, font-size);
+            color: map-get($primary, color);
+            line-height: 0px;
+            > * { line-height: 1.2em };
+        }
+        .c-responsive-table__secondary-column {
+            @include ffamily(map-get($secondary, font-family));
+            font-size: map-get($secondary, font-size);
+            color: map-get($secondary, color);
+            line-height: 0px;
+            > * { line-height: 1.2em; }
+        }
+
+        strong, b {
+            @include ffamily('bold');
+        }
+    }
+    &__primary-column {
+        text-align: left;
+        color: map-deep-get($c-map, primary, color);
+        @include ffamily(map-deep-get($c-map, primary, font-family));
+        font-size: map-deep-get($c-map, primary, font-size);
+        line-height: 1.2em;
+    }
+    &__secondary-column {
+        //text-align: center;
+        strong, b {
+            @include ffamily('bold');
+        }
+    }
+    &__secondary-item {
+        display: block;
+        position: relative;
+        margin-top: 0.5em;
+    }
+    &__secondary-item-label {
+        display: inline-block;
+        @include ffamily(map-get($caption, font-family));
+        font-size: map-get($caption, font-size);
+        color: map-get($caption, color);
+
+        strong, b {
+            @include ffamily('bold');
+        }
+    }
+    &__secondary-item-value {
+        display: inline-block;
+        @include ffamily(map-get($secondary, font-family));
+        font-size: map-get($secondary, font-size);
+        color: map-get($secondary, color);
+
+        strong, b {
+            @include ffamily('bold');
+        }
+    }
+    &__sub-title, &__sub-title-italic {
+        display: block;
+        @include ffamily(map-deep-get($c-map, sub-title, font-family));
+        font-size: map-deep-get($c-map, sub-title, font-size);
+        color: map-deep-get($c-map, sub-title, color);
+        margin-top: 0.25em;
+    }
+
+    &__sub-title-italic {
+        @include ffamily("regular", "i");
+    }
+    &__action-btn {
+        position: absolute;
+        width: map-get($action-btn, width);
+        right: 0px;
+        cursor: pointer;
+        top: 50%;
+        color: map-get($action-btn, color);
+        font-size: map-get($action-btn, width);
+        @include transform(translateY(-50%));
+    }
+    .c-primary-column-line__border {
+        position:absolute;
+        top: -10px;
+        left:-10px;
+        display:block;
+        width:5px;
+        height:calc(100% + 20px);
+    }
+    .c-primary-column-title{
+        font-size: 13px;        
+    }
+}
+
+//Reset
+$c-map: null;
+$caption: null;
+$primary: null;
+$secondary: null;
+$row: null;
+$action-btn: null;

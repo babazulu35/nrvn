@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html class="no-js" lang="tr">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<link rel="stylesheet" href="../../../bower_components/nouislider/distribute/nouislider.min.css">
+	<link rel="stylesheet" href="../../../css/main.css">
+</head>
+<body style="padding:20px;">
+	<!-- Your Component Goes Here -->
+
+	<div id="slider" class="c-slider-input" style="margin:50px 0 100px">
+		<span id="value" class="c-slider-input__value">0</span>
+		<span class="c-slider-input__start-value">0</span>
+		<span class="c-slider-input__end-value">100</span>
+		<span class="c-slider-input__label">ETİKET</span>
+	</div>
+
+	<div id="slider01" class="c-slider-input" style="margin:100px 0">
+		<span id="value01" class="c-slider-input__value">0</span>
+		<span class="c-slider-input__start-value"><i class="icon__n icon__n--arrow_back"></i></span>
+		<span class="c-slider-input__end-value"><i class="icon__n icon__n--arrow_forward"></i></span>
+		<span class="c-slider-input__label">ASİMETRİ</span>
+	</div>
+
+	<div id="slider02" class="c-slider-input" style="margin:100px 0">
+		<span id="value02" class="c-slider-input__value">0</span>
+		<span class="c-slider-input__start-value"><i class="icon__n icon__n--rotate_left"></i></span>
+		<span class="c-slider-input__end-value"><i class="icon__n icon__n--rotate_right"></i></span>
+		<span class="c-slider-input__label">DÖNDÜR</span>
+	</div>
+
+	<div id="slider03" class="c-slider-input" style="margin:100px 0">
+		<span id="value03" class="c-slider-input__value">0</span>
+		<span class="c-slider-input__start-value"><i class="icon__n icon__n--looks"></i></span>
+		<span class="c-slider-input__end-value"><i class="icon__n icon__n--looks"></i></span>
+		<span class="c-slider-input__label">BÜK</span>
+	</div>
+
+	<div id="slider04" class="c-slider-input c-slider-input--active">
+		<span id="value04" class="c-slider-input__value">0</span>
+		<span class="c-slider-input__start-value">0</span>
+		<span class="c-slider-input__end-value">100</span>
+		<span class="c-slider-input__label">ETİKET</span>
+	</div>
+
+	<script type="text/javascript" src="../../../bower_components/nouislider/distribute/nouislider.min.js"></script>
+	<script type="text/javascript">
+
+		var slider = document.getElementById('slider');
+
+		noUiSlider.create(slider, {
+			start: [20],
+			connect: true,
+			range: {
+				'min': -100,
+				'max': 100
+			}
+		});
+
+		var directionField = document.getElementById('value');
+		slider.noUiSlider.on('update', function( values, handle ){
+			directionField.innerHTML = values[handle];
+		});
+
+
+		var slider01 = document.getElementById('slider01');
+
+		noUiSlider.create(slider01, {
+			start: [60],
+			connect: true,
+			range: {
+				'min': 0,
+				'max': 100
+			}
+		});
+
+		var directionField01 = document.getElementById('value01');
+		slider01.noUiSlider.on('update', function( values, handle ){
+			directionField01.innerHTML = values[handle];
+		});
+
+
+		var slider02 = document.getElementById('slider02');
+
+		noUiSlider.create(slider02, {
+			start: [35],
+			connect: true,
+			range: {
+				'min': 0,
+				'max': 100
+			}
+		});
+
+		var directionField02 = document.getElementById('value02');
+		slider02.noUiSlider.on('update', function( values, handle ){
+			directionField02.innerHTML = values[handle];
+		});
+
+
+		var slider03 = document.getElementById('slider03');
+
+		noUiSlider.create(slider03, {
+			start: [70],
+			connect: true,
+			range: {
+				'min': 0,
+				'max': 100
+			}
+		});
+
+		var directionField03 = document.getElementById('value03');
+		slider03.noUiSlider.on('update', function( values, handle ){
+			directionField03.innerHTML = values[handle];
+		});
+
+
+		var slider04 = document.getElementById('slider04');
+
+		noUiSlider.create(slider04, {
+			start: [20],
+			connect: true,
+			range: {
+				'min': 0,
+				'max': 100
+			}
+		});
+
+		var directionField04 = document.getElementById('value04');
+		slider04.noUiSlider.on('update', function( values, handle ){
+			directionField04.innerHTML = values[handle];
+		});
+
+
+	</script>
+
+</body>
+</html>
+<!-- End Of Html -->

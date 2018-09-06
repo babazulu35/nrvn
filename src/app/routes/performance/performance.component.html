@@ -1,0 +1,59 @@
+<app-cover-image [backgroundImage]="(performance?.Images | image) || 'assets/images/cover-image/default.jpg'" *ngIf="performance" [isCollapsed]="selectedTab?.params?.isCollapsed">
+    <div class="c-cover-image__header">
+        <app-title-switcher
+			(searchEvent)="titleSearchHandler($event)"
+			(changeEvent)="titleChangeHandler($event)"
+			(actionEvent)="titleActionHandler($event)"
+        	[title]="performance.Localization?.Tr.Name"
+			[finderTitle]="'PERFORMANS ARA'"
+			[finderSettings]='{
+				search: {
+					placeholder: "Görüntülemek istediğiniz performans adını girin",
+					feedback: {
+						title: "Aramanız ile eşleşen performans bulunamadı",
+						description: "Arama kriterini değiştirerek yeniden deneyebilir ya da yeni performans oluşturabilirsiniz.",
+						icon: {type: "icon", name: "performance"},
+						action: {action: "gotoLink", label: "YENİ PERFORMANS OLUŞTUR", params: {link: "performance/create"}}
+					}
+				}
+			}' ></app-title-switcher>
+        <div class="float-xs-right">
+			<!--<app-button [isDisabled]="true" theme="danger" [routerLink]="['/performance',performance.Id,'edit']">PERFORMANS BİLGİLERİNİ DÜZENLE</app-button>-->
+			<app-button *ngIf="'Event_Performances_Create' | authRole" [routerLink]="['/performance',performance.Id,'edit']" theme="danger">PERFORMANS BİLGİLERİNİ DÜZENLE</app-button>
+        </div>
+    </div>
+
+    <div class="c-cover-image__body">
+        <div class="row">
+			<div class="col-xs-5 padding-right-30 c-cover-image__venue-desc">
+				<p><strong class="c-cover-image__venue-desc-title">{{venue?.Localization?.Tr?.Name}}</strong></p>
+				<p>{{venue?.Localization?.Tr?.Address}}</p>
+			<!--	<p *ngIf="venue.Phone">T. {{venue.Phone | phoneFormat}}</p> -->
+			<!--	<p *ngIf="venue.WebUrl"><a target="_blank" [attr.href]="venue.WebUrl">{{venue.WebUrl}}</a></p> -->
+			</div>
+			<div class="col-xs-6 offset-xs-1">
+				<div class="c-cover-image__over-image-dates">
+					<strong class="c-cover-image__over-image-dates-day">{{performance.Date | relativeDate}}</strong>
+					<span class="c-cover-image__over-image-dates-subtitle">KAPASİTE</span>
+					<strong>{{seatStatistics?.totalCapacityCount}}</strong>
+					<span class="c-cover-image__over-image-dates-subtitle">DURUM</span>
+					<strong>{{performanceStatus[performance.Status] | enumTranslator}}</strong>
+				</div>
+				<!--end or-over-image-dates-->
+			</div>
+		</div>
+    </div>
+
+    <div class="c-cover-image__footer">
+		<app-tab-bar *ngIf="['Performance_Dashboard', 'Performance_Tickets', 'Performance_Seats', 'Performance_Comp', 'Performance_PoolComp', 'Performance_Reservations', 'Performance_GroupSales', 'Performance_Relocation', 'Performance_BulkRefund'] | authRole"
+					 theme='light'
+					 [data]="tabs"
+					 (changeEvent)="tabChangeHandler($event)">
+			<div right *ngIf="selectedTab?.params?.isCollapsed">
+				<app-button [routerLink]="['/performance',performance.Id,'edit']" theme="danger">PERFORMANS BİLGİLERİNİ DÜZENLE</app-button>
+			</div>
+		</app-tab-bar>
+    </div>
+</app-cover-image>
+
+<router-outlet></router-outlet>

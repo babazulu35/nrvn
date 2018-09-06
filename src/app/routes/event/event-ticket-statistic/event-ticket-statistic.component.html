@@ -1,0 +1,457 @@
+<app-collapsible-container theme="gray" [isAsideOpen]="true" [asideWidth]="240">
+    <div content>
+        <!--Header -->
+        <!--NG Switch Ekle-->
+        <!--<router-outlet></router-outlet>-->
+        <div class="p-header p-header--border clearfix">
+            <span style="display: inline-block;float:left;"> Bilet İstatistikleri <app-button type="icon" theme="primary" size="lg" icon="keyboard_arrow_down" (click)="openReportsMenu($event)"></app-button></span>
+            <!--Filtre Verileri için Silinmemesi Gerekir-->
+            <!-- <span style="display: inline-block;float:right;margin-right:20px;font-size:12px;margin-top:7px;"><strong>Tüm Performanslar görüntüleniyor</strong> <em>( Toplam : 5 )</em><span (click)="openChartFilterMenu($event)"> <strong style="text-decoration: underline;cursor: pointer"> Filtrele </strong> </span></span> -->
+        </div>
+
+        <div class="p-container">
+            <!-- Satış Hızı -->
+            <div class="p-group">
+                <div class="p-group__header p-group__header--border">
+                    <div class="p-group__header-bar">
+                        <div class="p-group__header-title">
+                            Satış Hızı
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-group__item padding-bottom-20 full-width" style="display: table;">
+                    <div style="display: table-cell;width:240px;float:left">
+                        <app-selectbox [value]="salesFilterBy" (changeEvent)="salesFilterBy=$event" [options]="salesFilterByOptions"></app-selectbox>
+                    </div>
+                    <div style="display: table-cell;width:140px;float:right;margin-right:10px;">
+                        <app-selectbox [value]="salesTimePeriod" (changeEvent)="salesTimePeriodChange($event)" [options]="salesTimePeriodOptions"></app-selectbox>
+                    </div>
+                    <div style="display: table-cell;width:80px;vertical-align: middle;">
+                        <app-button (click)="salesViewType='table'" style="font-size:38px;margin-top:-2px;" type="icon" icon="list"></app-button>
+                        <app-button (click)="salesViewType='graph'" style="font-size:24px;margin-top:-2px;border-top:1px solid #333;border-bottom:1px solid #333" size="lg" type="icon" icon="timeline"></app-button>
+                    </div>
+                </div>
+
+                <div class="or-index-intro" *ngIf="(salesViewType == 'table' && !salesTableData.rows) || (salesViewType == 'graph' && !salesGraphData?.length)">
+                    <figure class="or-index-intro__img"><img src="assets/images/intro/statistic-no-data.jpg" alt="" /></figure>
+                    <h2 class="or-index-intro__title">Veri bulunamadı</h2>
+                    <p class="or-index-intro__text">Arama kriterlerini değiştirerek tekrar deneyebilirsiniz.</p>
+                </div>
+
+                <app-line-chart *ngIf="salesViewType == 'graph' && salesGraphData?.length" [dataSets]="salesGraphData"></app-line-chart>
+
+                <div class="c-reports-data-table" *ngIf="salesViewType == 'table' && salesTableData.rows">
+                    <div class="c-reports-data-table-content">
+                        <table class="c-reports-data-table-date">
+                            <tr>
+                                <td class="c-reports-data-table-date-cell">
+                                    <table class="c-reports-data-table-date-label">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    <span class="c-reports-data-table-title" *ngIf="eventType == 'normal'">PERFORMANSLAR <i class="icon__n icon__n--unfold_more"></i></span>
+                                                    <span class="c-reports-data-table-title" *ngIf="eventType == 'master'">ETKİNLİKLER <i class="icon__n icon__n--unfold_more"></i></span>
+                                                </th>
+                                                <!-- <th>ÖNCE</th> -->
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let row of salesTableDataGetFilteredRows(salesTableData.rows)">
+                                                <td class="c-reports-data-table-name"><strong>{{row.Name}}</strong></td>
+                                                <!-- <td>399</td> -->
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <!-- end c-reports-data-table-date-label -->
+                                </td>
+                                <td class="c-reports-data-table-date-cell">
+                                    <table class="c-reports-data-table-date-content">
+                                        <thead>
+                                            <tr>
+                                                <th *ngFor="let label of salesTableData.labels | slice:salesTableData.start:salesTableData.end">
+                                                    {{label}}
+                                                    <!-- <i>Pzt</i> -->
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let row of salesTableDataGetFilteredRows(salesTableData.rows)">
+                                                <td *ngFor="let data of row.data | slice:salesTableData.start:salesTableData.end">
+                                                    {{data || "-"}}
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <!-- end c-reports-data-table-date-content -->
+                                    <div class="c-reports-data-table-nav">
+                                        <span class="c-reports-data-table-nav-prev" (click)="salesTableDataMovePrev()"><i class="icon__n icon__n--keyboard_arrow_left"></i></span>
+                                        <span class="c-reports-data-table-nav-next" (click)="salesTableDataMoveNext()"><i class="icon__n icon__n--keyboard_arrow_right"></i></span>
+                                    </div>
+                                </td>
+                                <td class="c-reports-data-table-date-cell">
+                                    <table class="c-reports-data-table-date-result">
+                                        <thead>
+                                            <tr>
+                                                <th>GÜN ORT.</th>
+                                                <th>TOPLAM</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let row of salesTableDataGetFilteredRows(salesTableData.rows)">
+                                                <td>{{row.total / row.data.length | number:'1.2-2'}}</td>
+                                                <td><strong>{{row.total}}</strong></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <!-- end c-reports-data-table-date-result -->
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Kapasite Bilgileri -->
+            <div class="p-group" *ngIf="capacityStatusData">
+                <div class="p-group__header">
+                    <div class="p-group__header-bar">
+                        <div class="p-group__header-title">
+                            Kapasite Bilgileri
+                        </div>
+                    </div>
+                </div>
+                <div class="c-reports-data-table margin-bottom-10">
+                    <div class="c-reports-data-table-content">
+                        <table class="c-reports-data-table__capacity">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <ng-container *ngIf="eventType == 'normal'">PERFORMANSLAR</ng-container>
+                                        <ng-container *ngIf="eventType == 'master'">ETKİNLİKLER</ng-container>
+                                    </th>
+                                    <th>UYGUN</th>
+                                    <th>SATILDI</th>
+                                    <th>DAVETİYE</th>
+                                    <th>SOSYAL REZERVE</th>
+                                    <th>REZERVE</th>
+                                    <th>BLOKE</th>
+                                    <th>İPTAL</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let row of capacityStatusData.EventCapacityStatues">
+                                    <td><strong>{{row.Name}}</strong></td>
+                                    <td>{{row.Available}}</td>
+                                    <td>{{row.Sold}}</td>
+                                    <td>{{row.Comp}}</td>
+                                    <td>{{row.SocialReserved}}</td>
+                                    <td>{{row.Reserved}}</td>
+                                    <td>{{row.Hold}}</td>
+                                    <td>{{row.Kill}}</td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td><strong>TOPLAM</strong></td>
+                                    <td><strong>{{capacityStatusData.AvailableTotal}}</strong></td>
+                                    <td><strong>{{capacityStatusData.SoldTotal}}</strong></td>
+                                    <td><strong>{{capacityStatusData.CompTotal}}</strong></td>
+                                    <td><strong>{{capacityStatusData.SocialReservedTotal}}</strong></td>
+                                    <td><strong>{{capacityStatusData.ReservedTotal}}</strong></td>
+                                    <td><strong>{{capacityStatusData.HoldTotal}}</strong></td>
+                                    <td><strong>{{capacityStatusData.KillTotal}}</strong></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gelir Dağılımı -->
+            <div class="p-group" *ngIf="netSalesTicketSoldData">
+                <div class="p-group__header">
+                    <div class="p-group__header-bar">
+                        <div class="p-group__header-title">
+                            Gelir Dağılımı
+                        </div>
+                    </div>
+                </div>
+
+                <div class="c-reports-data-table margin-bottom-10">
+                    <div class="c-reports-data-table-content">
+                        <table class="c-reports-data-table__net-sales">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th class="c-reports-data-table__net-sales-narrow-caption" *ngFor="let label of netSalesTicketSoldData.labels">{{label}}</th>
+                                    <th class="c-reports-data-table__net-sales-narrow-caption">TOPLAM</th>
+                                    <th>GELİR</th>
+                                    <th>KAMPANYA İNDİRİMİ</th>
+                                    <th>NET GELİR</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let row of netSalesTicketSoldData.rows">
+                                    <td *ngFor="let col of row" [attr.colspan]="col.colspan" [attr.rowspan]="col.rowspan" class="c-reports-data-table-{{col.class}}">
+                                        <i *ngIf="col.insideITag">{{col.Name | number:'1.2-2'}} TRY</i>
+                                        <strong *ngIf="col.insideStrongTag">{{col.Name | number:'1.2-2'}} TRY</strong>
+                                        <ng-container *ngIf="!col.insideStrongTag && !col.insideITag">
+                                            <ng-container *ngIf="col.addTRY">{{col.Name | number:'1.2-2'}} TRY</ng-container>
+                                            <ng-container *ngIf="!col.addTRY">{{col.Name}}</ng-container>
+                                        </ng-container>
+                                    </td>
+                                </tr>
+                                <!--
+                                <tr>
+                                    <td colspan="8" class="c-reports-data-table-name">Etkinlik</td>
+                                </tr>
+                                <tr>
+                                    <td class="c-reports-data-table-category">Tam</td>
+                                    <td>87</td>
+                                    <td>87</td>
+                                    <td>87</td>
+                                    <td rowspan="2" class="c-reports-data-table-line-total">597</td>
+                                    <td rowspan="2">13.325,00 TRY</td>
+                                    <td rowspan="2"><i>-123,00 TRY</i></td>
+                                    <td rowspan="2"><strong>12.092,00 TRY</strong></td>
+                                </tr>
+                                <tr>
+                                    <td class="c-reports-data-table-category">Öğrenci</td>
+                                    <td>87</td>
+                                    <td>87</td>
+                                    <td>87</td>
+                                </tr>
+                                -->
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td [attr.colspan]="netSalesTicketSoldData.labels.length + 5" class="c-reports-data-table-name">TOPLAM</td>
+                                </tr>
+                                <tr>
+                                    <td class="c-reports-data-table-category">Tüm Kategoriler</td>
+                                    <td *ngFor="let colTotal of netSalesTicketSoldData.totals.cols">{{colTotal}}</td>
+                                    <td class="c-reports-data-table-line-total">{{netSalesTicketSoldData.totals.TicketSold}}</td>
+                                    <td>{{netSalesTicketSoldData.totals.Sales | number:'1.2-2'}} TRY</td>
+                                    <td><i>{{netSalesTicketSoldData.totals.CampaingsDiscount | number:'1.2-2'}} TRY</i></td>
+                                    <td><strong>{{netSalesTicketSoldData.totals.NetSales | number:'1.2-2'}} TRY</strong></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Satış Kanalları -->
+            <div class="p-group" *ngIf="salesChannelsData?.leftSide">
+                <div class="p-group__header">
+                    <div class="p-group__header-bar">
+                        <div class="p-group__header-title">
+                            Satış Kanalları
+                        </div>
+                        <!--
+                        <i class="icon__n icon__n--list icon__n--90" (click)="salesChannelsViewType='channel'"></i>
+                        <i class="icon__n icon__n--list" (click)="salesChannelsViewType='performance'"></i>
+                        -->
+                    </div>
+                </div>
+
+                <div class="c-reports-data-table margin-bottom-10" *ngIf="salesChannelsViewType == 'channel'">
+                    <div class="c-reports-data-table-content">
+                        <table class="c-reports-data-table__sales-channel-navigation">
+                            <tr>
+                                <td class="c-reports-data-table__sales-channel-navigation-cell">
+                                    <table class="c-reports-data-table-title-list">
+                                        <tbody>
+                                            <tr [class.c-reports-data-table-line-border]="row.isLastItem" *ngFor="let row of salesChannelsData.leftSide">
+                                                <td *ngFor="let col of row.cols" [attr.rowspan]="col.rowspan" class="c-reports-data-table-{{col.class}}">
+                                                    {{col.Name || "-"}}
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <!-- end c-reports-data-table-title-list -->
+                                </td>
+
+                                <td class="c-reports-data-table__sales-channel-navigation-cell">
+                                    <div>
+                                        <table class="c-reports-data-table-list">
+                                            <thead>
+                                                <tr>
+                                                    <th *ngFor="let label of salesChannelsData.rightSide.labels | slice:salesChannelsData.start:salesChannelsData.end">
+                                                        {{label}}
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr [class.c-reports-data-table-line-border]="false" *ngFor="let row of salesChannelsData.rightSide.data">
+                                                    <td *ngFor="let data of row | slice:salesChannelsData.start:salesChannelsData.end">
+                                                        {{data || "-"}}
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!-- end c-reports-data-table-list -->
+                                    <div class="c-reports-data-table-nav">
+                                        <span class="c-reports-data-table-nav-prev" (click)="salesChannelsDataMovePrev()"><i class="icon__n icon__n--keyboard_arrow_left"></i></span>
+                                        <span class="c-reports-data-table-nav-next" (click)="salesChannelsDataMoveNext()"><i class="icon__n icon__n--keyboard_arrow_right"></i></span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="c-reports-data-table margin-bottom-10" *ngIf="salesChannelsViewType == 'performance'">
+                    <div class="c-reports-data-table-content">
+                        <table class="c-reports-data-table__sales-channel">
+                            <tbody>
+                                <tr [class.c-reports-data-table-line-border]="row.isLastItem" *ngFor="let row of salesChannelsDataByPerformance">
+                                    <td [attr.rowspan]="col.rowspan" class="c-reports-data-table-{{col.class}}" *ngFor="let col of row.cols">
+                                        {{col.Name || "-"}}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bilet Bedelleri -->
+            <div class="p-group" *ngIf="ticketPrices?.rows?.length">
+                <div class="p-group__header">
+                    <div class="p-group__header-bar">
+                        <div class="p-group__header-title">
+                            Bilet Bedelleri
+                        </div>
+                    </div>
+                </div>
+
+                <div class="c-reports-data-table" style="width:860px; margin-bottom:50px;">
+                    <div class="c-reports-data-table-content">
+                        <table class="c-reports-data-table__price">
+                            <thead>
+                                <tr>
+                                    <th colspan="3">
+                                        <span class="c-reports-data-table-title">
+                                            PERFORMANSLAR
+                                            <!-- <i class="icon__n icon__n--unfold_more"></i> -->
+                                        </span>
+                                    </th>
+                                    <th *ngFor="let col of ticketPrices.cols">{{col.Name}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr [class.c-reports-data-table-line-border]="row.isLastItem" *ngFor="let row of ticketPrices.rows">
+                                    <td
+                                        [attr.rowspan]="col.rowspan"
+                                        class="c-reports-data-table-{{col.class}}"
+                                        *ngFor="let col of row.cols">
+                                        {{col.Name}}
+                                        <!-- <strong>Two Door Cinema Club</strong> -->
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--
+    <app-no-data *ngIf="productPerformances.length == 0" style="max-width: 60%;margin-top:30px" [hasContainer]="true" [icon]='{type: "icon", name: "event"}' title="Seçtiğiniz etkinliğe ait ürün kaydı bulunamadı" description=""></app-no-data>
+    -->
+
+    <!-- /.o-collapsible-container__content -->
+    <div aside>
+        <div class="p-group" *ngIf="capacityData && netSalesData">
+            <div class="p-group__header">
+                <div class="p-group__header-bar">
+                    <div class="p-group__header-title">
+                        İLK BAKIŞ
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-group__item">
+                <div class="c-narrow-report-statistic">
+                    <app-narrow-report-chart [label]="'Etkinlik Geneli Satılan Bilet'" [data]="capacityData.NumSoldTickets" [percent]="capacityData.PercentSoldTickets" [color]="'EC4E48'" [viewType]="'progress'"></app-narrow-report-chart>
+
+                    <ul class="c-narrow-report-statistic__list  c-narrow-report-statistic__list--border">
+                        <li class="c-narrow-report-statistic__list-item">
+                            <span class="c-narrow-report-statistic__list-item-label">NET GELİR</span>
+                            <span class="c-narrow-report-statistic__list-item-value">{{netSalesData.SalesAmount | number:'1.2-2'}}</span>
+                        </li>
+                        <!-- end c-narrow-report-statistic__list -->
+
+                        <li class="c-narrow-report-statistic__list-item">
+                            <span class="c-narrow-report-statistic__list-item-label">ORT. BİLET BEDELİ</span>
+                            <span class="c-narrow-report-statistic__list-item-value">{{netSalesData.Average | number:'1.2-2'}}</span>
+                        </li>
+                        <!-- end c-narrow-report-statistic__list -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- end c-narrow-report-statistic -->
+
+        <div class="p-group" *ngIf="false">
+            <div class="p-group__header">
+                <div class="p-group__header-bar">
+                    <div class="p-group__header-title">
+                        PERFORMANSLARA GÖRE DAĞILIM
+                    </div>
+                </div>
+            </div>
+            <div class="c-narrow-report-statistic">
+
+                <div class="c-narrow-report-statistic__item">
+                    <div class="c-narrow-report-statistic__item-label">Two Door Cinema Club</div>
+                    <div class="c-narrow-report-statistic__item-progress-bar"><span class="c-narrow-report-statistic__item-progress-bar-fill" style="width:22%;background-color:#ff9aff;"></span></div>
+                    <div class="c-narrow-report-statistic__item-key">2779</div>
+                    <div class="c-narrow-report-statistic__item-value">%22</div>
+                </div>
+                <!-- end c-narrow-report-statistic__item -->
+
+                <div class="c-narrow-report-statistic__item">
+                    <div class="c-narrow-report-statistic__item-label">Man With a Plan</div>
+                    <div class="c-narrow-report-statistic__item-progress-bar"><span class="c-narrow-report-statistic__item-progress-bar-fill" style="width:33%;background-color:#54dddd;"></span></div>
+                    <div class="c-narrow-report-statistic__item-key">3334</div>
+                    <div class="c-narrow-report-statistic__item-value">%33</div>
+                </div>
+                <!-- end c-narrow-report-statistic__item -->
+
+            </div>
+        </div>
+        <!-- end c-narrow-report-statistic -->
+
+        <div class="p-group" *ngIf="transactionsData && transactionsData.length">
+            <div class="p-group__header">
+                <div class="p-group__header-bar">
+                    <div class="p-group__header-title">
+                        DİĞER BİLGİLER
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-group__item">
+                <div class="c-narrow-report-statistic" style="width:220px; margin-bottom:30px;">
+                    <ul class="c-narrow-report-statistic__list">
+                        <li class="c-narrow-report-statistic__list-item" *ngFor="let item of transactionsData">
+                            <span class="c-narrow-report-statistic__list-item-label">{{item.Name}}</span>
+                            <span class="c-narrow-report-statistic__list-item-value">{{item.Count}}</span>
+                        </li>
+                        <!-- end c-narrow-report-statistic__list -->
+                    </ul>
+                    <!-- end c-narrow-report-statistic__list-item -->
+                </div>
+            </div>
+        </div>
+        <!-- end c-narrow-report-statistic -->
+    </div>
+    <!-- /.o-collapsible-container__aside -->
+</app-collapsible-container>
+<!-- /.o-collapsible-container -->

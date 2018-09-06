@@ -1,0 +1,14 @@
+<ul class="c-vertical-kv-list__section" *ngFor="let section of sections">
+	<li class="c-vertical-kv-list__item"
+		[class.c-vertical-kv-list__item--status]="item.color"
+		[class.c-vertical-kv-list__item--refresh]="item.hasAction"
+		[class.c-vertical-kv-list__item--active]="item.isActive"
+		*ngFor="let item of section">
+		<div class="c-vertical-kv-list__item-dot">
+			<i class="c-vertical-kv-list__item-icon" [style.background-color]="'#'+item.color"></i>
+		</div>
+		<span class="c-vertical-kv-list__item-label">{{item.label}}</span>
+		<span class="c-vertical-kv-list__item-action"><a href="javascript:void(0)" (click)="emitClickEvent($event, item)" class="icon__n icon__n--replay"></a></span>
+		<span class="c-vertical-kv-list__item-value">{{item.value}}</span>
+	</li>
+</ul>

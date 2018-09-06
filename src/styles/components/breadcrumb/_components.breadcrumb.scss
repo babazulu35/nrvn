@@ -1,0 +1,62 @@
+/**
+* Tree View:
+* Author: Color Picker
+* `.c-color-picker` sınıfı ile birlikte kullanılır.
+*
+* @example
+*/
+
+// Variables
+$c-breadcrumb: ( color: #35383d, padding: 0.4em 0px, margin: 0.15em 0px 0.1em, font-size: (18 / 12) * 1em, sm:( font-size: (18 / 12) * 0.5em), lg:( font-size: (18 / 12) * 1.5em));
+// Merge settings and defaults
+$c-breadcrumb: map-merge($c-breadcrumb, getSettingsMap("c-breadcrumb"));
+// Set shortcuts
+$c-map: $c-breadcrumb;
+.c-breadcrumb {
+    position: relative;
+    display: block;
+    line-height: 1em;
+    width: 100%;
+    font-size: map-get($c-map, font-size);
+    @include ffamily("light");
+    &__sm {
+        font-size: map-deep-get($c-map, sm, font-size);
+    }
+    &__lg {
+        font-size: map-depp-get($c-map, lg, font-size);
+    }
+    &__bar {
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+        width: 100%;
+        flex: 0 0 100%;
+        table-layout: fixed;
+    }
+    &__element {
+        display: block;
+        width: inherit;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        &-item {
+            display: inline;
+            padding: map-get($c-map, padding);
+            //margin: map-deep-get($c-map, breadcrumb, margin);
+            color: map-get($c-map, color);
+            font-size: inherit;
+            line-height: 1.2em;
+            &:after {
+                margin: 0px 5px;
+                content: "/"
+            }
+            &:last-child {
+                &:after {
+                    content: "" !important
+                }
+            }
+        }
+    }
+}
+
+$c-map: null;

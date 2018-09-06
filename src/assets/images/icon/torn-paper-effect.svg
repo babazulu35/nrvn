@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="19px" height="8px" viewBox="0 0 19 8" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 41.2 (35397) - http://www.bohemiancoding.com/sketch -->
+    <title>Group</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <polyline id="path-1" points="17.9237622 3.58746525 15.9061597 16.5235483 3.10455807 18.4266949"></polyline>
+        <mask id="mask-2" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="14.8192042" height="14.8392297" fill="white">
+            <use xlink:href="#path-1"></use>
+        </mask>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group" transform="translate(-1.000000, -11.000000)">
+            <rect id="Rectangle-2" fill="#F7F7F7" x="1" y="11" width="19" height="8"></rect>
+            <use id="Rectangle" stroke="#DCDCE5" mask="url(#mask-2)" stroke-width="2" fill="#FFFFFF" transform="translate(10.514160, 11.007080) rotate(-315.000000) translate(-10.514160, -11.007080) " xlink:href="#path-1"></use>
+        </g>
+    </g>
+</svg>

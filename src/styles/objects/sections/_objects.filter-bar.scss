@@ -1,0 +1,23 @@
+// Set defaults
+$o-filter-bar: (
+  margin: map-get($l-list, margin)
+);
+
+// Merge settings and defaults
+$o-filter-bar: map-merge($o-filter-bar, getSettingsMap("o-filter-bar"));
+$o-map: $o-filter-bar;
+
+.o-filter-bar {
+  display: block;
+  margin: map-get($o-map, margin);
+  padding: 1.5em 0px 1.5em;
+
+  [class*="col-"] {
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
+    margin-right: -0.4em;;
+  }
+}
+
+$o-map: null;

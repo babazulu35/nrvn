@@ -1,0 +1,19 @@
+<div class="c-cms-field-card__bar">
+  <div *ngIf="leftIcon" class="c-cms-field-card__handle">
+    <span><app-button type="icon" [icon]="leftIcon" [isDisabled]="!isDraggable" theme="secondary"></app-button></span>
+  </div>
+  <div class="c-cms-field-card__info">
+    <span class="c-cms-field-card__icon">
+      <app-promise-icon [iconName]="cmsField?.Icon || 'do_not_disturb_alt'"></app-promise-icon>
+    </span>
+    <span class="c-cms-field-card__title">
+      {{fieldData?.Name}}
+    </span>
+    <span class="c-cms-field-card__sub-title">
+      {{fieldData?.UniqueName}}
+    </span>
+  </div>
+  <div *ngIf="contextMenuData?.length" class="c-cms-field-card__action">
+    <span><app-button (click)="openContextMenu($event)" type="icon" [icon]="'more_vert'" theme="secondary"></app-button></span>
+  </div>
+</div>

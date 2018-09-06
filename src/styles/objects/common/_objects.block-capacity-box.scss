@@ -1,0 +1,87 @@
+$oc-block-capacity-box: ( 
+    info: (
+        background-color: #F7F7F7, 
+        border-color: #DCDCE5,
+        color: #35383D,
+        padding: 15px,
+        title: (
+            font-size: 12px
+        )
+    ),
+    list: (
+        item: (
+            title: (
+                font-size: 13px
+            ),
+            capacity: (
+                font-size: 15px
+            ),
+            input: (
+                font-size: 13px
+            )
+        )
+    )
+);
+// Merge settings and defaults
+$oc-block-capacity-box: map-merge($oc-block-capacity-box, getSettingsMap("oc-block-capacity-box"));
+// Set shortcuts
+$oc-map: $oc-block-capacity-box;
+.oc-block-capacity-box {
+    display: block;
+    position: relative;
+    width: 100%;
+    height: auto;
+
+    &__info {
+        display: flex;
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+        background-color: map-deep-get($oc-map, info, background-color);
+        border: 1px solid map-deep-get($oc-map, info, border-color);
+        border-radius: 3px;
+        padding: map-deep-get($oc-map, info, padding);
+
+        &-title {
+            @include ffamily(regular);
+            font-size: map-deep-get($oc-map, info, title, font-size);
+            white-space: nowrap;
+
+            b, strong {
+                @include ffamily(bold);
+                font-size: map-deep-get($oc-map, info, title, font-size) - 1px;
+            }
+
+            > * + * {
+                margin-left: 0.3em;
+            }
+        }
+    }
+    
+
+    .c-block-capacity-list {
+        &__caption {
+            display: none;
+        }
+
+        &__item {
+            border-bottom: none;
+
+            &-title {
+                font-size: map-deep-get($oc-map, list, item, title, font-size);
+                @include ffamily(bold);
+            }
+
+            &-input {
+                font-size: map-deep-get($oc-map, list, item, input, font-size);
+            }
+
+            &-capacity {
+
+            }
+        }
+    }
+}
+
+//Reset
+$oc-map: null;

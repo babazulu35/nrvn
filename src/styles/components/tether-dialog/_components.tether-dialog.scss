@@ -1,0 +1,79 @@
+$c-tether-dialog: (
+  z-index: map-get($z-index, tether-dialog),
+  ease: getEase(out-sine)
+);
+
+// Merge settings and defaults
+$c-tether-dialog: map-merge($c-tether-dialog, getSettingsMap("c-tether-dialog"));
+
+// Set shortcuts
+$c-map: $c-tether-dialog;
+
+.c-tether-dialog {
+
+  position: fixed;
+  z-index: map-get($c-map, z-index);
+  top: 0;
+  right: 0;
+  left: 0;
+  font-size: 0px;
+
+  &--on {
+    height: 100vh;
+  }
+
+  &__content {
+    z-index: map-get($c-map, z-index) + 1;
+    max-height: 100vh;
+    min-height: 470px;
+
+    & > * {
+      display: block;
+    }
+
+    &--half {
+      width: 50vw;
+      height: 50vh;
+    }
+    &--quarter {
+      width:35vw;
+      height:50vh
+    }
+
+    &--main {
+      position: absolute;
+      left: map-deep-get($l-vars, main-menu, max-width);
+      top: map-deep-get($l-vars, header, height);
+      height: calc(100% - #{map-deep-get($l-vars, header, height)});
+      left: map-deep-get($l-vars, main-menu, max-width);
+      width: calc(100% - #{map-deep-get($l-vars, main-menu, max-width)});
+      transition: all getTransition(main-menu);
+      background: #fff;
+    }
+
+    @include animation(getAnimation(fade-in, 0.2s map-get($c-map, ease)));
+  }
+
+  &__overlay {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.65);
+    @include animation(getAnimation(fade-in, 0.4s map-get($c-map, ease)));
+  }
+
+}
+
+body.is-menu-collapsed {
+  .c-tether-dialog__content--main {
+    left: map-deep-get($l-vars, main-menu, min-width);
+    width: calc(100% - #{map-deep-get($l-vars, main-menu, min-width)});
+    transition: all getTransition(main-menu);
+  }
+}
+
+//Reset
+$c-map: null;
+$selected-size: null;

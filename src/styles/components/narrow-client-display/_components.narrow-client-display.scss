@@ -1,0 +1,97 @@
+ /**
+ * Narrow Client Display:
+ * Author: Fatih Turan
+ * `.c-narrow-client-display` sınıfı ile oluşturulur.
+ *
+ * @example
+ */
+ 
+ // Set Defaults
+ $c-narrow-client-display: ( box-filled-bg: #f7f7f7, text-color: #3a2e39, operations-icon-color: #bdbdbd, operations-icon-color-hover: darken(#bdbdbd, 10%), avatar-size: 60px, avatar-icon-size: 32px, avatar-small-size: 28px, avatar-small-icon-size: 17px, avatar-icon-color: #bdbdbd, avatar-border-color: #dcdce4, avatar-small-outer-border-size: 3px, dropcap-avatar-bg: #ee494b, dropcap-avatar-text: #fff, dropcap-avatar-text-size: 22px, );
+ // Merge settings and defaults
+ $c-narrow-client-display: map-merge($c-narrow-client-display, getSettingsMap("c-narrow-client-display"));
+ // Set shortcuts
+ $c-map: $c-narrow-client-display;
+ .c-narrow-client-display {
+     display: block;
+     position: relative;
+     padding: 24px 0 22px;
+     text-align: center;
+     border-bottom: 1px solid #dcdce4;
+ }
+ 
+ .c-narrow-client-display__avatar {
+     margin: 0 auto 10px;
+     width: map-get($c-map, avatar-size);
+     font-size: map-get($c-map, avatar-size);
+     line-height: 0;
+     .c-avatar {
+         border: 1px solid map-get($c-map, avatar-border-color);
+     }
+     .icon__n {
+         font-size: map-get($c-map, avatar-icon-size);
+         color: map-get($c-map, avatar-icon-color);
+     }
+ }
+ 
+ .c-narrow-client-display__dropcap-avatar {
+     position: relative;
+     .c-narrow-client-display__avatar {
+         font-size: map-get($c-map, avatar-small-size);
+         position: absolute;
+         left: 33px;
+         bottom: -13px;
+         background-color: #fff;
+         box-shadow: 0 0 0 map-get($c-map, avatar-small-outer-border-size) #fff;
+         .c-avatar {}
+         .icon__n {
+             font-size: map-get($c-map, avatar-small-icon-size);
+         }
+     }
+ }
+ 
+ .c-narrow-client-display__dropcap-avatar-inner {
+     .c-avatar {
+         background-color: map-get($c-map, dropcap-avatar-bg);
+         border: 0;
+     }
+     .c-avatar__letters {
+         @include ffamily("regular");
+         font-size: map-get($c-map, dropcap-avatar-text-size);
+         color: map-get($c-map, dropcap-avatar-text);
+     }
+ }
+ 
+ .c-narrow-client-display--filled {
+     background-color: map-get($c-map, box-filled-bg);
+     .c-narrow-client-display__dropcap-avatar .c-avatar {
+         box-shadow: 0 0 0 map-get($c-map, avatar-small-outer-border-size) map-get($c-map, box-filled-bg);
+     }
+ }
+ 
+ .c-narrow-client-display__text {
+     display: block;
+     font-size: 11px;
+     @include ffamily("regular");
+     color: map-get($c-map, text-color);
+     text-align: center;
+ }
+ 
+ .c-narrow-client-display__name {
+     margin-bottom: 10px;
+     font-size: 15px;
+     @include ffamily("semi");
+ }
+ 
+ .c-narrow-client-display__operations {
+     position: absolute;
+     top: 10px;
+     right: 15px;
+     span {
+         font-size: 24px;
+         color: map-get($c-map, operations-icon-color);
+         &:hover {
+             color: map-get($c-map, operations-icon-color-hover);
+         }
+     }
+ }

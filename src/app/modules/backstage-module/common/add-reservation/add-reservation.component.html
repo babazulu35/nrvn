@@ -1,0 +1,103 @@
+<app-dialog-box [isLoading]="isLoading">
+    <div #header class="c-dialog-box__header c-dialog-box__header--padding">
+        <div class="c-dialog-box__header-bar">
+            <h1 class="c-dialog-box__header-title">
+                {{title}}
+            </h1>
+            <div class="c-dialog-box__header-actions">
+                <app-button (click)="tetherService.dismiss()" type="icon" icon="close" theme="secondary"></app-button>
+            </div>
+        </div>
+        <div class="c-dialog-box__header-sticky-contents">
+            <app-wizard-header currentLevel={{currentLevelIndex+1}} totalLevel={{levels?.length}} (actionEvent)="wizardActionHandler($event)">
+                <span><strong>{{wizardHeader.currentLevel}}. Adım: </strong>{{currentLevel?.title}}</span>
+            </app-wizard-header>
+        </div>
+    </div>
+    <div #body class="c-dialog-box__body c-dialog-box__body--no-padding" [ngSwitch]="currentLevel?.key"
+        [class.c-dialog-box__body--no-scroll]="!currentLevel?.hasScroll">
+
+        <div *ngSwitchCase="'product'" class="p-container p-container--inherit">
+            <div class="oc-add-reservation__product-list">
+                <app-simple-product-list 
+                    *ngIf="productList?.length"
+                    (changeEvent)="productListHandler($event)"
+                    [selectedProductId]="product?.id"
+                    [productItems]="productList"></app-simple-product-list>
+
+                <app-no-data *ngIf="!productList?.length"
+                    [title]="'Rezervasyona uygun ürün bulunamadı'"
+                    [icon]="{type: 'svg', name: 'tickets'}" ></app-no-data>
+
+            </div>
+        </div>
+
+        <div *ngSwitchCase="'customer'" class="p-container p-container--inherit">
+
+            <app-customer-search-typeahead *ngIf="!guestFormIsOpen" 
+                (actionEvent)="customerActionHandler($event)"></app-customer-search-typeahead>
+            <app-guest-form *ngIf="guestFormIsOpen" [hasCityTown]="false" [hasIdNo]="false" [showQuickFill]="false"></app-guest-form>
+        </div>
+
+        <div *ngSwitchCase="'reservationOptions'" class="p-container p-container">
+            <div class="p-group">
+                <div class="p-group__item">
+                    <div class="p-toggle">
+                        <span class="p-toggle__label">Yapılacak rezervasyon adedini seçin</span>
+                        <span class="p-toggle__input">
+                            <app-selectbox placeholder="Seçiniz" [numberRanges]="{placeholder: 'Seçiniz', min: 1, max: 10, label:' Adet'}" [value]="reservationOptions?.Count" (changeEvent)="inputChangeHandler($event, 'Count')"></app-selectbox>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="p-group">
+                <div class="p-group__header">
+                    <div class="p-group__header-bar">
+                        <div class="p-group__header-title">
+                            Rezervasyon geçerlilik süresini seçin
+                        </div>
+                    </div>
+                </div>
+                <div class="p-group__item" *ngIf="expirationTypes">
+                    <app-radio-group 
+                        (changeEvent)="inputChangeHandler($event, 'ExpirationType')"
+                        name="ExpirationType" 
+                        [value]="reservationOptions?.ExpirationType">
+                        <div class="oc-add-reservation__table-row">
+                            <span class="oc-add-reservation__table-column-left"><app-checkbox [value]="expirationTypes[0].value" [label]="expirationTypes[0].label"></app-checkbox></span>
+                            <span class="oc-add-reservation__table-column-right"></span>
+                        </div>
+                        <div class="oc-add-reservation__table-row">
+                            <span class="oc-add-reservation__table-column-left"><app-checkbox [value]="expirationTypes[1].value" [label]="expirationTypes[1].label"></app-checkbox></span>
+                            <span class="oc-add-reservation__table-column-right" *ngIf="reservationOptions?.ExpirationType == 1"><app-selectbox placeholder="Seçiniz" [options]="hoursRange" [value]="reservationOptions?.ExpirationTime" (changeEvent)="inputChangeHandler($event, 'ExpirationTime')"></app-selectbox></span>
+                        </div>
+                        <div class="oc-add-reservation__table-row">
+                            <span class="oc-add-reservation__table-column-left"><app-checkbox [value]="expirationTypes[2].value" [label]="expirationTypes[2].label"></app-checkbox></span>
+                            <span class="oc-add-reservation__table-column-right" *ngIf="reservationOptions?.ExpirationType == 2"><app-selectbox placeholder="Seçiniz" [options]="hoursRange" [value]="reservationOptions?.ExpirationTime" (changeEvent)="inputChangeHandler($event, 'ExpirationTime')"></app-selectbox></span>
+                        </div>
+                    </app-radio-group>
+                </div>
+            </div>
+
+            <div class="p-group">
+                <div class="p-group__item">
+                    <div class="p-toggle">
+                        <span class="p-toggle__label">En uygun seçeneğe göre belirle</span>
+                        <span class="p-toggle__input">
+                            <app-checkbox type="lightswitch" (changeEvent)="inputChangeHandler($event, 'BestAvailable')" [isChecked]="reservationOptions?.BestAvailable"></app-checkbox>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--<app-reservation-settings [toggleFields]="{autoSelectFieldVisible:true}" (resultEvent)="reservationHandler($event)" *ngSwitchCase="'reservationOptions'"></app-reservation-settings>-->
+    </div>
+    <div #footer class="c-dialog-box__footer row">
+        <div class="c-dialog-box__footer-content">
+            <div class="col-xs-16">
+                <app-button (click)="submitClickHandler($event)" [isDisabled]="!isValid" theme="primary" [label]="currentLevel?.key == 'reservationOptions' ? 'REZERVASYONU TAMAMLA' : 'DEVAM ET'"></app-button>
+            </div>
+        </div>
+    </div>
+
+</app-dialog-box>

@@ -1,0 +1,23 @@
+$oc-customer-search-box: ( 
+    background-color: #ffffff, 
+    border-color: #dcdce5
+);
+// Merge settings and defaults
+$oc-customer-search-box: map-merge($oc-customer-search-box, getSettingsMap("oc-customer-search-box"));
+// Set shortcuts
+$oc-map: $oc-customer-search-box;
+.oc-customer-search-box {
+    display: block;
+    position: relative;
+    width: 100%;
+    height: auto;
+    background-color: map-get($oc-map, background-color);
+
+    &--border {
+        border: solid 1px map-get($oc-map, border-color);
+        box-shadow: 0px 0px 15px rgba(0,0,0,0.25);
+    }
+}
+
+//Reset
+$oc-map: null;

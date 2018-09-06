@@ -1,0 +1,89 @@
+/* Override Bootstrap form element styles
+*  Author: Fatih Turan
+*/
+
+// Set Defaults
+$form-elements: (
+  label-text-color: #939393,
+  label-font-size: 11px,
+  input-height: 38px,
+  input-text-color: #262126,
+  input-font-size: 15px,
+  input-border-color: #dcdce5,
+  input-border-focus-color: #359df1,
+  input-border-radius: 2px,
+  placeholder-color: #bdbdbd,
+  placeholder-text-size: 13px,
+  error-color: #e10f21,
+);
+
+// Merge settings and defaults
+$form-elements: map-merge($form-elements, getSettingsMap("form-elements"));
+
+// Set shortcuts
+$c-map: $form-elements;
+
+
+// Re-set Row Margin in Form element
+form > .row { margin-bottom: 27px }
+
+// Label
+label {
+  cursor: pointer;
+}
+
+.form-control-label {
+  @include ffamily("semi");
+  font-size: map-get($c-map, label-font-size);
+  color: map-get($c-map, label-text-color);
+  text-transform: uppercase;
+}
+
+// Input and Textarea
+input.form-control[type="text"],
+input.form-control[type="password"],
+input.form-control[type="email"],
+textarea {
+  height: map-get($c-map, input-height);
+  font-size: map-get($c-map, input-font-size);
+  @include ffamily("regular");
+  color: map-get($c-map, input-text-color);
+  border: 1px solid map-get($c-map, input-border-color);
+  border-radius: map-get($c-map, input-border-radius);
+  &:focus {
+    border: 1px solid map-get($c-map, input-border-focus-color);
+    box-shadow: none;
+  }
+  @include t--placeholder {
+    font-size: map-get($c-map, placeholder-text-size);
+    color: map-get($c-map, placeholder-color);
+  }
+}
+
+textarea {
+  height: auto;
+  min-height: 160px !important;
+}
+
+.has-danger {
+  input.form-control[type="text"],
+  input.form-control[type="password"],
+  input.form-control[type="email"],
+  textarea {
+    color: map-get($c-map, error-color);
+    border-color: map-get($c-map, error-color);
+    @include t--placeholder {
+      color: map-get($c-map, error-color);
+    };
+  }
+}
+
+// input.form-control[type="text"],
+// input.form-control[type="password"],
+// input.form-control[type="email"],
+// textarea,
+// [class*="padding-right-"] {
+//   & + .c-helper-text {
+//     margin-top: 10px
+//   }
+// }

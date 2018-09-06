@@ -1,0 +1,16 @@
+<div *ngFor="let notification of notifications" class="c-notification-bar-item c-notification-bar-item--{{notification.type}} c-notification-bar-item--{{notification.animation}}">
+    <div class="c-notification-bar-item__inner">
+        <i class="c-notification-bar-item__icon icon__n"
+        [class.icon__n--done]="notification.type == 'success'"
+        [class.icon__n--warning]="notification.type == 'warning'"
+        [class.icon__n--error]="notification.type == 'danger'"
+        ></i>
+        <span class="c-notification-bar-item__text" [innerHTML]="notification.text | sanitizeHtml"></span>
+        <span class="c-notification-bar-item__close">
+            <app-button (click)="close(notification)" 
+                theme="light" type="icon" icon="close"></app-button>
+        </span>
+    </div>
+    <div class="c-notification-bar-item__close-timer"><strong>{{notification.timer}} sn</strong> sonra kapanacak</div>
+    <!-- /.c-notification-bar__inner -->
+</div>

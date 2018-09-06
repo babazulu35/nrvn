@@ -1,0 +1,19 @@
+/**
+ *
+ * Html Unordered List
+ *
+ */
+
+ul {
+    list-style: square outside;
+}
+
+li > {
+
+    ul,
+    ol {
+        margin-left: 2 * $global-spacing-unit;
+        margin-bottom: 0;
+    }
+
+}

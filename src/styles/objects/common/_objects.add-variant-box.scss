@@ -1,0 +1,38 @@
+/* --------------------------------------------------------
+author: Abdullah Karadeniz
+----------------------------------------------------------*/
+$oc-add-variant-box: (
+	toggle: (
+        label: (
+            color: #3a2e39,
+            font-size: 13px
+        )
+    )
+);
+
+$oc-add-variant-box: map-merge($oc-add-variant-box, getSettingsMap("oc-add-variant-box"));
+$oc-map: $oc-add-variant-box;
+
+.oc-add-variant-box {
+    display: block;
+    
+    &__toggle {
+        display: inline-block;
+        
+        &-label {
+            display: inline-block;
+            @include ffamily('semi');
+            font-size: map-deep-get($oc-map, toggle, label, font-size);
+            color: map-deep-get($oc-map, toggle, label, color);
+            padding-right: 1em;
+            vertical-align: middle;
+        }
+
+        &-input {
+            display: inline-block;
+            vertical-align: middle;
+        }
+    }
+}
+
+$oc-map: null;

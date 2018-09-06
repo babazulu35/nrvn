@@ -1,0 +1,22 @@
+<app-radio-group 
+    *ngIf="productItems?.length"
+    name="productId"
+    [value]="selectedProductId"
+    (changeEvent)="radioHandler($event)">
+    <div class="c-simple-product-list__item" [class.c-simple-product-list-item--selected]="product?.selected" *ngFor="let product of productItems">
+        <div class="c-simple-product-list__item-bar" *ngIf="product">
+            <div class="c-simple-product-list-item__title">
+                <div class="c-simple-product-list-item__checkbox">
+                    <app-checkbox [value]="product?.id" type="square"></app-checkbox>
+                </div>
+                <div class="c-simple-product-list-item__title-name">{{product?.title}}</div>
+            </div>
+            <!-- end c-simple-product-list__title -->
+            <div class="c-simple-product-list-item__amount">
+                <span class="c-simple-product-list-item__amount-value">{{product?.price}} <sup>{{product?.currency}}</sup></span>
+            </div>
+            <!-- end c-simple-product-list__amount -->
+        </div>
+        <!--end c-simple-product-list__item-->
+    </div>
+</app-radio-group>

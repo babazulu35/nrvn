@@ -1,0 +1,16 @@
+ <span class="c-md-editor__input">
+    <textarea #textarea class="full-width form-control"
+        [cols]="cols"
+        [rows]="rows"></textarea>
+ </span>
+ <span *ngIf="locales?.length" class="c-md-editor__footer">
+    <span class="c-md-editor__footer-content">
+      <ng-content></ng-content>
+    </span>
+    <span *ngIf="locales?.length" class="c-md-editor__localization">
+      <span class="c-md-editor__localization-btn">
+        <app-button (clickEvent)="openLocalizationBox()" type="icon" icon="public" theme="secondary"></app-button>
+      </span>
+      <span class="c-md-editor__localization-badge">{{completedLocalizations?.length}} / {{locales?.length}}</span>
+    </span>
+  </span>

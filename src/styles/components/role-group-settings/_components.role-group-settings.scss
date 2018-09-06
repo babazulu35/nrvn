@@ -1,0 +1,93 @@
+.c-role-group-settings {
+    .c-avatar{
+        min-width: 40px !important;
+    }
+    .c-firm-search-select__list-item-type{
+        min-width: 0px !important;
+    }
+    .p-container {
+        padding: 0px 30px 30px 30px
+    }
+    .c-expandable-block__bar-center {
+        text-align: left;
+    }
+    .p-form-gorup__label {
+        @include ffamily ("semi");
+        color: #939393;
+        font-size: 11px;
+        margin-bottom: 10px;
+    }
+    .p-group__main-title {
+        @include ffamily('semi');
+        color: #333;
+        h3 {
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+    }
+    .c-firm-search-select__container {
+        border: inherit;
+    }
+    .p-group__item--noitem {
+        @include ffamily('regular', 'i');
+        color: #939393;
+    }
+    .p-form-group--black-title {
+        color: #333;
+        font-size: 12px;
+    }
+    .p-group__item--selectall {
+        text-decoration: underline;
+        display: block;
+        margin-bottom: 20px;
+        width: 100%;
+        color: #333;
+        @include ffamily('bold');
+        font-size: 12px;
+        cursor: pointer;
+    }
+    .c-role-group-role-list {
+        .p-container {
+            padding: 30px;
+            .p-group__item-element {
+                &.disabled {
+                    color: #d5d5d5;
+                }
+            }
+        }
+    }
+    &--single-check {
+        .p-group {
+            &__item {
+                display: flex;
+                margin-top: 0px;
+                align-items: center;
+                justify-content: space-between;
+                flex-direction: row;
+                flex-wrap: wrap;
+                margin-top: 0px;
+                &-element {
+                    display: flex;
+                    justify-content: flex-start;
+                    flex-direction: row;
+                    flex-wrap: wrap;
+                    align-items: center;
+                    width: 50%;
+                    margin-bottom: 10px;
+                    &.disabled {
+                        color: #939393;
+                    }
+                    //
+                }
+                &.disabled {
+                    color: #d5d5d5;
+                }
+                &-label {
+                    @include ffamily('regular');
+                    font-size: 13px;
+                    margin-left: 20px;
+                }
+            }
+        }
+    }
+}

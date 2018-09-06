@@ -1,0 +1,73 @@
+<app-no-data *ngIf="isEmpty" [hasContainer]="true" [icon]="{type: 'svg', name: 'performance'}" [iconSize]="'lg'" [action]='{label: "PERFORMANS EKLE", action:"addPerformance", params:{} }' (actionEvent)="openSearchBox($event)"></app-no-data>
+<app-container-canvas *ngIf="!isEmpty">
+  <div class="c-performance-capacity-search-select__list-container">
+    <ul #list class="c-performance-capacity-search-select__list">
+      <li 
+        *ngIf="performanceCardData" class="c-performance-capacity-search-select__list-item">
+        <app-card-item 
+          (actionEvent)="cardActionHandler($event, 'performance')"
+          [hasGoToAction]="true"
+          [data]="performanceCardData"
+          [actions]="isEditable ? [
+            {action: 'edit', label: 'Yeni Performans Ekle', icon: 'replay'},
+            {action: 'remove', label: 'Performansı Kaldır'}
+          ] : []" ></app-card-item>
+      </li>
+      <li 
+        *ngIf="venueCardData" class="c-performance-capacity-search-select__list-item">
+        <app-card-item [data]="venueCardData" 
+          (actionEvent)="cardActionHandler($event, 'venue')"
+          [hasGoToAction]="true"
+          [actions]="[]"></app-card-item>
+      </li>
+      <li 
+        *ngIf="templateCardData" class="c-performance-capacity-search-select__list-item">
+        <app-card-item [data]="templateCardData"
+          (actionEvent)="cardActionHandler($event, 'template')"
+          [hasGoToAction]="true"
+          [actions]="[]">
+          <ul *ngIf="templateCapacity?.seated || templateCapacity?.standing">
+              <li><b>KAPASİTE:</b></li>
+              <li *ngIf="templateCapacity?.seated"><b>O: </b>{{templateCapacity?.seated}}</li>
+              <li *ngIf="templateCapacity?.standing"><b>A: </b>{{templateCapacity?.standing}}</li>
+          </ul>
+        </app-card-item>
+      </li>
+      <li class="c-performance-capacity-search-select__list-item">
+        <div class="c-performance-capacity-search-select__capacity-card">
+          
+          <app-action-box *ngIf="actionBoxIsActive"
+              (actionEvent)="actionBoxHandler($event)"
+              [value]="capacity"
+              [title]="'Kapasite Ekle'"
+              [description]="'Seçtiğiniz mekan <b>sadece ayakta</b> kapasite seçimine izin vermektedir.'"
+              [input]="{placeholder: 'KAPASİTE GİR', type: 'number'}"
+              [buttons]="[
+                  {action: 'addCapacity', label: 'EKLE'}
+              ]" ></app-action-box>
+          <div *ngIf="capacity && !actionBoxIsActive" class="c-performance-capacity-search-select__capacity-card-container">
+            <div class="c-performance-capacity-search-select__capacity-card-avatar c-performance-capacity-search-select__capacity-card-avatar--border">
+              <div class="c-performance-capacity-search-select__capacity-card-capacity"><span>{{capacity}}</span><br/><small>KAPASİTE</small></div>
+            </div>
+            <div class="c-performance-capacity-search-select__capacity-card-action">
+              <app-button [isDisabled]="!capacitySelectIsEnabled" [isPromising]="isPromising" (clickEvent)="isSeatSelectionAvailable ? emitAction('openVenueEditor') : showActionBox()" theme="secondary" size="full-width">DÜZENLE</app-button>
+            </div>
+          </div>
+
+          <div *ngIf="!capacity && !actionBoxIsActive" class="c-performance-capacity-search-select__capacity-card-container">
+            <span *ngIf="!actionBoxIsActive" class="c-performance-capacity-search-select__capacity-card-add">
+              <app-button
+                (clickEvent)="isSeatSelectionAvailable ? emitAction('openVenueEditor') : showActionBox()" 
+                [isDisabled]="!capacitySelectIsEnabled"
+                type="icon" icon="add" shape="circle" theme="secondary" size="lg"></app-button>
+                <span>KAPASİTE BİLGİSİ</span><br><span>EKLE</span>
+            </span>
+          </div>
+        </div>
+      </li>
+    </ul>
+    <!--<div class="c-performance-capacity-search-select__add-button">
+        <app-button (click)="openSearchBox($event)" type="icon" icon="plus" shape="circle" theme="secondary" size="lg"></app-button>
+    </div>-->
+  </div>
+</app-container-canvas>

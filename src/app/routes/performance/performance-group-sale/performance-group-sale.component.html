@@ -1,0 +1,104 @@
+<div class="or-performance-group-sale">
+	<app-collapsible-container theme="gray" [isAsideOpen]="true" [asideWidth]="240" [isLoading]="isLoading" [hasAsideFooter]="true">
+		<div content>
+			<!--Header-->
+			<div class="p-header p-header--border">
+				<span class="margin-right-5">Grup Satış</span>
+			</div>
+
+			<div class="p-full-content">
+        		<app-venue-template-editor *ngIf="performance && isEditorEnabled"
+					role="group_sales"
+					(editorEvent)="venueEditorEventHandler($event)"
+					[performanceId]="performance?.Id" >
+				</app-venue-template-editor>
+			</div>
+		</div>
+    	<div aside>
+			<div class="p-group">
+				<!--header-->
+				<div class="p-group__header">
+					<div class="p-group__header-bar">
+						<div class="p-group__header-title">
+							İSTATİSTİKLER & BİLDİRİMLER
+						</div>
+					</div>
+				</div>
+
+				<!--item-->
+				<div class="p-group__item">
+					<app-vertical-kv-list
+						[sections]="statistics"
+					></app-vertical-kv-list>
+				</div>
+			</div>
+			
+			<!--<div class="p-group" *ngIf="selectedOnSaleSeats?.length">
+				<div class="p-group__item">
+					<app-action-box
+						[title]="selectedOnSaleSeats?.length + ' Adet Koltuk Seçtiniz'"
+						[description]="'Bu koltukları grup halinde satmak istiyor musunuz?'"
+            			[buttons]="[
+							{label: 'GRUP SATIŞ YAP', action: 'makeGroupSale', theme: 'secondary', params:{target: selectedOnSaleSeats}}
+						]"
+						(actionEvent)="actionBoxActionHandler($event)"
+					>
+					</app-action-box>
+				</div>
+			</div>-->
+
+			<div class="p-group" *ngIf="standingBlocks?.length">
+				<app-container-canvas backgroundColor="fff" textAlign="left">
+					<h4>Numarasız Koltuklar</h4>
+					<p>Ayakta bloklara ait kapasite bilgileri aşağıda listelenmiştir. Maksimum kapasite numarasız bloğun toplam kapasitesidir.</p>
+					<div class="p-group__item">
+						<app-block-capacity-list 
+							(changeEvent)="standingBlockChangeHandler($event)"
+							title="Ayakta Bloklar"
+							[items]="standingBlocks"></app-block-capacity-list>
+					</div>
+				</app-container-canvas>
+			</div>
+
+			<div class="p-group" *ngIf="isValid">
+				<!--header-->
+				<div class="p-group__header">
+					<div class="p-group__header-bar">
+						<div class="p-group__header-title">
+							SEÇİLEN KAPASİTE BİLGİLERİ
+						</div>
+					</div>
+				</div>
+
+				<!--item-->
+				<div class="p-group__item">
+					<app-vertical-kv-list
+						[sections]="selectedSeatsStatistics"
+					></app-vertical-kv-list>
+				</div>
+			</div>
+
+			<div class="p-group" *ngIf="!isValid">
+				<div class="p-group__item">
+					<app-cta-box>
+						<div class="c-cta-box c-cta-box--dark">
+							<i class="c-cta-box__icon icon__n icon__n--announcement"></i>
+							<p class="c-cta-box__content">
+								<i>Kapasite seçimi yapılmamış!</i> <br/>
+								<b>Grup satış</b> yapmak istediğiniz koltukları seçin veya kapasite bilgisi girin
+							</p>
+						</div>
+					</app-cta-box>
+				</div>
+			</div>
+		</div>
+		<div aside-footer>
+			<div class="col-xs-16">
+				<app-button
+				(clickEvent)='submit($event)'
+				[isPromising]="isLoading || isPromising" 
+				[isDisabled]="!isValid">GRUP SATIŞ YAP</app-button>
+			</div>
+		</div>
+	</app-collapsible-container>
+</div>

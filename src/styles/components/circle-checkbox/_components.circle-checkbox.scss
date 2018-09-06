@@ -1,0 +1,288 @@
+/* --------------------------------------------------------
+version: 1.0
+last modified: 19.11.2016
+author: Abdullah Karadeniz
+----------------------------------------------------------*/
+
+/**
+ * Checkbox:
+ * `.c-circle-checkbox` -
+
+ *     @example
+ *     
+ */
+
+$c-circle-checkbox: (
+  outer-radius: 20px,
+  inner-scale: 0.6em,
+  label-scale: 0.65em,
+
+  border-width: 1px,
+  checked-border-width: 2px,
+
+  sizes: (
+    sm: 0.85,
+    lg: 1.25
+  ),
+
+  themes: (
+    light: (
+      border-color: #dcdce5,
+      background-color: #ffffff,
+      checked-color: #3a2e39,
+      disabled-color: #dcdce5,
+    ),
+
+    dark: (
+      border-color: #9d9d9d,
+      background-color: #ffffff,
+      checked-color: #ffffff,
+      disabled-color: #9d9d9d
+    )
+  )
+);
+
+// Merge settings and defaults
+$c-circle-checkbox: map-merge($c-circle-checkbox, getSettingsMap("c-circle-checkbox"));
+
+// Set shortcuts
+$themes: map-get($c-circle-checkbox, themes);
+$selected-theme: map-get($themes, light);
+$c-map: $c-circle-checkbox;
+
+.c-circle-checkbox {
+  display: flex;
+  position: relative;
+  margin-bottom: 0px;
+  align-content: center;
+  align-items: center;
+  justify-content: flex-start;
+
+  font-size: map-get($c-map, outer-radius);
+
+  &--sm {
+    font-size: map-get($c-map, outer-radius) * map-deep-get($c-map, sizes, sm);
+  }
+
+  &--lg {
+    font-size: map-get($c-map, outer-radius) * map-deep-get($c-map, sizes, lg);
+  }
+
+  &--autosize {
+    font-size: inherit;
+  }
+
+  &--align-middle {
+    align-items: center;
+  }
+
+  &--align-top {
+    align-items: flex-start;
+    // .c-circle-checkbox__indicator {
+    //   vertical-align: top;
+    //   margin-top: 3px;
+    // }
+  }
+
+  &--align-bottom {
+    align-items: flex-end;
+    // .c-circle-checkbox__indicator {
+    //   vertical-align: bottom;
+    //   margin-bottom: 3px;
+    // }
+  }
+
+  input[type="checkbox"],
+  input[type="radio"] {
+    position: absolute;
+    z-index: 2;
+    font-size: inherit;
+    line-height: 0px;
+    width: 1em;
+    height: 1em;
+    left: 0px;
+    top: 0px;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  &__indicator {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    position: relative;
+    font-size: inherit;
+    line-height: 0px;
+    width: 1em;
+    height: 1em;
+    vertical-align: middle;
+    //margin-right: -0.25em;
+  }
+
+  &__label {
+    display: inline-block;
+    @include ffamily('regular');
+    font-size: map-get($c-map, label-scale);
+    margin-top: map-get($c-map, label-scale)/5;
+    width: calc(100% - #{1em / map-get($c-map, label-scale)}em);
+    padding-left: map-get($c-map, label-scale);
+    vertical-align: middle;
+    color: map-get($selected-theme, checked-color);
+  }
+
+  &__indicator:before {
+      content: "";
+      position: absolute;
+      z-index: 0;
+      font-size: inherit;
+      line-height: 0px;
+      width: 1em;
+      height: 1em;
+      top: 0px;
+      left: 0px;
+      border: solid map-get($c-map, border-width) map-get($selected-theme, border-color);
+      @include border-radius(50%);
+      @include transition(border 0.4s ease-out);
+  }
+
+  input[type="checkbox"]:not(:disabled),
+  input[type="radio"]:not(:disabled) {
+      &~span {
+          cursor: pointer;
+      }
+  }
+
+  input[type="checkbox"]:focus,
+  input[type="radio"]:focus {
+    &~ .c-circle-checkbox__indicator:before {
+        border: solid map-get($c-map, border-width) map-get($selected-theme, checked-color);
+        @include transition(border 0.2s ease-in-out);
+    }
+  }
+
+  input[type="checkbox"]:not(:checked):not(:disabled),
+  input[type="radio"]:not(:checked):not(:disabled) {
+    &:hover {
+      &~ .c-circle-checkbox__indicator:before {
+        border: solid map-get($c-map, border-width) map-get($selected-theme, checked-color);
+        @include transition(border 0.2s ease-in-out);
+      }
+    }
+
+    &:active {
+      &~ .c-circle-checkbox__indicator:before {
+        border: solid map-get($c-map, border-width) map-get($selected-theme, border-color);
+        @include transition(border 0.1s ease-in-out);
+      }
+    }
+  }
+
+  input[type="checkbox"]:checked,
+  input[type="radio"]:checked {
+
+    &~ .c-circle-checkbox__indicator:before {
+      border: solid map-get($c-map, checked-border-width) map-get($selected-theme, checked-color);
+      @include transition(border 0.15s cubic-bezier(0.175, 0.885, 0.320, 1.275));
+    }
+    &~ .c-circle-checkbox__indicator:after {
+      content: "";
+      position: absolute;
+      font-size: map-get($c-map, inner-scale);
+      width: 1em;
+      height: 1em;
+      background-color: map-get($selected-theme, checked-color);
+      left: 0px;
+      top: 0px;
+      @include transform(translateX((1em / map-get($c-map, inner-scale) - 1em) / 2) translateY((1em / map-get($c-map, inner-scale) - 1em) / 2));
+      @include border-radius(0.5em);
+
+      transform-origin: 1em 1em;
+      @include animation("zoomIn" 0.3s);
+    }
+  }
+
+  input[type="checkbox"]:disabled,
+  input[type="radio"]:disabled {
+    display: none;
+    &~span {
+        cursor: not-allowed;
+    }
+    &~ .c-circle-checkbox__label {
+      color: map-get($selected-theme, disabled-color);
+    }
+    &~ .c-circle-checkbox__indicator:before {
+      border: solid map-get($c-map, border-width) map-get($selected-theme, disabled-color);
+    }
+    &~ .c-circle-checkbox__indicator:after {
+      background-color: map-get($selected-theme, disabled-color);
+    }
+  }
+
+
+  //SET THEMES
+  &--dark {
+    $selected-theme: map-get($themes, dark);
+    .c-circle-checkbox__label {
+      color: map-get($selected-theme, checked-color) !important;
+    }
+
+    .c-circle-checkbox__indicator:before {
+      border: solid map-get($c-map, border-width) map-get($selected-theme, border-color) !important;
+    }
+
+    .c-circle-checkbox__indicator:after {
+      background-color: map-get($selected-theme, checked-color) !important;
+    }
+
+    input[type="checkbox"]:focus {
+        &~ .c-circle-checkbox__indicator:before {
+          border: solid map-get($c-map, border-width) map-get($selected-theme, checked-color) !important;
+        }
+    }
+
+    input[type="checkbox"]:not(:checked):not(:disabled) {
+      &:hover {
+        &~ .c-circle-checkbox__indicator:before {
+          border: solid map-get($c-map, border-width) map-get($selected-theme, checked-color) !important;
+        }
+      }
+
+      &:active {
+        &~ .c-circle-checkbox__indicator:before {
+          border: solid map-get($c-map, border-width) map-get($selected-theme, border-color) !important;
+        }
+      }
+    }
+
+    input[type="checkbox"]:checked,
+    input[type="radio"]:checked {
+      &~ .c-circle-checkbox__indicator:before {
+        border: solid map-get($c-map, checked-border-width) map-get($selected-theme, checked-color) !important;
+      }
+
+      &~ .c-circle-checkbox__indicator:after {
+        background-color: map-get($selected-theme, checked-color) !important;
+      }
+    }
+
+    input[type="checkbox"]:disabled,
+    input[type="radio"]:disabled
+    {
+      display: none;
+      &~ .c-circle-checkbox__label {
+        color: map-get($selected-theme, disabled-color) !important;
+      }
+      &~ .c-circle-checkbox__indicator:before {
+        border: solid map-get($c-map, border-width) map-get($selected-theme, disabled-color) !important;
+      }
+      &~ .c-circle-checkbox__indicator:after {
+        background-color: map-get($selected-theme, disabled-color) !important;
+      }
+    }
+  }
+}
+
+//Reset
+$themes: null;
+$selected-theme: null;
+$c-map: null;

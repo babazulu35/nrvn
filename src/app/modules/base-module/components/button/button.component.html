@@ -1,0 +1,25 @@
+<span class="c-button__wrapper" [ngSwitch]="type">
+  <app-promise-icon
+    *ngSwitchCase="'icon'"
+    [iconName]="icon"
+    [isPromising]="isPromising"
+    size="autosize"
+  ></app-promise-icon>
+
+  <span *ngSwitchCase="'link'" class="c-button__link">
+    <ng-content select="[left]"></ng-content><a href="javascript:void(0)"><span class="c-button__link-label">{{label}}</span></a><ng-content select="[right]"></ng-content>
+  </span>
+
+  <button type="button"
+    *ngSwitchDefault
+    [disabled]='disabled'
+    >
+    <ng-template [ngIf]="label">
+      <span *ngIf="!isPromising">{{label}}</span><app-promise-icon *ngIf="isPromising" [isPromising]="isPromising"></app-promise-icon>
+    </ng-template>
+    <ng-template [ngIf]="!label">
+      <span *ngIf="!isPromising"><ng-content></ng-content></span><app-promise-icon *ngIf="isPromising" [isPromising]="isPromising"></app-promise-icon>
+    </ng-template>
+  </button>
+
+</span>

@@ -1,0 +1,66 @@
+.or-venue-events {
+  .o-cover-image__button {
+    float: right;
+  }
+
+  .o-cover-image__button {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    .btn-secondary {
+      background-color: #ec4e48;
+      border-color: #ec4e48;
+    }
+  }
+
+  .o-cover-image-tab-bar {
+    position: relative;
+    bottom: 0;
+  }
+
+  .o-venue-search {
+    position: relative;
+    left: 20px;
+
+    .c-header-search-bar {
+      padding-bottom: 20px;
+    }
+  }
+}
+
+.o-search-filter {
+  margin: 0 25px 5px;
+
+  .c-selectbox {
+    margin-right: 15px;
+  }
+}
+
+.o-venue-description {
+  @include ffamily('regular');
+  font-size: 13px;
+  line-height: 19px;
+
+  p + p {
+    margin-top: 5px;
+  }
+
+  .icon__n--more_horiz {
+    vertical-align: text-top;
+    font-size: 27px;
+  }
+}
+
+.o-social-links {
+  margin-top: 20px;
+  .icon__n {
+    font-size: 22px;
+    & + .icon__n {
+      margin-left: 3px;
+    }
+  }
+}
+
+.or-list-view-venue-events .c-primary-column-line__select .c-circle-checkbox {
+  display: table-cell;
+}

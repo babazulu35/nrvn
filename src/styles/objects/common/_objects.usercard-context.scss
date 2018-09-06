@@ -1,0 +1,45 @@
+$c-usercard-context__view: ( padding: 18px, text-color: #3a2e39, gray-color: #9d9d9d);
+// Merge settings and defaults
+$c-usercard-context__view: map-merge($c-usercard-context__view, getSettingsMap("c-usercard-context__view"));
+// Set shortcuts
+$c-map: $c-usercard-context__view;
+.c-usercard-context__view {
+    position: relative;
+    padding: map-get($c-map, padding);
+    background: #ffffff;
+    border: 1px solid #bdbdbd;
+    box-shadow: 0px 0.25em 10px rgba(0, 0, 0, 0.1);
+    min-width: 260px;
+    &-info {
+        display: table;
+        width: 100%;
+    }
+    &-avatar {
+        width: 40px;
+        display: table-cell;
+        vertical-align: middle;
+        .c-avatar {
+            font-size: 40px !important;
+            vertical-align: middle;
+        }
+    }
+    &-name {
+        display: table-cell;
+        vertical-align: middle;
+        padding-left: 10px;
+        font-size: 15px;
+        @include ffamily("semi");
+        color: map-get($c-map, text-color);
+        i {
+            vertical-align: bottom;
+            font-size: 24px;
+            color: map-get($c-map, gray-color);
+        }
+        span {
+            display: block;
+            margin-top: 3px;
+            font-size: 11px;
+            @include ffamily("regular");
+        }
+    }
+}

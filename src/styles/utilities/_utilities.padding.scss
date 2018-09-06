@@ -1,0 +1,54 @@
+$padding-properties:( display: inline-block, inline-space-fix: -4px, );
+$i: 0;
+@while $i < 101 {
+    .padding-#{$i} {
+        display: map-get($padding-properties, display);
+        padding: unquote('#{$i}px') !important;
+        margin-right: map-get($padding-properties, inline-space-fix);
+    }
+    .padding-side-#{$i} {
+        display: map-get($padding-properties, display);
+        padding-left: unquote('#{$i}px') !important;
+        padding-right: unquote('#{$i}px') !important;
+        margin-right: map-get($padding-properties, inline-space-fix);
+    }
+    .padding-left-#{$i} {
+        display: map-get($padding-properties, display);
+        padding-left: unquote('#{$i}px') !important;
+        margin-right: map-get($padding-properties, inline-space-fix);
+    }
+    .padding-top-#{$i} {
+        display: map-get($padding-properties, display);
+        padding-top: unquote('#{$i}px') !important;
+        margin-right: map-get($padding-properties, inline-space-fix);
+    }
+    .padding-right-#{$i} {
+        display: map-get($padding-properties, display);
+        padding-right: unquote('#{$i}px') !important;
+        margin-right: map-get($padding-properties, inline-space-fix);
+    }
+    .padding-bottom-#{$i} {
+        display: map-get($padding-properties, display);
+        padding-bottom: unquote('#{$i}px') !important;
+        margin-right: map-get($padding-properties, inline-space-fix);
+    }
+    .overelement-#{$i} {
+        margin-top: unquote('-#{$i}px') !important;
+        padding-top:15px;
+        padding-bottom:15px;
+    }
+    @if($i >= 10) {
+        $i: $i+5;
+    }@else{
+        $i: $i+1;
+    }
+    
+}
+
+.padding-clear-lr {
+    padding-left: 0;
+    padding-right: 0;
+}
+.padding-clear {
+    padding: 0;
+}

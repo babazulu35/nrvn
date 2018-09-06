@@ -1,0 +1,56 @@
+image: node:9
+options:
+  max-time: 20
+pipelines:
+  branches:
+    development:
+      - step:
+         caches:
+          - node
+         script:
+          - npm install
+          - npm run build-test
+         artifacts:
+          - dist/**
+      - step:
+         script:
+          - apt-get update
+          - apt-get -qq install lftp
+          - cd dist/
+          - lftp -d -e "mirror --no-perms -R . site/wwwroot/ ; quit" -u $ENV_TEST_FTP_USER,$ENV_TEST_FTP_PASS ftp://$ENV_TEST_FTP_HOST
+          - echo "Deploy OK"
+         deployment: test
+    master:
+      - step:
+         caches:
+          - node
+         script:
+          - npm install
+          - npm run build-preprod
+         artifacts:
+          - dist/**
+      - step:
+         script:
+          - apt-get update
+          - apt-get -qq install lftp
+          - cd dist/
+          - lftp -d -e "mirror --no-perms -R . site/wwwroot/ ; quit" -u $ENV_PREPROD_FTP_USER,$ENV_PREPROD_FTP_PASS ftp://$ENV_PREPROD_FTP_HOST
+          - echo "Deploy OK"
+         deployment: staging
+    helium-reservation:
+      - step:
+         caches:
+          - node
+         script:
+          - npm install
+          - node node_modules/@angular/cli/bin/ng build -e test -bh /nirvana/
+         artifacts:
+          - dist/**
+      - step:
+         script:
+          - apt-get update
+          - apt-get -qq install lftp
+          - cd dist/
+          - lftp -d -e "mirror --no-perms -R . /srv/users/brew-test/apps/brew-test-env/public/nirvana/ ; quit" -u $ENV_TEST2_FTP_USER,$ENV_TEST2_FTP_PASS sftp://$ENV_TEST2_FTP_HOST
+          - echo "Deploy OK"
+         deployment: test

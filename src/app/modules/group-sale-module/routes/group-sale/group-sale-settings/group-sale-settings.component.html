@@ -1,0 +1,201 @@
+<div class="or-group-sale-settings">
+    <div class="p-header-bar" sticky sticky-main-scroller sticky-release-offset="30" sticky-height-property="55" sticky-width-property="100%" sticky-follow-menu-moves>
+        <div class="p-header-bar__left">
+            <app-button theme="primary" icon="keyboard_arrow_left" shape="rounded" type="icon" size="md" (clickEvent)="backClickHandler($event)"></app-button>
+            <h1>Grup Satış Yap</h1>
+        </div>
+  
+        <div class="p-header-bar__right">
+            <app-button (clickEvent)='submitClickHandler($event)' [isDisabled]="!isValid || isLoading">KAYDET</app-button>
+            <!-- <app-button (clickEvent)='exit($event)' type="icon" icon="close" theme="secondary"></app-button> -->
+        </div>
+    </div>
+  
+    <app-collapsible-container [isLoading]="isLoading || !performance" [asideWidth]="240" [asideHasNoPadding]="true" [isAsideOpen]="true">
+        <div content>
+          <div class="p-container">
+            <div class="p-group">
+              <div class="p-group__item">
+                  <app-helper-text *ngIf="groupSaleCreate?.ReservationCode" type="info" [text]="'Rezervasyon kodu ile grup satış işleminde müşteri değiştirlemez. Rezervasyon Kodu: <b>' + groupSaleCreate?.ReservationCode + '</b>'"></app-helper-text>
+                  <app-customer-card-list 
+                      (changeEvent)="customersChangeHandler($event)"
+                      (csvChangeEvent)="csvChangeHandler($event)"
+                      [allowMultipleCustomer]="false"
+                      [readonly]="groupSaleCreate?.ReservationCode != null"
+                      [customers]="customers" 
+                      [csvValidateFile]="csvValidateFile"></app-customer-card-list>
+              </div>
+            </div>
+
+            <div class="p-group" *ngIf="productBlockCapacities">
+              <div class="p-group__header" *ngIf="!rsvpOptions">
+                <div class="p-group__header-bar">
+                  <div class="p-group__header-title">
+                    Seçim Özeti
+                  </div>
+                </div>
+              </div>
+  
+              <div class="p-group__item">
+                <app-container-canvas>
+                  <div class="c-container-canvas__content c-container-canvas__content--wide">
+                    <div class="p-group">
+                      <div class="p-group__item" *ngIf="totalSeatCount || totalStandingSeatCount">
+                        <h3><b *ngIf="totalSeatCount">{{totalSeatCount}} adet numaralı</b><b *ngIf="totalSeatCount && totalStandingSeatCount">, </b><b *ngIf="totalStandingSeatCount">{{totalStandingSeatCount}} adet numarasız</b> koltuk seçtiniz.</h3>
+                      </div>
+                      <div class="p-group__item">
+                        <app-responsive-table>
+                          <div class="c-responsive-table__caption row">
+                            <div class="c-responsive-table__primary-column col-lg-6">
+                                <span>ÜRÜN ADI</span>
+                            </div>
+                            <div class="c-responsive-table__secondary-column col-lg-10">
+                              <span class="col-lg-5">VARYANT</span>
+                              <span class="col-lg-4">BİRİM BEDEL</span>
+                              <span class="col-lg-3">ADET</span>
+                              <span class="col-lg-4">TOPLAM BEDEL</span>
+                            </div>
+                          </div>
+
+                          <div class="c-responsive-table__row row" *ngFor="let selectedSeatsProduct of selectedSeatsProducts">
+                            <div class="c-responsive-table__primary-column col-lg-6">
+                              <span>{{selectedSeatsProduct?.product?.Localization?.Name}}</span>
+                            </div>
+                            <div class="c-responsive-table__secondary-column col-lg-10">
+                              <span class="col-lg-5">
+                                <app-selectbox [options]="selectedSeatsProduct?.variantList" [value]="selectedSeatsProduct?.variant" (changeEvent)="variantChangeHandler($event)"></app-selectbox>
+                              </span>
+                              <span class="col-lg-4">
+                                {{selectedSeatsProduct?.variant?.DefaultPrice | number:'1.2-2'}}<sup>{{defaultCurrencyCode}}</sup>
+                              </span>
+                              <span class="col-lg-3">
+                                  {{selectedSeatsProduct?.count}}
+                              </span>
+                              <span class="col-lg-4">
+                                <b>{{selectedSeatsProduct?.totalAmount | number:'1.2-2'}}<sup>{{defaultCurrencyCode}}</sup></b>
+                              </span>
+                            </div>
+                          </div>
+
+                          <div class="c-responsive-table__footer row">
+                            <div class="c-responsive-table__primary-column col-lg-6">
+                                <span>TOPLAM</span>
+                            </div>
+                            <div class="c-responsive-table__secondary-column col-lg-10">
+                              <span class="col-lg-5"></span>
+                              <span class="col-lg-4"></span>
+                              <span class="col-lg-3">{{(totalSeatCount + totalStandingSeatCount) || ''}}</span>
+                              <span class="col-lg-4 p-amount">{{realTotalAmount?.product | number:'1.2-2'}}<sup>{{defaultCurrencyCode}}</sup></span>
+                            </div>
+                          </div>
+
+                        </app-responsive-table>
+                      </div>
+                    </div>
+                  </div>
+                </app-container-canvas>
+              </div>
+            </div>
+
+            <div class="p-group" *ngIf="productBlockCapacities">
+              <div class="p-group__header" *ngIf="!rsvpOptions">
+                <div class="p-group__header-bar">
+                  <div class="p-group__header-title">
+                    Grup Satış Ayarları
+                  </div>
+                </div>
+              </div>
+  
+              <div class="p-group__item">
+                <app-container-canvas>
+                  <div class="c-container-canvas__content c-container-canvas__content--wide">
+                    <div class="p-group">
+                      <div class="p-group__item">
+                        <app-responsive-table>
+                          <div class="c-responsive-table__caption row">
+                            <div class="c-responsive-table__primary-column col-lg-4"></div>
+                            <div class="c-responsive-table__secondary-column col-lg-12">
+                              <span class="col-lg-4 text-xs-right">GERÇEK BEDELLER</span>
+                              <span class="col-lg-2"></span>
+                              <span class="col-lg-4">İNDİRİMLİ BEDEL</span>
+                              <span class="col-lg-6"></span>
+                            </div>
+                          </div>
+                          
+                          <!--Toplam ürün bedeli-->
+                          <div class="c-responsive-table__row row">
+                            <div class="c-responsive-table__primary-column col-lg-4"><span>Toplam Ürün Bedeli<sup>*</sup></span></div>
+                            <div class="c-responsive-table__secondary-column col-lg-12">
+                              <span class="col-lg-4 text-xs-right p-amount p-secondary">{{realTotalAmount?.product | number:'1.2-2'}}<sup>{{defaultCurrencyCode}}</sup></span>
+                              <span class="col-lg-2 p-icon"><app-promise-icon iconName="arrow_forward"></app-promise-icon></span>
+                              <span class="col-lg-4"><app-text-input [isFlex]="true" type="price" [value]="discountedTotalAmount?.product" (changeEvent)="inputChangeHandler($event, 'product', discountedTotalAmount)"><span class="c-text-input__suffix"><span class="c-text-input__suffix-label">{{defaultCurrencyCode}}</span></span></app-text-input></span>
+                              <span class="col-lg-6 text-xs-right p-status" [innerHTML]="getAmountStatus('product')"></span>
+                            </div>
+                          </div>
+
+                          <!--Toplam biletleme bedeli-->
+                          <div class="c-responsive-table__row row">
+                            <div class="c-responsive-table__primary-column col-lg-4"><span>Toplam Biletleme Bedeli<sup>*</sup></span></div>
+                            <div class="c-responsive-table__secondary-column col-lg-12">
+                              <span class="col-lg-4 text-xs-right p-amount p-secondary">{{realTotalAmount?.ticketing | number:'1.2-2'}}<sup>{{defaultCurrencyCode}}</sup></span>
+                              <span class="col-lg-2 p-icon"><app-promise-icon iconName="arrow_forward"></app-promise-icon></span>
+                              <span class="col-lg-4"><app-text-input [isFlex]="true" type="price" [value]="discountedTotalAmount?.ticketing" (changeEvent)="inputChangeHandler($event, 'ticketing', discountedTotalAmount)"><span class="c-text-input__suffix"><span class="c-text-input__suffix-label">{{defaultCurrencyCode}}</span></span></app-text-input></span>
+                              <span class="col-lg-6 text-xs-right p-status" [innerHTML]="getAmountStatus('ticketing')"></span>
+                            </div>
+                          </div>
+
+                          <!--Toplam hizmet bedeli-->
+                          <div class="c-responsive-table__row row">
+                            <div class="c-responsive-table__primary-column col-lg-4"><span>Toplam Hizmet Bedeli<sup>*</sup></span></div>
+                            <div class="c-responsive-table__secondary-column col-lg-12">
+                              <span class="col-lg-4 text-xs-right p-amount p-secondary">{{realTotalAmount?.service | number:'1.2-2'}}<sup>{{defaultCurrencyCode}}</sup></span>
+                              <span class="col-lg-2 p-icon"><app-promise-icon iconName="arrow_forward"></app-promise-icon></span>
+                              <span class="col-lg-4"><app-text-input [isFlex]="true" type="price" [value]="discountedTotalAmount?.service" (changeEvent)="inputChangeHandler($event, 'service', discountedTotalAmount)"><span class="c-text-input__suffix"><span class="c-text-input__suffix-label">{{defaultCurrencyCode}}</span></span></app-text-input></span>
+                              <span class="col-lg-6 text-xs-right p-status" [innerHTML]="getAmountStatus('service')"></span>
+                            </div>
+                          </div>
+
+                          <!--Toplam bedel-->
+                          <div class="c-responsive-table__row row">
+                            <div class="c-responsive-table__primary-column col-lg-4"><span>Toplam Bedeli</span></div>
+                            <div class="c-responsive-table__secondary-column col-lg-12">
+                              <span class="col-lg-4 text-xs-right p-amount p-secondary">{{realTotalAmount?.result | number:'1.2-2'}}<sup>{{defaultCurrencyCode}}</sup></span>
+                              <span class="col-lg-2 p-icon"><app-promise-icon iconName="arrow_forward"></app-promise-icon></span>
+                              <span class="col-lg-4 p-amount text-xs-right"><span *ngIf="discountedTotalAmount?.result >= 0">{{discountedTotalAmount?.result | number:'1.2-2'}}<sup>{{defaultCurrencyCode}}</sup></span></span>
+                              <span class="col-lg-6 text-xs-right p-status" [innerHTML]="getAmountStatus('result')"></span>
+                            </div>
+                          </div>
+
+                          <div class="c-responsive-table__footer row">
+                            <div class="c-responsive-table__primary-column col-lg-4">
+                                <span>Fatura No<sup>*</sup></span>
+                            </div>
+                            <div class="c-responsive-table__secondary-column col-lg-12">
+                              <span class="col-lg-10 text-xs-left">
+                                <app-text-input [value]="groupSaleCreate?.InvoiceNo" (changeEvent)="inputChangeHandler($event, 'InvoiceNo', groupSaleCreate)"></app-text-input>
+                              </span>
+                              <span class="col-lg-6"></span>
+                            </div>
+                          </div>
+
+                        </app-responsive-table>
+                      </div>
+                    </div>
+                  </div>
+                </app-container-canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <div aside>
+          <div class="p-container">
+            
+            <div class="p-group">
+              <app-card-item [actions]="null" [data]="{entryType: 'performance', model: performance }"></app-card-item>
+            </div>
+
+          </div>
+        </div>
+    </app-collapsible-container>
+  </div>

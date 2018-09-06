@@ -1,0 +1,7 @@
+// Section Genel Değişkenleri
+$section-margin:90px; // not standart bir değerse ve birden fazla yerde aynı aralık kullanılıyorsa globalden çağrılabilinir
+
+
+section {
+	margin-left:$section-margin;
+}

@@ -1,0 +1,27 @@
+<div class="c-action-box__title" *ngIf="title" [innerHTML]="title | sanitizeHtml"></div>
+<div class="c-action-box__text"  *ngIf="description" [innerHTML]="description | sanitizeHtml"></div>
+<div class="c-action-box__input" *ngIf="input">
+   <input #actionInput
+      [type]="input?.type"
+      [required]="input?.required"
+      [(ngModel)]="value"
+      [placeholder]="input?.placeholder"
+      [min]="input?.min"
+      [max]="input?.max"
+      [tabindex]="readonly ? -1 : 0"
+      (focus)="inputFocusHandler($event)"
+      (focusout)="inputFocusOutHandler($event)"
+      (keyup.enter)="inputEnterHandler($event)"
+      (keyup.escape)="inputEscapeHandler($event)">
+</div>
+<div class="c-action-box__buttons">
+  <div class="c-action-box__button" *ngFor="let button of buttons">
+    <app-button 
+      (clickEvent)="buttonClickHandler(button, $event)"
+      [theme]="button?.theme || 'secondary'" 
+      [label]="button?.label"
+      [isDisabled]="!this.input ? false : !inputIsValid"
+      [isPromising]="button?.isPromising || isPromising"
+      size="full-width"></app-button>
+  </div>
+</div>

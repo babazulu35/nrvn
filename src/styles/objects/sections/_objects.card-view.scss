@@ -1,0 +1,149 @@
+// $cardview: ( cardview-container: ( max-width:1660px, padding-bottom:25px, margin:0 auto, padding: 30px 20px), cardview-content-item: ( height:352px, width:202px,
+// /*margin:0px 10px 20px 10px,*/
+// border-radius:4, floatposition:left), cardview-content-footer: ( width:100%, height:auto, display: block, floatposition:left, border: 1px solid #ccc, padding:20px 0px, ), cardview-checkbox: ( position:absolute, top:10px, left:10px, display:none, right:auto, bottom:auto, z-index: 1025), multi-selection:( top:0px, left:auto, width: 100%, right:0, bottom:auto, z-index: 1024, display: none, ));
+// /*     position:absolute,
+//       top:130px, 
+//       left:auto, 
+//       width: 100%, 
+//       right:0, 
+//       bottom:auto, 
+//       z-index: 1024, 
+//       display: none,*/
+// $cardview: map-merge($cardview, getSettingsMap("cardview"));
+// .o-card-container {
+//     $cardview-container: map-get($cardview, "cardview-container");
+//     max-width: map-get($cardview-container, 'max-width');
+//     padding-bottom: map-get($cardview-container, 'padding-bottom');
+//     margin: map-get($cardview-container, 'margin');
+//     padding-left: 10px;
+//     padding-right: 10px;
+//     position: relative;
+//     &__multi-selection-bar {
+//         position: relative;
+//         z-index: 1;
+//         top: 0px;
+//         left: 0px;
+//         width: 100%;
+//     }
+//     &__content {
+//         padding: map-get($cardview-container, 'padding');
+//     }
+// }
+// .o-card-view__item {
+//     $cardview-content-item: map-get($cardview, "cardview-content-item");
+//     display: map-get($cardview-content-item, 'display');
+//     height: map-get($cardview-content-item, 'height');
+//     width: map-get($cardview-content-item, 'width');
+//     margin: map-get($cardview-content-item, 'margin');
+//     float: map-get($cardview-content-item, 'floatposition');
+// }
+// .o-card-view__footer {
+//     $cardview-content-footer: map-get($cardview, "cardview-content-footer");
+//     width: map-get($cardview-content-footer, "width");
+//     display: map-get($cardview-content-footer, "display");
+//     height: map-get($cardview-content-footer, "height");
+//     float: map-get($cardview-content-footer, "floatposition");
+//     border-top: map-get($cardview-content-footer, "border");
+//     padding: map-get($cardview-content-footer, "padding");
+//     margin-bottom: 40px;
+//     .c-selectbox {
+//         min-width: 70px;
+//     }
+// }
+// .o-placeholder--checkbox {
+//     $checkbox: map-get($cardview, "cardview-checkbox");
+//     display: map-get($checkbox, 'display');
+//     position: map-get($checkbox, 'position');
+//     top: map-get($checkbox, 'top');
+//     left: map-get($checkbox, 'left');
+//     bottom: map-get($checkbox, 'bottom');
+//     right: map-get($checkbox, 'right');
+//     z-index: map-get($checkbox, "z-index");
+// }
+// .o-placeholder--multi_selection {
+//     $multiselection: map-get($cardview, "multi-selection");
+//     //position: map-get($multiselection, 'position');
+//     top: map-get($multiselection, 'top');
+//     //margin-top: -68px;
+//     //margin-bottom: -55px;
+//     left: map-get($multiselection, 'left');
+//     bottom: map-get($multiselection, 'bottom');
+//     right: map-get($multiselection, 'right');
+//     width: map-get($multiselection, 'width');
+//     z-index: map-get($multiselection, "z-index");
+//     //display: map-get($multiselection,"display");
+//     &.active {
+//         //display: block;
+//         position: relative;
+//     }
+//     &--changepos {
+//         //top: 69px;
+//     }
+// }
+// .o-card-holder {
+//     float: left;
+// }
+// // Overrides
+// .o-card-container {
+//     &.multi-selection-active {
+//         .o-placeholder--multi_selection {
+//             display: block;
+//         }
+// Set defaults
+$o-card-view: ( border-color: #dcdce5, margin: map-get($l-list, margin), content: ( padding: 0px), footer: ( margin: 20px 0px, padding: 0px 0px 10px 0px));
+// Merge settings and defaults
+$o-card-view: map-merge($o-card-view, getSettingsMap("o-card-view"));
+$o-map: $o-card-view;
+.o-card-view {
+    margin: map-get($o-map, margin);
+    margin-bottom: 30px;
+    min-height: 320px;
+    &__content {
+        padding: map-deep-get($o-map, content, padding);
+        [ng-reflect-is-loading="true"] {
+            margin-top: 10px;
+            &:after {
+                content: "";
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(255, 255, 255, 0.7);
+                animation: getAnimation(zoom-in) 1s ease;
+                z-index: 9999999
+            }
+            &:before {
+                content: "";
+                position: absolute;
+                width: 48px;
+                height: 48px;
+                background-image: url('/assets/images/svg/content-loader.svg');
+                transform: translate(-50%, -50%);
+                left: 50%;
+                top: 50%;
+                z-index: 19999999;
+                border-radius: 50%;
+            }
+        }
+    }
+    &__footer {
+        margin: map-deep-get($o-map, footer, margin);
+        padding: map-deep-get($o-map, footer, padding);
+        .c-selectbox {
+            min-width: 70px;
+        }
+        .c-pagination--main {
+            float: left;
+            width: 100%;
+            height: auto;
+            border-top: solid 1px map-get($o-map, border-color);
+            padding-top: 20px;
+            margin-bottom: 20px;
+        }
+    }
+}
+
+$o-map: null;

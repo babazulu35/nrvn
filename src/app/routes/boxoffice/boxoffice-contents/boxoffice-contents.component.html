@@ -1,0 +1,197 @@
+<div class="or-create-content">
+
+  <div class="p-header-bar">
+    <div class="p-header-bar__left">
+      <app-header-inline-edit 
+        [placeholder]="'Yeni İçerik'"
+        [breadcrumbs]="[{label:'İçerikler', routerLink:'/boxoffice/contents'}]"></app-header-inline-edit>
+    </div>
+
+    <div class="p-header-bar__right">
+      <app-button>KAYDET</app-button>
+    </div>
+  </div>
+
+  <app-split-container>
+    <div fluid >
+      <div class="p-container">
+        <div class="p-form-group">
+          <div class="p-form-group__label">
+            İÇERİK BAŞLIĞI
+          </div>
+          <div class="p-form-group__input">
+            <app-text-input></app-text-input>
+            <app-mock-box
+                  description="c-helper-text bileşeni Angular bileşeni olarak eklenmesi gerekiyor."
+                  width="100%"
+                  height="25px"
+                  color="#666666"
+                  backgroundColor="#d1d1d1"></app-mock-box>
+          </div>
+        </div>
+
+        <div class="p-group">
+          <div class="p-group__header">
+            <div class="p-group__header-bar">
+              <div class="p-group__header-title">
+                Etkinlik Kartı
+              </div>
+            </div>
+          </div>
+          <div class="p-group__item">
+            <app-mock-box
+              description="c-basic-button-group bileşeni Angular bileşeni olarak eklenmesi gerekiyor."
+              width="100%"
+              height="52px"
+              color="#666666"
+              backgroundColor="#d1d1d1"></app-mock-box>
+          </div>
+        </div>
+
+        <div class="p-group">
+          <div class="p-group__header">
+            <div class="p-group__header-bar">
+              <div class="p-group__header-title">
+                Program
+              </div>
+              <div class="p-group__header-action">
+                <app-mock-box style="font-size: 15px; line-height: 15px"
+                  description="Mock: Tümünü Daralt"
+                  width="100%"
+                  height="16px"
+                  color="#666666"
+                  backgroundColor="#d1d1d1"></app-mock-box>
+              </div>
+            </div>
+          </div>
+          
+          <div class="p-form-group">
+            <app-mock-box
+                description="c-collapsible-card-to-form bileşeni Angular bileşeni olarak eklenmesi gerekiyor."
+                width="100%"
+                height="382px"
+                color="#666666"
+                backgroundColor="#d1d1d1"></app-mock-box>
+          </div>
+
+          <div class="p-form-group">
+            <app-mock-box
+                description="c-collapsible-card-to-form bileşeni Angular bileşeni olarak eklenmesi gerekiyor."
+                width="100%"
+                height="227px"
+                color="#666666"
+                backgroundColor="#d1d1d1"></app-mock-box>
+          </div>
+
+          <div class="p-form-group">
+            <app-mock-box
+                description="c-basic-button-group bileşeni Angular bileşeni olarak eklenmesi gerekiyor."
+                width="100%"
+                height="52px"
+                color="#666666"
+                backgroundColor="#d1d1d1"></app-mock-box>
+          </div>
+        </div>
+
+        <div class="p-group">
+          <div class="p-group__header p-group__header--border">
+            <div class="p-group__header-bar">
+              <div class="p-group__header-title">
+                Özel İçerik
+              </div>
+            </div>
+          </div>
+          <div class="p-group__item">
+            <span class="margin-right-10"><b>Bu içerik öne çıksın</b></span><app-checkbox type="lightswitch" theme="dark"></app-checkbox>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+
+    <div fixed >
+      <div class="p-container">
+        <div class="p-group">
+          <div class="p-form-group">
+            <div class="p-form-group__label">
+              BAĞLAR
+            </div>
+            <app-mock-box
+                description="mini-card bileşeni Angular bileşeni olarak eklenmesi gerekiyor."
+                width="100%"
+                height="60px"
+                color="#666666"
+                backgroundColor="#d1d1d1"></app-mock-box>
+          </div>
+          <div class="p-form-group">
+            <app-container-canvas>
+                <div class="c-container-canvas c-container-canvas--dashed-border">
+                  <app-button theme="secondary">LİNKLE</app-button>
+                </div>
+              </app-container-canvas>
+          </div>
+        </div><!-- /.p-group -->
+
+        <div class="p-group">
+          <div class="p-group__list">
+            <div class="p-group__list-item">
+              <div class="p-group__list-item-label">
+                Aktif (Yayınla)
+              </div>
+              <div class="p-group__list-item-action">
+                <app-checkbox type="lightswitch"></app-checkbox>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-group__item">
+            <div class="p-form-group">
+              <app-checkbox type="square">Babylon.com.tr</app-checkbox>
+            </div>
+
+            <div class="p-form-group">
+              <app-checkbox type="square">Babylon.com.tr</app-checkbox>
+            </div>
+
+            <div class="p-form-group">
+              <app-checkbox type="square">Babylon.com.tr</app-checkbox>
+            </div>
+          </div>
+
+          <div class="p-group__item">
+            <div class="p-group__list">
+              <div class="p-group__list-item">
+                <div class="p-group__list-item-key">
+                  EKLEYEN
+                </div>
+                <div class="p-group__list-item-value">
+                  <a href="javascript:void(0)">Altuğ Canıtez</a>
+                </div>
+              </div>
+
+              <div class="p-group__list-item">
+                <div class="p-group__list-item-key">
+                  EKLENME TARİHİ
+                </div>
+                <div class="p-group__list-item-value">
+                  01 Aralık 2016, 22:00
+                </div>
+              </div>
+
+              <div class="p-group__list-item">
+                <div class="p-group__list-item-key">
+                  BİÇİM
+                </div>
+                <div class="p-group__list-item-value">
+                  Etkinlik Bilgileri
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div><!-- /.p-container -->
+    </div><!-- /.o-split-container__fixed -->
+  </app-split-container>
+
+</div>

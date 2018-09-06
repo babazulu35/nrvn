@@ -1,0 +1,60 @@
+<app-cover-image [backgroundImage]="(event?.Images | image) || 'assets/images/cover-image/default.jpg'" *ngIf="event">
+	<div class="c-cover-image__header">
+		<app-title-switcher
+			(searchEvent)="titleSearchHandler($event)"
+			(changeEvent)="titleChangeHandler($event)"
+			[title]="event?.Name"
+			[finderTitle]="'ETKİNLİK ARA'"
+			[finderSettings]='{
+				search: {
+					placeholder: "Görüntülemek istediğiniz etkinlik adını girin",
+					feedback: {
+						title: "Aramanız ile eşleşen erkinlik bulunamadı",
+						description: "Arama kriterini değiştirerek yeniden deneyebilir ya da yeni etkinlik oluşturabilirsiniz.",
+						icon: {type: "icon", name: "event"},
+						action: {action: "gotoLink", label: "YENİ ETKİNLİK OLUŞTUR", params: {link: "event/create"}}
+					}
+				}
+			}' ></app-title-switcher>
+
+		<div class="float-xs-right">
+		<app-button *ngIf="'Event_Create' | authRole" theme="danger" [routerLink]="['/event',event.Id,'edit']">ETKİNLİK BİLGİLERİNİ DÜZENLE</app-button>
+		</div>
+	</div>
+
+	<div class="c-cover-image__body">
+		<div class="row">
+			<div class="col-xs-5 padding-right-30 or-venue-desc">
+				<div *ngIf="venues.length > 1">
+					<div *ngFor="let venue of venues | slice:0:3">
+						<div>
+							<p><strong class="c-cover-image__venue-desc-title">{{venue.Name}}</strong></p>
+						</div>
+					</div>
+				</div>
+
+				<div *ngIf="venues.length == 1 && venues[0]">
+					<p><strong class="c-cover-image__venue-desc-title">{{venues[0].Localization.Tr.Name}}</strong></p>
+					<p>{{venues[0].Localization.Tr.Address}}</p>
+					<p>T. {{venues[0].Phone | phoneFormat}}</p>
+					<p><a target="_blank" [attr.href]="venues[0].WebUrl">{{venues[0].WebUrl}}</a></p>
+				</div>
+			</div>
+
+			<div class="col-xs-6 offset-xs-1">
+				<div class="c-cover-image__over-image-dates" *ngIf="performance">
+					<strong class="c-cover-image__over-image-dates-day">{{ performance.Date | relativeDate}}</strong>
+					<span class="c-cover-image__over-image-dates-subtitle">EN YAKIN PERFORMANS</span>
+					<strong class="c-cover-image__over-image-dates-time">{{ performance.Date| date:'HH:mm'}}</strong>
+				</div>
+				<!--end or-over-image-dates-->
+			</div>
+		</div>
+	</div>
+
+	<div class="c-cover-image__footer">
+		<app-tab-bar *ngIf="['Event_Dashboard','Event_Performances'] | authRole" theme='light' [data]="tabs"></app-tab-bar>
+	</div>
+</app-cover-image>
+
+<router-outlet></router-outlet>

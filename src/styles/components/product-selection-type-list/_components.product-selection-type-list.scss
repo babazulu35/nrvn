@@ -1,0 +1,81 @@
+$c-product-selection-type-list: (
+    border-radius: 3px,
+    border-color: #dcdce5,
+    padding: 20px,
+
+    caption: (
+        font-size: 13px,
+        color: #939393
+    ),
+    item: (
+        icon: (
+            font-size: 24px,
+            color: #B0B0B0
+        ),
+        title: (
+            font-size: 15px,
+            color: #3a2e39
+        )
+    )
+);
+
+// Merge settings and defaults
+$c-product-selection-type-list: map-merge($c-product-selection-type-list, getSettingsMap("c-product-selection-type-list"));
+
+// Set shortcuts
+$c-map: $c-product-selection-type-list;
+
+.c-product-selection-type-list {
+  display: block;
+  position: relative;
+  border-radius: map-deep-get($c-map, border-radius);
+  border: solid 1px map-deep-get($c-map, border-color);
+  padding: map-deep-get($c-map, padding);
+
+  &__caption {
+    display: block;
+    width: 100%;
+    @include ffamily('semi');
+    font-size: map-deep-get($c-map, caption, font-size);
+    color: map-deep-get($c-map, caption, color);
+    padding: 0px map-deep-get($c-map, padding)/4 map-deep-get($c-map, padding)*0.75;
+    border-bottom: solid 1px map-deep-get($c-map, border-color);
+  }
+
+  &__body {
+    display: block;
+    width: 100%;
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    padding: map-deep-get($c-map, padding)/2 map-deep-get($c-map, padding)/4;
+    border-bottom: solid 1px map-deep-get($c-map, border-color);
+    
+    [class^="col-"],
+    [class*=" col-"] {
+        > * {
+            display: inline-block;
+            margin-right: -4px;
+            vertical-align: middle;
+        }
+    }
+
+    &-icon {
+        line-height: 0px;
+        color: map-deep-get($c-map, item, icon, color);
+        padding-right: map-deep-get($c-map, padding);
+        font-size: map-deep-get($c-map, item, icon, font-size);
+    }
+
+    &-title {
+        line-height: 0px;
+        @include ffamily('regular');
+        font-size: map-deep-get($c-map, item, title, font-size);
+        color: map-deep-get($c-map, item, title, color);
+        padding-right: map-deep-get($c-map, padding)/2;
+    }
+  }
+
+}

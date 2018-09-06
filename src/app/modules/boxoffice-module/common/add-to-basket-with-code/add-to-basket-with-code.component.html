@@ -1,0 +1,24 @@
+<div class="c-add-to-basket-code__header">
+    <div class="c-add-to-basket-code__header-bar">
+        <h1 class="c-add-to-basket-code__header-title">
+            Rezervasyon Kodu Girerek Sepete Ürün Eklemek Üzeresiniz
+        </h1>
+        <div class="c-add-to-basket-code__header-actions">
+            <app-button (click)="dismiss()" type="icon" icon="close" theme="secondary"></app-button>
+        </div>
+    </div>
+</div>
+
+<div class="c-add-to-basket-code__body">
+    <div class="c-add-to-basket-code__description">Aşağıdaki Alana Rezervasyon Kodunu Giriniz</div>
+    <div class="c-add-to-basket-code__feedback-input">
+        <app-text-input [required]="true" type="search" theme="underline" (typeEvent)="typeEventHandler($event)" (changeEvent)="changeEventHandler($event)" [placeholder]="'XXXXXXXXXX'" [icon]="'lock'"></app-text-input>
+    </div>
+</div>
+
+<div class="c-add-to-basket-code__footer">
+    <div class="c-add-to-basket-code__footer-action-bar">
+        <app-button (click)="tether.dismiss()" [type]="'link'" [label]="'VAZGEÇ'"></app-button>
+        <app-button (click)="add()" [isDisabled]="!isValid" [type]="'button'" [label]="'SEPETE EKLE'" [theme]="'primary'"></app-button>
+    </div>
+</div>

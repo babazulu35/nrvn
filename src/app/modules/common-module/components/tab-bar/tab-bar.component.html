@@ -1,0 +1,27 @@
+<ng-template [ngIf] = "visibleItems?.length">
+    <div class="c-tab-bar__left">
+        <ul class="c-tab-bar__visible-list">
+            <li *ngFor="let item of visibleItems" 
+                class="c-tab-bar__item">
+                <a [routerLink]="item.routerLink"
+                    [routerLinkActive] = "['c-tab-bar__item-link--active']"
+                    [class.c-tab-bar__item-link--active]="item?.selected"
+                    class="c-tab-bar__item-link">{{item.label}}</a>
+            </li>
+        </ul>
+        <span class="c-tab-bar__hidden-list-menu" *ngIf="hiddenItems?.length">
+            <app-button (clickEvent)="openHiddenItems($event)" type="icon" icon="more_vert"></app-button>
+        </span>
+    </div>
+    <div class="c-tab-bar__right">
+        <ng-content select="[right]"></ng-content>
+    </div>
+</ng-template>
+<ng-template [ngIf] = "!visibleItems?.length">
+    <div class="c-tab-bar__left">
+        <ng-content select="[left]"></ng-content>
+    </div>
+    <div class="c-tab-bar__right">
+        <ng-content select="[right]"></ng-content>
+    </div>
+</ng-template>

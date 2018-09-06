@@ -1,0 +1,21 @@
+<app-expandable-block 
+  (actionEvent)="emitAction($event)"
+  [contextMenuData]="contextMenuData"
+  [title]="data?.Title || data?.Name"
+  [isExpanded]="true" >
+
+  <div class="c-cms-component__fields">
+    <div class="c-cms-component__field" *ngFor="let field of fields">
+        <app-cms-field
+          [data]="field"></app-cms-field>
+    </div>
+  </div>
+<!--
+  <div class="c-cms-component__footer">
+    <div class="c-cms-component__actions">
+      <app-button (clickEvent)="resetFields()" type="link" label="TEMİZLE"></app-button>
+      <app-button (clickEvent)="saveComponent()" theme="secondary" label="KAYDET"></app-button>
+    </div>
+  </div>-->
+
+</app-expandable-block>

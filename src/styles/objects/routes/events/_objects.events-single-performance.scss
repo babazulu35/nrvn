@@ -1,0 +1,3 @@
+$o-events-single-performance: ();
+$o-events-single-performance: map-merge($o-events-single-performance, getSettingsMap("o-events-single-performance"));
+$o-map: $o-events-single-performance;

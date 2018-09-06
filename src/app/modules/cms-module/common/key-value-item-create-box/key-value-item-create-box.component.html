@@ -1,0 +1,57 @@
+<app-dialog-box>
+  <div #header class="c-dialog-box__header c-dialog-box__header--border c-dialog-box__header--padding">
+      <div class="c-dialog-box__header-bar">
+          <h1 class="c-dialog-box__header-title">
+              {{title}}
+          </h1>
+          <div class="c-dialog-box__header-actions">
+              <app-button (click)="tetherService.dismiss()" type="icon" icon="close" theme="secondary"></app-button>
+          </div>
+      </div>
+  </div>
+  <div #body class="c-dialog-box__body c-dialog-box__body--no-padding">
+      <div class="p-container p-container">
+        <div class="p-group">
+            <div class="p-group__item">
+                <app-text-input theme="underline" 
+                    (changeEvent)="inputChangeHandler($event, 'label')"
+                    placeholder="Etiket Adı" [required]='true' [value]="keyValueItem?.label"></app-text-input>
+            </div>
+
+            <div class="p-group__item">
+              <div class="p-form-group">
+                  <div class="p-form-group__label">
+                      ANAHTAR İSİM
+                   </div>
+                   <div class="p-form-group__input">
+                       <app-text-input 
+                         (changeEvent)="inputChangeHandler($event, 'key')"
+                         placeholder="" [value]="keyValueItem?.key" [required]='true'></app-text-input>
+                   </div>
+              </div>
+          </div>
+
+          <div class="p-group__item">
+              <div class="p-form-group">
+                  <div class="p-form-group__label">
+                      DEĞER
+                   </div>
+                   <div class="p-form-group__input">
+                       <app-text-input 
+                         (changeEvent)="inputChangeHandler($event, 'value')"
+                         placeholder="" [value]="keyValueItem?.value" [required]='true'></app-text-input>
+                   </div>
+              </div>
+          </div>
+        </div>
+      </div>
+  </div>
+  <div #footer class="c-dialog-box__footer row">
+      <div class="c-dialog-box__footer-content">
+          <div class="col-xs-16">
+              <app-button (click)="submitClickHandler($event)" [isDisabled]="!isValid" theme="primary" [label]="isEditMode ? 'DÜZENLE' : 'EKLE'"></app-button>
+          </div>
+      </div>
+  </div>
+
+</app-dialog-box>

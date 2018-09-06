@@ -1,0 +1,43 @@
+<div class="or-cms-component-container-create" [ngClass]="{'main-loader': isLoading }">
+	<div class="p-header-bar" sticky sticky-main-scroller sticky-release-offset="30" sticky-height-property="55" sticky-width-property="100%" sticky-follow-menu-moves>
+		<div class="p-header-bar__left">
+			<app-breadcrumb [breadcrumbs]="[
+				{title: 'Satış Kanalları'}
+			]"></app-breadcrumb>
+		</div>
+
+		<div class="p-header-bar__right">
+			<app-button (clickEvent)='openSalesChannelModal()' [isDisabled]="false" [label]="'SATIŞ KANALI EKLE'"></app-button>
+		</div>
+	</div>
+
+	<app-split-container [fixedWidth]="0">
+		<div fluid>
+			<div class="p-container">
+				<div class="p-group">
+					<div class="p-group__item">
+						<app-inline-search-input (onInputSave)="onInputChange($event)" (onInputChange)="onInputChange($event)" [isIconAlignLeft]='true' placeholder='Satış Kanalları Arasında Arayın'></app-inline-search-input>
+					</div>
+
+					<div class="p-group__item" *ngFor="let salesChannel of salesChannels; let i=index">
+						<app-expandable-tree-block
+							(actionEvent)="expandableTreeBlockActionHandler($event, salesChannel)"
+							[isExpanded]="i==0"
+							[title]="salesChannel.Name"
+							[contextMenu]="getContextMenu(salesChannel, 'sales-channel')"
+							[isInactive]="!salesChannel?.IsActive"
+							[items]="salesChannel.subChannels"
+							[mainItem]="salesChannel"
+						></app-expandable-tree-block>
+					</div>
+
+					<div class="p-group__item">
+						<app-container-canvas [isEmpty]="true">
+							<app-button (click)="openSalesChannelModal()" theme="secondary">SATIŞ KANALI EKLE</app-button>
+						</app-container-canvas>
+					</div>
+				</div>
+			</div>
+		</div>
+	</app-split-container>
+</div>

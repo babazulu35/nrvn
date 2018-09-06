@@ -1,0 +1,121 @@
+<app-dialog-box>
+
+  <div #header class="c-dialog-box__header c-dialog-box__header--padding">
+    <div class="c-dialog-box__header-bar">
+      <h1 class="c-dialog-box__header-title">
+        {{title}}
+      </h1>
+      <div class="c-dialog-box__header-actions">
+        <app-button (click)="tether.dismiss()" type="icon" icon="close" theme="secondary"></app-button>
+      </div>
+    </div>
+
+    <div class="c-dialog-box__header-sticky-contents">
+      <app-wizard-header currentLevel={{currentLevelIndex+1}} totalLevel={{levels?.length}} (actionEvent)="wizardActionHandler($event)">
+        <span><strong>{{wizardHeader.currentLevel}}. Adım: </strong>{{currentLevel?.title}}</span>
+      </app-wizard-header>
+    </div>
+
+  </div>
+
+   <div #body [ngSwitch]="currentLevel?.key" class="c-dialog-box__body c-dialog-box__body--no-padding ">
+    <div *ngSwitchCase="'selectSalesCahannel'" class="p-container">
+      <div *ngIf="availableChannels?.length" class="oc-add-variant-price-box__select-all-toggle">
+        <span class="oc-add-variant-price-box__select-all-toggle-label">Tüm Satış Kanalları</span>
+        <span class="oc-add-variant-price-box__select-all-toggle-input">
+          <app-checkbox type="lightswitch" (changeEvent)="inputChangeHandler($event, 'toggleAll')"></app-checkbox>
+        </span>
+      </div>
+
+      <ul *ngIf="availableChannels?.length" class="oc-add-variant-price-box__channel-list">
+        <li *ngFor="let channel of availableChannels" class="oc-add-variant-price-box__channel-list-item">
+          <span class="oc-add-variant-price-box__channel-list-item-input">
+            <app-checkbox type="square" (changeEvent)="channelCheckedHandler($event, channel)" [isChecked]="channel.selected" ></app-checkbox>
+          </span>
+          <span class="oc-add-variant-price-box__channel-list-item-icon">
+            <i class="icon__n icon__n--md icon__n--{{channel?.icon}}"></i>
+          </span>
+          <span class="oc-add-variant-price-box__channel-list-item-label">
+            {{channel.name}}
+          </span>
+        </li>
+      </ul>
+
+      <app-no-data *ngIf="!availableChannels?.length"
+        [title]="'Uygun satış kanalı bulunamadı.'"
+        [description]="'Bütün satış kanalları zaten eklenmiş olabilir.'"
+        [icon]="{type: 'svg', name: 'tickets'}" ></app-no-data>
+    </div>
+    <div *ngSwitchCase="'setChannelPrice'" class="p-container">
+        <!--<div class="p-group__item row">
+          <div class="col-xs-8 padding-right-10">
+            <div class="p-form-group__label">SATIŞ BAŞLANGIÇ TARİHİ<sup>*</sup></div>
+            <div class="p-form-group__input">
+              <app-text-input type="datepicker" size="sm-text" placeholder="Bir Tarih Seçiniz" (changeEvent)="inputChangeHandler($event, 'BeginDate')" [date]="variantPrice?.BeginDate" ></app-text-input>
+            </div>
+          </div>
+          <div class="col-xs-8 padding-left-10">
+            <div class="p-form-group__label">SATIŞ BİTİŞ TARİHİ<sup>*</sup></div>
+            <div class="p-form-group__input">
+              <app-text-input type="datepicker" size="sm-text" placeholder="Bir Tarih Seçiniz" (changeEvent)="inputChangeHandler($event, 'EndDate')" [date]="variantPrice?.EndDate" ></app-text-input>
+            </div>
+          </div>
+        </div>-->
+
+        <div class="p-group__item row">
+          <div class="col-xs-8 padding-right-10">
+            <div class="p-form-group__label">FİYAT</div>
+            <div class="p-form-group__input">
+              <app-text-input type="price" (changeEvent)="inputChangeHandler($event, 'Price')" [value]="variantPrice?.Price" ></app-text-input>
+            </div>
+          </div>
+          <div class="col-xs-8 padding-left-10">
+            <div class="p-form-group__label">HİZMET BEDELİ</div>
+            <div class="p-form-group__input">
+              <app-text-input-with-select 
+                (changeEvent)="inputChangeHandler($event, 'ServiceFee')" 
+                [selectOptions]="priceAdjustmentTypes"
+                [selectValue]="variantPrice?.ServiceFeeAdjType"
+                [inputValue]="variantPrice?.ServiceFee" ></app-text-input-with-select>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-group__item row">
+          <div class="col-xs-8 padding-right-10">
+            <div class="p-form-group__label">BİLETLEME BEDELİ</div>
+            <div class="p-form-group__input">
+              <app-text-input type="price" (changeEvent)="inputChangeHandler($event, 'TicketingFee')" [value]="variantPrice?.TicketingFee" ></app-text-input>
+            </div>
+          </div>
+          <div class="col-xs-8 padding-left-10">
+            <div class="p-form-group__label">MAKSİMUM ÜRÜN ADEDİ</div>
+            <div class="p-form-group__input">
+              <app-selectbox (changeEvent)="inputChangeHandler($event, 'MaxProduct')" [value]="variantPrice?.MaxProduct" [numberRanges]="{min: 1, max: 10}"></app-selectbox>
+            </div>
+          </div>
+        </div>
+
+        <!--<div class="p-group__item row">
+          <div class="col-xs-8 padding-right-10">
+            
+          </div>
+          <div class="col-xs-8 padding-left-10">
+            <div class="p-form-group__input text-xs-right">
+              <span class="p-label padding-right-10">Koltuk Seçilebilir </span><app-checkbox type="lightswitch" (changeEvent)="inputChangeHandler($event, 'IsSeatSelectionEnabled')" [isChecked]="variantPrice?.IsSeatSelectionEnabled"></app-checkbox>
+            </div>
+          </div>
+        </div>-->
+    </div>
+
+  </div>
+
+  <div #footer class="c-dialog-box__footer">
+    <div class="c-dialog-box__footer-content">
+      <div class="col-xs-16">
+        <app-button [isDisabled]="!isValid" (click)="submit($event)">DEVAM</app-button>
+      </div>
+    </div>
+  </div>
+
+</app-dialog-box>

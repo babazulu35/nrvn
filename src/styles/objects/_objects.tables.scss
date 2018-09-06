@@ -1,0 +1,7 @@
+// HTML `tablo`. manippulasoynu için 
+.o-table {
+	width:100%;
+	&--fixed {
+		table-layout: fixed;
+	}
+}

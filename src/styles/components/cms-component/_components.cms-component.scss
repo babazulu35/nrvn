@@ -1,0 +1,53 @@
+$c-cms-component: (
+    space: 20px,
+    border-color: #dcdce5,
+
+    fields: (
+        
+    ),
+
+    field: (
+
+    ),
+
+    footer: (
+        background-color: #FFFEF0
+    )
+);
+
+// Merge settings and defaults
+$c-cms-component: map-merge($c-cms-component, getSettingsMap("c-cms-component"));
+$c-map: $c-cms-component;
+
+// Basic Styling
+.c-cms-component {
+  display: block;
+  width: 100%;
+
+  &__fields {
+    padding: map-deep-get($c-map, space);
+  }
+
+  &__field {
+    & + .c-cms-component__field {
+        margin-top: map-deep-get($c-map, space);
+    }
+  }
+
+  &__footer {
+      display: block;
+      background-color: map-deep-get($c-map, footer, background-color);
+      border-top: solid 1px map-deep-get($c-map, border-color);
+      padding: map-deep-get($c-map, space)/2;
+      text-align: right;
+  }
+
+  &__actions {
+      > * {
+          margin-left: map-deep-get($c-map, space)/2;
+      }
+  }
+}
+
+// Reset
+$c-map: null;

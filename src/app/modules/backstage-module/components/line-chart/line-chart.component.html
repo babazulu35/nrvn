@@ -1,0 +1,9 @@
+<div class="margin-top-20 full-width">
+    <canvas #line></canvas>
+    <div class="c-line-chart__control-icons_left">
+        <app-button [theme]="secondary" (click)="prevDataSet(currentState)" *ngIf="showPrevArrow" size="lg" type="icon" icon="keyboard_arrow_left"></app-button>
+    </div>
+    <div class="c-line-chart__control-icons_right">
+        <app-button [theme]="secondary" (click)="nextDataSet(currentState)" *ngIf="showNextArrow" size="lg" type="icon" icon="keyboard_arrow_right"></app-button>
+    </div>
+</div>

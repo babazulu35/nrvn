@@ -1,0 +1,129 @@
+/* --------------------------------------------------------
+author: Abdullah Karadeniz
+----------------------------------------------------------*/
+
+$c-autocomplete: (
+    padding: 10px,
+    height: 200px,
+    border-color: #DCDCE5,
+    list: (
+      item: (
+        color: #2F3239,
+        active-color: #2096F3,
+        font-size: 13px
+      )
+    )
+  );
+  
+  // Merge settings and defaults
+  $c-autocomplete: map-merge($c-autocomplete, getSettingsMap("c-autocomplete"));
+  
+  // Set shortcuts
+  $c-map: $c-autocomplete;
+  
+  .c-autocomplete {
+    display: block;
+    position: relative;
+    width: 100%;
+    white-space: normal;
+
+    &--disabled {
+      cursor: not-allowed;
+      > * {pointer-events: none; opacity: 0.6;}
+    }
+  
+    &__input {
+      display: block;
+
+      & + .c-autocomplete__list-container {
+        margin-top: map-deep-get($c-map, padding)*0.5;
+      }
+    }
+
+    &__list-container {
+      display: flex;
+      flex-direction: column;
+      max-height: map-deep-get($c-map, height);
+    }
+
+    &__list {
+      display: flex;
+      flex-grow: 0;
+      flex-shrink: 1;
+      flex-direction: column;
+      width: 100%;
+      overflow-x: hidden;
+      padding: map-deep-get($c-map, padding)*0.5 0px;
+      border-bottom: solid 1px map-deep-get($c-map, border-color);
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      & + .c-autocomplete__list {
+        margin-top: map-deep-get($c-map, padding);
+      }
+
+      &--featured {
+        flex-shrink: 0;
+        flex-grow: 1;
+        overflow-x: initial;
+
+        .c-autocomplete__list {
+          &-item {
+            @include ffamily('bold');
+          }
+        }
+      }
+
+      &-item {
+        display: table;
+        @include ffamily('regular');
+        font-size: map-deep-get($c-map, list, item, font-size);
+        line-height: 1em;
+        color: map-deep-get($c-map, list, item, color);
+        padding: map-deep-get($c-map, padding)*0.75 0px;
+
+        &--disabled {
+          cursor: not-allowed;
+          > * {pointer-events: none; opacity: 0.6;}
+        }
+
+        &:not(.c-autocomplete__list-item--disabled):hover,
+        &:not(.c-autocomplete__list-item--disabled).c-autocomplete__list-item--active {
+          background-color: map-deep-get($c-map, list, item, active-color);
+          color: #fff;
+          .c-autocomplete__list-item-primary {
+            padding-left: map-deep-get($c-map, padding)*0.5;
+          }
+          .c-autocomplete__list-item-secondary {
+            padding-right: map-deep-get($c-map, padding)*0.5;
+          }
+        }
+        &:not(.c-autocomplete__list-item--disabled):not(.c-autocomplete__list-item--active):hover {
+          cursor: pointer;
+        }
+
+        & + .c-autocomplete__list-item {
+          // margin-top: map-deep-get($c-map, padding);
+        }
+
+        &-primary {
+          display: table-cell;
+          vertical-align: middle;
+          width: 100%;
+          padding-right: map-deep-get($c-map, padding)*0.5;
+        }
+
+        &-secondary {
+          display: table-cell;
+          vertical-align: middle;
+        }
+      }
+    }
+  }
+  
+  //Reset
+  $c-map: null;
+  $selected-size: null;
+  
